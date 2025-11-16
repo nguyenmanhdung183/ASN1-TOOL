@@ -1,0 +1,38 @@
+/* e2ap_{{name}}.h - enumurate*/
+/* e2ap_{{name}}.h */
+
+/******************************************************/
+/*                                                    */
+/*    {{name}}                                       */
+/*                                                    */
+/******************************************************/
+
+typedef enum {
+{% for item in items %}
+    e2ap_{{ item.name | replace('-', '_') }} = {{ item.value }}{% if not loop.last %},{% endif %}
+{% endfor %}
+//add other values as needed
+} e2ap_{{name}}_Root;
+
+typedef OSUINT32 e2ap_{{name}};
+
+/* Encode / Decode */
+EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}} value);
+EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue);
+
+/* Print helpers */
+EXTERN void asn1Print_e2ap_{{name}} (const char* name, const e2ap_{{name}}* pvalue);
+
+/* Convert to stream (pretty print to stream) */
+EXTERN int asn1PrtToStrm_e2ap_{{name}} (OSCTXT* pctxt, const char* name, const e2ap_{{name}}* pvalue);
+
+/* Convert to string (write into user buffer) */
+EXTERN int asn1PrtToStr_e2ap_{{name}} (const char* name,const e2ap_{{name}}* pvalue,char* buffer,OSSIZE bufSize);
+/* Enumeration table */
+EXTERN extern const OSEnumItem e2ap_{{name}}_ENUMTAB[];
+#define e2ap_{{name}}_ENUMTABSIZE {{items|length}}
+
+/* Enum <-> String conversion */
+EXTERN const OSUTF8CHAR* e2ap_{{name}}_ToString (OSUINT32 value);
+EXTERN int e2ap_{{name}}_ToEnum (OSCTXT* pctxt,const OSUTF8CHAR* value,e2ap_{{name}}* pvalue);
+EXTERN int e2ap_{{name}}_ToEnum2 (OSCTXT* pctxt,const OSUTF8CHAR* value,OSSIZE valueLen,e2ap_{{name}}* pvalue);

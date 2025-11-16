@@ -1,0 +1,50 @@
+/* e2ap_{{name}}.c */
+#include "e2ap_{{name}}.h"
+#include "rtxsrc/rtxErrCodes.h"
+
+const OSUTF8CHAR* const e2ap_{{name}}_ENUMTAB[e2ap_{{name}}_ENUMTABSIZE] = {
+{% for item in items %}
+   (OSUTF8CHAR*)"{{item.string}}"{% if not loop.last %},{% endif %}
+{% endfor %}
+};
+
+EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}} value)
+{
+   int stat = 0;
+   RTXCTXPUSHTYPENAME (pctxt, "{{name}}");
+   if (value >= {{items|length}}) {
+      rtxErrAddIntParm (pctxt, value);
+      return LOG_RTERR (pctxt, RTERR_INVENUM);
+   }
+   stat = pe_ConsUnsigned (pctxt, value, 0, OSUINTCONST({{items|length - 1}}));
+   if (stat != 0) return LOG_RTERR (pctxt, stat);
+   RTXCTXPOPEXTNAME (pctxt);
+   return stat;
+}
+
+EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
+{
+   int stat = 0;
+   RTXCTXPUSHTYPENAME (pctxt, "{{name}}");
+   stat = pd_ConsUnsigned (pctxt, pvalue, 0, OSUINTCONST({{items|length - 1}}));
+   if (stat != 0) return LOG_RTERR (pctxt, stat);
+   RTXCTXPOPEXTNAME (pctxt);
+   return stat;
+}
+
+EXTERN int asn1PrtToStr_e2ap_{{name}} (const char* name, e2ap_{{name}}* pvalue, char* buffer, OSSIZE bufSize)
+{
+   int stat;
+   if (rtPrintToStringIndent (buffer, bufSize) < 0) return -1;
+   if (rtPrintToString (name, buffer, bufSize) < 0) return -1;
+   switch (*pvalue) {
+{% for item in items %}
+      case {{item.value}}:
+         stat = rtPrintToString (" = {{item.string}}\n", buffer, bufSize);
+         break;
+{% endfor %}
+      default:
+         stat = rtPrintToString (" = ???\n", buffer, bufSize);
+   }
+   return (stat < 0) ? -1 : 0;
+}

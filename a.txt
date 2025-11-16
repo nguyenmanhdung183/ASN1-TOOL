@@ -1,0 +1,25 @@
+
+e2ap_rtx_templates/
+│
+├── README.md                     # Hướng dẫn dùng
+├── generate_all.py               # Script Python sinh toàn bộ IE
+├── data_e2setup.xlsx             # Excel mẫu (TransactionID, ProcedureCode, Criticality, RICindicationType...)
+│
+├── templates/
+│   ├── integer_no_ext.h.j2
+│   ├── integer_no_ext.c.j2
+│   ├── integer_with_ext.h.j2
+│   ├── integer_with_ext.c.j2
+│   ├── enumerated.h.j2
+│   ├── enumerated.c.j2
+│   └── container.h.j2
+│
+└── output/                       # Kết quả mẫu (sau khi chạy script)
+    ├── e2ap_TransactionID.h
+    ├── e2ap_TransactionID.c
+    ├── e2ap_ProcedureCode.h
+    ├── e2ap_ProcedureCode.c
+    ├── e2ap_Criticality.h
+    ├── e2ap_Criticality.c
+    ├── e2ap_RICindicationType.h
+    └── e2ap_RICindicationType.c
