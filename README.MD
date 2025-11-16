@@ -17,3 +17,11 @@ PROTOCOL IE CONTAINER
 CHOICE
 CLASS
 CONTAINER PAIR
+
+
+==========================================
+chạy 1.py -> xem file .yaml và chỉnh lại nếu bị sai
+chạy 2.py
+chạy 3.py
+chạy 4.py
+chạy 5.py

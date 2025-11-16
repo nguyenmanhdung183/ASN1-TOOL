@@ -236,3 +236,76 @@ if not choice_df.empty:
             f.write(c_tmpl.render(data))
 
         print(f"Generated CHOICE: e2ap_{choice_name}.h/c")
+        
+import yaml
+
+# =============================
+# 5. EXPORT ASN.1 TREE RA YAML
+# =============================
+
+# Giả sử bạn đã gom toàn bộ tree vào dict Python, ví dụ:
+# asn1_tree = {
+#     "E2setupRequest": {
+#         "E2setupRequestIEs": [
+#             "TransactionID",
+#             {"GlobalE2node-ID": {...}}
+#         ]
+#     }
+# }
+
+def flatten_asn1_tree(node):
+    """
+    Chuyển tree ASN.1 sang dạng chỉ có field name, giữ children.
+    """
+    if isinstance(node, dict):
+        out = {}
+        for k, v in node.items():
+            if isinstance(v, (dict, list)):
+                out[k] = flatten_asn1_tree(v)
+            else:
+                out[k] = None
+        return out
+    elif isinstance(node, list):
+        out = []
+        for item in node:
+            if isinstance(item, (dict, list)):
+                out.append(flatten_asn1_tree(item))
+            else:
+                out.append(item)
+        return out
+    else:
+        return node
+
+# TODO: Thay bằng tree thực tế của bạn (gôm từ Messages + Types + Choices)
+asn1_tree = {
+    "E2setupRequest": {
+        "E2setupRequestIEs": [
+            "TransactionID",
+            {
+                "GlobalE2node-ID": {
+                    "GlobalE2node-gNB-ID": {
+                        "GlobalgNB-ID": ["PLMN-Identity", {"GNB-ID-Choice": ["gnb-ID"]}],
+                        "GlobalenGNB-ID": ["PLMN-Identity", {"ENGNB-ID": ["gNB-ID"]}],
+                        "GNB-CU-UP-ID": None,
+                        "GNB-DU-ID": None
+                    }
+                }
+            }
+        ]
+    }
+}
+
+yaml_tree = flatten_asn1_tree(asn1_tree)
+
+# Ghi ra file YAML
+os.makedirs("output/yaml", exist_ok=True)
+with open("output/yaml/e2ap_tree.yaml", "w", encoding="utf-8") as f:
+    yaml.dump(yaml_tree, f, sort_keys=False, allow_unicode=True, default_flow_style=False)
+
+print("Exported ASN.1 tree to output/yaml/e2ap_tree.yaml")
+        
+#=====================================        
+# tìm và sắp xếp dữ liệu        
+#=====================================        
+
+# sắp xếp các phần node con lên đầu, có hàm check node con đã tồn tại chưa (trong file hiện tại + file trong VDI)

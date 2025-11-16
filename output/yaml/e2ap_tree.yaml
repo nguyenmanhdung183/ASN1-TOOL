@@ -1,0 +1,15 @@
+E2setupRequest:
+  E2setupRequestIEs:
+  - TransactionID
+  - GlobalE2node-ID:
+      GlobalE2node-gNB-ID:
+        GlobalgNB-ID:
+        - PLMN-Identity
+        - GNB-ID-Choice:
+          - gnb-ID
+        GlobalenGNB-ID:
+        - PLMN-Identity
+        - ENGNB-ID:
+          - gNB-ID
+        GNB-CU-UP-ID: null
+        GNB-DU-ID: null
