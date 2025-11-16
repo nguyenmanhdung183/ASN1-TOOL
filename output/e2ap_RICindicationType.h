@@ -8,12 +8,7 @@
 /******************************************************/
 
 typedef enum {
-
-    e2ap_report = 0,
-
-    e2ap_insert = 1
-
-//add other values as needed
+    e2ap_report = 0,    e2ap_insert = 1//add other values as needed
 } e2ap_RICindicationType_Root;
 
 typedef OSUINT32 e2ap_RICindicationType;

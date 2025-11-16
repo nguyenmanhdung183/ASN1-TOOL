@@ -1,0 +1,104 @@
+/* e2ap_{{name}}.c */
+#include "e2ap_{{name}}.h"
+#include "rtxsrc/rtxErrCodes.h"
+
+EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
+{
+   int stat = 0;
+   OSBOOL extbit = FALSE;
+   RTXCTXPUSHTYPENAME (pctxt, "{{name}}");
+
+   extbit = (OSBOOL)(pvalue->t > 3);
+   stat = rtxEncBit (pctxt, extbit);
+   if (stat != 0) return LOG_RTERR (pctxt, stat);
+
+   if (extbit) {
+      stat = pe_SmallNonNegWholeNumber (pctxt, pvalue->t - 4);
+      if (stat != 0) return LOG_RTERR (pctxt, stat);
+   } else {
+      stat = rtxEncBits (pctxt, pvalue->t - 1, 2);
+      if (stat != 0) return LOG_RTERR (pctxt, stat);
+   }
+
+   switch (pvalue->t) {
+{% for choice in choices %}
+      case {{choice.tag}}:
+         RTXCTXPUSHELEMNAME (pctxt, "{{choice.name}}");
+         pvalue->u.{{choice.field}} = rtxMemAllocType (pctxt, e2ap_{{choice.type}});
+         if (pvalue->u.{{choice.field}} == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
+         asn1Init_e2ap_{{choice.type}} (pvalue->u.{{choice.field}});
+         stat = asn1PE_e2ap_{{choice.type}} (pctxt, pvalue->u.{{choice.field}});
+         if (stat != 0) return LOG_RTERR (pctxt, stat);
+         RTXCTXPOPELEMNAME (pctxt);
+         break;
+{% endfor %}
+      default:
+         return LOG_RTERR (pctxt, RTERR_INVOPT);
+   }
+
+   RTXCTXPOPELEMNAME (pctxt);
+   return 0;
+}
+
+EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
+{
+   int stat = 0;
+   OSUINT32 ui;
+   OSBOOL extbit = FALSE;
+   ASN1OpenType openType;
+   RTXCTXPUSHTYPENAME (pctxt, "{{name}}");
+
+   stat = rtxDecBit (pctxt, &extbit);
+   if (stat != 0) return LOG_RTERR (pctxt, stat);
+
+   if (extbit) {
+      stat = pd_SmallNonNegWholeNumber (pctxt, &ui);
+      if (stat != 0) return LOG_RTERR (pctxt, stat);
+      pvalue->t = ui + 4;
+   } else {
+      pvalue->t = ui + 1;
+   }
+
+   switch (pvalue->t) {
+{% for choice in choices %}
+      case {{choice.tag}}:
+         RTXCTXPUSHELEMNAME (pctxt, "{{choice.name}}");
+         pvalue->u.{{choice.field}} = rtxMemAllocType (pctxt, e2ap_{{choice.type}});
+         if (pvalue->u.{{choice.field}} == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
+         asn1Init_e2ap_{{choice.type}} (pvalue->u.{{choice.field}});
+         stat = asn1PD_e2ap_{{choice.type}} (pctxt, pvalue->u.{{choice.field}});
+         if (stat != 0) return LOG_RTERR (pctxt, stat);
+         RTXCTXPOPELEMNAME (pctxt);
+         break;
+{% endfor %}
+      default:
+         return LOG_RTERR (pctxt, RTERR_INVOPT);
+   }
+
+   RTXCTXPOPELEMNAME (pctxt);
+   return 0;
+}
+
+int asn1Init_e2ap_{{name}} (e2ap_{{name}}* pvalue)
+{
+   if (pvalue == 0) return RTERR_NULLPTR;
+   pvalue->t = 0;
+   OSRTLMEMSET (&pvalue->u, 0, sizeof(pvalue->u));
+   return 0;
+}
+
+void asn1Free_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
+{
+   if (pvalue == 0) return;
+   switch (pvalue->t) {
+{% for choice in choices %}
+      case {{choice.tag}}:
+         if (pvalue->u.{{choice.field}}) {
+            asn1Free_e2ap_{{choice.type}} (pctxt, pvalue->u.{{choice.field}});
+            rtxMemFreePtr (pctxt, (void*)pvalue->u.{{choice.field}});
+         }
+         break;
+{% endfor %}
+   }
+   pvalue->t = 0;
+}

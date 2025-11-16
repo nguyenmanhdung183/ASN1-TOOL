@@ -2,13 +2,8 @@
 #include "e2ap_RICindicationType.h"
 #include "rtxsrc/rtxErrCodes.h"
 
-const OSUTF8CHAR* const e2ap_RICindicationType_ENUMTAB[e2ap_RICindicationType_ENUMTABSIZE] = {
-
-   (OSUTF8CHAR*)"report",
-
-   (OSUTF8CHAR*)"insert"
-
-};
+const OSEnumItem e2ap_RICindicationType_ENUMTAB[e2ap_RICindicationType_ENUMTABSIZE] = {
+   { OSUTF8("report"), 0, 6,  },   { OSUTF8("insert"), 1, 6,  }};
 
 EXTERN int asn1PE_e2ap_RICindicationType (OSCTXT* pctxt, e2ap_RICindicationType value)
 {
@@ -19,9 +14,8 @@ EXTERN int asn1PE_e2ap_RICindicationType (OSCTXT* pctxt, e2ap_RICindicationType 
       return LOG_RTERR (pctxt, RTERR_INVENUM);
    }
    stat = pe_ConsUnsigned (pctxt, value, 0, OSUINTCONST(1));
-   if (stat != 0) return LOG_RTERR (pctxt, stat);
    RTXCTXPOPEXTNAME (pctxt);
-   return stat;
+   return (stat != 0) ? LOG_RTERR (pctxt, stat) : stat;
 }
 
 EXTERN int asn1PD_e2ap_RICindicationType (OSCTXT* pctxt, e2ap_RICindicationType* pvalue)
@@ -29,28 +23,19 @@ EXTERN int asn1PD_e2ap_RICindicationType (OSCTXT* pctxt, e2ap_RICindicationType*
    int stat = 0;
    RTXCTXPUSHTYPENAME (pctxt, "RICindicationType");
    stat = pd_ConsUnsigned (pctxt, pvalue, 0, OSUINTCONST(1));
-   if (stat != 0) return LOG_RTERR (pctxt, stat);
    RTXCTXPOPEXTNAME (pctxt);
-   return stat;
+   return (stat != 0) ? LOG_RTERR (pctxt, stat) : stat;
 }
 
 EXTERN int asn1PrtToStr_e2ap_RICindicationType (const char* name, e2ap_RICindicationType* pvalue, char* buffer, OSSIZE bufSize)
 {
    int stat;
+   const char* enumStr = "???";
+   if (*pvalue < e2ap_RICindicationType_ENUMTABSIZE) {
+      enumStr = (const char*)e2ap_RICindicationType_ENUMTAB[*pvalue].name;
+   }
    if (rtPrintToStringIndent (buffer, bufSize) < 0) return -1;
    if (rtPrintToString (name, buffer, bufSize) < 0) return -1;
-   switch (*pvalue) {
-
-      case 0:
-         stat = rtPrintToString (" = report\n", buffer, bufSize);
-         break;
-
-      case 1:
-         stat = rtPrintToString (" = insert\n", buffer, bufSize);
-         break;
-
-      default:
-         stat = rtPrintToString (" = ???\n", buffer, bufSize);
-   }
+   stat = rtPrintToString (" = %s\n", enumStr, buffer, bufSize);
    return (stat < 0) ? -1 : 0;
 }

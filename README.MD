@@ -1,8 +1,9 @@
 ============= DỮ LIỆU CƠ BẢN - NODE CUỐI==============
 ENUM -> cần fix thêm
 INTERGER ->cần fix thêm
-OCTET STRING
-PRINTABLE STRING
+OCTET STRING ->cần fix thêm
+BIT STRING  -> dùng ASN1BitStr32
+PRINTABLE STRING -> cần fix thêm
 
 
 ===========================

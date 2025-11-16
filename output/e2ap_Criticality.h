@@ -8,14 +8,7 @@
 /******************************************************/
 
 typedef enum {
-
-    e2ap_reject = 0,
-
-    e2ap_ignore = 1,
-
-    e2ap_notify = 2
-
-//add other values as needed
+    e2ap_reject = 0,    e2ap_ignore = 1,    e2ap_notify = 2//add other values as needed
 } e2ap_Criticality_Root;
 
 typedef OSUINT32 e2ap_Criticality;

@@ -8,16 +8,7 @@
 /******************************************************/
 
 typedef enum {
-
-    e2ap_control_processing_overload = 0,
-
-    e2ap_hardware_failure = 1,
-
-    e2ap_om_intervention = 2,
-
-    e2ap_unspecified = 3
-
-//add other values as needed
+    e2ap_control_processing_overload = 0,    e2ap_hardware_failure = 1,    e2ap_om_intervention = 2,    e2ap_unspecified = 3//add other values as needed
 } e2ap_CauseMisc_Root;
 
 typedef OSUINT32 e2ap_CauseMisc;
