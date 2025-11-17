@@ -1,0 +1,12 @@
+IE_Name	ASN1_Type	Min	Max	Enum_Items
+AMFName	PrintableString (SIZE(1..150,...))			
+E2nodeComponentInterfaceType	ENUMERATED			ng,xn,e1,f1,w1,s1,x2, ...
+GNB-CU-UP-ID	INTEGER (0..68719476735)	0	68719476735	
+GNB-DU-ID	INTEGER (0..68719476735)	0	68719476735	
+NGENB-DU-ID	INTEGER (0..68719476735)	0	68719476735	
+PLMN-Identity	OCTET STRING (SIZE(3))			
+RANfunctionDefinition	OCTET STRING			
+RANfunctionID	INTEGER (0..4095)	0	4095	
+RANfunctionOID	PrintableString (SIZE(1..1000,...))			
+RANfunctionRevision	INTEGER (0..4095)	0	4095	
+TransactionID	INTEGER (0..255, ...)	0	255	
