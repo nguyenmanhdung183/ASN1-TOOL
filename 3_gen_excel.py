@@ -1,223 +1,439 @@
 #!/usr/bin/env python3
 """
-parse_e2ap_to_excel_terminal.py
-Đọc O-RAN E2AP PDF → Tìm E2SetupRequest → In ra terminal 3 bảng Excel:
-- Primitives
-- Messages
-- Types
-→ KHÔNG GHI FILE → CHỈ IN RA CONSOLE
-→ ĐÚNG ĐỊNH DẠNG BẢNG + T_VALUE + ProtocolIE-Container
+parse_e2ap_asn1.py
+Extract ASN.1-like definitions from O-RAN E2AP PDF and build a multi-linked-list tree.
+Outputs JSON and prints a readable tree.
+
+PDF default: ./O-RAN_E2AP.WG3.TS.E2AP-R004-v07.00.pdf
 """
 
 import re
+import json
 import sys
-import pdfplumber
-from typing import Dict, List, Any, Optional
+import yaml
 
-PDF_PATH = "Tool_read_pdf/O-RAN_E2AP.WG3.TS.E2AP-R004-v07.00.pdf"
+
+
+import os
+import glob
+
+pdf_path = "./O-RAN_E2AP.WG3.TS.E2AP-R004-v07.00.pdf"
 TARGET_TYPE = "E2setupRequest"
 
-# ===================================================================
-# 1. ĐỌC PDF
-# ===================================================================
-def extract_text_from_pdf(path: str) -> str:
-    try:
-        with pdfplumber.open(path) as pdf:
-            return "\n".join(page.extract_text() or "" for page in pdf.pages)
-    except Exception as e:
-        print(f"Error reading PDF with pdfplumber: {e}")
-        sys.exit(1)
 
-# ===================================================================
-# 2. TÌM ASN.1 BLOCKS
-# ===================================================================
-def extract_asn1_blocks(text: str) -> Dict[str, Dict]:
+# ============================================================
+# PDF extraction
+# ============================================================
+
+def extract_text_from_pdf(path, output_txt_file=None):
+    try:
+        import pdfplumber
+        text_chunks = []
+        with pdfplumber.open(path) as pdf:
+            for p in pdf.pages:
+                t = p.extract_text()
+                if t:
+                    text_chunks.append(t)
+        full_text = "\n".join(text_chunks)
+
+    except Exception:
+        import PyPDF2
+        reader = PyPDF2.PdfReader(path)
+        text_chunks = []
+        for p in reader.pages:
+            t = p.extract_text()
+            if t:
+                text_chunks.append(t)
+        full_text = "\n".join(text_chunks)
+
+    # Cleanup OCR noise
+    full_text = full_text.replace("\u2026", "...")
+    full_text = re.sub(r"(?m)^\s*this\s*$", "", full_text, flags=re.IGNORECASE)
+
+    if output_txt_file:
+        with open(output_txt_file, "w", encoding="utf-8") as f:
+            f.write(full_text)
+
+    return full_text
+
+
+# ============================================================
+# Balanced brace finder
+# ============================================================
+
+def find_balanced_braces(text, start_pos):
+    assert text[start_pos] == "{"
+    depth = 0
+    i = start_pos
+    while i < len(text):
+        ch = text[i]
+        if ch == "{":
+            depth += 1
+        elif ch == "}":
+            depth -= 1
+            if depth == 0:
+                return i + 1, text[start_pos + 1:i]
+        i += 1
+    return None, None
+
+
+# ============================================================
+# Extract ASN.1 blocks
+# ============================================================
+
+def extract_asn1_blocks(full_text):
+    area = full_text
     blocks = {}
 
     # SEQUENCE / CHOICE / SET
-    for kind in ("SEQUENCE", "CHOICE", "SET"):
-        pattern = rf"([A-Za-z0-9'-]+)\s*::=\s*{kind}\s*\{{"
-        for m in re.finditer(pattern, text):
-            name = m.group(1)
-            start = m.end() - 1
-            end, content = find_balanced(text, start)
-            if end:
-                blocks[name] = {"kind": kind, "content": content.strip()}
+    for m in re.finditer(r"([A-Za-z0-9'\-]+)\s*::=\s*(SEQUENCE|CHOICE|SET)\s*\{", area):
+        name = m.group(1).strip()
+        kind = m.group(2).strip().upper()
+        brace_start = m.end() - 1
+        end_idx, content = find_balanced_braces(area, brace_start)
+        if end_idx:
+            blocks[name] = {"kind": kind, "content": content.strip()}
+        else:
+            blocks[name] = {"kind": kind, "content": ""}
 
-    # ProtocolIE-Container
-    for m in re.finditer(r"([A-Za-z0-9'-]+)IEs\s*::=\s*SEQUENCE\s*\(.*ProtocolIE-Container", text):
-        name = m.group(1) + "IEs"
-        blocks[name] = {"kind": "IE-CONTAINER", "content": ""}
+    # IE-LISTS
+    for m in re.finditer(r"([A-Za-z0-9'\-]+)\s+(?:E2AP-PROTOCOL-IES|PROTOCOL-IES|ProtocolIE-List|ProtocolIE-Container)\s*::=\s*\{",
+                         area, flags=re.IGNORECASE):
+        name = m.group(1).strip()
+        brace_start = m.end() - 1
+        end_idx, content = find_balanced_braces(area, brace_start)
+        if end_idx:
+            blocks[name] = {"kind": "IE-LIST", "content": content.strip()}
+        else:
+            blocks[name] = {"kind": "IE-LIST", "content": ""}
 
-    # ALIAS
-    for m in re.finditer(r"^([A-Za-z0-9'-]+)\s*::=\s*([^\n]+)", text, re.MULTILINE):
-        name, rhs = m.groups()
+    # ALIAS definitions
+    for m in re.finditer(r"^([A-Za-z0-9'\-]+)\s*::=\s*([A-Za-z0-9 \(\)\.\-,'<>]+)$",
+                         area, flags=re.MULTILINE):
+        name = m.group(1).strip()
+        rhs = m.group(2).strip()
         if name not in blocks:
-            blocks[name] = {"kind": "ALIAS", "content": rhs.strip()}
+            blocks[name] = {"kind": "ALIAS", "content": rhs}
 
     return blocks
 
-def find_balanced(text: str, start: int) -> tuple[Optional[int], str]:
-    assert text[start] == "{"
-    depth = 0
-    i = start
-    while i < len(text):
-        if text[i] == "{": depth += 1
-        elif text[i] == "}": 
-            depth -= 1
-            if depth == 0: return i + 1, text[start + 1:i]
-        i += 1
-    return None, ""
 
-# ===================================================================
-# 3. PARSE FIELDS
-# ===================================================================
-def parse_fields(content: str) -> List[tuple[str, str]]:
-    fields = []
-    parts = re.split(r",\s*(?=[a-zA-Z])", content.replace("\n", " "))
-    for part in parts:
-        part = part.strip()
-        if not part or part in {"...", ".."}: continue
-        m = re.match(r"([a-zA-Z0-9'-]+)\s+(.+)", part)
-        if m:
-            fields.append((m.group(1), m.group(2).split()[0]))
+# ============================================================
+# IE-LIST parser
+# ============================================================
+
+def parse_ie_list_content(content):
+    types = []
+    i = 0
+    while i < len(content):
+        if content[i] == "{":
+            end, inner = find_balanced_braces(content, i)
+            if not end:
+                break
+            m = re.search(r"\bTYPE\s+([A-Za-z0-9'\-]+)", inner)
+            if m:
+                types.append(m.group(1).strip())
+            i = end
         else:
-            fields.append((part.split()[0], "UNKNOWN"))
+            i += 1
+    return types
+
+
+# ============================================================
+# Field parsing (FIXED VERSION)
+# ============================================================
+
+ELLIPSIS = {"...", "..", ".", "…", "this", "THIS"}
+IDENT = re.compile(r"[A-Za-z0-9'\-]+")
+FIELD_LINE_RE = re.compile(r"^\s*([A-Za-z0-9'\-]+)\s+(.+)$")
+
+
+def split_fields_from_block(content):
+    s = content.replace("\n", " ").replace("\r", " ")
+    parts = []
+    current = []
+    depth_paren = 0
+    depth_brace = 0
+
+    for ch in s:
+        if ch == "(":
+            depth_paren += 1
+        elif ch == ")":
+            if depth_paren > 0:
+                depth_paren -= 1
+        elif ch == "{":
+            depth_brace += 1
+        elif ch == "}":
+            if depth_brace > 0:
+                depth_brace -= 1
+
+        if ch == "," and depth_paren == 0 and depth_brace == 0:
+            token = "".join(current).strip()
+            if token:
+                parts.append(token)
+            current = []
+        else:
+            current.append(ch)
+
+    last = "".join(current).strip()
+    if last:
+        parts.append(last)
+
+    return [p.strip() for p in parts if p.strip()]
+
+
+def parse_fields(content):
+    items = split_fields_from_block(content)
+    fields = []
+
+    for it in items:
+        s = it.strip()
+
+        # Case 0: Nếu dòng chỉ là "..." → bỏ
+        if s in ELLIPSIS:
+            continue
+
+        # Case 1: đúng dạng "name  type"
+        m = FIELD_LINE_RE.match(s)
+        if m:
+            fname = m.group(1).strip()
+            ftype = m.group(2).strip()
+
+            # loại bỏ OPTIONAL/PRESENCE nhưng KHÔNG đụng tới '...'
+            ftype = re.sub(
+                r"\bOPTIONAL\b|\bDEFAULT\b.*$|\bPRESENCE\b.*$|\bCONSTRAINED BY.*$",
+                "",
+                ftype,
+                flags=re.IGNORECASE
+            ).strip()
+
+            fields.append((fname, ftype))
+            continue
+
+        # Case 2: Nếu trong dòng có fieldName + "..." → vẫn phải giữ fieldName
+        tokens = IDENT.findall(s)
+        if len(tokens) >= 1 and "..." in s:
+            fields.append((tokens[0], None))   # giữ home-eNB-ID
+            continue
+
+        # Case 3: 1 token duy nhất → field không có type
+        if len(tokens) == 1:
+            fields.append((tokens[0], None))
+            continue
+
+        # Case 4: fallback
+        fields.append((None, s))
+
     return fields
 
-# ===================================================================
-# 4. BUILD TREE + COLLECT DATA
-# ===================================================================
+
+
+# ============================================================
+# Node + type classifier
+# ============================================================
+
 class Node:
-    def __init__(self, name: str, kind: str = "UNKNOWN", primitive: bool = False):
+    def __init__(self, name, kind="UNKNOWN", is_primitive=False):
         self.name = name
         self.kind = kind
-        self.primitive = primitive
-        self.children: List[Node] = []
+        self.children = []
+        self.is_primitive = is_primitive
 
-def build_tree(name: str, blocks: Dict, visited: set) -> Node:
-    if name in visited: return Node(name, "RECURSIVE")
-    visited.add(name)
+    def to_dict(self):
+        return {
+            "name": self.name,
+            "kind": self.kind,
+            "is_primitive": self.is_primitive,
+            "children": [c.to_dict() for c in self.children]
+        }
 
-    node = Node(name)
-    block = blocks.get(name, {})
 
-    if not block:
-        node.primitive = any(t in name.upper() for t in ["INTEGER", "OCTET", "ENUM", "PRINTABLE"])
-        node.kind = "PRIMITIVE" if node.primitive else "EXTERNAL"
+PRIMITIVE_TOKENS = ["INTEGER", "OCTET STRING", "BIT STRING", "BOOLEAN",
+                    "ENUMERATED", "NULL", "OBJECT IDENTIFIER", "UTF8String"]
+
+
+def is_primitive_type(v):
+    up = v.upper()
+    for t in PRIMITIVE_TOKENS:
+        if t in up:
+            return True
+    return False
+
+
+# ============================================================
+# Tree Builder (recursive)
+# ============================================================
+
+def build_type_tree(type_name, blocks, visited=None):
+    if visited is None:
+        visited = set()
+
+    node = Node(type_name)
+    if type_name in visited:
+        node.kind = "RECURSIVE"
         return node
 
-    kind = block["kind"]
+    visited.add(type_name)
+
+    entry = blocks.get(type_name)
+    if not entry:
+        if is_primitive_type(type_name):
+            node.kind = "PRIMITIVE"
+            node.is_primitive = True
+            return node
+
+        base = re.sub(r"\(.*\)", "", type_name).strip()
+        if base != type_name:
+            return build_type_tree(base, blocks, visited)
+
+        node.kind = "PRIMITIVE_OR_EXTERNAL"
+        node.is_primitive = True
+        return node
+
+    kind = entry["kind"]
+    content = entry.get("content", "")
     node.kind = kind
 
+    # -------------------------
+    # ALIAS
+    # -------------------------
     if kind == "ALIAS":
-        ref = block["content"].split()[0]
-        child = build_tree(ref, blocks, visited.copy())
+        rhs = content.strip()
+        if is_primitive_type(rhs):
+            node.kind = "PRIMITIVE"
+            node.is_primitive = True
+            return node
+        ref = rhs.split()[0]
+        child = build_type_tree(ref, blocks, visited.copy())
         node.children.append(child)
         return node
 
-    if kind in ("SEQUENCE", "CHOICE"):
-        content = block.get("content", "")
+    # -------------------------
+    # IE-LIST
+    # -------------------------
+    if kind == "IE-LIST":
+        types = parse_ie_list_content(content)
+        for t in types:
+            child = build_type_tree(t, blocks, visited.copy())
+            node.children.append(child)
+        return node
+
+    # -------------------------
+    # SEQUENCE / CHOICE / SET
+    # -------------------------
+    if kind in ("SEQUENCE", "CHOICE", "SET"):
         fields = parse_fields(content)
         for fname, ftype in fields:
-            child = build_tree(ftype, blocks, visited.copy())
-            child.name = fname  # override name
+            if ftype is None:
+                # No type → resolve by name if exists
+                if fname and fname in blocks:
+                    child = build_type_tree(fname, blocks, visited.copy())
+                else:
+                    child = Node(fname or "UNKNOWN", "UNKNOWN")
+                node.children.append(child)
+                continue
+
+            # detect SEQUENCE OF X or {{X}}
+            ref = None
+            m = re.search(r"\bSEQUENCE\s+OF\s+([A-Za-z0-9'\-]+)", ftype, flags=re.IGNORECASE)
+            if m:
+                ref = m.group(1)
+            else:
+                m = re.search(r"\{\s*\{\s*([A-Za-z0-9'\-]+)\s*\}\s*\}", ftype)
+                if m:
+                    ref = m.group(1)
+                else:
+                    m = re.search(r"\{\s*([A-Za-z0-9'\-]+)\s*\}", ftype)
+                    if m:
+                        ref = m.group(1)
+                    else:
+                        m = re.search(r"\bOF\b\s+([A-Za-z0-9'\-]+)", ftype)
+                        if m:
+                            ref = m.group(1)
+                        else:
+                            ref = ftype.split()[0]
+
+            ref = re.sub(r"[,\(\)]", "", ref).strip()
+
+            if is_primitive_type(ref) or is_primitive_type(ftype):
+                child = Node(fname or ref, "PRIMITIVE", True)
+            else:
+                child = build_type_tree(ref, blocks, visited.copy())
+                # Bạn yêu cầu: **KHÔNG đổi name → giữ type name 100%**
+                # if fname:
+                #     child.name = fname
+
             node.children.append(child)
 
+        return node
+
+    # -------------------------
+    # fallback
+    # -------------------------
+    node.kind = "UNKNOWN"
     return node
 
-# ===================================================================
-# 5. IN RA TERMINAL DƯỚI DẠNG BẢNG EXCEL
-# ===================================================================
-def print_excel_tables(tree: Node, target: str):
-    primitives = []
-    messages = []
-    types = []
 
-    def traverse(node: Node, parent_msg: str = None):
-        # Primitives
-        if node.primitive:
-            name = node.name.split()[0] if " " in node.name else node.name
-            asn_type = node.name
-            min_v = max_v = enum = ""
+# ============================================================
+# Print tree
+# ============================================================
 
-            if "INTEGER" in asn_type:
-                m = re.search(r"\((\d+)\.\.(\d+)", asn_type)
-                if m: min_v, max_v = m.groups()
-                asn_type = "INTEGER"
-            elif "ENUMERATED" in asn_type:
-                asn_type = "ENUMERATED"
-                if "Criticality" in name:
-                    enum = '[(0,"reject","reject"),(1,"ignore","ignore"),(2,"notify","notify")]'
-            elif "OCTET STRING" in asn_type:
-                asn_type = "OCTET STRING"
-            elif "PrintableString" in asn_type:
-                asn_type = "PrintableString"
+def pretty_print(node, indent=0):
+    pfx = " " * indent
+    print(f"{pfx}{node.name}")
+    for c in node.children:
+        pretty_print(c, indent + 4)
 
-            primitives.append([name, asn_type, min_v, max_v, enum])
-            return
 
-        # Messages + IE + T_VALUE
-        if node.kind == "SEQUENCE" and parent_msg is None:
-            parent_msg = node.name
+# ======================== YAML EXPORT ===========================
 
-        if parent_msg and node.kind != "SEQUENCE":
-            ie_type = node.name
-            field = ie_type[0].lower() + ie_type[1:]
-            if field.endswith("List"): field = field[:-4] + "s"
-            ie_id = f"ID_id_{ie_type}"
+# def to_yaml_dict(node):
+#     return {
+#         node.name: {
+#             "children": [to_yaml_dict(c) for c in node.children]
+#         }
+#     }
 
-            messages.append([parent_msg, ie_id, ie_type, field])
+def to_yaml_dict(node):
+    if not node.children:
+        return {node.name: {}}
+    return {
+        node.name: {
+            c.name: to_yaml_dict(c)[c.name] for c in node.children
+        }
+    }
 
-            # IE
-            types.append([parent_msg, "IE", parent_msg, ie_id, field, ie_type, "reject", "", ""])
 
-            # T_VALUE
-            types.append([f"{parent_msg}IEs", "T_VALUE", parent_msg, ie_id, field, ie_type, "reject", "", ""])
-
-        # CHOICE
-        if node.kind == "CHOICE":
-            tag = 1
-            for c in node.children:
-                types.append([node.name, "CHOICE", node.name, tag, c.name, c.name, "", "", ""])
-                tag += 1
-
-    traverse(tree, target)
-
-    # In bảng
-    def print_sheet(title: str, headers: List[str], rows: List[list]):
-        if not rows: return
-        print(f"\n{'='*100}")
-        print(f" SHEET: {title}")
-        print(f"{'='*100}")
-        widths = [max(len(str(r[i])) for r in rows + [headers]) for i in range(len(headers))]
-        print(" | ".join(f"{h:<{w}}" for h, w in zip(headers, widths)))
-        print("-" * sum(widths + [3]) * len(headers) // len(headers))
-        for row in rows:
-            print(" | ".join(f"{str(cell):<{w}}" for cell, w in zip(row, widths)))
-
-    print_sheet("Primitives", ["IE_Name", "ASN1_Type", "Min", "Max", "Enum_Items"], primitives)
-    print_sheet("Messages", ["Message_Name", "IE_ID_Constant", "IE_Type", "Field_Name"], messages)
-    print_sheet("Types", ["Type_Name", "ASN1_Type", "Parent_Type", "Tag/ID", "Field_Name", "IE_Type", "Criticality", "Optional", "Extensible"], types)
-
-# ===================================================================
+# ============================================================
 # MAIN
-# ===================================================================
-def main():
-    print(f"Reading PDF: {PDF_PATH}")
-    text = extract_text_from_pdf(PDF_PATH)
-    print("Extracting ASN.1 blocks...")
+# ============================================================
+
+def main(ppath, target):
+    print("Reading PDF text…")
+    #text = extract_text_from_pdf(ppath, "a.txt")
+    text = extract_text_from_pdf(ppath)
+    print("Extracting ASN.1 blocks…")
     blocks = extract_asn1_blocks(text)
     print(f"Found {len(blocks)} ASN.1 types.")
 
-    target = TARGET_TYPE
+    # case-insensitive resolve
     real_target = next((k for k in blocks if k.lower() == target.lower()), target)
-    print(f"Building tree for: {real_target}")
 
-    tree = build_tree(real_target, blocks, set())
-    print_excel_tables(tree, real_target)
+    print(f"Building tree for: {real_target}")
+    tree = build_type_tree(real_target, blocks)
+
+    print("\n--- TREE ---")
+    pretty_print(tree)
+
+
 
 if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        TARGET_TYPE = sys.argv[1]  # gán trực tiếp, không cần global
-    main()
+    tp = TARGET_TYPE
+    pp = pdf_path
+    if len(sys.argv) >= 2:
+        tp = sys.argv[1]
+    if len(sys.argv) >= 3:
+        pp = sys.argv[2]
+    main(pp, tp)
+
+

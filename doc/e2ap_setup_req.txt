@@ -1,0 +1,85 @@
+--- TREE ---
+E2setupRequest
+└── E2AP-PDU
+    └── initiatingMessage
+        └── E2setupRequest
+            └── protocolIEs
+                └── E2setupRequestIEs
+                    └── ProtocolIE-Field
+                        ├── id
+                        │   └── ID_id_TransactionID
+                        │       └── INTEGER (0..255)
+                        ├── criticality
+                        │   └── Criticality
+                        │       └── ENUMERATED {reject(0), ignore(1), notify(2)}
+                        └── value
+                            └── TransactionID
+                                └── INTEGER (0..255)
+                        ├── id
+                        │   └── ID_id_GlobalE2node-ID
+                        │       └── INTEGER (0..65535)
+                        ├── criticality
+                        │   └── Criticality
+                        │       └── ENUMERATED {reject(0), ignore(1), notify(2)}
+                        └── value
+                            └── GlobalE2node-ID
+                                └── CHOICE
+                                    └── gNB
+                                        └── GlobalGNB-ID
+                                            ├── plmn-ID
+                                            │   └── PLMN-Identity
+                                            │       └── OCTET STRING (SIZE(3))
+                                            └── gNB-ID
+                                                └── GNB-ID
+                                                    └── CHOICE
+                                                        └── gNB-ID-Bits28
+                                                            └── BIT STRING (SIZE(28))
+                        ├── id
+                        │   └── ID_id_RANfunctionsAdded
+                        │       └── INTEGER (0..65535)
+                        ├── criticality
+                        │   └── Criticality
+                        │       └── ENUMERATED {reject(0), ignore(1), notify(2)}
+                        └── value
+                            └── RANfunctionsAdded-List
+                                └── SEQUENCE OF RANfunctionItem
+                                    └── RANfunctionItem
+                                        ├── ranFunctionID
+                                        │   └── RANfunctionID
+                                        │       └── INTEGER (0..4095)
+                                        ├── ranFunctionDefinition
+                                        │   └── RANfunctionDefinition
+                                        │       └── OCTET STRING
+                                        ├── ranFunctionRevision
+                                        │   └── RANfunctionRevision
+                                        │       └── INTEGER (1..4294967295)
+                                        └── ranFunctionOID
+                                            └── RANfunctionOID
+                                                └── PrintableString (SIZE(1..1000))
+                        ├── id
+                        │   └── ID_id_E2nodeComponentConfigAddition
+                        │       └── INTEGER (0..65535)
+                        ├── criticality
+                        │   └── Criticality
+                        │       └── ENUMERATED {reject(0), ignore(1), notify(2)}
+                        └── value
+                            └── E2nodeComponentConfigAddition-List
+                                └── SEQUENCE OF E2nodeComponentConfigAdditionItem
+                                    └── E2nodeComponentConfigAdditionItem
+                                        ├── e2nodeComponentInterfaceType
+                                        │   └── E2nodeComponentInterfaceType
+                                        │       └── ENUMERATED {x2(0), f1(1), e1(2), s1(3), w1(4), xn(5), a1(6)}
+                                        ├── e2nodeComponentID
+                                        │   └── E2nodeComponentID
+                                        │       └── CHOICE
+                                        │           └── e2nodeComponentInterfaceTypeX2
+                                        │               └── E2nodeComponentInterfaceX2
+                                        │                   └── tNLAssociationList
+                                        │                       └── SEQUENCE OF TNLAssociationItem
+                                        └── e2nodeComponentConfiguration
+                                            └── E2nodeComponentConfiguration
+                                                └── CHOICE
+                                                    └── e2nodeComponentInterfaceTypeX2
+                                                        └── E2nodeComponentConfigurationX2
+                                                            └── tNLAssociationList
+                                                                └── SEQUENCE OF TNLAssociationItem

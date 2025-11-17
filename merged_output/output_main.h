@@ -62,9 +62,16 @@ EXTERN void asn1Free_e2ap_PLMN_Identity (OSCTXT* pctxt, e2ap_PLMN_Identity* pval
 /* File .h missing: e2ap_GNB_CU_UP_ID.h */
 /****************************************/
 
-/*************************************/
-/* File .h missing: e2ap_GNB_DU_ID.h */
-/*************************************/
+// --- Begin of e2ap_GNB_DU_ID.h ---
+/* e2ap_GNB_DU_ID.h */
+typedef OSUINT32 e2ap_GNB_DU_ID;
+
+EXTERN int asn1PE_e2ap_GNB_DU_ID (OSCTXT* pctxt, e2ap_GNB_DU_ID value);
+EXTERN int asn1PD_e2ap_GNB_DU_ID (OSCTXT* pctxt, e2ap_GNB_DU_ID* pvalue);
+EXTERN void asn1Print_e2ap_GNB_DU_ID (const char* name, const e2ap_GNB_DU_ID* pvalue);
+EXTERN int asn1PrtToStr_e2ap_GNB_DU_ID (const char* name, e2ap_GNB_DU_ID* pvalue, char* buffer, OSSIZE bufSize);
+EXTERN int asn1PrtToStrm_e2ap_GNB_DU_ID (OSCTXT* pctxt, const char* name, const e2ap_GNB_DU_ID* pvalue);
+// --- End of e2ap_GNB_DU_ID.h ---
 
 /***********************************************/
 /* File .h missing: e2ap_GlobalE2node_gNB_ID.h */

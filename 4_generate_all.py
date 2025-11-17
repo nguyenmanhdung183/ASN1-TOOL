@@ -18,6 +18,7 @@ os.makedirs("output", exist_ok=True)
 primitive_df = df.get("Primitives", pd.DataFrame())
 for _, row in primitive_df.iterrows():
     name = row["IE_Name"]
+    name = name.replace('-', '_')
     asn_type = row["ASN1_Type"]
     template_dir = "templates"
 
@@ -27,8 +28,10 @@ for _, row in primitive_df.iterrows():
         bits = 8
     elif maxv <= 65535:
         bits = 16
-    else:
+    elif maxv<= 4294967296:
         bits = 32
+    else:
+        bits = 64    
 
     # INTEGER có extension
     if "INTEGER" in asn_type and "..." in asn_type:
