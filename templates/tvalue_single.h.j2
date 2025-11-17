@@ -1,0 +1,11 @@
+/* e2ap_{{item_ies}}_T_VALUE.h */
+#ifndef _E2AP_{{item_ies|upper}}_T_VALUE_H_
+#define _E2AP_{{item_ies|upper}}_T_VALUE_H_
+
+#include "e2ap_{{item_type}}.h"
+
+typedef union e2ap_{{item_ies}}_T_VALUE {
+   e2ap_{{item_type}}* {{item_type[0].lower() + item_type[1:]}};
+} e2ap_{{item_ies}}_T_VALUE;
+
+#endif

@@ -34,10 +34,6 @@ EXTERN void asn1Free_e2ap_PLMN_Identity (OSCTXT* pctxt, e2ap_PLMN_Identity* pval
 #endif
 // --- End of e2ap_PLMN_Identity.h ---
 
-/**********************************/
-/* File .h missing: e2ap_gnb_ID.h */
-/**********************************/
-
 /*****************************************/
 /* File .h missing: e2ap_GNB_ID_Choice.h */
 /*****************************************/
@@ -45,10 +41,6 @@ EXTERN void asn1Free_e2ap_PLMN_Identity (OSCTXT* pctxt, e2ap_PLMN_Identity* pval
 /****************************************/
 /* File .h missing: e2ap_GlobalgNB_ID.h */
 /****************************************/
-
-/**********************************/
-/* File .h missing: e2ap_gNB_ID.h */
-/**********************************/
 
 /************************************/
 /* File .h missing: e2ap_ENGNB_ID.h */
@@ -100,9 +92,32 @@ EXTERN int asn1PrtToStrm_e2ap_GNB_DU_ID (OSCTXT* pctxt, const char* name, const 
 /* File .h missing: e2ap_enb_ID_longmacro.h */
 /********************************************/
 
-/*****************************************/
-/* File .h missing: e2ap_ENB_ID_Choice.h */
-/*****************************************/
+// --- Begin of e2ap_ENB_ID_Choice.h ---
+/* e2ap_ENB_ID_Choice.h */
+#ifndef _E2AP_ENB_ID_CHOICE_H_
+#define _E2AP_ENB_ID_CHOICE_H_
+
+#include "rtxsrc/rtxContext.h"
+#include "e2ap_BIT STRING.h"
+
+typedef struct e2ap_ENB_ID_Choice {
+   OSINT32 t;  /* choice tag */
+   union {
+      e2ap_BIT STRING* enb-ID-macro;
+      ASN1OpenType* extElem1;  /* extension */
+   } u;
+} e2ap_ENB_ID_Choice;
+
+EXTERN int asn1PE_e2ap_ENB_ID_Choice (OSCTXT* pctxt, e2ap_ENB_ID_Choice* pvalue);
+EXTERN int asn1PD_e2ap_ENB_ID_Choice (OSCTXT* pctxt, e2ap_ENB_ID_Choice* pvalue);
+EXTERN void asn1Print_e2ap_ENB_ID_Choice (const char* name, const e2ap_ENB_ID_Choice* pvalue);
+EXTERN int asn1PrtToStr_e2ap_ENB_ID_Choice (const char* name, e2ap_ENB_ID_Choice* pvalue, char* buffer, OSSIZE bufSize);
+EXTERN int asn1Copy_e2ap_ENB_ID_Choice (OSCTXT* pctxt, const e2ap_ENB_ID_Choice* pSrcValue, e2ap_ENB_ID_Choice* pDstValue);
+EXTERN int asn1Init_e2ap_ENB_ID_Choice (e2ap_ENB_ID_Choice* pvalue);
+EXTERN void asn1Free_e2ap_ENB_ID_Choice (OSCTXT* pctxt, e2ap_ENB_ID_Choice* pvalue);
+
+#endif
+// --- End of e2ap_ENB_ID_Choice.h ---
 
 /******************************************/
 /* File .h missing: e2ap_GlobalngeNB_ID.h */
@@ -111,10 +126,6 @@ EXTERN int asn1PrtToStrm_e2ap_GNB_DU_ID (OSCTXT* pctxt, const char* name, const 
 /****************************************/
 /* File .h missing: e2ap_macro_eNB_ID.h */
 /****************************************/
-
-/*****************************/
-/* File .h missing: e2ap_©.h */
-/*****************************/
 
 /**********************************************/
 /* File .h missing: e2ap_short_Macro_eNB_ID.h */
@@ -178,81 +189,176 @@ EXTERN void asn1Free_e2ap_GlobalE2node_ID (OSCTXT* pctxt, e2ap_GlobalE2node_ID* 
 #endif
 // --- End of e2ap_GlobalE2node_ID.h ---
 
+/*****************************************/
+/* File .h missing: e2ap_RANfunctionID.h */
+/*****************************************/
+
+// --- Begin of e2ap_RANfunctionDefinition.h ---
+/* e2ap_RANfunctionDefinition.h */
+#ifndef _E2AP_RANFUNCTIONDEFINITION_H_
+#define _E2AP_RANFUNCTIONDEFINITION_H_
+
+#include "rtxsrc/rtxContext.h"
+#include "rtxsrc/rtxDList.h"
+
+typedef OSDynOctStr e2ap_RANfunctionDefinition;
+
+EXTERN int asn1PE_e2ap_RANfunctionDefinition (OSCTXT* pctxt, e2ap_RANfunctionDefinition* pvalue);
+EXTERN int asn1PD_e2ap_RANfunctionDefinition (OSCTXT* pctxt, e2ap_RANfunctionDefinition** ppvalue);
+EXTERN void asn1Print_e2ap_RANfunctionDefinition (const char* name, const e2ap_RANfunctionDefinition* pvalue);
+EXTERN int asn1PrtToStr_e2ap_RANfunctionDefinition (const char* name, e2ap_RANfunctionDefinition* pvalue, char* buffer, OSSIZE bufSize);
+EXTERN int asn1PrtToStrm_e2ap_RANfunctionDefinition (OSCTXT* pctxt, const char* name, const e2ap_RANfunctionDefinition* pvalue);
+EXTERN int asn1Copy_e2ap_RANfunctionDefinition (OSCTXT* pctxt, const e2ap_RANfunctionDefinition* pSrcValue, e2ap_RANfunctionDefinition* pDstValue);
+EXTERN int asn1Init_e2ap_RANfunctionDefinition (e2ap_RANfunctionDefinition* pvalue);
+EXTERN void asn1Free_e2ap_RANfunctionDefinition (OSCTXT* pctxt, e2ap_RANfunctionDefinition* pvalue);
+
+#endif
+// --- End of e2ap_RANfunctionDefinition.h ---
+
+/***********************************************/
+/* File .h missing: e2ap_RANfunctionRevision.h */
+/***********************************************/
+
+/*******************************************/
+/* File .h missing: e2ap_PrintableString.h */
+/*******************************************/
+
+// --- Begin of e2ap_RANfunctionOID.h ---
+/* e2ap_RANfunctionOID.h */
+#ifndef _E2AP_RANFUNCTIONOID_H_
+#define _E2AP_RANFUNCTIONOID_H_
+
+#include "rtxsrc/rtxContext.h"
+
+typedef const char* e2ap_RANfunctionOID;
+
+EXTERN int asn1PE_e2ap_RANfunctionOID (OSCTXT* pctxt, e2ap_RANfunctionOID value);
+EXTERN int asn1PD_e2ap_RANfunctionOID (OSCTXT* pctxt, e2ap_RANfunctionOID* ppvalue);
+EXTERN void asn1Print_e2ap_RANfunctionOID (const char* name, e2ap_RANfunctionOID pvalue);
+EXTERN int asn1PrtToStr_e2ap_RANfunctionOID (const char* name, e2ap_RANfunctionOID pvalue, char* buffer, OSSIZE bufSize);
+EXTERN int asn1PrtToStrm_e2ap_RANfunctionOID (OSCTXT* pctxt, const char* name, e2ap_RANfunctionOID pvalue);
+EXTERN int asn1Copy_e2ap_RANfunctionOID (OSCTXT* pctxt, e2ap_RANfunctionOID pSrcValue, e2ap_RANfunctionOID* ppDstValue);
+EXTERN void asn1Free_e2ap_RANfunctionOID (OSCTXT* pctxt, e2ap_RANfunctionOID pvalue);
+
+#endif
+// --- End of e2ap_RANfunctionOID.h ---
+
+/********************************************/
+/* File .h missing: e2ap_RANfunction_Item.h */
+/********************************************/
+
+/***********************************************/
+/* File .h missing: e2ap_RANfunction_ItemIEs.h */
+/***********************************************/
+
 /*********************************************/
 /* File .h missing: e2ap_RANfunctions_List.h */
 /*********************************************/
 
-/************************************/
-/* File .h missing: e2ap_SEQUENCE.h */
-/************************************/
+/********************************************************/
+/* File .h missing: e2ap_E2nodeComponentInterfaceType.h */
+/********************************************************/
+
+/***********************************/
+/* File .h missing: e2ap_AMFName.h */
+/***********************************/
+
+/******************************************************/
+/* File .h missing: e2ap_E2nodeComponentInterfaceNG.h */
+/******************************************************/
+
+/***********************************************/
+/* File .h missing: e2ap_GlobalNG_RANNode_ID.h */
+/***********************************************/
+
+/******************************************************/
+/* File .h missing: e2ap_E2nodeComponentInterfaceXn.h */
+/******************************************************/
+
+/******************************************************/
+/* File .h missing: e2ap_E2nodeComponentInterfaceE1.h */
+/******************************************************/
+
+/******************************************************/
+/* File .h missing: e2ap_E2nodeComponentInterfaceF1.h */
+/******************************************************/
+
+/******************************************************/
+/* File .h missing: e2ap_E2nodeComponentInterfaceW1.h */
+/******************************************************/
+
+/***********************************/
+/* File .h missing: e2ap_MMEname.h */
+/***********************************/
+
+/******************************************************/
+/* File .h missing: e2ap_E2nodeComponentInterfaceS1.h */
+/******************************************************/
+
+/******************************************************/
+/* File .h missing: e2ap_E2nodeComponentInterfaceX2.h */
+/******************************************************/
+
+/*********************************************/
+/* File .h missing: e2ap_E2nodeComponentID.h */
+/*********************************************/
+
+/******************************************************/
+/* File .h missing: e2ap_e2nodeComponentRequestPart.h */
+/******************************************************/
+
+/*******************************************************/
+/* File .h missing: e2ap_e2nodeComponentResponsePart.h */
+/*******************************************************/
+
+/********************************************************/
+/* File .h missing: e2ap_E2nodeComponentConfiguration.h */
+/********************************************************/
+
+// --- Begin of e2ap_E2nodeComponentConfigAddition_Item.h ---
+#ifndef _E2AP_E2NODECOMPONENTCONFIGADDITION_ITEM_H_
+#define _E2AP_E2NODECOMPONENTCONFIGADDITION_ITEM_H_
+
+#include "rtxsrc/rtxContext.h"
+
+typedef struct e2ap_E2nodeComponentConfigAddition_Item {
+} e2ap_E2nodeComponentConfigAddition_Item;
+
+EXTERN int asn1PE_e2ap_E2nodeComponentConfigAddition_Item (OSCTXT* pctxt, e2ap_E2nodeComponentConfigAddition_Item* pvalue);
+EXTERN int asn1PD_e2ap_E2nodeComponentConfigAddition_Item (OSCTXT* pctxt, e2ap_E2nodeComponentConfigAddition_Item* pvalue);
+EXTERN void asn1Init_e2ap_E2nodeComponentConfigAddition_Item (e2ap_E2nodeComponentConfigAddition_Item* pvalue);
+EXTERN void asn1Free_e2ap_E2nodeComponentConfigAddition_Item (OSCTXT* pctxt, e2ap_E2nodeComponentConfigAddition_Item* pvalue);
+EXTERN void asn1Print_e2ap_E2nodeComponentConfigAddition_Item (const char* name, const e2ap_E2nodeComponentConfigAddition_Item* pvalue);
+
+#endif
+// --- End of e2ap_E2nodeComponentConfigAddition_Item.h ---
+
+/*****************************************************************/
+/* File .h missing: e2ap_E2nodeComponentConfigAddition_ItemIEs.h */
+/*****************************************************************/
 
 /**************************************************************/
 /* File .h missing: e2ap_E2nodeComponentConfigAddition_List.h */
 /**************************************************************/
 
-// --- Begin of e2ap_E2setupRequestIEs.h ---
-/* e2ap_E2SetupRequestIEs.h */
-#ifndef _E2AP_E2SETUPREQUESTIES_H_
-#define _E2AP_E2SETUPREQUESTIES_H_
-
-#include "rtxsrc/rtxDList.h"
-#include "e2ap_ProtocolIE_ID.h"
-#include "e2ap_Criticality.h"
-#include "e2ap_E2SetupRequestIEs_T_VALUE.h"
-
-typedef struct e2ap_E2SetupRequestIEs_Element {
-   e2ap_ProtocolIE_ID_t id;
-   e2ap_Criticality_t criticality;
-   e2ap_E2SetupRequestIEs_T_VALUE value;
-} e2ap_E2SetupRequestIEs_Element;
-
-typedef struct e2ap_E2SetupRequestIEs {
-   OSRTDList elem;  /* list of e2ap_E2SetupRequestIEs_Element */
-} e2ap_E2SetupRequestIEs;
-
-#endif
-// --- End of e2ap_E2setupRequestIEs.h ---
+/*********************************************/
+/* File .h missing: e2ap_E2setupRequestIEs.h */
+/*********************************************/
 
 // --- Begin of e2ap_E2setupRequest.h ---
-/* e2ap_E2SetupRequest.h */
 #ifndef _E2AP_E2SETUPREQUEST_H_
 #define _E2AP_E2SETUPREQUEST_H_
 
-#include "e2ap_E2nodeComponentConfigAddition_List.h"
-#include "e2ap_GlobalE2node_ID.h"
-#include "e2ap_RANfunctions_List.h"
-#include "e2ap_TransactionID.h"
+#include "rtxsrc/rtxContext.h"
 
-/* T_VALUE Union */
-typedef union e2ap_E2SetupRequestIEs_T_VALUE {
-   T_E2AP_PDU_Contents_e2ap__transactionID;
-   T_E2AP_PDU_Contents_e2ap__globalE2node_ID;
-   T_E2AP_PDU_Contents_e2ap__rANfunctionsAdded;
-   T_E2AP_PDU_Contents_e2ap__e2nodeComponentConfigAddition;
-} e2ap_E2SetupRequestIEs_TVALUE;
-
-/* IE Struct */
-typedef struct e2ap_E2SetupRequestIEs {
-   e2ap_ProtocolIE_ID id;
-   e2ap_Criticality criticality;
-   e2ap_E2SetupRequestIEs_T_VALUE value;
-} e2ap_E2SetupRequestIEs;
-
-/* Container */
-typedef struct e2ap_E2SetupRequest_protocolIEs_Container {
-   e2ap_E2SetupRequestIEs* elem;
-   OSUINT16 n;
-} e2ap_E2SetupRequest_protocolIEs_Container;
-
-/* Message */
 typedef struct e2ap_E2SetupRequest {
-   e2ap_E2SetupRequest_protocolIEs_Container protocolIEs;
 } e2ap_E2SetupRequest;
 
 EXTERN int asn1PE_e2ap_E2SetupRequest (OSCTXT* pctxt, e2ap_E2SetupRequest* pvalue);
 EXTERN int asn1PD_e2ap_E2SetupRequest (OSCTXT* pctxt, e2ap_E2SetupRequest* pvalue);
-EXTERN int asn1Init_e2ap_E2SetupRequest (e2ap_E2SetupRequest* pvalue);
+EXTERN void asn1Init_e2ap_E2SetupRequest (e2ap_E2SetupRequest* pvalue);
 EXTERN void asn1Free_e2ap_E2SetupRequest (OSCTXT* pctxt, e2ap_E2SetupRequest* pvalue);
+EXTERN void asn1Print_e2ap_E2SetupRequest (const char* name, const e2ap_E2SetupRequest* pvalue);
 
 #endif
 // --- End of e2ap_E2setupRequest.h ---

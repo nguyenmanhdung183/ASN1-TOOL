@@ -39,14 +39,7 @@
                       "name": "GNB-ID-Choice",
                       "kind": "CHOICE",
                       "is_primitive": false,
-                      "children": [
-                        {
-                          "name": "gnb-ID",
-                          "kind": "PRIMITIVE",
-                          "is_primitive": true,
-                          "children": []
-                        }
-                      ]
+                      "children": []
                     }
                   ]
                 },
@@ -65,14 +58,7 @@
                       "name": "ENGNB-ID",
                       "kind": "CHOICE",
                       "is_primitive": false,
-                      "children": [
-                        {
-                          "name": "gNB-ID",
-                          "kind": "PRIMITIVE",
-                          "is_primitive": true,
-                          "children": []
-                        }
-                      ]
+                      "children": []
                     }
                   ]
                 },
@@ -110,14 +96,7 @@
                       "name": "ENGNB-ID",
                       "kind": "CHOICE",
                       "is_primitive": false,
-                      "children": [
-                        {
-                          "name": "gNB-ID",
-                          "kind": "PRIMITIVE",
-                          "is_primitive": true,
-                          "children": []
-                        }
-                      ]
+                      "children": []
                     }
                   ]
                 },
@@ -201,12 +180,6 @@
                           "children": []
                         },
                         {
-                          "name": "©",
-                          "kind": "PRIMITIVE",
-                          "is_primitive": true,
-                          "children": []
-                        },
-                        {
                           "name": "short-Macro-eNB-ID",
                           "kind": "PRIMITIVE",
                           "is_primitive": true,
@@ -258,12 +231,6 @@
                           "children": []
                         },
                         {
-                          "name": "©",
-                          "kind": "PRIMITIVE",
-                          "is_primitive": true,
-                          "children": []
-                        },
-                        {
                           "name": "short-Macro-eNB-ID",
                           "kind": "PRIMITIVE",
                           "is_primitive": true,
@@ -285,20 +252,320 @@
         },
         {
           "name": "RANfunctions-List",
-          "kind": "PRIMITIVE_OR_EXTERNAL",
-          "is_primitive": true,
-          "children": []
-        },
-        {
-          "name": "E2nodeComponentConfigAddition-List",
-          "kind": "ALIAS",
+          "kind": "SEQUENCE-OF-SINGLECONTAINER",
           "is_primitive": false,
           "children": [
             {
-              "name": "SEQUENCE",
-              "kind": "PRIMITIVE_OR_EXTERNAL",
-              "is_primitive": true,
-              "children": []
+              "name": "RANfunction-ItemIEs",
+              "kind": "IE-LIST",
+              "is_primitive": false,
+              "children": [
+                {
+                  "name": "RANfunction-Item",
+                  "kind": "SEQUENCE",
+                  "is_primitive": false,
+                  "children": [
+                    {
+                      "name": "RANfunctionID",
+                      "kind": "PRIMITIVE",
+                      "is_primitive": true,
+                      "children": []
+                    },
+                    {
+                      "name": "RANfunctionDefinition",
+                      "kind": "PRIMITIVE",
+                      "is_primitive": true,
+                      "children": []
+                    },
+                    {
+                      "name": "RANfunctionRevision",
+                      "kind": "PRIMITIVE",
+                      "is_primitive": true,
+                      "children": []
+                    },
+                    {
+                      "name": "RANfunctionOID",
+                      "kind": "ALIAS",
+                      "is_primitive": false,
+                      "children": [
+                        {
+                          "name": "PrintableString",
+                          "kind": "PRIMITIVE_OR_EXTERNAL",
+                          "is_primitive": true,
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "E2nodeComponentConfigAddition-List",
+          "kind": "SEQUENCE-OF-SINGLECONTAINER",
+          "is_primitive": false,
+          "children": [
+            {
+              "name": "E2nodeComponentConfigAddition-ItemIEs",
+              "kind": "IE-LIST",
+              "is_primitive": false,
+              "children": [
+                {
+                  "name": "E2nodeComponentConfigAddition-Item",
+                  "kind": "SEQUENCE",
+                  "is_primitive": false,
+                  "children": [
+                    {
+                      "name": "E2nodeComponentInterfaceType",
+                      "kind": "PRIMITIVE_OR_EXTERNAL",
+                      "is_primitive": true,
+                      "children": []
+                    },
+                    {
+                      "name": "E2nodeComponentID",
+                      "kind": "CHOICE",
+                      "is_primitive": false,
+                      "children": [
+                        {
+                          "name": "E2nodeComponentInterfaceNG",
+                          "kind": "SEQUENCE",
+                          "is_primitive": false,
+                          "children": [
+                            {
+                              "name": "AMFName",
+                              "kind": "ALIAS",
+                              "is_primitive": false,
+                              "children": [
+                                {
+                                  "name": "PrintableString",
+                                  "kind": "PRIMITIVE_OR_EXTERNAL",
+                                  "is_primitive": true,
+                                  "children": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "E2nodeComponentInterfaceXn",
+                          "kind": "SEQUENCE",
+                          "is_primitive": false,
+                          "children": [
+                            {
+                              "name": "GlobalNG-RANNode-ID",
+                              "kind": "CHOICE",
+                              "is_primitive": false,
+                              "children": [
+                                {
+                                  "name": "GlobalgNB-ID",
+                                  "kind": "SEQUENCE",
+                                  "is_primitive": false,
+                                  "children": [
+                                    {
+                                      "name": "PLMN-Identity",
+                                      "kind": "PRIMITIVE",
+                                      "is_primitive": true,
+                                      "children": []
+                                    },
+                                    {
+                                      "name": "GNB-ID-Choice",
+                                      "kind": "CHOICE",
+                                      "is_primitive": false,
+                                      "children": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "GlobalngeNB-ID",
+                                  "kind": "SEQUENCE",
+                                  "is_primitive": false,
+                                  "children": [
+                                    {
+                                      "name": "PLMN-Identity",
+                                      "kind": "PRIMITIVE",
+                                      "is_primitive": true,
+                                      "children": []
+                                    },
+                                    {
+                                      "name": "ENB-ID-Choice",
+                                      "kind": "CHOICE",
+                                      "is_primitive": false,
+                                      "children": [
+                                        {
+                                          "name": "enb-ID-macro",
+                                          "kind": "PRIMITIVE",
+                                          "is_primitive": true,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "enb-ID-shortmacro",
+                                          "kind": "PRIMITIVE",
+                                          "is_primitive": true,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "enb-ID-longmacro",
+                                          "kind": "PRIMITIVE",
+                                          "is_primitive": true,
+                                          "children": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "E2nodeComponentInterfaceE1",
+                          "kind": "SEQUENCE",
+                          "is_primitive": false,
+                          "children": [
+                            {
+                              "name": "GNB-CU-UP-ID",
+                              "kind": "PRIMITIVE",
+                              "is_primitive": true,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "E2nodeComponentInterfaceF1",
+                          "kind": "SEQUENCE",
+                          "is_primitive": false,
+                          "children": [
+                            {
+                              "name": "GNB-DU-ID",
+                              "kind": "PRIMITIVE",
+                              "is_primitive": true,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "E2nodeComponentInterfaceW1",
+                          "kind": "SEQUENCE",
+                          "is_primitive": false,
+                          "children": [
+                            {
+                              "name": "NGENB-DU-ID",
+                              "kind": "PRIMITIVE",
+                              "is_primitive": true,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "E2nodeComponentInterfaceS1",
+                          "kind": "SEQUENCE",
+                          "is_primitive": false,
+                          "children": [
+                            {
+                              "name": "MMEname",
+                              "kind": "ALIAS",
+                              "is_primitive": false,
+                              "children": [
+                                {
+                                  "name": "PrintableString",
+                                  "kind": "PRIMITIVE_OR_EXTERNAL",
+                                  "is_primitive": true,
+                                  "children": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "name": "E2nodeComponentInterfaceX2",
+                          "kind": "SEQUENCE",
+                          "is_primitive": false,
+                          "children": [
+                            {
+                              "name": "GlobalENB-ID",
+                              "kind": "SEQUENCE",
+                              "is_primitive": false,
+                              "children": [
+                                {
+                                  "name": "PLMN-Identity",
+                                  "kind": "PRIMITIVE",
+                                  "is_primitive": true,
+                                  "children": []
+                                },
+                                {
+                                  "name": "ENB-ID",
+                                  "kind": "CHOICE",
+                                  "is_primitive": false,
+                                  "children": [
+                                    {
+                                      "name": "macro-eNB-ID",
+                                      "kind": "PRIMITIVE",
+                                      "is_primitive": true,
+                                      "children": []
+                                    },
+                                    {
+                                      "name": "short-Macro-eNB-ID",
+                                      "kind": "PRIMITIVE",
+                                      "is_primitive": true,
+                                      "children": []
+                                    },
+                                    {
+                                      "name": "long-Macro-eNB-ID",
+                                      "kind": "PRIMITIVE",
+                                      "is_primitive": true,
+                                      "children": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "name": "GlobalenGNB-ID",
+                              "kind": "SEQUENCE",
+                              "is_primitive": false,
+                              "children": [
+                                {
+                                  "name": "PLMN-Identity",
+                                  "kind": "PRIMITIVE",
+                                  "is_primitive": true,
+                                  "children": []
+                                },
+                                {
+                                  "name": "ENGNB-ID",
+                                  "kind": "CHOICE",
+                                  "is_primitive": false,
+                                  "children": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "E2nodeComponentConfiguration",
+                      "kind": "SEQUENCE",
+                      "is_primitive": false,
+                      "children": [
+                        {
+                          "name": "e2nodeComponentRequestPart",
+                          "kind": "PRIMITIVE",
+                          "is_primitive": true,
+                          "children": []
+                        },
+                        {
+                          "name": "e2nodeComponentResponsePart",
+                          "kind": "PRIMITIVE",
+                          "is_primitive": true,
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }

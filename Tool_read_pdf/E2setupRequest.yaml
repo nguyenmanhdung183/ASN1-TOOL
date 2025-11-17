@@ -5,19 +5,16 @@ E2setupRequest:
       GlobalE2node-gNB-ID:
         GlobalgNB-ID:
           PLMN-Identity: {}
-          GNB-ID-Choice:
-            gnb-ID: {}
+          GNB-ID-Choice: {}
         GlobalenGNB-ID:
           PLMN-Identity: {}
-          ENGNB-ID:
-            gNB-ID: {}
+          ENGNB-ID: {}
         GNB-CU-UP-ID: {}
         GNB-DU-ID: {}
       GlobalE2node-en-gNB-ID:
         GlobalenGNB-ID:
           PLMN-Identity: {}
-          ENGNB-ID:
-            gNB-ID: {}
+          ENGNB-ID: {}
         GNB-CU-UP-ID: {}
         GNB-DU-ID: {}
       GlobalE2node-ng-eNB-ID:
@@ -31,7 +28,6 @@ E2setupRequest:
           PLMN-Identity: {}
           ENB-ID:
             macro-eNB-ID: {}
-            ©: {}
             short-Macro-eNB-ID: {}
             long-Macro-eNB-ID: {}
         NGENB-DU-ID: {}
@@ -40,9 +36,54 @@ E2setupRequest:
           PLMN-Identity: {}
           ENB-ID:
             macro-eNB-ID: {}
-            ©: {}
             short-Macro-eNB-ID: {}
             long-Macro-eNB-ID: {}
-    RANfunctions-List: {}
+    RANfunctions-List:
+      RANfunction-ItemIEs:
+        RANfunction-Item:
+          RANfunctionID: {}
+          RANfunctionDefinition: {}
+          RANfunctionRevision: {}
+          RANfunctionOID:
+            PrintableString: {}
     E2nodeComponentConfigAddition-List:
-      SEQUENCE: {}
+      E2nodeComponentConfigAddition-ItemIEs:
+        E2nodeComponentConfigAddition-Item:
+          E2nodeComponentInterfaceType: {}
+          E2nodeComponentID:
+            E2nodeComponentInterfaceNG:
+              AMFName:
+                PrintableString: {}
+            E2nodeComponentInterfaceXn:
+              GlobalNG-RANNode-ID:
+                GlobalgNB-ID:
+                  PLMN-Identity: {}
+                  GNB-ID-Choice: {}
+                GlobalngeNB-ID:
+                  PLMN-Identity: {}
+                  ENB-ID-Choice:
+                    enb-ID-macro: {}
+                    enb-ID-shortmacro: {}
+                    enb-ID-longmacro: {}
+            E2nodeComponentInterfaceE1:
+              GNB-CU-UP-ID: {}
+            E2nodeComponentInterfaceF1:
+              GNB-DU-ID: {}
+            E2nodeComponentInterfaceW1:
+              NGENB-DU-ID: {}
+            E2nodeComponentInterfaceS1:
+              MMEname:
+                PrintableString: {}
+            E2nodeComponentInterfaceX2:
+              GlobalENB-ID:
+                PLMN-Identity: {}
+                ENB-ID:
+                  macro-eNB-ID: {}
+                  short-Macro-eNB-ID: {}
+                  long-Macro-eNB-ID: {}
+              GlobalenGNB-ID:
+                PLMN-Identity: {}
+                ENGNB-ID: {}
+          E2nodeComponentConfiguration:
+            e2nodeComponentRequestPart: {}
+            e2nodeComponentResponsePart: {}

@@ -1,26 +1,37 @@
 # generate_all.py
 import pandas as pd
-from jinja2 import Template, Environment, FileSystemLoader
+from jinja2 import Environment, FileSystemLoader
 import os
+import re
 
 # Cấu hình Jinja2
 env = Environment(loader=FileSystemLoader("templates"), trim_blocks=True, lstrip_blocks=True)
 
 # Đọc Excel
-df = pd.read_excel("data_e2setup.xlsx", sheet_name=None)  # Đọc tất cả sheet
+df = pd.read_excel("data_e2setup.xlsx", sheet_name=None)
 
 # Tạo thư mục output
 os.makedirs("output", exist_ok=True)
 
+# Danh sách các file đã sinh (để tránh ghi đè)
+generated_files = set()
+
+def safe_write(path, content):
+    if path in generated_files:
+        print(f"Skip (already generated): {path}")
+        return
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(content)
+    generated_files.add(path)
+    print(f"Generated: {path}")
+
 # =============================
-# 1. SINH CÁC IE PRIMITIVE (INTEGER, ENUM, OCTET...)
+# 1. SINH CÁC IE PRIMITIVE
 # =============================
 primitive_df = df.get("Primitives", pd.DataFrame())
 for _, row in primitive_df.iterrows():
-    name = row["IE_Name"]
-    name = name.replace('-', '_')
+    name = row["IE_Name"].replace('-', '_')
     asn_type = row["ASN1_Type"]
-    template_dir = "templates"
 
     # Xác định số bits
     maxv = row["Max"] if pd.notna(row["Max"]) else 0
@@ -28,10 +39,10 @@ for _, row in primitive_df.iterrows():
         bits = 8
     elif maxv <= 65535:
         bits = 16
-    elif maxv<= 4294967296:
+    elif maxv <= 4294967295:
         bits = 32
     else:
-        bits = 64    
+        bits = 64
 
     # INTEGER có extension
     if "INTEGER" in asn_type and "..." in asn_type:
@@ -61,254 +72,198 @@ for _, row in primitive_df.iterrows():
         items = eval(row["Enum_Items"])
         h_tmpl = env.get_template("enumerated.h.j2")
         c_tmpl = env.get_template("enumerated.c.j2")
-        data = {
-            "name": name,
-            #"items": [{"value": v, "name": n, "string": s, "transidx": t} for v, n, s, t in items]
-            "items": [{"value": v, "name": n, "string": s} for v, n, s in items]
-        }
+        data = {"name": name, "items": [{"value": v, "name": n, "string": s} for v, n, s in items]}
 
-    # OCTET STRING (SIZE(n))
+    # OCTET STRING
     elif "OCTET STRING" in asn_type:
-        import re
         match = re.search(r"SIZE\((\d+)\)", asn_type)
         if match:
-            # Fixed size
             size = int(match.group(1))
             h_tmpl = env.get_template("octet_string.h.j2")
             c_tmpl = env.get_template("octet_string.c.j2")
-            data = {
-                "name": name,
-                "is_dynamic": False,
-                "size": size
-            }
+            data = {"name": name, "is_dynamic": False, "size": size}
         else:
-            # Dynamic (no SIZE)
             h_tmpl = env.get_template("octet_string.h.j2")
             c_tmpl = env.get_template("octet_string.c.j2")
-            data = {
-                "name": name,
-                "is_dynamic": True
-            }
-    #PRINTABLE STRING        
+            data = {"name": name, "is_dynamic": True}
+
+    # PrintableString
     elif "PrintableString" in asn_type:
-        import re
         match = re.search(r"SIZE\((\d+)\.\.(\d+),?\s*\.\.\.\)", asn_type)
         if match:
-            min_size = int(match.group(1))
-            max_size = int(match.group(2))
+            min_size, max_size = int(match.group(1)), int(match.group(2))
             h_tmpl = env.get_template("printable_string.h.j2")
             c_tmpl = env.get_template("printable_string.c.j2")
-            data = {
-                "name": name,
-                "has_constraint": True,
-                "min_size": min_size,
-                "max_size": max_size
-            }
+            data = {"name": name, "has_constraint": True, "min_size": min_size, "max_size": max_size}
         else:
             h_tmpl = env.get_template("printable_string.h.j2")
             c_tmpl = env.get_template("printable_string.c.j2")
-            data = {
-                "name": name,
-                "has_constraint": False
-            }
+            data = {"name": name, "has_constraint": False}
 
     else:
         print(f"Skip primitive: {name}")
         continue
 
-    # Ghi file
-    with open(f"output/e2ap_{name}.h", "w", encoding="utf-8") as f:
-        f.write(h_tmpl.render(data))
-    with open(f"output/e2ap_{name}.c", "w", encoding="utf-8") as f:
-        f.write(c_tmpl.render(data))
-    print(f"Generated primitive: e2ap_{name}.h/c")
-
-
-
-
+    safe_write(f"output/e2ap_{name}.h", h_tmpl.render(data))
+    safe_write(f"output/e2ap_{name}.c", c_tmpl.render(data))
 
 # =============================
-# 2. SINH BẢN TIN LỚN (E2SetupRequest)
-# =============================
-message_df = df.get("Messages", pd.DataFrame())
-if not message_df.empty:
-    for message_name, group in message_df.groupby("Message_Name"):
-        ies = []
-        includes = set()
-        for _, row in group.iterrows():
-            ie_type = row["IE_Type"]
-            field_name = row["Field_Name"]
-            ie_id = row["IE_ID_Constant"]
-            includes.add(f"e2ap_{ie_type}")
-            ies.append({
-                "ie_type": ie_type,
-                "field": field_name,
-                "ie_id_constant": ie_id
-            })
-
-        data = {
-            "message_name": message_name,
-            "ies": ies,
-            "includes": sorted(includes)
-        }
-
-        # Sinh .h (gộp T_VALUE + IE + Container + Message)
-        h_tmpl = env.get_template("message.h.j2")
-        with open(f"output/e2ap_{message_name}.h", "w", encoding="utf-8") as f:
-            f.write(h_tmpl.render(data))
-
-        # Sinh .c (PE/PD + switch case)
-        c_tmpl = env.get_template("message.c.j2")
-        with open(f"output/e2ap_{message_name}.c", "w", encoding="utf-8") as f:
-            f.write(c_tmpl.render(data))
-
-        print(f"Generated message: e2ap_{message_name}.h/c")
-# =============================
-# 3. SINH T_VALUE UNION + ProtocolIE-Container
+# 2. SINH CHOICE
 # =============================
 types_df = df.get("Types", pd.DataFrame())
-if not types_df.empty:
-    # Gom nhóm theo Parent_Type (ví dụ: E2SetupRequest)
-    for parent_type, group in types_df.groupby("Parent_Type"):
-        # 1. Sinh T_VALUE union
-        fields = []
-        includes = set()
-        for _, row in group.iterrows():
-            field_name = row["Field_Name"]
-            ie_type = row["IE_Type"]
-            includes.add(f"e2ap_{ie_type}")
-            fields.append({"field": field_name, "ie_type": ie_type})
+choice_groups = types_df[types_df["ASN1_Type"] == "CHOICE"].groupby("Type_Name")
+for choice_name, group in choice_groups:
+    choice_name = choice_name.replace('-', '_')
+    choices, includes = [], set()
+    for _, row in group.iterrows():
+        if pd.isna(row["Field_Name"]): continue
+        tag = row["Tag/ID"]
+        field = row["Field_Name"]
+        ctype = row["IE_Type"]
+        includes.add(f"e2ap_{ctype}")
+        choices.append({"tag": tag, "field": field, "type": ctype, "name": field})
+    data = {"name": choice_name, "choices": choices, "includes": sorted(includes)}
+    safe_write(f"output/e2ap_{choice_name}.h", env.get_template("choice.h.j2").render(data))
+    safe_write(f"output/e2ap_{choice_name}.c", env.get_template("choice.c.j2").render(data))
 
-        # T_VALUE .h
-        h_tmpl = env.get_template("tvalue.h.j2")
-        with open(f"output/e2ap_{parent_type}IEs_T_VALUE.h", "w", encoding="utf-8") as f:
-            f.write(h_tmpl.render({
-                "parent": parent_type,
-                "fields": fields,
-                "includes": sorted(includes)
-            }))
-        print(f"Generated T_VALUE: e2ap_{parent_type}IEs_T_VALUE.h")
+# =============================
+# 3. SINH SEQUENCE (NORMAL + CONTAINER + LIST)
+# =============================
+seq_groups = types_df[types_df["ASN1_Type"] == "SEQUENCE"].groupby("Type_Name")
+seq_order = []  # topological sort: con -> cha
 
-        # 2. Sinh ProtocolIE-Container
-        container_name = f"{parent_type}IEs"
-        h_tmpl = env.get_template("protocol_ie.h.j2")
-        with open(f"output/e2ap_{container_name}.h", "w", encoding="utf-8") as f:
-            f.write(h_tmpl.render({
-                "container_name": container_name,
-                "parent": parent_type
-            }))
-        print(f"Generated container: e2ap_{container_name}.h")
-        
-# =============================
-# 4. SINH CHOICE (E2AP_PDU, GlobalE2node_ID, ...)
-# =============================
-choice_df = df.get("Types", pd.DataFrame())
-if not choice_df.empty:
-    # Lọc các dòng có ASN1_Type = "CHOICE"
-    choice_groups = choice_df[choice_df["ASN1_Type"] == "CHOICE"].groupby("Type_Name")
-    for choice_name, group in choice_groups:
-        choices = []
-        includes = set()
-        for _, row in group.iterrows():
-            if pd.isna(row["Field_Name"]): continue
-            tag = row["Tag/ID"]
-            field = row["Field_Name"]
-            choice_type = row["IE_Type"]
-            includes.add(f"e2ap_{choice_type}")
-            choices.append({
-                "tag": tag,
-                "field": field,
-                "type": choice_type,
-                "name": field
+# Thu thập tất cả SEQUENCE
+seq_info = {}
+for seq_name, group in seq_groups:
+    seq_name = seq_name.replace('-', '_')
+    fields = []
+    is_container = False
+    extensible = False
+    list_field = None
+
+    for _, row in group.iterrows():
+        if row["ASN1_Type"] == "IE":
+            ie_id = row["IE_ID_Constant"] if pd.notna(row["IE_ID_Constant"]) else None
+            if ie_id: is_container = True
+            if pd.notna(row["Extensible"]) and row["Extensible"].lower() == "yes":
+                extensible = True
+            fields.append({
+                "field": row["Field_Name"],
+                "ie_type": row["IE_Type"],
+                "ie_id_constant": ie_id,
+                "criticality": row["Criticality"] if pd.notna(row["Criticality"]) else "reject",
+                "presence": row["Presence"].lower() if pd.notna(row["Presence"]) else "mandatory"
             })
-
-        data = {
-            "name": choice_name,
-            "choices": choices,
-            "includes": sorted(includes)
-        }
-
-        # Sinh .h
-        h_tmpl = env.get_template("choice.h.j2")
-        with open(f"output/e2ap_{choice_name}.h", "w", encoding="utf-8") as f:
-            f.write(h_tmpl.render(data))
-
-        # Sinh .c
-        c_tmpl = env.get_template("choice.c.j2")
-        with open(f"output/e2ap_{choice_name}.c", "w", encoding="utf-8") as f:
-            f.write(c_tmpl.render(data))
-
-        print(f"Generated CHOICE: e2ap_{choice_name}.h/c")
-        
-import yaml
-
-# =============================
-# 5. EXPORT ASN.1 TREE RA YAML
-# =============================
-
-# Giả sử bạn đã gom toàn bộ tree vào dict Python, ví dụ:
-# asn1_tree = {
-#     "E2setupRequest": {
-#         "E2setupRequestIEs": [
-#             "TransactionID",
-#             {"GlobalE2node-ID": {...}}
-#         ]
-#     }
-# }
-
-def flatten_asn1_tree(node):
-    """
-    Chuyển tree ASN.1 sang dạng chỉ có field name, giữ children.
-    """
-    if isinstance(node, dict):
-        out = {}
-        for k, v in node.items():
-            if isinstance(v, (dict, list)):
-                out[k] = flatten_asn1_tree(v)
-            else:
-                out[k] = None
-        return out
-    elif isinstance(node, list):
-        out = []
-        for item in node:
-            if isinstance(item, (dict, list)):
-                out.append(flatten_asn1_tree(item))
-            else:
-                out.append(item)
-        return out
-    else:
-        return node
-
-# TODO: Thay bằng tree thực tế của bạn (gôm từ Messages + Types + Choices)
-asn1_tree = {
-    "E2setupRequest": {
-        "E2setupRequestIEs": [
-            "TransactionID",
-            {
-                "GlobalE2node-ID": {
-                    "GlobalE2node-gNB-ID": {
-                        "GlobalgNB-ID": ["PLMN-Identity", {"GNB-ID-Choice": ["gnb-ID"]}],
-                        "GlobalenGNB-ID": ["PLMN-Identity", {"ENGNB-ID": ["gNB-ID"]}],
-                        "GNB-CU-UP-ID": None,
-                        "GNB-DU-ID": None
-                    }
-                }
+        elif row["ASN1_Type"] == "SEQUENCE OF":
+            list_field = {
+                "ie_type": row["IE_Type"],
+                "field": row["Field_Name"],
+                "ie_id_constant": row["Tag/ID"]
             }
-        ]
+
+    seq_info[seq_name] = {
+        "fields": fields,
+        "is_container": is_container,
+        "extensible": extensible,
+        "list_field": list_field,
+        "group": group
     }
-}
 
-yaml_tree = flatten_asn1_tree(asn1_tree)
+# Xác định thứ tự sinh: con trước, cha sau
+def get_deps(name):
+    deps = set()
+    info = seq_info.get(name, {})
+    for f in info.get("fields", []):
+        deps.add(f["ie_type"])
+    if info.get("list_field"):
+        deps.add(info["list_field"]["ie_type"])
+    return deps
 
-# Ghi ra file YAML
-os.makedirs("output/yaml", exist_ok=True)
-with open("output/yaml/e2ap_tree.yaml", "w", encoding="utf-8") as f:
-    yaml.dump(yaml_tree, f, sort_keys=False, allow_unicode=True, default_flow_style=False)
+from collections import deque
+visited = set()
+order = []
 
-print("Exported ASN.1 tree to output/yaml/e2ap_tree.yaml")
-        
-#=====================================        
-# tìm và sắp xếp dữ liệu        
-#=====================================        
+def dfs(node):
+    if node in visited: return
+    visited.add(node)
+    for dep in get_deps(node):
+        if dep in seq_info:
+            dfs(dep)
+    order.append(node)
 
-# sắp xếp các phần node con lên đầu, có hàm check node con đã tồn tại chưa (trong file hiện tại + file trong VDI)
+for name in seq_info:
+    dfs(name)
+
+# =============================
+# 4. SINH THEO THỨ TỰ: CON -> CHA
+# =============================
+for seq_name in order:
+    info = seq_info[seq_name]
+    fields = info["fields"]
+    is_container = info["is_container"]
+    extensible = info["extensible"]
+    list_field = info["list_field"]
+
+    includes = set(f"e2ap_{f['ie_type']}" for f in fields)
+    if list_field:
+        includes.add(f"e2ap_{list_field['ie_type']}")
+
+    # === 1. Normal SEQUENCE (không phải container) ===
+    if not is_container and not list_field:
+        data = {"name": seq_name, "fields": fields, "extensible": extensible}
+        safe_write(f"output/e2ap_{seq_name}.h", env.get_template("seq_normal.h.j2").render(data))
+        safe_write(f"output/e2ap_{seq_name}.c", env.get_template("seq_normal.c.j2").render(data))
+        continue
+
+    # === 2. ProtocolIE-Container (nhiều IE) ===
+    if is_container:
+        container_name = f"{seq_name}IEs"
+        tvalue_fields = [{"field": f["field"], "ie_type": f["ie_type"]} for f in fields]
+        safe_write(f"output/e2ap_{container_name}.h", env.get_template("protocol_ie.h.j2").render({
+            "container_name": container_name, "parent": seq_name
+        }))
+        if tvalue_fields:
+            safe_write(f"output/e2ap_{seq_name}IEs_T_VALUE.h", env.get_template("tvalue.h.j2").render({
+                "parent": seq_name, "fields": tvalue_fields, "includes": sorted(includes)
+            }))
+
+    # === 3. SEQUENCE OF (List) ===
+    if list_field:
+        list_name = list_field["ie_type"]
+        item_type = list_name.replace("_List", "_Item")
+        item_ies = f"{item_type}IEs"
+
+        # SingleContainer
+        safe_write(f"output/e2ap_{item_ies}_T_VALUE.h", env.get_template("tvalue_single.h.j2").render({
+            "item_ies": item_ies, "item_type": item_type, "ie_id": list_field["ie_id_constant"]
+        }))
+        safe_write(f"output/e2ap_{item_ies}.h", env.get_template("protocol_ie_single.h.j2").render({
+            "item_ies": item_ies, "item_type": item_type, "ie_id_constant": list_field["ie_id_constant"]
+        }))
+        safe_write(f"output/e2ap_{item_ies}.c", env.get_template("protocol_ie_single.c.j2").render({
+            "item_ies": item_ies, "item_type": item_type, "ie_id_constant": list_field["ie_id_constant"],
+            "criticality": "reject"
+        }))
+        safe_write(f"output/e2ap_{list_name}.h", env.get_template("seq_of.h.j2").render({
+            "list_name": list_name, "item_ies": item_ies
+        }))
+
+# =============================
+# 5. SINH MESSAGE (E2SetupRequest, ...)
+# =============================
+message_df = df.get("Messages", pd.DataFrame())
+for message_name, group in message_df.groupby("Message_Name"):
+    message_name = message_name.replace('-', '_')
+    ies, includes = [], set()
+    for _, row in group.iterrows():
+        ie_type = row["IE_Type"]
+        field_name = row["Field_Name"]
+        ie_id = row["IE_ID_Constant"]
+        includes.add(f"e2ap_{ie_type}")
+        ies.append({"ie_type": ie_type, "field": field_name, "ie_id_constant": ie_id})
+
+    data = {"message_name": message_name, "ies": ies, "includes": sorted(includes)}
+    safe_write(f"output/e2ap_{message_name}.h", env.get_template("message.h.j2").render(data))
+    safe_write(f"output/e2ap_{message_name}.c", env.get_template("message.c.j2").render(data))
+
+print("=== TẤT CẢ ĐÃ HOÀN TẤT ===")

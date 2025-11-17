@@ -1,0 +1,62 @@
+E2setupRequest
+└── protocolIEs : ProtocolIE-Container
+    ├── messageType : MessageType
+    ├── transactionID : TransactionID
+    ├── globalE2nodeID : GlobalE2node-ID (CHOICE)
+    │
+    │   ├── gNB : GlobalE2node-gNB-ID
+    │   │     ├── global-gNB-ID : GlobalgNB-ID
+    │   │     │     ├── plmn-id : PLMN-Identity (OCTET STRING (3))
+    │   │     │     └── gnb-id  : GNB-ID (BIT STRING (22..32))
+    │   │     ├── gNB-CU-UP-ID : GNB-CU-UP-ID (INTEGER)
+    │   │     └── gNB-DU-ID    : GNB-DU-ID (INTEGER)
+    │   │
+    │   ├── en-gNB : GlobalE2node-en-gNB-ID
+    │   │     ├── global-en-gNB-ID
+    │   │     │     ├── plmn-id
+    │   │     │     └── gNB-ID / en-gNB-ID (bitstring)
+    │   │     └── additional IDs (tuỳ option)
+    │   │
+    │   ├── ng-eNB : GlobalE2node-ng-eNB-ID
+    │   │     ├── global-ng-eNB-ID
+    │   │     │     ├── plmn-id
+    │   │     │     └── ng-eNB-ID (20-bit or 18-bit tùy type)
+    │   │     └── optional IDs
+    │   │
+    │   └── eNB : GlobalE2node-eNB-ID
+    │         ├── plmn-id
+    │         ├── eNB-ID (macro/short/macro+extended)
+    │         └── optional bits
+    │
+    ├── ranFunctionsAdded : RANfunctions-List (SEQUENCE OF)
+    │     └── RANfunction-Item
+    │          ├── ranFunctionID          : RANfunctionID (INTEGER)
+    │          ├── ranFunctionDefinition  : OCTET STRING
+    │          └── ranFunctionRevision    : INTEGER
+    │
+    └── e2nodeComponentConfigAddition : E2nodeComponentConfigAddition-List (SEQUENCE OF)
+          └── ProtocolIE-SingleContainer
+               └── E2nodeComponentConfigAddition-Item
+                     ├── e2nodeComponentInterfaceType : ENUM (ng, xn, e1, f1, w1, s1, x2, …)
+                     ├── e2nodeComponentID : E2nodeComponentID (CHOICE)
+                     │     ├── ngID : NG-ID
+                     │     │     ├── plmn-id
+                     │     │     └── amf-id / ng-id-fields
+                     │     ├── xnID : XN-ID
+                     │     │     ├── plmn-id
+                     │     │     └── xn-node-id (bitstring)
+                     │     ├── e1ID : E1-ID
+                     │     │     └── gNB-CU-UP-ID
+                     │     ├── f1ID : F1-ID
+                     │     │     └── gNB-DU-ID
+                     │     ├── w1ID : W1-ID
+                     │     │     └── gNB-DU-ID
+                     │     ├── s1ID : S1-ID
+                     │     │     └── enb-id / related fields
+                     │     └── x2ID : X2-ID
+                     │           ├── plmn-id
+                     │           └── x2-node-id (bitstring)
+                     │
+                     └── e2nodeComponentConfiguration : SEQUENCE
+                           ├── e2nodeComponentRequestPart  : OCTET STRING
+                           └── e2nodeComponentResponsePart : OCTET STRING

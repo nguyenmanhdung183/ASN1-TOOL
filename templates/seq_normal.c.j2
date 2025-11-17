@@ -1,0 +1,76 @@
+#include "e2ap_{{name}}.h"
+#include "rtxsrc/rtxErrCodes.h"
+
+int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
+{
+   int stat = 0;
+   RTXCTXPUSHTYPENAME(pctxt, "{{name}}");
+
+   {% for f in fields %}
+   {% if f.presence == "optional" %}
+   if (pvalue->m_{{f.field}}Present) {
+   {% endif %}
+   stat = asn1PE_e2ap_{{f.ie_type}} (pctxt, &pvalue->{{f.field}});
+   if (stat != 0) return LOG_RTERR(pctxt, stat);
+   {% if f.presence == "optional" %}
+   }
+   {% endif %}
+   {% endfor %}
+
+   {% if extensible %}
+   if (pvalue->extElem1Present) {
+      stat = pe_OpenType (pctxt, pvalue->extElem1.numocts, pvalue->extElem1.data);
+      if (stat != 0) return LOG_RTERR(pctxt, stat);
+   }
+   {% endif %}
+
+   RTXCTXPOPEXTNAME(pctxt);
+   return 0;
+}
+
+int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
+{
+   int stat = 0;
+   OSBOOL bit;
+   RTXCTXPUSHTYPENAME(pctxt, "{{name}}");
+
+   {% for f in fields %}
+   {% if f.presence == "optional" %}
+   stat = rtxDecBit (pctxt, &bit);
+   if (stat != 0) return LOG_RTERR(pctxt, stat);
+   if (bit) {
+      pvalue->m_{{f.field}}Present = TRUE;
+      stat = asn1PD_e2ap_{{f.ie_type}} (pctxt, &pvalue->{{f.field}});
+      if (stat != 0) return LOG_RTERR(pctxt, stat);
+   );
+   } else pvalue->m_{{f.field}}Present = FALSE;
+   {% else %}
+   stat = asn1PD_e2ap_{{f.ie_type}} (pctxt, &pvalue->{{f.field}});
+   if (stat != 0) return LOG_RTERR(pctxt, stat);
+   {% endif %}
+   {% endfor %}
+
+   {% if extensible %}
+   stat = pd_OpenType (pctxt, &pvalue->extElem1.numocts, &pvalue->extElem1.data);
+   if (stat > 0) pvalue->extElem1Present = TRUE;
+   {% endif %}
+
+   RTXCTXPOPEXTNAME(pctxt);
+   return 0;
+}
+
+void asn1Init_e2ap_{{name}} (e2ap_{{name}}* pvalue)
+{
+   memset(pvalue, 0, sizeof(*pvalue));
+   {% for f in fields %}
+   asn1Init_e2ap_{{f.ie_type}} (&pvalue->{{f.field}});
+   {% endfor %}
+}
+
+void asn1Free_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
+{
+   {% for f in fields %}
+   %}
+   asn1Free_e2ap_{{f.ie_type}} (pctxt, &pvalue->{{f.field}});
+   {% endfor %}
+}

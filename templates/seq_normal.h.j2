@@ -1,0 +1,22 @@
+#ifndef _E2AP_{{name|upper}}_H_
+#define _E2AP_{{name|upper}}_H_
+
+#include "rtxsrc/rtxContext.h"
+{% for f in fields %}
+#include "e2ap_{{f.ie_type}}.h"{% endfor %}
+
+typedef struct e2ap_{{name}} {
+{% for f in fields %}
+   e2ap_{{f.ie_type}} {{f.field}};
+   {% if f.presence == "optional" %}OSBOOL m_{{f.field}}Present;{% endif %}
+{% endfor %}
+{% if extensible %}ASN1OpenType extElem1; OSBOOL extElem1Present;{% endif %}
+} e2ap_{{name}};
+
+EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue);
+EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue);
+EXTERN void asn1Init_e2ap_{{name}} (e2ap_{{name}}* pvalue);
+EXTERN void asn1Free_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue);
+EXTERN void asn1Print_e2ap_{{name}} (const char* name, const e2ap_{{name}}* pvalue);
+
+#endif

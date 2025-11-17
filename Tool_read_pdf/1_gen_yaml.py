@@ -12,8 +12,6 @@ import json
 import sys
 import yaml
 
-
-
 import os
 import glob
 
@@ -34,9 +32,101 @@ pdf_path = "./O-RAN_E2AP.WG3.TS.E2AP-R004-v07.00.pdf"
 TARGET_TYPE = "E2setupRequest"
 
 
+def extract_ref_from_type(ftype):
+    ftype = ftype.strip()
+    # {{X}}
+    m = re.search(r"\{\s*\{\s*([A-Za-z0-9'\-]+)\s*\}\s*\}", ftype)
+    if m: return m.group(1)
+    # {X}
+    m = re.search(r"\{\s*([A-Za-z0-9'\-]+)\s*\}", ftype)
+    if m: return m.group(1)
+    # ProtocolIE-SingleContainer { {X} }
+    m = re.search(r"SingleContainer\s*\{[^}]*\{\s*([A-Za-z0-9'\-]+)\s*\}[^}]*\}", ftype, re.I)
+    if m: return m.group(1)
+    # SEQUENCE OF X
+    m = re.search(r"SEQUENCE\s+OF\s+([A-Za-z0-9'\-]+)", ftype, re.I)
+    if m: return m.group(1)
+    # OF X
+    m = re.search(r"OF\s+([A-Za-z0-9'\-]+)", ftype, re.I)
+    if m: return m.group(1)
+    return ftype.split()[0]
+
+def extract_sequence_of_singlecontainer_by_lines(lines, blocks):
+    """
+    Duyệt từng dòng, nếu thấy:
+    - Dòng hiện tại: có 'List' và 'SEQUENCE'
+    - Dòng hiện tại hoặc dòng sau: có 'SingleContainer' và '{{X}}'
+    → Trích xuất name và inner_type
+    """
+    for i in range(len(lines) - 1):
+        line1 = lines[i].strip()
+        line2 = lines[i + 1].strip() if i + 1 < len(lines) else ""
+
+        # Kết hợp 2 dòng để tìm
+        combined = (line1 + " " + line2).replace("\n", " ")
+
+        # Tìm name ::= SEQUENCE ... List
+        m_name = re.search(r"([A-Za-z0-9'\-]+)\s*::=\s*SEQUENCE", combined)
+        if not m_name:
+            continue
+        name = m_name.group(1).strip()
+
+        if "List" not in name:
+            continue
+
+        # Tìm {{X}} trong 2 dòng
+        m_inner = re.search(r"\{\s*\{\s*([A-Za-z0-9'\-]+)\s*\}\s*\}", line1 + line2)
+        if not m_inner:
+            continue
+        inner_type = m_inner.group(1).strip()
+
+        # Phải có SingleContainer trong 1 trong 2 dòng
+        if not (re.search(r"SingleContainer", line1, re.I) or re.search(r"SingleContainer", line2, re.I)):
+            continue
+
+        # Đã đủ điều kiện → lưu
+        blocks[name] = {
+            "kind": "SEQUENCE-OF-SINGLECONTAINER",
+            "content": inner_type
+        }
+        print(f"[DEBUG] Found via lines: {name} → {inner_type}")
+
 # ============================================================
 # PDF extraction
 # ============================================================
+
+
+def preprocess_pdf_text(text):
+    """
+    Gộp các dòng bị cắt tên type do PDF xuống dòng:
+    E2nodeComponentConfigAddition-
+    ItemIEs E2AP-PROTOCOL-IES ::= {
+    → E2nodeComponentConfigAddition-ItemIEs E2AP-PROTOCOL-IES ::= {
+    """
+    lines = text.splitlines()
+    merged = []
+    buffer = ""
+
+    for line in lines:
+        stripped = line.strip()
+        if not stripped:
+            if buffer:
+                merged.append(buffer)
+                buffer = ""
+            continue
+
+        # Nếu buffer kết thúc bằng '-' và dòng hiện tại bắt đầu bằng chữ → gộp
+        if buffer.endswith("-") and re.match(r"^[A-Za-z0-9'\-]", stripped):
+            buffer = buffer + stripped  # 
+        else:
+            if buffer:
+                merged.append(buffer)
+            buffer = stripped
+
+    if buffer:
+        merged.append(buffer)
+
+    return "\n".join(merged)
 
 def extract_text_from_pdf(path, output_txt_file=None):
     try:
@@ -95,40 +185,133 @@ def find_balanced_braces(text, start_pos):
 # ============================================================
 
 def extract_asn1_blocks(full_text):
+    """
+    FIXED version:
+    - Bắt SEQUENCE { ... }
+    - Bắt CHOICE { ... }
+    - Bắt SET { ... }
+    - Bắt SEQUENCE (SIZE..) OF <Type>
+    - Bắt SingleContainer {{Type}}
+    - Giải quyết case xuống dòng PDF
+    """
     area = full_text
     blocks = {}
+    lines = full_text.splitlines()
+    # ============================================================
+    # NORMAL SEQUENCE / CHOICE / SET (có dấu { ... })
+    # ============================================================
 
-    # SEQUENCE / CHOICE / SET
-    for m in re.finditer(r"([A-Za-z0-9'\-]+)\s*::=\s*(SEQUENCE|CHOICE|SET)\s*\{", area):
+    seq_pattern = re.compile(
+        r"([A-Za-z0-9'\-]+)\s*::=\s*(SEQUENCE|CHOICE|SET)\s*\{",
+        flags=re.MULTILINE
+    )
+
+    for m in seq_pattern.finditer(area):
         name = m.group(1).strip()
         kind = m.group(2).strip().upper()
-        brace_start = m.end() - 1
+        brace_start = m.end() - 1  # vị trí dấu '{'
+
         end_idx, content = find_balanced_braces(area, brace_start)
         if end_idx:
             blocks[name] = {"kind": kind, "content": content.strip()}
         else:
             blocks[name] = {"kind": kind, "content": ""}
 
-    # IE-LISTS
-    for m in re.finditer(r"([A-Za-z0-9'\-]+)\s+(?:E2AP-PROTOCOL-IES|PROTOCOL-IES|ProtocolIE-List|ProtocolIE-Container)\s*::=\s*\{",
-                         area, flags=re.IGNORECASE):
+    # # ==============================================
+    # # SEQUENCE (SIZE...) OF ProtocolIE-SingleContainer { {X} }  ← BẤT CHẤP XUỐNG DÒNG, SPACE, TAB, -
+    # # ==============================================
+    # seq_size_of_container_pattern = re.compile(
+    #     r"([A-Za-z0-9'\-]+)\s*::=\s*"
+    #     r"SEQUENCE\s*\([^)]*\)\s*OF\s*"
+    #     r"(?:ProtocolIE[-\s]*SingleContainer|SingleContainer)\s*"
+    #     r"\{[^}]*\{\s*([A-Za-z0-9'\-]+)\s*\}[^}]*\}",
+    #     flags=re.MULTILINE | re.DOTALL
+    # )
+    # for m in seq_size_of_container_pattern.finditer(area):
+    #     name = m.group(1).strip()
+    #     inner_type = m.group(2).strip()
+    #     blocks[name] = {
+    #         "kind": "SEQUENCE-OF-SINGLECONTAINER",
+    #         "content": inner_type
+    #     }
+    
+    
+    
+    # 1. XỬ LÝ SEQUENCE-OF-SingleContainer THEO DÒNG (Ý TƯỞNG CỦA BẠN)
+    extract_sequence_of_singlecontainer_by_lines(lines, blocks)
+    
+    
+    # ============================================================
+    # SEQUENCE OF (không kích thước): "SEQUENCE OF X"
+    # ============================================================
+
+    seq_of_simple = re.compile(
+        r"([A-Za-z0-9'\-]+)\s*::=\s*SEQUENCE\s+OF\s+([A-Za-z0-9'\-]+)",
+        flags=re.MULTILINE
+    )
+
+    for m in seq_of_simple.finditer(area):
+        name = m.group(1).strip()
+        ref = m.group(2).strip()
+        if name not in blocks:  # tránh ghi đè
+            blocks[name] = {
+                "kind": "SEQUENCE-OF",
+                "content": ref
+            }
+
+    # ============================================================
+    # ProtocolIE-SingleContainer { {X} }
+    # ============================================================
+
+    single_container_pattern = re.compile(
+        r"([A-Za-z0-9'\-]+)\s*::=\s*(?:ProtocolIE[- ]?SingleContainer|SingleContainer)\s*\{\s*\{\s*([A-Za-z0-9'\-]+)\s*\}\s*\}",
+        flags=re.MULTILINE
+    )
+
+    for m in single_container_pattern.finditer(area):
+        name = m.group(1).strip()
+        inner = m.group(2).strip()
+
+        blocks[name] = {
+            "kind": "SINGLE-CONTAINER",
+            "content": inner
+        }
+
+    # ============================================================
+    # IE-LISTS (giữ nguyên code gốc)
+    # ============================================================
+
+    for m in re.finditer(
+        r"([A-Za-z0-9'\-]+)\s+(?:E2AP-PROTOCOL-IES|PROTOCOL-IES|ProtocolIE-List|ProtocolIE-Container)\s*::=\s*\{",
+        area,
+        flags=re.IGNORECASE
+    ):
         name = m.group(1).strip()
         brace_start = m.end() - 1
+
         end_idx, content = find_balanced_braces(area, brace_start)
         if end_idx:
             blocks[name] = {"kind": "IE-LIST", "content": content.strip()}
         else:
             blocks[name] = {"kind": "IE-LIST", "content": ""}
 
-    # ALIAS definitions
-    for m in re.finditer(r"^([A-Za-z0-9'\-]+)\s*::=\s*([A-Za-z0-9 \(\)\.\-,'<>]+)$",
-                         area, flags=re.MULTILINE):
+    # ============================================================
+    # ALIAS / đơn giản "::= Something"
+    # ============================================================
+
+    alias_pattern = re.compile(
+        r"^([A-Za-z0-9'\-]+)\s*::=\s*([A-Za-z0-9 \(\)\.\-,'<>]+)$",
+        flags=re.MULTILINE
+    )
+
+    for m in alias_pattern.finditer(area):
         name = m.group(1).strip()
         rhs = m.group(2).strip()
         if name not in blocks:
             blocks[name] = {"kind": "ALIAS", "content": rhs}
 
     return blocks
+
 
 
 # ============================================================
@@ -167,27 +350,52 @@ def split_fields_from_block(content):
     current = []
     depth_paren = 0
     depth_brace = 0
+    in_sequence_block = False  # Đang ở trong SEQUENCE { ... }
 
-    for ch in s:
-        if ch == "(":
-            depth_paren += 1
-        elif ch == ")":
-            if depth_paren > 0:
-                depth_paren -= 1
-        elif ch == "{":
+    i = 0
+    while i < len(s):
+        ch = s[i]
+
+        if ch == "{" and depth_brace == 0 and not in_sequence_block:
+            # Bắt đầu block SEQUENCE {
+            seq_match = re.match(r"\s*SEQUENCE\s*\{", s[i-9:i+1], re.I)
+            if seq_match:
+                in_sequence_block = True
+                # Bỏ qua từ "SEQUENCE {"
+                i += len(seq_match.group(0)) - 1
+                current.append("{")
+                depth_brace += 1
+                i += 1
+                continue
+
+        if ch == "{":
             depth_brace += 1
         elif ch == "}":
-            if depth_brace > 0:
-                depth_brace -= 1
+            depth_brace -= 1
+            if depth_brace == 0 and in_sequence_block:
+                in_sequence_block = False
+                # Kết thúc block SEQUENCE }
+                token = "".join(current).strip()
+                if token:
+                    parts.append(token)
+                current = []
+                i += 1
+                continue
 
-        if ch == "," and depth_paren == 0 and depth_brace == 0:
+        # Chỉ cắt , khi:
+        # - Không trong ngoặc
+        # - Không trong SEQUENCE block
+        # - Không phải , trong type
+        if (ch == "," and depth_paren == 0 and depth_brace == 0 and not in_sequence_block):
             token = "".join(current).strip()
             if token:
                 parts.append(token)
             current = []
         else:
             current.append(ch)
+        i += 1
 
+    # Thêm phần cuối
     last = "".join(current).strip()
     if last:
         parts.append(last)
@@ -198,48 +406,29 @@ def split_fields_from_block(content):
 def parse_fields(content):
     items = split_fields_from_block(content)
     fields = []
-
     for it in items:
         s = it.strip()
-
-        # Case 0: Nếu dòng chỉ là "..." → bỏ
-        if s in ELLIPSIS:
+        if any(e in s for e in ELLIPSIS): continue
+        if "SingleContainer" in s:
+            fields.append((None, s))
             continue
 
-        # Case 1: đúng dạng "name  type"
-        m = FIELD_LINE_RE.match(s)
+        m = re.match(r"^([A-Za-z0-9'\-]+)\s+(.+)", s)
         if m:
             fname = m.group(1).strip()
             ftype = m.group(2).strip()
-
-            # loại bỏ OPTIONAL/PRESENCE nhưng KHÔNG đụng tới '...'
-            ftype = re.sub(
-                r"\bOPTIONAL\b|\bDEFAULT\b.*$|\bPRESENCE\b.*$|\bCONSTRAINED BY.*$",
-                "",
-                ftype,
-                flags=re.IGNORECASE
-            ).strip()
-
+            ftype = re.sub(r"\bOPTIONAL\b.*$", "", ftype, flags=re.I).strip()
+            ftype = re.sub(r"\bPRESENCE\b.*$", "", ftype, flags=re.I).strip()
+            ftype = re.sub(r"\bCONSTRAINED BY\b.*$", "", ftype, flags=re.I).strip()
             fields.append((fname, ftype))
             continue
 
-        # Case 2: Nếu trong dòng có fieldName + "..." → vẫn phải giữ fieldName
-        tokens = IDENT.findall(s)
-        if len(tokens) >= 1 and "..." in s:
-            fields.append((tokens[0], None))   # giữ home-eNB-ID
-            continue
-
-        # Case 3: 1 token duy nhất → field không có type
-        if len(tokens) == 1:
+        tokens = re.findall(r"[A-Za-z0-9'\-]+", s)
+        if tokens:
             fields.append((tokens[0], None))
             continue
-
-        # Case 4: fallback
         fields.append((None, s))
-
     return fields
-
-
 
 # ============================================================
 # Node + type classifier
@@ -306,7 +495,18 @@ def build_type_tree(type_name, blocks, visited=None):
     kind = entry["kind"]
     content = entry.get("content", "")
     node.kind = kind
-
+    
+    # -------------------------
+    # SEQUENCE-OF-SINGLECONTAINER
+    # -------------------------
+    if kind == "SEQUENCE-OF-SINGLECONTAINER":
+        inner = content.strip()
+        child = build_type_tree(inner, blocks, visited.copy())
+        #list_node = Node("[]", "SEQUENCE-OF")
+        #list_node.children.append(child)
+        #node.children.append(list_node)
+        node.children.append(child)
+        return node
     # -------------------------
     # ALIAS
     # -------------------------
@@ -347,24 +547,8 @@ def build_type_tree(type_name, blocks, visited=None):
                 continue
 
             # detect SEQUENCE OF X or {{X}}
-            ref = None
-            m = re.search(r"\bSEQUENCE\s+OF\s+([A-Za-z0-9'\-]+)", ftype, flags=re.IGNORECASE)
-            if m:
-                ref = m.group(1)
-            else:
-                m = re.search(r"\{\s*\{\s*([A-Za-z0-9'\-]+)\s*\}\s*\}", ftype)
-                if m:
-                    ref = m.group(1)
-                else:
-                    m = re.search(r"\{\s*([A-Za-z0-9'\-]+)\s*\}", ftype)
-                    if m:
-                        ref = m.group(1)
-                    else:
-                        m = re.search(r"\bOF\b\s+([A-Za-z0-9'\-]+)", ftype)
-                        if m:
-                            ref = m.group(1)
-                        else:
-                            ref = ftype.split()[0]
+            ref = extract_ref_from_type(ftype)
+
 
             ref = re.sub(r"[,\(\)]", "", ref).strip()
 
@@ -425,6 +609,7 @@ def main(ppath, target):
     print("Reading PDF text…")
     #text = extract_text_from_pdf(ppath, "a.txt")
     text = extract_text_from_pdf(ppath)
+    text = preprocess_pdf_text(text)
     print("Extracting ASN.1 blocks…")
     blocks = extract_asn1_blocks(text)
     print(f"Found {len(blocks)} ASN.1 types.")

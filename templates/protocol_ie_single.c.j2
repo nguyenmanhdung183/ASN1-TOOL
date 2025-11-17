@@ -1,0 +1,31 @@
+#include "e2ap_{{item_ies}}.h"
+#include "rtxsrc/rtxErrCodes.h"
+#include "e2ap_{{item_type}}.h"
+
+#define ID_{{item_type}} {{ie_id_constant}}
+#define CRIT_{{item_type}} {{criticality}}
+
+int asn1PE_e2ap_{{item_ies}} (OSCTXT* pctxt, e2ap_{{item_ies}}* pvalue)
+{
+   int stat = 0;
+   RTXCTXPUSHTYPENAME(pctxt, "{{item_ies}}");
+
+   stat = asn1PE_e2ap_ProtocolIE_ID (pctxt, &pvalue->id);
+   if (stat != 0) return LOG_RTERR(pctxt, stat);
+
+   stat = asn1PE_e2ap_Criticality (pctxt, &pvalue->criticality);
+   if (stat != 0) return LOG_RTERR(pctxt, stat);
+
+   stat = asn1PE_e2ap_{{item_type}} (pctxt, &pvalue->value);
+   if (stat != 0) return LOG_RTERR(pctxt, stat);
+
+   RTXCTXPOPEXTNAME(pctxt);
+   return 0;
+}
+
+void asn1Init_e2ap_{{item_ies}} (e2ap_{{item_ies}}* pvalue)
+{
+   pvalue->id = ID_{{item_type}};
+   pvalue->criticality = CRIT_{{item_type}};
+   asn1Init_e2ap_{{item_type}} (&pvalue->value);
+}
