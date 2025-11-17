@@ -1,0 +1,308 @@
+{
+  "name": "E2setupRequest",
+  "kind": "SEQUENCE",
+  "is_primitive": false,
+  "children": [
+    {
+      "name": "E2setupRequestIEs",
+      "kind": "IE-LIST",
+      "is_primitive": false,
+      "children": [
+        {
+          "name": "TransactionID",
+          "kind": "PRIMITIVE",
+          "is_primitive": true,
+          "children": []
+        },
+        {
+          "name": "GlobalE2node-ID",
+          "kind": "CHOICE",
+          "is_primitive": false,
+          "children": [
+            {
+              "name": "GlobalE2node-gNB-ID",
+              "kind": "SEQUENCE",
+              "is_primitive": false,
+              "children": [
+                {
+                  "name": "GlobalgNB-ID",
+                  "kind": "SEQUENCE",
+                  "is_primitive": false,
+                  "children": [
+                    {
+                      "name": "PLMN-Identity",
+                      "kind": "PRIMITIVE",
+                      "is_primitive": true,
+                      "children": []
+                    },
+                    {
+                      "name": "GNB-ID-Choice",
+                      "kind": "CHOICE",
+                      "is_primitive": false,
+                      "children": [
+                        {
+                          "name": "gnb-ID",
+                          "kind": "PRIMITIVE",
+                          "is_primitive": true,
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "GlobalenGNB-ID",
+                  "kind": "SEQUENCE",
+                  "is_primitive": false,
+                  "children": [
+                    {
+                      "name": "PLMN-Identity",
+                      "kind": "PRIMITIVE",
+                      "is_primitive": true,
+                      "children": []
+                    },
+                    {
+                      "name": "ENGNB-ID",
+                      "kind": "CHOICE",
+                      "is_primitive": false,
+                      "children": [
+                        {
+                          "name": "gNB-ID",
+                          "kind": "PRIMITIVE",
+                          "is_primitive": true,
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "GNB-CU-UP-ID",
+                  "kind": "PRIMITIVE",
+                  "is_primitive": true,
+                  "children": []
+                },
+                {
+                  "name": "GNB-DU-ID",
+                  "kind": "PRIMITIVE",
+                  "is_primitive": true,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "name": "GlobalE2node-en-gNB-ID",
+              "kind": "SEQUENCE",
+              "is_primitive": false,
+              "children": [
+                {
+                  "name": "GlobalenGNB-ID",
+                  "kind": "SEQUENCE",
+                  "is_primitive": false,
+                  "children": [
+                    {
+                      "name": "PLMN-Identity",
+                      "kind": "PRIMITIVE",
+                      "is_primitive": true,
+                      "children": []
+                    },
+                    {
+                      "name": "ENGNB-ID",
+                      "kind": "CHOICE",
+                      "is_primitive": false,
+                      "children": [
+                        {
+                          "name": "gNB-ID",
+                          "kind": "PRIMITIVE",
+                          "is_primitive": true,
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "GNB-CU-UP-ID",
+                  "kind": "PRIMITIVE",
+                  "is_primitive": true,
+                  "children": []
+                },
+                {
+                  "name": "GNB-DU-ID",
+                  "kind": "PRIMITIVE",
+                  "is_primitive": true,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "name": "GlobalE2node-ng-eNB-ID",
+              "kind": "SEQUENCE",
+              "is_primitive": false,
+              "children": [
+                {
+                  "name": "GlobalngeNB-ID",
+                  "kind": "SEQUENCE",
+                  "is_primitive": false,
+                  "children": [
+                    {
+                      "name": "PLMN-Identity",
+                      "kind": "PRIMITIVE",
+                      "is_primitive": true,
+                      "children": []
+                    },
+                    {
+                      "name": "ENB-ID-Choice",
+                      "kind": "CHOICE",
+                      "is_primitive": false,
+                      "children": [
+                        {
+                          "name": "enb-ID-macro",
+                          "kind": "PRIMITIVE",
+                          "is_primitive": true,
+                          "children": []
+                        },
+                        {
+                          "name": "enb-ID-shortmacro",
+                          "kind": "PRIMITIVE",
+                          "is_primitive": true,
+                          "children": []
+                        },
+                        {
+                          "name": "enb-ID-longmacro",
+                          "kind": "PRIMITIVE",
+                          "is_primitive": true,
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "GlobalENB-ID",
+                  "kind": "SEQUENCE",
+                  "is_primitive": false,
+                  "children": [
+                    {
+                      "name": "PLMN-Identity",
+                      "kind": "PRIMITIVE",
+                      "is_primitive": true,
+                      "children": []
+                    },
+                    {
+                      "name": "ENB-ID",
+                      "kind": "CHOICE",
+                      "is_primitive": false,
+                      "children": [
+                        {
+                          "name": "macro-eNB-ID",
+                          "kind": "PRIMITIVE",
+                          "is_primitive": true,
+                          "children": []
+                        },
+                        {
+                          "name": "©",
+                          "kind": "PRIMITIVE",
+                          "is_primitive": true,
+                          "children": []
+                        },
+                        {
+                          "name": "short-Macro-eNB-ID",
+                          "kind": "PRIMITIVE",
+                          "is_primitive": true,
+                          "children": []
+                        },
+                        {
+                          "name": "long-Macro-eNB-ID",
+                          "kind": "PRIMITIVE",
+                          "is_primitive": true,
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "NGENB-DU-ID",
+                  "kind": "PRIMITIVE",
+                  "is_primitive": true,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "name": "GlobalE2node-eNB-ID",
+              "kind": "SEQUENCE",
+              "is_primitive": false,
+              "children": [
+                {
+                  "name": "GlobalENB-ID",
+                  "kind": "SEQUENCE",
+                  "is_primitive": false,
+                  "children": [
+                    {
+                      "name": "PLMN-Identity",
+                      "kind": "PRIMITIVE",
+                      "is_primitive": true,
+                      "children": []
+                    },
+                    {
+                      "name": "ENB-ID",
+                      "kind": "CHOICE",
+                      "is_primitive": false,
+                      "children": [
+                        {
+                          "name": "macro-eNB-ID",
+                          "kind": "PRIMITIVE",
+                          "is_primitive": true,
+                          "children": []
+                        },
+                        {
+                          "name": "©",
+                          "kind": "PRIMITIVE",
+                          "is_primitive": true,
+                          "children": []
+                        },
+                        {
+                          "name": "short-Macro-eNB-ID",
+                          "kind": "PRIMITIVE",
+                          "is_primitive": true,
+                          "children": []
+                        },
+                        {
+                          "name": "long-Macro-eNB-ID",
+                          "kind": "PRIMITIVE",
+                          "is_primitive": true,
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "RANfunctions-List",
+          "kind": "PRIMITIVE_OR_EXTERNAL",
+          "is_primitive": true,
+          "children": []
+        },
+        {
+          "name": "E2nodeComponentConfigAddition-List",
+          "kind": "ALIAS",
+          "is_primitive": false,
+          "children": [
+            {
+              "name": "SEQUENCE",
+              "kind": "PRIMITIVE_OR_EXTERNAL",
+              "is_primitive": true,
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
