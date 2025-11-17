@@ -1,0 +1,22 @@
+/* e2ap_{{ies_name}}.h */
+//IE
+/* Forward declaration for the enum */
+typedef enum {
+   T_E2AP_PDU_Contents_{{ies_name}}_UNDEF,
+   T_E2AP_PDU_Contents_{{ies_name}}_{{ie_id_const}}
+} T_E2AP_PDU_Contents_{{ies_name}};
+
+/* The actual IE container */
+typedef struct EXTERN e2ap_{{ies_name}} {
+   ASN1OpenType* extElem1;
+   OSSIZE        extElem1_n;
+   union {
+      e2ap_{{item_type}} u_{{ies_name}}_{{ie_id_const}};
+   } value;
+} e2ap_{{ies_name}};
+
+EXTERN int  asn1PE_e2ap_{{ies_name}} (OSCTXT* pctxt, e2ap_{{ies_name}}* pvalue);
+EXTERN int  asn1PD_e2ap_{{ies_name}} (OSCTXT* pctxt, e2ap_{{ies_name}}* pvalue);
+EXTERN void asn1Init_e2ap_{{ies_name}} (e2ap_{{ies_name}}* pvalue);
+EXTERN void asn1Free_e2ap_{{ies_name}} (OSCTXT* pctxt, e2ap_{{ies_name}}* pvalue);
+

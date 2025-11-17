@@ -1,7 +1,6 @@
 /* e2ap_E2AP_PDU.c */
-#include "e2ap_E2AP_PDU.h"
-#include "rtxsrc/rtxErrCodes.h"
 
+// choice
 EXTERN int asn1PE_e2ap_E2AP_PDU (OSCTXT* pctxt, e2ap_E2AP_PDU* pvalue)
 {
    int stat = 0;
@@ -21,12 +20,21 @@ EXTERN int asn1PE_e2ap_E2AP_PDU (OSCTXT* pctxt, e2ap_E2AP_PDU* pvalue)
    }
 
    switch (pvalue->t) {
-      case 1:
+      case 1.0:
          RTXCTXPUSHELEMNAME (pctxt, "initiatingMessage");
-         pvalue->u.initiatingMessage = rtxMemAllocType (pctxt, e2ap_InitiatingMessage);
-         if (pvalue->u.initiatingMessage == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
-         asn1Init_e2ap_InitiatingMessage (pvalue->u.initiatingMessage);
          stat = asn1PE_e2ap_InitiatingMessage (pctxt, pvalue->u.initiatingMessage);
+         if (stat != 0) return LOG_RTERR (pctxt, stat);
+         RTXCTXPOPELEMNAME (pctxt);
+         break;
+      case 2.0:
+         RTXCTXPUSHELEMNAME (pctxt, "successfulOutcome");
+         stat = asn1PE_e2ap_SuccessfulOutcome (pctxt, pvalue->u.successfulOutcome);
+         if (stat != 0) return LOG_RTERR (pctxt, stat);
+         RTXCTXPOPELEMNAME (pctxt);
+         break;
+      case 3.0:
+         RTXCTXPUSHELEMNAME (pctxt, "unsuccessfulOutcome");
+         stat = asn1PE_e2ap_UnsuccessfulOutcome (pctxt, pvalue->u.unsuccessfulOutcome);
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXPOPELEMNAME (pctxt);
          break;
@@ -58,12 +66,27 @@ EXTERN int asn1PD_e2ap_E2AP_PDU (OSCTXT* pctxt, e2ap_E2AP_PDU* pvalue)
    }
 
    switch (pvalue->t) {
-      case 1:
+      case 1.0:
          RTXCTXPUSHELEMNAME (pctxt, "initiatingMessage");
          pvalue->u.initiatingMessage = rtxMemAllocType (pctxt, e2ap_InitiatingMessage);
          if (pvalue->u.initiatingMessage == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
-         asn1Init_e2ap_InitiatingMessage (pvalue->u.initiatingMessage);
          stat = asn1PD_e2ap_InitiatingMessage (pctxt, pvalue->u.initiatingMessage);
+         if (stat != 0) return LOG_RTERR (pctxt, stat);
+         RTXCTXPOPELEMNAME (pctxt);
+         break;
+      case 2.0:
+         RTXCTXPUSHELEMNAME (pctxt, "successfulOutcome");
+         pvalue->u.successfulOutcome = rtxMemAllocType (pctxt, e2ap_SuccessfulOutcome);
+         if (pvalue->u.successfulOutcome == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
+         stat = asn1PD_e2ap_SuccessfulOutcome (pctxt, pvalue->u.successfulOutcome);
+         if (stat != 0) return LOG_RTERR (pctxt, stat);
+         RTXCTXPOPELEMNAME (pctxt);
+         break;
+      case 3.0:
+         RTXCTXPUSHELEMNAME (pctxt, "unsuccessfulOutcome");
+         pvalue->u.unsuccessfulOutcome = rtxMemAllocType (pctxt, e2ap_UnsuccessfulOutcome);
+         if (pvalue->u.unsuccessfulOutcome == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
+         stat = asn1PD_e2ap_UnsuccessfulOutcome (pctxt, pvalue->u.unsuccessfulOutcome);
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXPOPELEMNAME (pctxt);
          break;
@@ -87,12 +110,24 @@ void asn1Free_e2ap_E2AP_PDU (OSCTXT* pctxt, e2ap_E2AP_PDU* pvalue)
 {
    if (pvalue == 0) return;
    switch (pvalue->t) {
-      case 1:
+      case 1.0:
          if (pvalue->u.initiatingMessage) {
             asn1Free_e2ap_InitiatingMessage (pctxt, pvalue->u.initiatingMessage);
             rtxMemFreePtr (pctxt, (void*)pvalue->u.initiatingMessage);
          }
          break;
+      case 2.0:
+         if (pvalue->u.successfulOutcome) {
+            asn1Free_e2ap_SuccessfulOutcome (pctxt, pvalue->u.successfulOutcome);
+            rtxMemFreePtr (pctxt, (void*)pvalue->u.successfulOutcome);
+         }
+         break;
+      case 3.0:
+         if (pvalue->u.unsuccessfulOutcome) {
+            asn1Free_e2ap_UnsuccessfulOutcome (pctxt, pvalue->u.unsuccessfulOutcome);
+            rtxMemFreePtr (pctxt, (void*)pvalue->u.unsuccessfulOutcome);
+         }
+         break;
    }
-   pvalue->t = 0;
+   pvalue->t = 0;
 }

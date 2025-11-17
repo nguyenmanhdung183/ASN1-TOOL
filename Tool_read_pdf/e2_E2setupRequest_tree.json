@@ -39,7 +39,14 @@
                       "name": "GNB-ID-Choice",
                       "kind": "CHOICE",
                       "is_primitive": false,
-                      "children": []
+                      "children": [
+                        {
+                          "name": "gnb-ID",
+                          "kind": "PRIMITIVE",
+                          "is_primitive": true,
+                          "children": []
+                        }
+                      ]
                     }
                   ]
                 },
@@ -58,7 +65,14 @@
                       "name": "ENGNB-ID",
                       "kind": "CHOICE",
                       "is_primitive": false,
-                      "children": []
+                      "children": [
+                        {
+                          "name": "gNB-ID",
+                          "kind": "PRIMITIVE",
+                          "is_primitive": true,
+                          "children": []
+                        }
+                      ]
                     }
                   ]
                 },
@@ -96,7 +110,14 @@
                       "name": "ENGNB-ID",
                       "kind": "CHOICE",
                       "is_primitive": false,
-                      "children": []
+                      "children": [
+                        {
+                          "name": "gNB-ID",
+                          "kind": "PRIMITIVE",
+                          "is_primitive": true,
+                          "children": []
+                        }
+                      ]
                     }
                   ]
                 },
@@ -180,6 +201,12 @@
                           "children": []
                         },
                         {
+                          "name": "----------error-------",
+                          "kind": "PRIMITIVE",
+                          "is_primitive": true,
+                          "children": []
+                        },
+                        {
                           "name": "short-Macro-eNB-ID",
                           "kind": "PRIMITIVE",
                           "is_primitive": true,
@@ -226,6 +253,12 @@
                       "children": [
                         {
                           "name": "macro-eNB-ID",
+                          "kind": "PRIMITIVE",
+                          "is_primitive": true,
+                          "children": []
+                        },
+                        {
+                          "name": "----------error-------",
                           "kind": "PRIMITIVE",
                           "is_primitive": true,
                           "children": []
@@ -373,7 +406,14 @@
                                       "name": "GNB-ID-Choice",
                                       "kind": "CHOICE",
                                       "is_primitive": false,
-                                      "children": []
+                                      "children": [
+                                        {
+                                          "name": "gnb-ID",
+                                          "kind": "PRIMITIVE",
+                                          "is_primitive": true,
+                                          "children": []
+                                        }
+                                      ]
                                     }
                                   ]
                                 },
@@ -506,6 +546,12 @@
                                       "children": []
                                     },
                                     {
+                                      "name": "----------error-------",
+                                      "kind": "PRIMITIVE",
+                                      "is_primitive": true,
+                                      "children": []
+                                    },
+                                    {
                                       "name": "short-Macro-eNB-ID",
                                       "kind": "PRIMITIVE",
                                       "is_primitive": true,
@@ -536,7 +582,14 @@
                                   "name": "ENGNB-ID",
                                   "kind": "CHOICE",
                                   "is_primitive": false,
-                                  "children": []
+                                  "children": [
+                                    {
+                                      "name": "gNB-ID",
+                                      "kind": "PRIMITIVE",
+                                      "is_primitive": true,
+                                      "children": []
+                                    }
+                                  ]
                                 }
                               ]
                             }

@@ -403,32 +403,77 @@ def split_fields_from_block(content):
     return [p.strip() for p in parts if p.strip()]
 
 
+# def parse_fields(content):
+#     items = split_fields_from_block(content)
+#     fields = []
+#     for it in items:
+#         s = it.strip()
+#         if any(e in s for e in ELLIPSIS): continue
+#         if "SingleContainer" in s:
+#             fields.append((None, s))
+#             continue
+
+#         m = re.match(r"^([A-Za-z0-9'\-]+)\s+(.+)", s)
+#         if m:
+#             fname = m.group(1).strip()
+#             ftype = m.group(2).strip()
+#             ftype = re.sub(r"\bOPTIONAL\b.*$", "", ftype, flags=re.I).strip()
+#             ftype = re.sub(r"\bPRESENCE\b.*$", "", ftype, flags=re.I).strip()
+#             ftype = re.sub(r"\bCONSTRAINED BY\b.*$", "", ftype, flags=re.I).strip()
+#             fields.append((fname, ftype))
+#             continue
+
+#         tokens = re.findall(r"[A-Za-z0-9'\-]+", s)
+#         if tokens:
+#             fields.append((tokens[0], None))
+#             continue
+#         fields.append((None, s))
+#     return fields
+
+
 def parse_fields(content):
     items = split_fields_from_block(content)
     fields = []
     for it in items:
         s = it.strip()
-        if any(e in s for e in ELLIPSIS): continue
-        if "SingleContainer" in s:
-            fields.append((None, s))
+        s = re.sub(r'\bthis\b', '----------error-------', s, flags=re.IGNORECASE)
+        # Case 0: Nếu dòng chỉ là "..." → bỏ
+        if s in ELLIPSIS:
             continue
 
-        m = re.match(r"^([A-Za-z0-9'\-]+)\s+(.+)", s)
+        # Case 1: đúng dạng "name  type"
+        m = FIELD_LINE_RE.match(s)
         if m:
             fname = m.group(1).strip()
             ftype = m.group(2).strip()
-            ftype = re.sub(r"\bOPTIONAL\b.*$", "", ftype, flags=re.I).strip()
-            ftype = re.sub(r"\bPRESENCE\b.*$", "", ftype, flags=re.I).strip()
-            ftype = re.sub(r"\bCONSTRAINED BY\b.*$", "", ftype, flags=re.I).strip()
+
+            # loại bỏ OPTIONAL/PRESENCE nhưng KHÔNG đụng tới '...'
+            ftype = re.sub(
+                r"\bOPTIONAL\b|\bDEFAULT\b.*$|\bPRESENCE\b.*$|\bCONSTRAINED BY.*$",
+                "",
+                ftype,
+                flags=re.IGNORECASE
+            ).strip()
+
             fields.append((fname, ftype))
             continue
 
-        tokens = re.findall(r"[A-Za-z0-9'\-]+", s)
-        if tokens:
+        # Case 2: Nếu trong dòng có fieldName + "..." → vẫn phải giữ fieldName
+        tokens = IDENT.findall(s)
+        if len(tokens) >= 1 and "..." in s:
+            fields.append((tokens[0], None))   # giữ home-eNB-ID
+            continue
+
+        # Case 3: 1 token duy nhất → field không có type
+        if len(tokens) == 1:
             fields.append((tokens[0], None))
             continue
+
+        # Case 4: fallback
         fields.append((None, s))
+
     return fields
+
 
 # ============================================================
 # Node + type classifier

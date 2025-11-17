@@ -1,7 +1,6 @@
 /* e2ap_GlobalE2node_ID.c */
-#include "e2ap_GlobalE2node_ID.h"
-#include "rtxsrc/rtxErrCodes.h"
 
+// choice
 EXTERN int asn1PE_e2ap_GlobalE2node_ID (OSCTXT* pctxt, e2ap_GlobalE2node_ID* pvalue)
 {
    int stat = 0;
@@ -21,12 +20,15 @@ EXTERN int asn1PE_e2ap_GlobalE2node_ID (OSCTXT* pctxt, e2ap_GlobalE2node_ID* pva
    }
 
    switch (pvalue->t) {
-      case 1:
+      case 1.0:
          RTXCTXPUSHELEMNAME (pctxt, "gNB");
-         pvalue->u.gNB = rtxMemAllocType (pctxt, e2ap_GlobalGNB_ID);
-         if (pvalue->u.gNB == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
-         asn1Init_e2ap_GlobalGNB_ID (pvalue->u.gNB);
          stat = asn1PE_e2ap_GlobalGNB_ID (pctxt, pvalue->u.gNB);
+         if (stat != 0) return LOG_RTERR (pctxt, stat);
+         RTXCTXPOPELEMNAME (pctxt);
+         break;
+      case 2.0:
+         RTXCTXPUSHELEMNAME (pctxt, "ng_eNB");
+         stat = asn1PE_e2ap_GlobalNGeNB_ID (pctxt, pvalue->u.ng_eNB);
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXPOPELEMNAME (pctxt);
          break;
@@ -58,12 +60,19 @@ EXTERN int asn1PD_e2ap_GlobalE2node_ID (OSCTXT* pctxt, e2ap_GlobalE2node_ID* pva
    }
 
    switch (pvalue->t) {
-      case 1:
+      case 1.0:
          RTXCTXPUSHELEMNAME (pctxt, "gNB");
          pvalue->u.gNB = rtxMemAllocType (pctxt, e2ap_GlobalGNB_ID);
          if (pvalue->u.gNB == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
-         asn1Init_e2ap_GlobalGNB_ID (pvalue->u.gNB);
          stat = asn1PD_e2ap_GlobalGNB_ID (pctxt, pvalue->u.gNB);
+         if (stat != 0) return LOG_RTERR (pctxt, stat);
+         RTXCTXPOPELEMNAME (pctxt);
+         break;
+      case 2.0:
+         RTXCTXPUSHELEMNAME (pctxt, "ng_eNB");
+         pvalue->u.ng_eNB = rtxMemAllocType (pctxt, e2ap_GlobalNGeNB_ID);
+         if (pvalue->u.ng_eNB == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
+         stat = asn1PD_e2ap_GlobalNGeNB_ID (pctxt, pvalue->u.ng_eNB);
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXPOPELEMNAME (pctxt);
          break;
@@ -87,12 +96,18 @@ void asn1Free_e2ap_GlobalE2node_ID (OSCTXT* pctxt, e2ap_GlobalE2node_ID* pvalue)
 {
    if (pvalue == 0) return;
    switch (pvalue->t) {
-      case 1:
+      case 1.0:
          if (pvalue->u.gNB) {
             asn1Free_e2ap_GlobalGNB_ID (pctxt, pvalue->u.gNB);
             rtxMemFreePtr (pctxt, (void*)pvalue->u.gNB);
          }
          break;
+      case 2.0:
+         if (pvalue->u.ng_eNB) {
+            asn1Free_e2ap_GlobalNGeNB_ID (pctxt, pvalue->u.ng_eNB);
+            rtxMemFreePtr (pctxt, (void*)pvalue->u.ng_eNB);
+         }
+         break;
    }
-   pvalue->t = 0;
+   pvalue->t = 0;
 }

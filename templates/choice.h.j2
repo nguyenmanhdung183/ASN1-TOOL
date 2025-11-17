@@ -1,12 +1,6 @@
 /* e2ap_{{name}}.h */
-#ifndef _E2AP_{{name|upper}}_H_
-#define _E2AP_{{name|upper}}_H_
 
-#include "rtxsrc/rtxContext.h"
-{% for inc in includes %}
-#include "{{inc}}.h"
-{% endfor %}
-
+// choice
 typedef struct e2ap_{{name}} {
    OSINT32 t;  /* choice tag */
    union {
@@ -25,4 +19,3 @@ EXTERN int asn1Copy_e2ap_{{name}} (OSCTXT* pctxt, const e2ap_{{name}}* pSrcValue
 EXTERN int asn1Init_e2ap_{{name}} (e2ap_{{name}}* pvalue);
 EXTERN void asn1Free_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue);
 
-#endif

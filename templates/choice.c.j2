@@ -1,7 +1,6 @@
 /* e2ap_{{name}}.c */
-#include "e2ap_{{name}}.h"
-#include "rtxsrc/rtxErrCodes.h"
 
+// choice
 EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
 {
    int stat = 0;
@@ -24,9 +23,6 @@ EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
 {% for choice in choices %}
       case {{choice.tag}}:
          RTXCTXPUSHELEMNAME (pctxt, "{{choice.name}}");
-         pvalue->u.{{choice.field}} = rtxMemAllocType (pctxt, e2ap_{{choice.type}});
-         if (pvalue->u.{{choice.field}} == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
-         asn1Init_e2ap_{{choice.type}} (pvalue->u.{{choice.field}});
          stat = asn1PE_e2ap_{{choice.type}} (pctxt, pvalue->u.{{choice.field}});
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXPOPELEMNAME (pctxt);
@@ -65,7 +61,6 @@ EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
          RTXCTXPUSHELEMNAME (pctxt, "{{choice.name}}");
          pvalue->u.{{choice.field}} = rtxMemAllocType (pctxt, e2ap_{{choice.type}});
          if (pvalue->u.{{choice.field}} == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
-         asn1Init_e2ap_{{choice.type}} (pvalue->u.{{choice.field}});
          stat = asn1PD_e2ap_{{choice.type}} (pctxt, pvalue->u.{{choice.field}});
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXPOPELEMNAME (pctxt);
@@ -100,5 +95,5 @@ void asn1Free_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
          break;
 {% endfor %}
    }
-   pvalue->t = 0;
+   pvalue->t = 0;
 }

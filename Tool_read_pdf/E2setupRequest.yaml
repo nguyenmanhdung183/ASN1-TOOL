@@ -5,16 +5,19 @@ E2setupRequest:
       GlobalE2node-gNB-ID:
         GlobalgNB-ID:
           PLMN-Identity: {}
-          GNB-ID-Choice: {}
+          GNB-ID-Choice:
+            gnb-ID: {}
         GlobalenGNB-ID:
           PLMN-Identity: {}
-          ENGNB-ID: {}
+          ENGNB-ID:
+            gNB-ID: {}
         GNB-CU-UP-ID: {}
         GNB-DU-ID: {}
       GlobalE2node-en-gNB-ID:
         GlobalenGNB-ID:
           PLMN-Identity: {}
-          ENGNB-ID: {}
+          ENGNB-ID:
+            gNB-ID: {}
         GNB-CU-UP-ID: {}
         GNB-DU-ID: {}
       GlobalE2node-ng-eNB-ID:
@@ -28,6 +31,7 @@ E2setupRequest:
           PLMN-Identity: {}
           ENB-ID:
             macro-eNB-ID: {}
+            '----------error-------': {}
             short-Macro-eNB-ID: {}
             long-Macro-eNB-ID: {}
         NGENB-DU-ID: {}
@@ -36,6 +40,7 @@ E2setupRequest:
           PLMN-Identity: {}
           ENB-ID:
             macro-eNB-ID: {}
+            '----------error-------': {}
             short-Macro-eNB-ID: {}
             long-Macro-eNB-ID: {}
     RANfunctions-List:
@@ -58,7 +63,8 @@ E2setupRequest:
               GlobalNG-RANNode-ID:
                 GlobalgNB-ID:
                   PLMN-Identity: {}
-                  GNB-ID-Choice: {}
+                  GNB-ID-Choice:
+                    gnb-ID: {}
                 GlobalngeNB-ID:
                   PLMN-Identity: {}
                   ENB-ID-Choice:
@@ -79,11 +85,13 @@ E2setupRequest:
                 PLMN-Identity: {}
                 ENB-ID:
                   macro-eNB-ID: {}
+                  '----------error-------': {}
                   short-Macro-eNB-ID: {}
                   long-Macro-eNB-ID: {}
               GlobalenGNB-ID:
                 PLMN-Identity: {}
-                ENGNB-ID: {}
+                ENGNB-ID:
+                  gNB-ID: {}
           E2nodeComponentConfiguration:
             e2nodeComponentRequestPart: {}
             e2nodeComponentResponsePart: {}

@@ -119,6 +119,7 @@ for choice_name, group in choice_groups:
         if pd.isna(row["Field_Name"]): continue
         tag = row["Tag/ID"]
         field = row["Field_Name"]
+        field = field.replace('-', '_')
         ctype = row["IE_Type"]
         includes.add(f"e2ap_{ctype}")
         choices.append({"tag": tag, "field": field, "type": ctype, "name": field})
@@ -127,127 +128,144 @@ for choice_name, group in choice_groups:
     safe_write(f"output/e2ap_{choice_name}.c", env.get_template("choice.c.j2").render(data))
 
 # =============================
-# 3. SINH SEQUENCE (NORMAL + CONTAINER + LIST)
+# 2.5. SINH SingleContainer
 # =============================
-seq_groups = types_df[types_df["ASN1_Type"] == "SEQUENCE"].groupby("Type_Name")
-seq_order = []  # topological sort: con -> cha
+single_containers = types_df[types_df["ASN1_Type"] == "SingleContainer"]
 
-# Thu thập tất cả SEQUENCE
-seq_info = {}
-for seq_name, group in seq_groups:
-    seq_name = seq_name.replace('-', '_')
-    fields = []
-    is_container = False
-    extensible = False
-    list_field = None
+for _, row in single_containers.iterrows():
+    list_name   = row["Type_Name"].replace("-", "_")                                # E2nodeComponentConfigAddition_List
+    item_ies    = row["IE_Type"]                                                    # E2nodeComponentConfigAddition_ItemIEs
+    item_type   = item_ies.replace("IEs", "")                                       # E2nodeComponentConfigAddition_Item
+    ie_id       = row["Tag/ID"]                                                     # ID_id_E2nodeComponentConfigAddition
+    criticality = row["Criticality"] if pd.notna(row["Criticality"]) else "reject"
 
-    for _, row in group.iterrows():
-        if row["ASN1_Type"] == "IE":
-            ie_id = row["IE_ID_Constant"] if pd.notna(row["IE_ID_Constant"]) else None
-            if ie_id: is_container = True
-            if pd.notna(row["Extensible"]) and row["Extensible"].lower() == "yes":
-                extensible = True
-            fields.append({
-                "field": row["Field_Name"],
-                "ie_type": row["IE_Type"],
-                "ie_id_constant": ie_id,
-                "criticality": row["Criticality"] if pd.notna(row["Criticality"]) else "reject",
-                "presence": row["Presence"].lower() if pd.notna(row["Presence"]) else "mandatory"
-            })
-        elif row["ASN1_Type"] == "SEQUENCE OF":
-            list_field = {
-                "ie_type": row["IE_Type"],
-                "field": row["Field_Name"],
-                "ie_id_constant": row["Tag/ID"]
-            }
+    # Size constraint từ cột Min_Value / Max_Value (nếu có)
+    min_size = int(row["Min_Value"]) if pd.notna(row["Min_Value"]) else 1
+    max_val = row["Max_Value"] if pd.notna(row["Max_Value"]) else "256"
+    if max_val in ["maxofE2nodeComponents", "maxofRANfunctionID", "256"]:
+        max_size = 256
+    elif max_val == "512":
+        max_size = 512
+    elif max_val == "1024":
+        max_size = 1024
+    else:
+        max_size = int(max_val) if max_val.isdigit() else 256
 
-    seq_info[seq_name] = {
-        "fields": fields,
-        "is_container": is_container,
-        "extensible": extensible,
-        "list_field": list_field,
-        "group": group
+    data = {
+        "list_name":   list_name,
+        "item_ies":    item_ies,
+        "item_type":   item_type,
+        "ie_id":       ie_id,
+        "criticality": f"e2ap_Criticality_{criticality}",
+        "min_size":    min_size,
+        "max_size":    max_size,
     }
 
-# Xác định thứ tự sinh: con trước, cha sau
-def get_deps(name):
-    deps = set()
-    info = seq_info.get(name, {})
-    for f in info.get("fields", []):
-        deps.add(f["ie_type"])
-    if info.get("list_field"):
-        deps.add(info["list_field"]["ie_type"])
-    return deps
+    # 1. Sinh ProtocolIE-SingleContainer (ItemIEs) – struct
+    # safe_write(f"output/e2ap_{item_ies}.h",
+    #            env.get_template("protocol_ie_single.h.j2").render(data))
+    # safe_write(f"output/e2ap_{item_ies}.c",
+    #            env.get_template("protocol_ie_single.c.j2").render(data))
 
-from collections import deque
-visited = set()
-order = []
+    # 2. Sinh List: SEQUENCE (SIZE) OF ProtocolIE-SingleContainer<...>
+    safe_write(f"output/e2ap_{list_name}.h",
+               env.get_template("seq_of_single_container.h.j2").render(data))
+    safe_write(f"output/e2ap_{list_name}.c",
+               env.get_template("seq_of_single_container.c.j2").render(data))
 
-def dfs(node):
-    if node in visited: return
-    visited.add(node)
-    for dep in get_deps(node):
-        if dep in seq_info:
-            dfs(dep)
-    order.append(node)
-
-for name in seq_info:
-    dfs(name)
+    print(f"SingleContainer → {list_name} (uses {item_ies})")
 
 # =============================
-# 4. SINH THEO THỨ TỰ: CON -> CHA
+# SINH IE (Protocol-IES) – CHỈ CẦN TÌM DÒNG ASN1_Type == "IE" + IE_Type kết thúc bằng "IEs"
 # =============================
-for seq_name in order:
-    info = seq_info[seq_name]
-    fields = info["fields"]
-    is_container = info["is_container"]
-    extensible = info["extensible"]
-    list_field = info["list_field"]
+ie_rows = types_df[
+    (types_df["ASN1_Type"] == "IE") &
+    (types_df["IE_Type"].str.endswith("IEs") == False) &  # IE thật, không phải container
+    (types_df["Type_Name"].str.contains("ItemIEs"))       # chỉ lấy XXX-ItemIEs
+]
 
-    includes = set(f"e2ap_{f['ie_type']}" for f in fields)
-    if list_field:
-        includes.add(f"e2ap_{list_field['ie_type']}")
+for _, row in ie_rows.iterrows():
+    ies_name    = row["Type_Name"].replace("-", "_")# + "IEs"   # E2nodeComponentConfigAddition_ItemIEs
+    item_type   = row["IE_Type"]                                # E2nodeComponentConfigAddition_Item
+    ie_id       = row["Tag/ID"]
+    criticality = row["Criticality"] if pd.notna(row["Criticality"]) else "reject"
 
-    # === 1. Normal SEQUENCE (không phải container) ===
-    if not is_container and not list_field:
-        data = {"name": seq_name, "fields": fields, "extensible": extensible}
-        safe_write(f"output/e2ap_{seq_name}.h", env.get_template("seq_normal.h.j2").render(data))
-        safe_write(f"output/e2ap_{seq_name}.c", env.get_template("seq_normal.c.j2").render(data))
+    data = {
+        "ies_name": ies_name,
+        "item_type": item_type,
+        "ie_id": ie_id,
+        "criticality": f"e2ap_Criticality_{criticality}"
+    }
+
+    safe_write(f"output/e2ap_{ies_name}.h", env.get_template("ie.h.j2").render(data))
+    safe_write(f"output/e2ap_{ies_name}.c", env.get_template("ie.c.j2").render(data))
+    print(f"IE → e2ap_{ies_name}.h/c")
+
+# =============================
+# 4. SINH SEQUENCE (cả normal SEQUENCE và ProtocolIE-Container)
+# =============================
+sequence_rows = types_df[
+    (types_df["ASN1_Type"] == "SEQUENCE") #| (types_df["ASN1_Type"] == "Container") |(types_df["ASN1_Type"] == "IE")  # một số SEQUENCE được định nghĩa dưới dạng IE cha
+]
+
+# Lấy danh sách các SEQUENCE cần sinh (dựa vào Type_Name duy nhất)
+sequence_names = types_df[types_df["ASN1_Type"].isin(["SEQUENCE", "Container"])]["Type_Name"].unique()
+
+for seq_name_raw in sequence_names:
+    seq_name = seq_name_raw.replace('-', '_')
+
+    # Tìm tất cả các IE con thuộc về SEQUENCE này
+    # Điều kiện: Parent_Type == seq_name_raw HOẶC Type_Name == seq_name_raw (trường hợp SEQUENCE chính)
+    child_rows = types_df[
+        (types_df["Parent_Type"] == seq_name_raw) |
+        ((types_df["Type_Name"] == seq_name_raw) & (types_df["ASN1_Type"] == "IE"))
+    ]
+
+    fields = []
+    for _, row in child_rows.iterrows():
+        field_name_raw = row["Field_Name"]
+        if pd.isna(field_name_raw):
+            continue
+
+        field_name = field_name_raw.replace('-', '_')
+        ie_type = row["IE_Type"]
+
+        # Xác định presence: nếu cột Optional có giá trị (Yes/O, v.v.) → optional
+        optional_val = row.get("Optional")
+        presence = "optional" if (pd.notna(optional_val) and str(optional_val).strip() != "") else "mandatory"
+
+        fields.append({
+            "field": field_name,
+            "ie_type": ie_type,
+            "presence": presence,
+        })
+
+    # Kiểm tra extensible
+    extensible = False
+    ext_row = types_df[types_df["Type_Name"] == seq_name_raw]
+    if not ext_row.empty:
+        ext_val = ext_row.iloc[0].get("Extensible")
+        if pd.notna(ext_val) and str(ext_val).strip().lower() in ["yes", "true", "1"]:
+            extensible = True
+
+    # Nếu không có field nào → bỏ qua (tránh sinh file rỗng)
+    if not fields and not extensible:
+        print(f"Skip empty SEQUENCE: {seq_name}")
         continue
 
-    # === 2. ProtocolIE-Container (nhiều IE) ===
-    if is_container:
-        container_name = f"{seq_name}IEs"
-        tvalue_fields = [{"field": f["field"], "ie_type": f["ie_type"]} for f in fields]
-        safe_write(f"output/e2ap_{container_name}.h", env.get_template("protocol_ie.h.j2").render({
-            "container_name": container_name, "parent": seq_name
-        }))
-        if tvalue_fields:
-            safe_write(f"output/e2ap_{seq_name}IEs_T_VALUE.h", env.get_template("tvalue.h.j2").render({
-                "parent": seq_name, "fields": tvalue_fields, "includes": sorted(includes)
-            }))
+    data = {
+        "name": seq_name,
+        "fields": fields,
+        "extensible": extensible
+    }
 
-    # === 3. SEQUENCE OF (List) ===
-    if list_field:
-        list_name = list_field["ie_type"]
-        item_type = list_name.replace("_List", "_Item")
-        item_ies = f"{item_type}IEs"
+    # Sinh file .h và .c dùng đúng template seq_normal
+    safe_write(f"output/e2ap_{seq_name}.h",
+               env.get_template("seq_normal.h.j2").render(data))
+    safe_write(f"output/e2ap_{seq_name}.c",
+               env.get_template("seq_normal.c.j2").render(data))
 
-        # SingleContainer
-        safe_write(f"output/e2ap_{item_ies}_T_VALUE.h", env.get_template("tvalue_single.h.j2").render({
-            "item_ies": item_ies, "item_type": item_type, "ie_id": list_field["ie_id_constant"]
-        }))
-        safe_write(f"output/e2ap_{item_ies}.h", env.get_template("protocol_ie_single.h.j2").render({
-            "item_ies": item_ies, "item_type": item_type, "ie_id_constant": list_field["ie_id_constant"]
-        }))
-        safe_write(f"output/e2ap_{item_ies}.c", env.get_template("protocol_ie_single.c.j2").render({
-            "item_ies": item_ies, "item_type": item_type, "ie_id_constant": list_field["ie_id_constant"],
-            "criticality": "reject"
-        }))
-        safe_write(f"output/e2ap_{list_name}.h", env.get_template("seq_of.h.j2").render({
-            "list_name": list_name, "item_ies": item_ies
-        }))
-
+    print(f"SEQUENCE → e2ap_{seq_name}.h/c  ({len(fields)} fields, extensible={extensible})")
 # =============================
 # 5. SINH MESSAGE (E2SetupRequest, ...)
 # =============================
