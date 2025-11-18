@@ -6,7 +6,7 @@ EXTERN int asn1PE_e2ap_{{message_name}} (OSCTXT* pctxt, e2ap_{{message_name}}* p
 {
    RTXCTXPUSHTYPENAME (pctxt, "{{message_name}}");
    int stat = asn1PE_e2ap_{{message_name}}_protocolIEs_Container (pctxt, &pvalue->protocolIEs);
-   RTXCTXPOPEXTNAME (pctxt);
+   RTXCTXPOPTYPENAME (pctxt);
    return (stat != 0) ? LOG_RTERR (pctxt, stat) : 0;
 }
 
@@ -43,6 +43,6 @@ EXTERN int asn1PE_e2ap_{{message_name}}_protocolIEs_Container (OSCTXT* pctxt, co
       if (stat != 0) return LOG_RTERR (pctxt, stat);
    }
 
-   RTXCTXPOPEXTNAME (pctxt);
-   return 0;
+   RTXCTXPOPTYPENAME (pctxt);
+   return stat;
 }

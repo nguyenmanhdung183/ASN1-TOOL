@@ -13,20 +13,20 @@ EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}} value)
 
    PU_SETSIZECONSTRAINT (pctxt, OSUINTCONST({{min_size}}), OSUINTCONST({{max_size}}), OSUINTCONST(0), OSUINT32_MAX);
 
-   char c = (char) rtValidateStr (19, value);  /* 19 = PrintableString */
+   char c = (char) rtValidateStr (19, value); 
    if (c != 0) {
       char lbuf[2];
       lbuf[0] = c;
       lbuf[1] = 0;
-      rtxErrAddStrnParm (pctxt, lbuf);
+      rtxErrAddStrParm (pctxt, lbuf);
       return LOG_RTERR (pctxt, RTERR_CONSVIO);
    }
 
    stat = pe_ConstrainedStringEx (pctxt, value, 0, 8, 7, 7);
    if (stat != 0) return LOG_RTERR (pctxt, stat);
 
-   RTXCTXPOPEXTNAME (pctxt);
-   return 0;
+   RTXCTXPOPTYPENAME (pctxt);
+   return stat;
 }
 
 EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* ppvalue)
@@ -39,8 +39,8 @@ EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* ppvalue)
    stat = pd_ConstrainedStringEx (pctxt, ppvalue, 0, 8, 7, 7);
    if (stat != 0) return LOG_RTERR (pctxt, stat);
 
-   RTXCTXPOPEXTNAME (pctxt);
-   return 0;
+   RTXCTXPOPTYPENAME (pctxt);
+   return stat;
 }
 
 {% else %}
@@ -53,8 +53,8 @@ EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}} value)
    stat = pe_PrintableString (pctxt, value);
    if (stat != 0) return LOG_RTERR (pctxt, stat);
 
-   RTXCTXPOPEXTNAME (pctxt);
-   return 0;
+   RTXCTXPOPTYPENAME (pctxt);
+   return stat;
 }
 
 EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* ppvalue)
@@ -65,15 +65,17 @@ EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* ppvalue)
    stat = pd_PrintableString (pctxt, ppvalue);
    if (stat != 0) return LOG_RTERR (pctxt, stat);
 
-   RTXCTXPOPEXTNAME (pctxt);
-   return 0;
+   RTXCTXPOPTYPENAME (pctxt);
+   return stat;
 }
 
 {% endif %}
 
 void asn1Free_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}} pvalue)
 {
-   if (pvalue) rtxMemFreePtr (pctxt, (void*)pvalue);
+   if (0 == pvalue) return; 
+   rtxMemFreePtr (pctxt, (void*)pvalue);
+   pvalue = 0;
 }
 
 /* Print to string */

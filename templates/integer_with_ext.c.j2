@@ -14,8 +14,8 @@ EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}} value)
       stat = pe_UnconsUnsigned (pctxt, value);
    }
    if (stat != 0) return LOG_RTERR (pctxt, stat);
-   RTXCTXPOPEXTNAME (pctxt);
-   return 0;
+   RTXCTXPOPTYPENAME (pctxt);
+   return stat;
 }
 
 EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
@@ -31,8 +31,8 @@ EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
       stat = pd_UnconsUnsigned (pctxt, pvalue);
    }
    if (stat != 0) return LOG_RTERR (pctxt, stat);
-   RTXCTXPOPEXTNAME (pctxt);
-   return 0;
+   RTXCTXPOPTYPENAME (pctxt);
+   return stat;
 }
 
 EXTERN int asn1PrtToStr_e2ap_{{name}} (const char* name, e2ap_{{name}}* pvalue, char* buffer, OSSIZE bufSize)

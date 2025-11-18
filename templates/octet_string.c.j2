@@ -8,17 +8,17 @@ EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
 {
    int stat = 0;
    RTXCTXPUSHTYPENAME (pctxt, "{{name}}");
-   stat = pe_OctetString (pctxt, pvalue->numocts, pvalue->data);
-   RTXCTXPOPEXTNAME (pctxt);
+   stat = pe_OctetString (pctxt, pvalue.numocts, pvalue.data);
+   RTXCTXPOPTYPENAME (pctxt);
    return (stat != 0) ? LOG_RTERR (pctxt, stat) : 0;
 }
 
-EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}** ppvalue)
+EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
 {
    int stat = 0;
    RTXCTXPUSHTYPENAME (pctxt, "{{name}}");
-   stat = pd_DynOctetString (pctxt, (OSDynOctStr**)ppvalue);
-   RTXCTXPOPEXTNAME (pctxt);
+   stat = pd_DynOctetString (pctxt, (OSDynOctStr*)pvalue);
+   RTXCTXPOPTYPENAME (pctxt);
    return (stat != 0) ? LOG_RTERR (pctxt, stat) : 0;
 }
 
@@ -35,9 +35,9 @@ void asn1Free_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
    if (pvalue == 0) return;
    if (pvalue->numocts > 0 && pvalue->data != 0) {
       rtxMemFreePtr (pctxt, (void*)pvalue->data);
+      pvalue->numocts = 0;
+      pvalue->data = 0;
    }
-   pvalue->numocts = 0;
-   pvalue->data = 0;
 }
 
 {% else %}
@@ -48,7 +48,7 @@ EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
    RTXCTXPUSHTYPENAME (pctxt, "{{name}}");
    PU_SETSIZECONSTRAINT (pctxt, OSUINTCONST({{size}}), OSUINTCONST({{size}}), 0, 0);
    stat = pe_OctetString (pctxt, pvalue->numocts, pvalue->data);
-   RTXCTXPOPEXTNAME (pctxt);
+   RTXCTXPOPTYPENAME (pctxt);
    return (stat != 0) ? LOG_RTERR (pctxt, stat) : 0;
 }
 
@@ -58,7 +58,7 @@ EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
    RTXCTXPUSHTYPENAME (pctxt, "{{name}}");
    PU_SETSIZECONSTRAINT (pctxt, OSUINTCONST({{size}}), OSUINTCONST({{size}}), 0, 0);
    stat = pd_OctetString (pctxt, &pvalue->numocts, pvalue->data, sizeof(pvalue->data));
-   RTXCTXPOPEXTNAME (pctxt);
+   RTXCTXPOPTYPENAME (pctxt);
    return (stat != 0) ? LOG_RTERR (pctxt, stat) : 0;
 }
 

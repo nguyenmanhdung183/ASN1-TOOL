@@ -19,8 +19,8 @@ int asn1PE_e2ap_{{item_ies}} (OSCTXT* pctxt, e2ap_{{item_ies}}* pvalue)
    stat = asn1PE_e2ap_{{item_type}} (pctxt, &pvalue->value);
    if (stat != 0) return LOG_RTERR(pctxt, stat);
 
-   RTXCTXPOPEXTNAME(pctxt);
-   return 0;
+   RTXCTXPOPTYPENAME (pctxt);
+   return stat;
 }
 
 void asn1Init_e2ap_{{item_ies}} (e2ap_{{item_ies}}* pvalue)

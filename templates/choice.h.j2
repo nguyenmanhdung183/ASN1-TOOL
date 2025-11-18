@@ -7,7 +7,6 @@ typedef struct e2ap_{{name}} {
 {% for choice in choices %}
       e2ap_{{choice.type}}* {{choice.field}};
 {% endfor %}
-      ASN1OpenType* extElem1;  /* extension */
    } u;
 } e2ap_{{name}};
 
@@ -18,4 +17,3 @@ EXTERN int asn1PrtToStr_e2ap_{{name}} (const char* name, e2ap_{{name}}* pvalue, 
 EXTERN int asn1Copy_e2ap_{{name}} (OSCTXT* pctxt, const e2ap_{{name}}* pSrcValue, e2ap_{{name}}* pDstValue);
 EXTERN int asn1Init_e2ap_{{name}} (e2ap_{{name}}* pvalue);
 EXTERN void asn1Free_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue);
-

@@ -1,23 +1,15 @@
 /* e2ap_{{name}}.c */
 
-// choice
+// choice -> ok
 EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
 {
    int stat = 0;
-   OSBOOL extbit = FALSE;
    RTXCTXPUSHTYPENAME (pctxt, "{{name}}");
 
-   extbit = (OSBOOL)(pvalue->t > 3);
-   stat = rtxEncBit (pctxt, extbit);
+   RTXCTXPUSHELEMNAME (pctxt, "t");
+   stat = rtxEncBit (pctxt, pvalue->t-1, 3);
    if (stat != 0) return LOG_RTERR (pctxt, stat);
-
-   if (extbit) {
-      stat = pe_SmallNonNegWholeNumber (pctxt, pvalue->t - 4);
-      if (stat != 0) return LOG_RTERR (pctxt, stat);
-   } else {
-      stat = rtxEncBits (pctxt, pvalue->t - 1, 2);
-      if (stat != 0) return LOG_RTERR (pctxt, stat);
-   }
+   RTXCTXPOPELEMNAME (pctxt);
 
    switch (pvalue->t) {
 {% for choice in choices %}
@@ -33,36 +25,31 @@ EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
    }
 
    RTXCTXPOPELEMNAME (pctxt);
-   return 0;
+   return stat;
 }
 
 EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
 {
    int stat = 0;
    OSUINT32 ui;
-   OSBOOL extbit = FALSE;
-   ASN1OpenType openType;
+
    RTXCTXPUSHTYPENAME (pctxt, "{{name}}");
 
-   stat = rtxDecBit (pctxt, &extbit);
+   stat = rtxDecBits (pctxt, &ui, 2);
    if (stat != 0) return LOG_RTERR (pctxt, stat);
-
-   if (extbit) {
-      stat = pd_SmallNonNegWholeNumber (pctxt, &ui);
-      if (stat != 0) return LOG_RTERR (pctxt, stat);
-      pvalue->t = ui + 4;
-   } else {
-      pvalue->t = ui + 1;
-   }
+   else pvalue->t = ui + 1;
 
    switch (pvalue->t) {
 {% for choice in choices %}
       case {{choice.tag}}:
          RTXCTXPUSHELEMNAME (pctxt, "{{choice.name}}");
+         
          pvalue->u.{{choice.field}} = rtxMemAllocType (pctxt, e2ap_{{choice.type}});
-         if (pvalue->u.{{choice.field}} == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
-         stat = asn1PD_e2ap_{{choice.type}} (pctxt, pvalue->u.{{choice.field}});
+         if (pvalue->u.{{choice.field}} == NULL) 
+            return LOG_RTERR (pctxt, RTERR_NOMEM);
+         stat = asn1PD_e2ap_{{choice.type}} (pctxt, &pvalue->u.{{choice.field}});
          if (stat != 0) return LOG_RTERR (pctxt, stat);
+         
          RTXCTXPOPELEMNAME (pctxt);
          break;
 {% endfor %}
@@ -71,7 +58,7 @@ EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
    }
 
    RTXCTXPOPELEMNAME (pctxt);
-   return 0;
+   return stat;
 }
 
 int asn1Init_e2ap_{{name}} (e2ap_{{name}}* pvalue)
@@ -95,5 +82,5 @@ void asn1Free_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
          break;
 {% endfor %}
    }
-   pvalue->t = 0;
+   pvalue->t = 0;
 }

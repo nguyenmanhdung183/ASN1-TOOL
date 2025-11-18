@@ -6,7 +6,7 @@ int asn1PE_e2ap_{{list_name}} (OSCTXT* pctxt, e2ap_{{list_name}}* pvalue)
 {
    int stat = 0;
    OSRTDListNode* pnode;
-   e2ap_{{item_ies}}* pdata;
+   OSUINT32 xx1;
 
    RTXCTXPUSHTYPENAME (pctxt, "{{list_name}}");
 
@@ -17,27 +17,27 @@ int asn1PE_e2ap_{{list_name}} (OSCTXT* pctxt, e2ap_{{list_name}}* pvalue)
    if (stat < 0) return LOG_RTERR (pctxt, stat);
 
    /* encode elements */
-   pnode = pvalue->head;
-   for (xx1 = 0; pnode != 0 && xx1 < pvalue->count; pnode = pnode->next, xx1++) {
-      pdata = (e2ap_{{item_ies}}*) pnode->data;
+   xx1 = 0;
+   for (pnode = pvalue->head; pnode != 0 && xx1 < pvalue->count; pnode = pnode->next) {
       RTXCTXPUSHARRAYELEMNAME (pctxt, "SEQUENCE", xx1);
 
-      stat = asn1PE_e2ap_{{item_ies}} (pctxt, pdata);
+      stat = asn1PE_e2ap_{{item_ies}} (pctxt, (e2ap_{{item_ies}}*)pnode->data);
       if (stat != 0) return LOG_RTERR (pctxt, stat);
 
       xx1++;
       RTXCTXPPOPARRAYELEMNAME (pctxt);
    }
 
-   RTXCTXPOPEXTNAME (pctxt);
-   return 0;
+   RTXCTXPOPTYPENAME (pctxt);
+   return stat;
 }
 
 int asn1PD_e2ap_{{list_name}} (OSCTXT* pctxt, e2ap_{{list_name}}** ppvalue)
 {
    int stat = 0;
+   OSRTDListNode* pnode;
    OSSIZE count = 0;
-   e2ap_{{item_ies}}* pdata;
+   OSSIZE xx1 = 0;
 
    RTXCTXPUSHTYPENAME (pctxt, "{{list_name}}");
 
@@ -49,42 +49,39 @@ int asn1PD_e2ap_{{list_name}} (OSCTXT* pctxt, e2ap_{{list_name}}** ppvalue)
    rtxDListInit (ppvalue);
 
    for (xx1 = 0; xx1 < count; xx1++) {
+      e2ap_{{item_ies}}* pdata;
       RTXCTXPUSHARRAYELEMNAME (pctxt, "SEQUENCE", xx1);
-
-      pdata = rtxMemAllocType (pctxt, e2ap_{{item_ies}});
-      if (!pdata) return LOG_RTERR (pctxt, RTERR_NOMEM);
+      rtxDListAllocNodeAndData(pctxt, e2ap_{{item_ies}}, &pnode, &pdata);
+      
+      if (pnode == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
 
       asn1Init_e2ap_{{item_ies}} (pdata);
 
+      rtxDListAppendNode(pvalue, pnode);
       stat = asn1PD_e2ap_{{item_ies}} (pctxt, pdata);
-      if (stat != 0) {
-         rtxMemFreePtr (pctxt, pdata);
-         return LOG_RTERR (pctxt, stat);
-      }
-
-      rtxDListAppendNode (ppvalue, pdata);
+      if (stat != 0) return LOG_RTERR (pctxt, stat);
 
       RTXCTXPPOPARRAYELEMNAME (pctxt);
    }
 
-   RTXCTXPOPEXTNAME (pctxt);
-   return 0;
+   RTXCTXPOPTYPENAME (pctxt);
+   return stat;
 }
 
 void asn1Init_e2ap_{{list_name}} (e2ap_{{list_name}}* pvalue)
-{
-   rtxDListInit (pvalue);
+{  
+   if (0 == pvalue) return RTERR_NULLPTR;
+   rtxDListFastInit (pvalue);
+   return 0;
 }
 
 void asn1Free_e2ap_{{list_name}} (OSCTXT* pctxt, e2ap_{{list_name}}* pvalue)
 {
+   e2ap_{{list_name}}* pdata;
    OSRTDListNode* pnode = pvalue->head;
-   while (pnode) {
-      e2ap_{{item_ies}}* pdata = (e2ap_{{item_ies}}*) pnode->data;
-      if (pdata) {
-         asn1Free_e2ap_{{item_ies}} (pctxt, pdata);
-         rtxMemFreePtr (pctxt, pdata);
-      }
+   while (0 != pnode) {
+      pdata = (e2ap_{{item_ies}}*) pnode->data;
+      asn1Free_e2ap_{{item_ies}} (pctxt, pdata);
       pnode = pnode->next;
    }
    rtxDListFreeAll (pvalue);

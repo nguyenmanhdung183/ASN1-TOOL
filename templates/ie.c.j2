@@ -37,7 +37,7 @@ int asn1PE_e2ap_{{ies_name}} (OSCTXT* pctxt, e2ap_{{ies_name}}* pvalue)
 
       switch (pvalue->value.t) {
          case T_E2AP_PDU_Contents_{{ies_name}}_{{ie_id_const}}:
-            RTXCTXPUSHELEMNAME (pctxt, "e2ap-E2nodeComponentConfigAddition-Item");
+            RTXCTXPUSHELEMNAME (pctxt, "e2ap-{{ies_name}}");
             stat = asn1PE_e2ap_{{item_type}} (pctxt, &pvalue->value.u_{{ies_name}}_{{ie_id_const}}.value);
             if (stat != 0) return LOG_RTERR (pctxt, stat);
             RTXCTXPOPELEMNAME (pctxt);
@@ -62,8 +62,8 @@ int asn1PE_e2ap_{{ies_name}} (OSCTXT* pctxt, e2ap_{{ies_name}}* pvalue)
       RTXCTXPOPELEMNAME (pctxt);
    }
 
-   RTXCTXPOPEXTNAME (pctxt);
-   return 0;
+   RTXCTXPOPTYPENAME (pctxt);
+   return stat;
 }
 
 int asn1PD_e2ap_{{ies_name}} (OSCTXT* pctxt, e2ap_{{ies_name}}* pvalue)
@@ -85,6 +85,5 @@ void asn1Free_e2ap_{{ies_name}} (OSCTXT* pctxt, e2ap_{{ies_name}}* pvalue)
    if (pvalue->extElem1) {
       rtxMemFreeArray (pctxt, pvalue->extElem1);
       pvalue->extElem1 = 0;
-      pvalue->extElem1_n = 0;
    }
 }

@@ -2,22 +2,47 @@
 #include "e2ap_{{name}}.h"
 #include "rtxsrc/rtxErrCodes.h"
 
-const OSEnumItem e2ap_{{name}}_ENUMTAB[e2ap_{{name}}_ENUMTABSIZE] = {
+// enumerated -> ok
+const OSEnumItem e2ap_{{name}}_ENUMTAB[] = {
 {% for item in items %}
    { OSUTF8("{{item.string | replace('-', '_') }}"), {{item.value}}, {{item.string|length}}, {{item.transidx}} }{% if not loop.last %},{% endif %}
 {% endfor %}
 };
+
+const OSUTF8CHAR* e2ap_{{name}}_ToString(OSUINT32 value) {
+   OSUINT32 idx = value;
+   if (idx >= 0 && idx < e2ap_{{name}}_ENUMTABSIZE) {
+      return e2ap_{{name}}_ENUMTAB[idx].name;
+   }
+   else return OSUTF8("_UNKNOWN_");
+}
+
+int e2ap_{{name}}_ToEnum2 (OSCTXT* pctxt,const OSUTF8CHAR* value,OSSIZE valueLen,e2ap_{{name}}* pvalue){
+   OSUINT32 idx = rtxLookupEnum (value, valueLen, e2ap_{{name}}_ENUMTAB, 2);
+   if (idx >= 0) {
+      *pvalue = ({{name}})e2ap_{{name}}_ENUMTAB[idx].value;
+      return 0;
+   } else {
+      rtxErrAddStrParm (pctxt, (const char*) value);
+      return LOG_RTERR(pctxt, RTERR_INVENUM);
+   }
+}
+
+int e2ap_{{name}}_ToEnum (OSCTXT* pctxt,const OSUTF8CHAR* value,e2ap_{{name}}* pvalue){
+   OSSIZE OSUTF8CHAR* value = rtxUTF8LenBytes(value);
+   return e2ap_{{name}}_ToEnum2(pctxt, value, valueLen, pvalue);
+}
 
 EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}} value)
 {
    int stat = 0;
    RTXCTXPUSHTYPENAME (pctxt, "{{name}}");
    if (value >= {{items|length}}) {
-      rtxErrAddIntParm (pctxt, value);
+      rtxErrAddUIntParm (pctxt, value);
       return LOG_RTERR (pctxt, RTERR_INVENUM);
    }
    stat = pe_ConsUnsigned (pctxt, value, 0, OSUINTCONST({{items|length - 1}}));
-   RTXCTXPOPEXTNAME (pctxt);
+   RTXCTXPOPTYPENAME (pctxt);
    return (stat != 0) ? LOG_RTERR (pctxt, stat) : stat;
 }
 
@@ -26,17 +51,13 @@ EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
    int stat = 0;
    RTXCTXPUSHTYPENAME (pctxt, "{{name}}");
    stat = pd_ConsUnsigned (pctxt, pvalue, 0, OSUINTCONST({{items|length - 1}}));
-   RTXCTXPOPEXTNAME (pctxt);
+   RTXCTXPOPTYPENAME (pctxt);
    return (stat != 0) ? LOG_RTERR (pctxt, stat) : stat;
 }
 
 EXTERN int asn1PrtToStr_e2ap_{{name}} (const char* name, e2ap_{{name}}* pvalue, char* buffer, OSSIZE bufSize)
 {
    int stat;
-   const char* enumStr = "???";
-   if (*pvalue < e2ap_{{name}}_ENUMTABSIZE) {
-      enumStr = (const char*)e2ap_{{name}}_ENUMTAB[*pvalue].name;
-   }
    if (rtPrintToStringIndent (buffer, bufSize) < 0) return -1;
    if (rtPrintToString (name, buffer, bufSize) < 0) return -1;
    stat = rtPrintToString (" = %s\n", enumStr, buffer, bufSize);

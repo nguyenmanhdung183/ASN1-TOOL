@@ -8,7 +8,7 @@ EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}} value)
    RTXCTXPUSHTYPENAME (pctxt, "{{name}}");
    stat = pe_ConsUnsigned (pctxt, value, {{min}}, {{max}});
    if (stat != 0) return LOG_RTERR (pctxt, stat);
-   RTXCTXPOPEXTNAME (pctxt);
+   RTXCTXPOPTYPENAME (pctxt);
    return stat;
 }
 
@@ -22,7 +22,7 @@ EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
    }
    stat = rtxDecBitsToByte (pctxt, pvalue, {{bits}});
    if (stat != 0) return LOG_RTERR (pctxt, stat);
-   RTXCTXPOPEXTNAME (pctxt);
+   RTXCTXPOPTYPENAME (pctxt);
    return stat;
 }
 
