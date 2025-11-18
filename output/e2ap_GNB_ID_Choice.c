@@ -1,13 +1,19 @@
 /* e2ap_GNB_ID_Choice.c */
 
 // choice
+
+/*****************************************/
+/*           GNB_ID_Choice                */
+/*****************************************/
+
+
 EXTERN int asn1PE_e2ap_GNB_ID_Choice (OSCTXT* pctxt, e2ap_GNB_ID_Choice* pvalue)
 {
    int stat = 0;
    OSBOOL extbit = FALSE;
-   RTXCTXPUSHTYPENAME (pctxt, "GNB_ID_Choice");
+   RTXCTXPUSHTYPENAME (pctxt, "GNB-ID-Choice");
 
-   extbit = (OSBOOL)(pvalue->t > 3);
+   extbit = (OSBOOL)(pvalue->t > 0);
    stat = rtxEncBit (pctxt, extbit);
    if (stat != 0) return LOG_RTERR (pctxt, stat);
 
@@ -20,9 +26,9 @@ EXTERN int asn1PE_e2ap_GNB_ID_Choice (OSCTXT* pctxt, e2ap_GNB_ID_Choice* pvalue)
    }
 
    switch (pvalue->t) {
-      case 0.0:
-         RTXCTXPUSHELEMNAME (pctxt, "gnb_ID");
-         stat = asn1PE_e2ap_BIT STRING (pctxt, pvalue->u.gnb_ID);
+      case 0:
+         RTXCTXPUSHELEMNAME (pctxt, "gnb-ID");
+         stat = asn1PE_ASN1BitStr32 (pctxt, pvalue->u.gnb-ID);
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXPOPELEMNAME (pctxt);
          break;
@@ -55,10 +61,10 @@ EXTERN int asn1PD_e2ap_GNB_ID_Choice (OSCTXT* pctxt, e2ap_GNB_ID_Choice* pvalue)
 
    switch (pvalue->t) {
       case 0.0:
-         RTXCTXPUSHELEMNAME (pctxt, "gnb_ID");
-         pvalue->u.gnb_ID = rtxMemAllocType (pctxt, e2ap_BIT STRING);
-         if (pvalue->u.gnb_ID == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
-         stat = asn1PD_e2ap_BIT STRING (pctxt, pvalue->u.gnb_ID);
+         RTXCTXPUSHELEMNAME (pctxt, "gnb-ID");
+         pvalue->u.gnb-ID = rtxMemAllocType (pctxt, ASN1BitStr32);
+         if (pvalue->u.gnb-ID == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
+         stat = asn1PD_ASN1BitStr32 (pctxt, pvalue->u.gnb-ID);
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXPOPELEMNAME (pctxt);
          break;
@@ -83,9 +89,9 @@ void asn1Free_e2ap_GNB_ID_Choice (OSCTXT* pctxt, e2ap_GNB_ID_Choice* pvalue)
    if (pvalue == 0) return;
    switch (pvalue->t) {
       case 0.0:
-         if (pvalue->u.gnb_ID) {
-            asn1Free_e2ap_BIT STRING (pctxt, pvalue->u.gnb_ID);
-            rtxMemFreePtr (pctxt, (void*)pvalue->u.gnb_ID);
+         if (pvalue->u.gnb-ID) {
+            asn1Free_ASN1BitStr32 (pctxt, pvalue->u.gnb-ID);
+            rtxMemFreePtr (pctxt, (void*)pvalue->u.gnb-ID);
          }
          break;
    }

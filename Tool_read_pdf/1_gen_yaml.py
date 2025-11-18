@@ -159,7 +159,21 @@ def extract_text_from_pdf(path, output_txt_file=None):
 
     return full_text
 
+def extract_text_from_txt(path, output_txt_file=None):
+    # Đọc toàn bộ nội dung TXT
+    with open(path, "r", encoding="utf-8") as f:
+        full_text = f.read()
 
+    # Cleanup (giữ nguyên logic của hàm gốc)
+    full_text = full_text.replace("\u2026", "...")
+    full_text = re.sub(r"(?m)^\s*this\s*$", "", full_text, flags=re.IGNORECASE)
+
+    # Nếu muốn ghi ra file
+    if output_txt_file:
+        with open(output_txt_file, "w", encoding="utf-8") as f:
+            f.write(full_text)
+
+    return full_text
 # ============================================================
 # Balanced brace finder
 # ============================================================
@@ -653,8 +667,9 @@ def to_yaml_dict(node):
 def main(ppath, target):
     print("Reading PDF text…")
     #text = extract_text_from_pdf(ppath, "a.txt")
-    text = extract_text_from_pdf(ppath)
-    text = preprocess_pdf_text(text)
+    # text = extract_text_from_pdf(ppath)
+    # text = preprocess_pdf_text(text)
+    text = extract_text_from_txt(ppath)
     print("Extracting ASN.1 blocks…")
     blocks = extract_asn1_blocks(text)
     print(f"Found {len(blocks)} ASN.1 types.")
@@ -689,10 +704,13 @@ if __name__ == "__main__":
     if len(sys.argv) >= 3:
         pp = sys.argv[2]
     with open('../msg.config', 'r') as file:
-        line = file.readline().strip()  # strip() để loại bỏ ký tự trắng dư thừa
-        word = line.split()[0] if line else None
-    print(word)
-    tp = word
+        line1 = file.readline().strip()  # đọc dòng 1
+        line2 = file.readline().strip()  # đọc dòng 2 
+    print(line1)
+    tp = line1
+    print(line2)
+    #pp = line2 # chuyển thành txt
+    pp = "../" + line2
     main(pp, tp)
 
 

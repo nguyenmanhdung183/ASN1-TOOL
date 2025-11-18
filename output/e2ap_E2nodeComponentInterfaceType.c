@@ -1,6 +1,12 @@
 /* e2ap_E2nodeComponentInterfaceType.c */
-#include "e2ap_E2nodeComponentInterfaceType.h"
-#include "rtxsrc/rtxErrCodes.h"
+
+//enumerated
+/******************************************************/
+/*                                                    */
+/*    E2nodeComponentInterfaceType                                       */
+/*                                                    */
+/***********************
+
 
 const OSEnumItem e2ap_E2nodeComponentInterfaceType_ENUMTAB[e2ap_E2nodeComponentInterfaceType_ENUMTABSIZE] = {
    { OSUTF8("ng"), 0, 2,  },   { OSUTF8("xn"), 1, 2,  },   { OSUTF8("e1"), 2, 2,  },   { OSUTF8("f1"), 3, 2,  },   { OSUTF8("w1"), 4, 2,  },   { OSUTF8("s1"), 5, 2,  },   { OSUTF8("x2"), 6, 2,  }};

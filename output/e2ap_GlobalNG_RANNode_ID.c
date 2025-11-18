@@ -1,13 +1,19 @@
 /* e2ap_GlobalNG_RANNode_ID.c */
 
 // choice
+
+/*****************************************/
+/*           GlobalNG_RANNode_ID                */
+/*****************************************/
+
+
 EXTERN int asn1PE_e2ap_GlobalNG_RANNode_ID (OSCTXT* pctxt, e2ap_GlobalNG_RANNode_ID* pvalue)
 {
    int stat = 0;
    OSBOOL extbit = FALSE;
-   RTXCTXPUSHTYPENAME (pctxt, "GlobalNG_RANNode_ID");
+   RTXCTXPUSHTYPENAME (pctxt, "GlobalNG-RANNode-ID");
 
-   extbit = (OSBOOL)(pvalue->t > 3);
+   extbit = (OSBOOL)(pvalue->t > 0);
    stat = rtxEncBit (pctxt, extbit);
    if (stat != 0) return LOG_RTERR (pctxt, stat);
 
@@ -20,15 +26,15 @@ EXTERN int asn1PE_e2ap_GlobalNG_RANNode_ID (OSCTXT* pctxt, e2ap_GlobalNG_RANNode
    }
 
    switch (pvalue->t) {
-      case 0.0:
+      case 0:
          RTXCTXPUSHELEMNAME (pctxt, "gNB");
          stat = asn1PE_e2ap_GlobalgNB-ID (pctxt, pvalue->u.gNB);
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXPOPELEMNAME (pctxt);
          break;
-      case 1.0:
-         RTXCTXPUSHELEMNAME (pctxt, "ng_eNB");
-         stat = asn1PE_e2ap_GlobalngeNB-ID (pctxt, pvalue->u.ng_eNB);
+      case 1:
+         RTXCTXPUSHELEMNAME (pctxt, "ng-eNB");
+         stat = asn1PE_e2ap_GlobalngeNB-ID (pctxt, pvalue->u.ng-eNB);
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXPOPELEMNAME (pctxt);
          break;
@@ -69,10 +75,10 @@ EXTERN int asn1PD_e2ap_GlobalNG_RANNode_ID (OSCTXT* pctxt, e2ap_GlobalNG_RANNode
          RTXCTXPOPELEMNAME (pctxt);
          break;
       case 1.0:
-         RTXCTXPUSHELEMNAME (pctxt, "ng_eNB");
-         pvalue->u.ng_eNB = rtxMemAllocType (pctxt, e2ap_GlobalngeNB-ID);
-         if (pvalue->u.ng_eNB == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
-         stat = asn1PD_e2ap_GlobalngeNB-ID (pctxt, pvalue->u.ng_eNB);
+         RTXCTXPUSHELEMNAME (pctxt, "ng-eNB");
+         pvalue->u.ng-eNB = rtxMemAllocType (pctxt, e2ap_GlobalngeNB-ID);
+         if (pvalue->u.ng-eNB == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
+         stat = asn1PD_e2ap_GlobalngeNB-ID (pctxt, pvalue->u.ng-eNB);
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXPOPELEMNAME (pctxt);
          break;
@@ -103,9 +109,9 @@ void asn1Free_e2ap_GlobalNG_RANNode_ID (OSCTXT* pctxt, e2ap_GlobalNG_RANNode_ID*
          }
          break;
       case 1.0:
-         if (pvalue->u.ng_eNB) {
-            asn1Free_e2ap_GlobalngeNB-ID (pctxt, pvalue->u.ng_eNB);
-            rtxMemFreePtr (pctxt, (void*)pvalue->u.ng_eNB);
+         if (pvalue->u.ng-eNB) {
+            asn1Free_e2ap_GlobalngeNB-ID (pctxt, pvalue->u.ng-eNB);
+            rtxMemFreePtr (pctxt, (void*)pvalue->u.ng-eNB);
          }
          break;
    }

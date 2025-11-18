@@ -1,6 +1,10 @@
 /* e2ap_GNB_CU_UP_ID.c */
-#include "e2ap_GNB_CU_UP_ID.h"
-#include "rtxsrc/rtxErrCodes.h"
+
+
+//interger no ext
+/*****************************************/
+/*           GNB_CU_UP_ID                */
+/*****************************************/
 
 EXTERN int asn1PE_e2ap_GNB_CU_UP_ID (OSCTXT* pctxt, e2ap_GNB_CU_UP_ID value)
 {

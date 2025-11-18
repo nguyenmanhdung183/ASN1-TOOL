@@ -1,13 +1,19 @@
 /* e2ap_{{name}}.c */
 
 // choice
+
+/*****************************************/
+/*           {{name}}                */
+/*****************************************/
+
+
 EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
 {
    int stat = 0;
    OSBOOL extbit = FALSE;
-   RTXCTXPUSHTYPENAME (pctxt, "{{name}}");
+   RTXCTXPUSHTYPENAME (pctxt, "{{name|replace('_', '-')}}");
 
-   extbit = (OSBOOL)(pvalue->t > 3);
+   extbit = (OSBOOL)(pvalue->t > 0);
    stat = rtxEncBit (pctxt, extbit);
    if (stat != 0) return LOG_RTERR (pctxt, stat);
 
@@ -21,7 +27,7 @@ EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
 
    switch (pvalue->t) {
 {% for choice in choices %}
-      case {{choice.tag}}:
+      case {{choice.tag | int}}:
          RTXCTXPUSHELEMNAME (pctxt, "{{choice.name}}");
          stat = asn1PE_e2ap_{{choice.type}} (pctxt, pvalue->u.{{choice.field}});
          if (stat != 0) return LOG_RTERR (pctxt, stat);

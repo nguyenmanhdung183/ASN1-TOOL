@@ -1,11 +1,22 @@
-/* e2ap_GlobalNG_RANNode_ID.h */
 
 // choice
+
+/*****************************************/
+/*           GlobalNG_RANNode_ID                */
+/*****************************************/
+
+#define T_e2ap_GlobalNG_RANNode_ID_gNB 1
+#define T_e2ap_GlobalNG_RANNode_ID_ng_eNB 2
+#define T_e2ap_GlobalNG_RANNode_ID_extElem1 2
+
 typedef struct e2ap_GlobalNG_RANNode_ID {
    OSINT32 t;  /* choice tag */
    union {
+      /* t =  1 */
       e2ap_GlobalgNB-ID* gNB;
+      /* t =  2 */
       e2ap_GlobalngeNB-ID* ng_eNB;
+
       ASN1OpenType* extElem1;  /* extension */
    } u;
 } e2ap_GlobalNG_RANNode_ID;

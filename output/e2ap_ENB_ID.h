@@ -1,14 +1,28 @@
-/* e2ap_ENB_ID.h */
 
 // choice
+
+/*****************************************/
+/*           ENB_ID                */
+/*****************************************/
+
+#define T_e2ap_ENB_ID_macro_eNB_ID 1
+#define T_e2ap_ENB_ID_home_eNB_ID 2
+#define T_e2ap_ENB_ID_short_Macro_eNB_ID 3
+#define T_e2ap_ENB_ID_long_Macro_eNB_ID 4
+#define T_e2ap_ENB_ID_extElem1 2
+
 typedef struct e2ap_ENB_ID {
    OSINT32 t;  /* choice tag */
    union {
-      e2ap_BIT STRING* macro_eNB_ID;
-      e2ap_WG3* O_RAN;
-      e2ap_BIT STRING* home_eNB_ID;
-      e2ap_BIT STRING* short_Macro_eNB_ID;
-      e2ap_BIT STRING* long_Macro_eNB_ID;
+      /* t =  1 */
+      ASN1BitStr32* macro_eNB_ID;
+      /* t =  2 */
+      ASN1BitStr32* home_eNB_ID;
+      /* t =  3 */
+      ASN1BitStr32* short_Macro_eNB_ID;
+      /* t =  4 */
+      ASN1BitStr32* long_Macro_eNB_ID;
+
       ASN1OpenType* extElem1;  /* extension */
    } u;
 } e2ap_ENB_ID;

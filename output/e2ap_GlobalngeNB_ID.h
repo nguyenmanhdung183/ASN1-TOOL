@@ -1,10 +1,17 @@
 
 //seq normal
 
-typedef struct e2ap_GlobalngeNB_ID {
+/*****************************************/
+/*           GlobalngeNB_ID                */
+/*****************************************/
+
+
+typedef struct EXTERN e2ap_GlobalngeNB_ID {
    e2ap_PLMN-Identity plmn_id;
    e2ap_ENB-ID-Choice enb_id;
-ASN1OpenType extElem1; OSBOOL extElem1Present;} e2ap_GlobalngeNB_ID;
+
+   OSRTDList extElem1;  /* Extension elements */
+} e2ap_GlobalngeNB_ID;
 
 EXTERN int asn1PE_e2ap_GlobalngeNB_ID (OSCTXT* pctxt, e2ap_GlobalngeNB_ID* pvalue);
 EXTERN int asn1PD_e2ap_GlobalngeNB_ID (OSCTXT* pctxt, e2ap_GlobalngeNB_ID* pvalue);

@@ -1,9 +1,11 @@
 /* e2ap_PLMN_Identity.h */
-#ifndef _E2AP_PLMN_IDENTITY_H_
-#define _E2AP_PLMN_IDENTITY_H_
 
-#include "rtxsrc/rtxContext.h"
-#include "rtxsrc/rtxDList.h"
+//octet string
+
+/*****************************************/
+/*           PLMN_Identity                */
+/*****************************************/
+
 
 typedef struct e2ap_PLMN_Identity {
    OSUINT32 numocts;
@@ -18,5 +20,3 @@ EXTERN int asn1PrtToStrm_e2ap_PLMN_Identity (OSCTXT* pctxt, const char* name, co
 EXTERN int asn1Copy_e2ap_PLMN_Identity (OSCTXT* pctxt, const e2ap_PLMN_Identity* pSrcValue, e2ap_PLMN_Identity* pDstValue);
 EXTERN int asn1Init_e2ap_PLMN_Identity (e2ap_PLMN_Identity* pvalue);
 EXTERN void asn1Free_e2ap_PLMN_Identity (OSCTXT* pctxt, e2ap_PLMN_Identity* pvalue);
-
-#endif

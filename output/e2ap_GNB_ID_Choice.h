@@ -1,10 +1,19 @@
-/* e2ap_GNB_ID_Choice.h */
 
 // choice
+
+/*****************************************/
+/*           GNB_ID_Choice                */
+/*****************************************/
+
+#define T_e2ap_GNB_ID_Choice_gnb_ID 1
+#define T_e2ap_GNB_ID_Choice_extElem1 2
+
 typedef struct e2ap_GNB_ID_Choice {
    OSINT32 t;  /* choice tag */
    union {
-      e2ap_BIT STRING* gnb_ID;
+      /* t =  1 */
+      ASN1BitStr32* gnb_ID;
+
       ASN1OpenType* extElem1;  /* extension */
    } u;
 } e2ap_GNB_ID_Choice;

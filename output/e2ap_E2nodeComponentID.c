@@ -1,13 +1,19 @@
 /* e2ap_E2nodeComponentID.c */
 
 // choice
+
+/*****************************************/
+/*           E2nodeComponentID                */
+/*****************************************/
+
+
 EXTERN int asn1PE_e2ap_E2nodeComponentID (OSCTXT* pctxt, e2ap_E2nodeComponentID* pvalue)
 {
    int stat = 0;
    OSBOOL extbit = FALSE;
    RTXCTXPUSHTYPENAME (pctxt, "E2nodeComponentID");
 
-   extbit = (OSBOOL)(pvalue->t > 3);
+   extbit = (OSBOOL)(pvalue->t > 0);
    stat = rtxEncBit (pctxt, extbit);
    if (stat != 0) return LOG_RTERR (pctxt, stat);
 
@@ -20,43 +26,43 @@ EXTERN int asn1PE_e2ap_E2nodeComponentID (OSCTXT* pctxt, e2ap_E2nodeComponentID*
    }
 
    switch (pvalue->t) {
-      case 0.0:
+      case 0:
          RTXCTXPUSHELEMNAME (pctxt, "e2nodeComponentInterfaceTypeNG");
          stat = asn1PE_e2ap_E2nodeComponentInterfaceNG (pctxt, pvalue->u.e2nodeComponentInterfaceTypeNG);
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXPOPELEMNAME (pctxt);
          break;
-      case 1.0:
+      case 1:
          RTXCTXPUSHELEMNAME (pctxt, "e2nodeComponentInterfaceTypeXn");
          stat = asn1PE_e2ap_E2nodeComponentInterfaceXn (pctxt, pvalue->u.e2nodeComponentInterfaceTypeXn);
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXPOPELEMNAME (pctxt);
          break;
-      case 2.0:
+      case 2:
          RTXCTXPUSHELEMNAME (pctxt, "e2nodeComponentInterfaceTypeE1");
          stat = asn1PE_e2ap_E2nodeComponentInterfaceE1 (pctxt, pvalue->u.e2nodeComponentInterfaceTypeE1);
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXPOPELEMNAME (pctxt);
          break;
-      case 3.0:
+      case 3:
          RTXCTXPUSHELEMNAME (pctxt, "e2nodeComponentInterfaceTypeF1");
          stat = asn1PE_e2ap_E2nodeComponentInterfaceF1 (pctxt, pvalue->u.e2nodeComponentInterfaceTypeF1);
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXPOPELEMNAME (pctxt);
          break;
-      case 4.0:
+      case 4:
          RTXCTXPUSHELEMNAME (pctxt, "e2nodeComponentInterfaceTypeW1");
          stat = asn1PE_e2ap_E2nodeComponentInterfaceW1 (pctxt, pvalue->u.e2nodeComponentInterfaceTypeW1);
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXPOPELEMNAME (pctxt);
          break;
-      case 5.0:
+      case 5:
          RTXCTXPUSHELEMNAME (pctxt, "e2nodeComponentInterfaceTypeS1");
          stat = asn1PE_e2ap_E2nodeComponentInterfaceS1 (pctxt, pvalue->u.e2nodeComponentInterfaceTypeS1);
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXPOPELEMNAME (pctxt);
          break;
-      case 6.0:
+      case 6:
          RTXCTXPUSHELEMNAME (pctxt, "e2nodeComponentInterfaceTypeX2");
          stat = asn1PE_e2ap_E2nodeComponentInterfaceX2 (pctxt, pvalue->u.e2nodeComponentInterfaceTypeX2);
          if (stat != 0) return LOG_RTERR (pctxt, stat);

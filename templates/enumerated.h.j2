@@ -1,6 +1,7 @@
 /* e2ap_{{name}}.h - enumurate*/
 /* e2ap_{{name}}.h */
 
+//enumerated
 /******************************************************/
 /*                                                    */
 /*    {{name}}                                       */
@@ -10,6 +11,7 @@
 typedef enum {
 {% for item in items %}
     e2ap_{{ item.name | replace('-', '_') }} = {{ item.value }}{% if not loop.last %},{% endif %}
+
 {% endfor %}
 //add other values as needed
 } e2ap_{{name}}_Root;

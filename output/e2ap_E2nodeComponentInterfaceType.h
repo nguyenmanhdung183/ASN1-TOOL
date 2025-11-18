@@ -1,6 +1,7 @@
 /* e2ap_E2nodeComponentInterfaceType.h - enumurate*/
 /* e2ap_E2nodeComponentInterfaceType.h */
 
+//enumerated
 /******************************************************/
 /*                                                    */
 /*    E2nodeComponentInterfaceType                                       */
@@ -8,7 +9,14 @@
 /******************************************************/
 
 typedef enum {
-    e2ap_ng = 0,    e2ap_xn = 1,    e2ap_e1 = 2,    e2ap_f1 = 3,    e2ap_w1 = 4,    e2ap_s1 = 5,    e2ap_x2 = 6//add other values as needed
+    e2ap_ng = 0,
+    e2ap_xn = 1,
+    e2ap_e1 = 2,
+    e2ap_f1 = 3,
+    e2ap_w1 = 4,
+    e2ap_s1 = 5,
+    e2ap_x2 = 6
+//add other values as needed
 } e2ap_E2nodeComponentInterfaceType_Root;
 
 typedef OSUINT32 e2ap_E2nodeComponentInterfaceType;

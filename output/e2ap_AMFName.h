@@ -1,8 +1,10 @@
 /* e2ap_AMFName.h */
-#ifndef _E2AP_AMFNAME_H_
-#define _E2AP_AMFNAME_H_
 
-#include "rtxsrc/rtxContext.h"
+//printable string
+/*****************************************/
+/*           AMFName                */
+/*****************************************/
+
 
 typedef const char* e2ap_AMFName;
 
@@ -13,5 +15,3 @@ EXTERN int asn1PrtToStr_e2ap_AMFName (const char* name, e2ap_AMFName pvalue, cha
 EXTERN int asn1PrtToStrm_e2ap_AMFName (OSCTXT* pctxt, const char* name, e2ap_AMFName pvalue);
 EXTERN int asn1Copy_e2ap_AMFName (OSCTXT* pctxt, e2ap_AMFName pSrcValue, e2ap_AMFName* ppDstValue);
 EXTERN void asn1Free_e2ap_AMFName (OSCTXT* pctxt, e2ap_AMFName pvalue);
-
-#endif

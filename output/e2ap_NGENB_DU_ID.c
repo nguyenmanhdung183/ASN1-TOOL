@@ -1,6 +1,10 @@
 /* e2ap_NGENB_DU_ID.c */
-#include "e2ap_NGENB_DU_ID.h"
-#include "rtxsrc/rtxErrCodes.h"
+
+
+//interger no ext
+/*****************************************/
+/*           NGENB_DU_ID                */
+/*****************************************/
 
 EXTERN int asn1PE_e2ap_NGENB_DU_ID (OSCTXT* pctxt, e2ap_NGENB_DU_ID value)
 {

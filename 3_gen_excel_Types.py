@@ -21,6 +21,14 @@ OUTPUT_DIR = Path("data_xlsx")
 OUTPUT_DIR.mkdir(exist_ok=True)
 OUTPUT_XLSX = OUTPUT_DIR / "data_excel.xlsx"
 
+
+with open('./msg.config', 'r') as file:
+    line1 = file.readline().strip()  # đọc dòng 1
+    line2 = file.readline().strip()  # đọc dòng 2 
+    PDF_FILE = "./" + line2
+    
+
+
 # ---------- Regex helpers ----------
 PRIMITIVE_RE = re.compile(
     r"\b(OCTET\s+STRING|INTEGER|ENUMERATED|PrintableString|VisibleString|UTF8String|IA5String|BOOLEAN)\b",
@@ -56,6 +64,14 @@ def load_pdf_text(path: Path) -> str:
             lines.append(ln)
 
     return "\n".join(lines)
+
+# load TXT
+def load_txt_text(path: Path) -> str:
+    with open(path, "r", encoding="utf-8") as f:
+        txt = f.read()
+    return txt
+
+
 
 # -------- Balanced brace ----------
 def find_balanced_block(text: str, start_brace_idx: int):
@@ -198,31 +214,39 @@ def parse_struct_block(name: str, block: str, detected_single_containers, detect
             if not ent:
                 continue
 
-            mtype = re.search(r"\bTYPE\s+([A-Za-z0-9\-\_]+)", ent)
-            field = mtype.group(1) if mtype else ""
+            # Tìm tất cả các TYPE trong ent
+            ie_types = [mtype.group(1) for mtype in re.finditer(r"\bTYPE\s+([A-Za-z0-9\-\_]+)", ent)]
+            
+            # Nếu có nhiều TYPE, xuất tất cả
+            for ie_type in ie_types:
+                mcrit = re.search(r"\bCRITICALITY\s+([A-Za-z0-9\-\_]+)", ent)
+                crit = mcrit.group(1) if mcrit else ""
 
-            mcrit = re.search(r"\bCRITICALITY\s+([A-Za-z0-9\-\_]+)", ent)
-            crit = mcrit.group(1) if mcrit else ""
+                mpres = re.search(r"\bPRESENCE\s+([A-Za-z0-9\-\_]+)", ent)
+                pres = mpres.group(1) if mpres else ""
+                optional = "OPTIONAL" if pres and not pres.lower().startswith("mand") else ""
 
-            mpres = re.search(r"\bPRESENCE\s+([A-Za-z0-9\-\_]+)", ent)
-            pres = mpres.group(1) if mpres else ""
-            optional = "OPTIONAL" if pres and not pres.lower().startswith("mand") else ""
+                # Lấy tên field từ IE nếu có, hoặc đặt mặc định
+                mfield = re.search(r"\bID\s+([A-Za-z0-9\-\_]+)", ent)
+                field_name = mfield.group(1) if mfield else ""  # hoặc "IE_Field"
 
-            rows.append({
-                "Type_Name": name,
-                "ASN1_Type": "IE",
-                "Parent_Type": name,
-                "Tag/ID": "",
-                "Field_Name": field,
-                "IE_Type": field,
-                "Criticality": crit,
-                "Optional": optional,
-                "Extensible": str(has_ext),
-                "Min_Value": "",
-                "Max_Value": ""
-            })
+                rows.append({
+                    "Type_Name": name,
+                    "ASN1_Type": "IE",
+                    "Parent_Type": name,
+                    "Tag/ID": "",
+                    "Field_Name": field_name,  # Sử dụng biến này
+                    "IE_Type": ie_type,
+                    "Criticality": crit,
+                    "Optional": optional,
+                    "Extensible": str(has_ext),
+                    "Min_Value": "",
+                    "Max_Value": ""
+                })
+
 
         return rows
+
 
     # SingleContainer
     if name in detected_single_containers:
@@ -382,11 +406,10 @@ def parse_struct_block(name: str, block: str, detected_single_containers, detect
 
 # ---------- MAIN ----------
 def main():
-    if not PDF_FILE.exists():
-        raise FileNotFoundError(f"PDF not found: {PDF_FILE}")
 
     print("Loading & cleaning PDF...")
-    pdf_text = load_pdf_text(PDF_FILE)
+    #pdf_text = load_pdf_text(PDF_FILE)
+    pdf_text = load_txt_text(PDF_FILE)
 
     detected_single = detect_sequence_of_singlecontainer_by_lines(pdf_text)
     detected_cont = detect_container_by_lines(pdf_text)
@@ -446,6 +469,10 @@ def main():
             continue
 
         for r in rows:
+            # nếu row về IE ko có trường IE_Type thì bỏ qua
+            if r.get("ASN1_Type") == "IE" and not r.get("IE_Type"):
+                continue
+            
             fn = r.get("Field_Name", "").replace("...", "").strip()
             ws.append([
                 r.get("Type_Name", ""),

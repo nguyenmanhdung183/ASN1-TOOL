@@ -119,7 +119,7 @@ for choice_name, group in choice_groups:
         if pd.isna(row["Field_Name"]): continue
         tag = row["Tag/ID"]
         field = row["Field_Name"]
-        field = field.replace('-', '_')
+        #field = field.replace('-', '_')
         ctype = row["IE_Type"]
         includes.add(f"e2ap_{ctype}")
         choices.append({"tag": tag, "field": field, "type": ctype, "name": field})
@@ -135,7 +135,7 @@ single_containers = types_df[types_df["ASN1_Type"] == "SingleContainer"]
 for _, row in single_containers.iterrows():
     list_name   = row["Type_Name"].replace("-", "_")                                # E2nodeComponentConfigAddition_List
     item_ies    = row["IE_Type"]                                                    # E2nodeComponentConfigAddition_ItemIEs
-    item_type   = item_ies.replace("IEs", "")                                       # E2nodeComponentConfigAddition_Item
+    item_type   = item_ies#.replace("IEs", "")                                       # E2nodeComponentConfigAddition_Item
     ie_id       = row["Tag/ID"]                                                     # ID_id_E2nodeComponentConfigAddition
     criticality = row["Criticality"] if pd.notna(row["Criticality"]) else "reject"
 
@@ -178,28 +178,72 @@ for _, row in single_containers.iterrows():
 # =============================
 # SINH IE (Protocol-IES) – CHỈ CẦN TÌM DÒNG ASN1_Type == "IE" + IE_Type kết thúc bằng "IEs"
 # =============================
+# ie_rows = types_df[
+#     (types_df["ASN1_Type"] == "IE") &
+#     (types_df["IE_Type"].str.endswith("IEs") == False) &  # IE thật, không phải container
+#     (types_df["Type_Name"].str.contains("ItemIEs"))       # chỉ lấy XXX-ItemIEs
+# ]
+
+# for _, row in ie_rows.iterrows():
+#     ies_name    = row["Type_Name"].replace("-", "_")# + "IEs"   # E2nodeComponentConfigAddition_ItemIEs
+#     item_type   = row["IE_Type"]                                # E2nodeComponentConfigAddition_Item
+#     ie_id       = row["Tag/ID"]
+#     criticality = row["Criticality"] if pd.notna(row["Criticality"]) else "reject"
+
+#     data = {
+#         "ies_name": ies_name,
+#         #"item_type": item_type,
+#         "choices": [{"item_type": item_type}],  
+#         "ie_id": ie_id,
+#         "criticality": f"e2ap_Criticality_{criticality}"
+#     }
+
+#     safe_write(f"output/e2ap_{ies_name}.h", env.get_template("ie.h.j2").render(data))
+#     safe_write(f"output/e2ap_{ies_name}.c", env.get_template("ie.c.j2").render(data))
+#     print(f"IE → e2ap_{ies_name}.h/c")
+# Nhóm các dòng dữ liệu có "IE" theo `Type_Name`
+# Nhóm các dòng dữ liệu có "IE" theo `Type_Name`
 ie_rows = types_df[
-    (types_df["ASN1_Type"] == "IE") &
-    (types_df["IE_Type"].str.endswith("IEs") == False) &  # IE thật, không phải container
-    (types_df["Type_Name"].str.contains("ItemIEs"))       # chỉ lấy XXX-ItemIEs
+    (types_df["ASN1_Type"] == "IE") &  # Kiểm tra ASN1_Type là "IE"
+    (~types_df["IE_Type"].str.endswith("IEs")) #&  # Loại bỏ những "IEs"
+    #(types_df["Type_Name"].str.contains("ItemIEs"))  # Chỉ lấy các Type_Name chứa "ItemIEs"
 ]
 
-for _, row in ie_rows.iterrows():
-    ies_name    = row["Type_Name"].replace("-", "_")# + "IEs"   # E2nodeComponentConfigAddition_ItemIEs
-    item_type   = row["IE_Type"]                                # E2nodeComponentConfigAddition_Item
-    ie_id       = row["Tag/ID"]
-    criticality = row["Criticality"] if pd.notna(row["Criticality"]) else "reject"
+# Group các dòng theo `Type_Name` để gom tất cả các trường cùng một IE
+for ies_name_raw, group in ie_rows.groupby("Type_Name"):
+    ies_name = ies_name_raw.replace("-", "_")  # Chuyển "-" thành "_"
+    choices = []
+
+    # Lặp qua từng dòng trong nhóm IE để lấy tất cả các trường
+    for _, row in group.iterrows():
+        item_type = row["IE_Type"]
+        field_name = row["Field_Name"]
+        optional_val = row.get("Optional")
+        presence = "optional" if (pd.notna(optional_val) and str(optional_val).strip() != "") else "mandatory"
+
+        # Thêm tất cả các trường vào choices
+        choices.append({
+            "item_type": item_type,
+            "field_name": field_name,
+            "presence": presence
+        })
+
+    # Lấy thông tin chung của `IE`
+    ie_id = group.iloc[0]["Tag/ID"]
+    criticality = group.iloc[0]["Criticality"] if pd.notna(group.iloc[0]["Criticality"]) else "reject"
 
     data = {
         "ies_name": ies_name,
-        "item_type": item_type,
+        "choices": choices,  # Tất cả các trường được nhóm lại và xuất
         "ie_id": ie_id,
         "criticality": f"e2ap_Criticality_{criticality}"
     }
 
+    # Tạo file header và source code cho `IE`
     safe_write(f"output/e2ap_{ies_name}.h", env.get_template("ie.h.j2").render(data))
     safe_write(f"output/e2ap_{ies_name}.c", env.get_template("ie.c.j2").render(data))
-    print(f"IE → e2ap_{ies_name}.h/c")
+    print(f"IE → e2ap_{ies_name}.h/c ({len(choices)} fields)")
+
 
 # =============================
 # 4. SINH SEQUENCE (cả normal SEQUENCE và ProtocolIE-Container)
@@ -227,7 +271,7 @@ for seq_name_raw in sequence_names:
         if pd.isna(field_name_raw):
             continue
 
-        field_name = field_name_raw.replace('-', '_')
+        field_name = field_name_raw#.replace('-', '_')
         ie_type = row["IE_Type"]
 
         # Xác định presence: nếu cột Optional có giá trị (Yes/O, v.v.) → optional
@@ -269,19 +313,19 @@ for seq_name_raw in sequence_names:
 # =============================
 # 5. SINH MESSAGE (E2SetupRequest, ...)
 # =============================
-message_df = df.get("Messages", pd.DataFrame())
-for message_name, group in message_df.groupby("Message_Name"):
-    message_name = message_name.replace('-', '_')
-    ies, includes = [], set()
-    for _, row in group.iterrows():
-        ie_type = row["IE_Type"]
-        field_name = row["Field_Name"]
-        ie_id = row["IE_ID_Constant"]
-        includes.add(f"e2ap_{ie_type}")
-        ies.append({"ie_type": ie_type, "field": field_name, "ie_id_constant": ie_id})
+# message_df = df.get("Messages", pd.DataFrame())
+# for message_name, group in message_df.groupby("Message_Name"):
+#     message_name = message_name#.replace('-', '_')
+#     ies, includes = [], set()
+#     for _, row in group.iterrows():
+#         ie_type = row["IE_Type"]
+#         field_name = row["Field_Name"]
+#         ie_id = row["IE_ID_Constant"]
+#         includes.add(f"e2ap_{ie_type}")
+#         ies.append({"ie_type": ie_type, "field": field_name, "ie_id_constant": ie_id})
 
-    data = {"message_name": message_name, "ies": ies, "includes": sorted(includes)}
-    safe_write(f"output/e2ap_{message_name}.h", env.get_template("message.h.j2").render(data))
-    safe_write(f"output/e2ap_{message_name}.c", env.get_template("message.c.j2").render(data))
+#     data = {"message_name": message_name, "ies": ies, "includes": sorted(includes)}
+#     safe_write(f"output/e2ap_{message_name}.h", env.get_template("message.h.j2").render(data))
+#     safe_write(f"output/e2ap_{message_name}.c", env.get_template("message.c.j2").render(data))
 
 print("=== TẤT CẢ ĐÃ HOÀN TẤT ===")

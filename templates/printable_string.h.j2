@@ -1,8 +1,10 @@
 /* e2ap_{{name}}.h */
-#ifndef _E2AP_{{name|upper}}_H_
-#define _E2AP_{{name|upper}}_H_
 
-#include "rtxsrc/rtxContext.h"
+//printable string
+/*****************************************/
+/*           {{name}}                */
+/*****************************************/
+
 
 typedef const char* e2ap_{{name}};
 
@@ -13,5 +15,3 @@ EXTERN int asn1PrtToStr_e2ap_{{name}} (const char* name, e2ap_{{name}} pvalue, c
 EXTERN int asn1PrtToStrm_e2ap_{{name}} (OSCTXT* pctxt, const char* name, e2ap_{{name}} pvalue);
 EXTERN int asn1Copy_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}} pSrcValue, e2ap_{{name}}* ppDstValue);
 EXTERN void asn1Free_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}} pvalue);
-
-#endif

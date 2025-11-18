@@ -15,19 +15,27 @@ OUTPUT_DIR = Path("data_xlsx")
 OUTPUT_DIR.mkdir(exist_ok=True)
 EXCEL_FILE = OUTPUT_DIR / "data_excel.xlsx"
 
-# ==================== ĐỌC PDF ====================
-full_text = ""
-with pdfplumber.open(PDF_FILE) as pdf:
-    for page in pdf.pages:
-        text = page.extract_text()
-        if text:
-            full_text += "\n" + text
+with open('./msg.config', 'r') as file:
+    line1 = file.readline().strip()  # đọc dòng 1
+    line2 = file.readline().strip()  # đọc dòng 2 
+    PDF_FILE = "./" + line2
+    
+# ==================== ĐỌC PDF ====================-
+# full_text = ""
+# with pdfplumber.open(PDF_FILE) as pdf:
+#     for page in pdf.pages:
+#         text = page.extract_text()
+#         if text:
+#             full_text += "\n" + text
 
-full_text = re.sub(r"-\s*\n", "", full_text)
-full_text = re.sub(r"\s+\n", " ", full_text)
-full_text = re.sub(r"\s{2,}", " ", full_text)
-full_text = full_text.replace("…", "...")
+# full_text = re.sub(r"-\s*\n", "", full_text)
+# full_text = re.sub(r"\s+\n", " ", full_text)
+# full_text = re.sub(r"\s{2,}", " ", full_text)
+# full_text = full_text.replace("…", "...")
 
+# ĐỌC TỪ FILE TXT
+with open(PDF_FILE, "r", encoding="utf-8") as f:
+    full_text = f.read()
 # ==================== DATABASE PRIMITIVE ====================
 primitive_db = {}
 

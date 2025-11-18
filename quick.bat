@@ -60,4 +60,13 @@ if %ERRORLEVEL% neq 0 (
 echo Finished 5_merge_all_file.py
 echo ------------------------
 
+echo Running 6_format_last_time
+python 6_format_last_time.py
+if %ERRORLEVEL% neq 0 (
+    echo Error occurred in 6_format_last_time.py, stopping.
+    exit /b 1
+)
+echo Finished 6_format_last_time.py
+echo ------------------------
+
 endlocal

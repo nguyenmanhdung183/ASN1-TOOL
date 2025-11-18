@@ -1,4 +1,11 @@
 /* e2ap_TransactionID.h */
+
+//interger with ext
+/*****************************************/
+/*           TransactionID                */
+/*****************************************/
+
+
 typedef OSUINT8 e2ap_TransactionID;
 
 EXTERN int asn1PE_e2ap_TransactionID (OSCTXT* pctxt, e2ap_TransactionID value);

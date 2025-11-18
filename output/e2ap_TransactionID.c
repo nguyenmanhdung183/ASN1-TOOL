@@ -1,6 +1,12 @@
 /* e2ap_TransactionID.c */
-#include "e2ap_TransactionID.h"
-#include "rtxsrc/rtxErrCodes.h"
+
+
+
+//interger with ext
+/*****************************************/
+/*           TransactionID                */
+/*****************************************/
+
 
 EXTERN int asn1PE_e2ap_TransactionID (OSCTXT* pctxt, e2ap_TransactionID value)
 {

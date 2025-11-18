@@ -1,12 +1,17 @@
 
+/*****************************************/
+/*           GlobalenGNB_ID                */
+/*****************************************/
+
+
 int asn1PE_e2ap_GlobalenGNB_ID (OSCTXT* pctxt, e2ap_GlobalenGNB_ID* pvalue)
 {
    int stat = 0;
    RTXCTXPUSHTYPENAME(pctxt, "GlobalenGNB_ID");
 
-   stat = asn1PE_e2ap_PLMN-Identity (pctxt, &pvalue->pLMN_Identity);
+   stat = asn1PE_e2ap_PLMN-Identity (pctxt, &pvalue->pLMN-Identity);
    if (stat != 0) return LOG_RTERR(pctxt, stat);
-   stat = asn1PE_e2ap_ENGNB-ID (pctxt, &pvalue->gNB_ID);
+   stat = asn1PE_e2ap_ENGNB-ID (pctxt, &pvalue->gNB-ID);
    if (stat != 0) return LOG_RTERR(pctxt, stat);
 
    if (pvalue->extElem1Present) {
@@ -24,9 +29,9 @@ int asn1PD_e2ap_GlobalenGNB_ID (OSCTXT* pctxt, e2ap_GlobalenGNB_ID* pvalue)
    OSBOOL bit;
    RTXCTXPUSHTYPENAME(pctxt, "GlobalenGNB_ID");
 
-   stat = asn1PD_e2ap_PLMN-Identity (pctxt, &pvalue->pLMN_Identity);
+   stat = asn1PD_e2ap_PLMN-Identity (pctxt, &pvalue->pLMN-Identity);
    if (stat != 0) return LOG_RTERR(pctxt, stat);
-   stat = asn1PD_e2ap_ENGNB-ID (pctxt, &pvalue->gNB_ID);
+   stat = asn1PD_e2ap_ENGNB-ID (pctxt, &pvalue->gNB-ID);
    if (stat != 0) return LOG_RTERR(pctxt, stat);
 
    stat = pd_OpenType (pctxt, &pvalue->extElem1.numocts, &pvalue->extElem1.data);
@@ -39,14 +44,14 @@ int asn1PD_e2ap_GlobalenGNB_ID (OSCTXT* pctxt, e2ap_GlobalenGNB_ID* pvalue)
 void asn1Init_e2ap_GlobalenGNB_ID (e2ap_GlobalenGNB_ID* pvalue)
 {
    memset(pvalue, 0, sizeof(*pvalue));
-   asn1Init_e2ap_PLMN-Identity (&pvalue->pLMN_Identity);
-   asn1Init_e2ap_ENGNB-ID (&pvalue->gNB_ID);
+   asn1Init_e2ap_PLMN-Identity (&pvalue->pLMN-Identity);
+   asn1Init_e2ap_ENGNB-ID (&pvalue->gNB-ID);
 }
 
 void asn1Free_e2ap_GlobalenGNB_ID (OSCTXT* pctxt, e2ap_GlobalenGNB_ID* pvalue)
 {
    %}
-   asn1Free_e2ap_PLMN-Identity (pctxt, &pvalue->pLMN_Identity);
+   asn1Free_e2ap_PLMN-Identity (pctxt, &pvalue->pLMN-Identity);
    %}
-   asn1Free_e2ap_ENGNB-ID (pctxt, &pvalue->gNB_ID);
+   asn1Free_e2ap_ENGNB-ID (pctxt, &pvalue->gNB-ID);
 }

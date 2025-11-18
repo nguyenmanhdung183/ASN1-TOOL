@@ -1,10 +1,17 @@
 
 //seq normal
 
-typedef struct e2ap_E2nodeComponentInterfaceX2 {
+/*****************************************/
+/*           E2nodeComponentInterfaceX2                */
+/*****************************************/
+
+
+typedef struct EXTERN e2ap_E2nodeComponentInterfaceX2 {
    e2ap_GlobalENB-ID global_eNB_ID;
-OSBOOL m_global_eNB_IDPresent;   e2ap_GlobalenGNB-ID global_en_gNB_ID;
-OSBOOL m_global_en_gNB_IDPresent;ASN1OpenType extElem1; OSBOOL extElem1Present;} e2ap_E2nodeComponentInterfaceX2;
+OSBOOL m_global-eNB-IDPresent;   e2ap_GlobalenGNB-ID global_en_gNB_ID;
+OSBOOL m_global-en-gNB-IDPresent;
+   OSRTDList extElem1;  /* Extension elements */
+} e2ap_E2nodeComponentInterfaceX2;
 
 EXTERN int asn1PE_e2ap_E2nodeComponentInterfaceX2 (OSCTXT* pctxt, e2ap_E2nodeComponentInterfaceX2* pvalue);
 EXTERN int asn1PD_e2ap_E2nodeComponentInterfaceX2 (OSCTXT* pctxt, e2ap_E2nodeComponentInterfaceX2* pvalue);

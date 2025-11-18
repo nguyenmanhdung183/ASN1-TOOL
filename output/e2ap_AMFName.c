@@ -1,8 +1,9 @@
 /* e2ap_AMFName.c */
-#include "e2ap_AMFName.h"
-#include "rtxsrc/rtxErrCodes.h"
-#include "rtxsrc/rtxCharStr.h"
-#include "rtxsrc/rtxMemBuf.h"
+
+//printable string
+/*****************************************/
+/*           AMFName                */
+/*****************************************/
 
 /* Constrained PrintableString */
 EXTERN int asn1PE_e2ap_AMFName (OSCTXT* pctxt, e2ap_AMFName value)

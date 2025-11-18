@@ -1,11 +1,10 @@
 /* e2ap_{{item_ies}}.h */
-#ifndef _E2AP_{{item_ies|upper}}_H_
-#define _E2AP_{{item_ies|upper}}_H_
+//protocol ie single
 
-#include "e2ap_ProtocolIE_ID.h"
-#include "e2ap_Criticality.h"
-#include "e2ap_{{item_type}}.h"
-#include "e2ap_{{item_ies}}_T_VALUE.h"
+/*****************************************/
+/*           {{item_ies}}                */
+/*****************************************/
+
 
 typedef struct e2ap_{{item_ies}}_Element {
     e2ap_ProtocolIE_ID_t id;
@@ -17,4 +16,3 @@ typedef struct e2ap_{{item_ies}} {
     e2ap_{{item_ies}}_Element elem;
 } e2ap_{{item_ies}};
 
-#endif

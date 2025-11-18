@@ -1,6 +1,11 @@
 /* e2ap_PLMN_Identity.c */
-#include "e2ap_PLMN_Identity.h"
-#include "rtxsrc/rtxErrCodes.h"
+
+
+//octet string
+
+/*****************************************/
+/*           PLMN_Identity                */
+/*****************************************/
 
 /* Fixed SIZE OCTET STRING */
 EXTERN int asn1PE_e2ap_PLMN_Identity (OSCTXT* pctxt, e2ap_PLMN_Identity* pvalue)

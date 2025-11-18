@@ -1,10 +1,15 @@
 
+/*****************************************/
+/*           E2nodeComponentInterfaceXn                */
+/*****************************************/
+
+
 int asn1PE_e2ap_E2nodeComponentInterfaceXn (OSCTXT* pctxt, e2ap_E2nodeComponentInterfaceXn* pvalue)
 {
    int stat = 0;
    RTXCTXPUSHTYPENAME(pctxt, "E2nodeComponentInterfaceXn");
 
-   stat = asn1PE_e2ap_GlobalNG-RANNode-ID (pctxt, &pvalue->global_NG_RAN_Node_ID);
+   stat = asn1PE_e2ap_GlobalNG-RANNode-ID (pctxt, &pvalue->global-NG-RAN-Node-ID);
    if (stat != 0) return LOG_RTERR(pctxt, stat);
 
    if (pvalue->extElem1Present) {
@@ -22,7 +27,7 @@ int asn1PD_e2ap_E2nodeComponentInterfaceXn (OSCTXT* pctxt, e2ap_E2nodeComponentI
    OSBOOL bit;
    RTXCTXPUSHTYPENAME(pctxt, "E2nodeComponentInterfaceXn");
 
-   stat = asn1PD_e2ap_GlobalNG-RANNode-ID (pctxt, &pvalue->global_NG_RAN_Node_ID);
+   stat = asn1PD_e2ap_GlobalNG-RANNode-ID (pctxt, &pvalue->global-NG-RAN-Node-ID);
    if (stat != 0) return LOG_RTERR(pctxt, stat);
 
    stat = pd_OpenType (pctxt, &pvalue->extElem1.numocts, &pvalue->extElem1.data);
@@ -35,11 +40,11 @@ int asn1PD_e2ap_E2nodeComponentInterfaceXn (OSCTXT* pctxt, e2ap_E2nodeComponentI
 void asn1Init_e2ap_E2nodeComponentInterfaceXn (e2ap_E2nodeComponentInterfaceXn* pvalue)
 {
    memset(pvalue, 0, sizeof(*pvalue));
-   asn1Init_e2ap_GlobalNG-RANNode-ID (&pvalue->global_NG_RAN_Node_ID);
+   asn1Init_e2ap_GlobalNG-RANNode-ID (&pvalue->global-NG-RAN-Node-ID);
 }
 
 void asn1Free_e2ap_E2nodeComponentInterfaceXn (OSCTXT* pctxt, e2ap_E2nodeComponentInterfaceXn* pvalue)
 {
    %}
-   asn1Free_e2ap_GlobalNG-RANNode-ID (pctxt, &pvalue->global_NG_RAN_Node_ID);
+   asn1Free_e2ap_GlobalNG-RANNode-ID (pctxt, &pvalue->global-NG-RAN-Node-ID);
 }
