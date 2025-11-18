@@ -9,534 +9,477 @@ EXTERN int asn1PrtToStr_e2ap_TransactionID (const char* name, e2ap_TransactionID
 EXTERN int asn1PrtToStrm_e2ap_TransactionID (OSCTXT* pctxt, const char* name, const e2ap_TransactionID* pvalue);
 // --- End of e2ap_TransactionID.h ---
 
-// --- Begin of e2ap_PLMN_Identity.h ---
-/* e2ap_PLMN_Identity.h */
-#ifndef _E2AP_PLMN_IDENTITY_H_
-#define _E2AP_PLMN_IDENTITY_H_
-
-#include "rtxsrc/rtxContext.h"
-#include "rtxsrc/rtxDList.h"
-
-typedef struct e2ap_PLMN_Identity {
-   OSUINT32 numocts;
-   OSOCTET data[3];
-} e2ap_PLMN_Identity;
-
-EXTERN int asn1PE_e2ap_PLMN_Identity (OSCTXT* pctxt, e2ap_PLMN_Identity* pvalue);
-EXTERN int asn1PD_e2ap_PLMN_Identity (OSCTXT* pctxt, e2ap_PLMN_Identity** ppvalue);
-EXTERN void asn1Print_e2ap_PLMN_Identity (const char* name, const e2ap_PLMN_Identity* pvalue);
-EXTERN int asn1PrtToStr_e2ap_PLMN_Identity (const char* name, e2ap_PLMN_Identity* pvalue, char* buffer, OSSIZE bufSize);
-EXTERN int asn1PrtToStrm_e2ap_PLMN_Identity (OSCTXT* pctxt, const char* name, const e2ap_PLMN_Identity* pvalue);
-EXTERN int asn1Copy_e2ap_PLMN_Identity (OSCTXT* pctxt, const e2ap_PLMN_Identity* pSrcValue, e2ap_PLMN_Identity* pDstValue);
-EXTERN int asn1Init_e2ap_PLMN_Identity (e2ap_PLMN_Identity* pvalue);
-EXTERN void asn1Free_e2ap_PLMN_Identity (OSCTXT* pctxt, e2ap_PLMN_Identity* pvalue);
-
-#endif
-// --- End of e2ap_PLMN_Identity.h ---
-
-/**********************************/
-/* File .h missing: e2ap_gnb_ID.h */
-/**********************************/
-
-/*****************************************/
-/* File .h missing: e2ap_GNB_ID_Choice.h */
-/*****************************************/
-
-/****************************************/
-/* File .h missing: e2ap_GlobalgNB_ID.h */
-/****************************************/
-
-/**********************************/
-/* File .h missing: e2ap_gNB_ID.h */
-/**********************************/
-
-/************************************/
-/* File .h missing: e2ap_ENGNB_ID.h */
-/************************************/
-
 /******************************************/
-/* File .h missing: e2ap_GlobalenGNB_ID.h */
+/* File .h missing: e2ap_ricRequestorID.h */
 /******************************************/
 
-// --- Begin of e2ap_GNB_CU_UP_ID.h ---
-/* e2ap_GNB_CU_UP_ID.h */
-typedef OSUINT32 e2ap_GNB_CU_UP_ID;
-
-EXTERN int asn1PE_e2ap_GNB_CU_UP_ID (OSCTXT* pctxt, e2ap_GNB_CU_UP_ID value);
-EXTERN int asn1PD_e2ap_GNB_CU_UP_ID (OSCTXT* pctxt, e2ap_GNB_CU_UP_ID* pvalue);
-EXTERN void asn1Print_e2ap_GNB_CU_UP_ID (const char* name, const e2ap_GNB_CU_UP_ID* pvalue);
-EXTERN int asn1PrtToStr_e2ap_GNB_CU_UP_ID (const char* name, e2ap_GNB_CU_UP_ID* pvalue, char* buffer, OSSIZE bufSize);
-EXTERN int asn1PrtToStrm_e2ap_GNB_CU_UP_ID (OSCTXT* pctxt, const char* name, const e2ap_GNB_CU_UP_ID* pvalue);
-// --- End of e2ap_GNB_CU_UP_ID.h ---
-
-// --- Begin of e2ap_GNB_DU_ID.h ---
-/* e2ap_GNB_DU_ID.h */
-typedef OSUINT32 e2ap_GNB_DU_ID;
-
-EXTERN int asn1PE_e2ap_GNB_DU_ID (OSCTXT* pctxt, e2ap_GNB_DU_ID value);
-EXTERN int asn1PD_e2ap_GNB_DU_ID (OSCTXT* pctxt, e2ap_GNB_DU_ID* pvalue);
-EXTERN void asn1Print_e2ap_GNB_DU_ID (const char* name, const e2ap_GNB_DU_ID* pvalue);
-EXTERN int asn1PrtToStr_e2ap_GNB_DU_ID (const char* name, e2ap_GNB_DU_ID* pvalue, char* buffer, OSSIZE bufSize);
-EXTERN int asn1PrtToStrm_e2ap_GNB_DU_ID (OSCTXT* pctxt, const char* name, const e2ap_GNB_DU_ID* pvalue);
-// --- End of e2ap_GNB_DU_ID.h ---
-
-/***********************************************/
-/* File .h missing: e2ap_GlobalE2node_gNB_ID.h */
-/***********************************************/
-
-/**************************************************/
-/* File .h missing: e2ap_GlobalE2node_en_gNB_ID.h */
-/**************************************************/
-
-/****************************************/
-/* File .h missing: e2ap_enb_ID_macro.h */
-/****************************************/
-
-/*********************************************/
-/* File .h missing: e2ap_enb_ID_shortmacro.h */
-/*********************************************/
-
-/********************************************/
-/* File .h missing: e2ap_enb_ID_longmacro.h */
-/********************************************/
-
-// --- Begin of e2ap_ENB_ID_Choice.h ---
-/* e2ap_ENB_ID_Choice.h */
-
-// choice
-typedef struct e2ap_ENB_ID_Choice {
-   OSINT32 t;  /* choice tag */
-   union {
-      e2ap_BIT STRING* enb_ID_macro;
-      e2ap_BIT STRING* enb_ID_shortmacro;
-      e2ap_BIT STRING* enb_ID_longmacro;
-      ASN1OpenType* extElem1;  /* extension */
-   } u;
-} e2ap_ENB_ID_Choice;
-
-EXTERN int asn1PE_e2ap_ENB_ID_Choice (OSCTXT* pctxt, e2ap_ENB_ID_Choice* pvalue);
-EXTERN int asn1PD_e2ap_ENB_ID_Choice (OSCTXT* pctxt, e2ap_ENB_ID_Choice* pvalue);
-EXTERN void asn1Print_e2ap_ENB_ID_Choice (const char* name, const e2ap_ENB_ID_Choice* pvalue);
-EXTERN int asn1PrtToStr_e2ap_ENB_ID_Choice (const char* name, e2ap_ENB_ID_Choice* pvalue, char* buffer, OSSIZE bufSize);
-EXTERN int asn1Copy_e2ap_ENB_ID_Choice (OSCTXT* pctxt, const e2ap_ENB_ID_Choice* pSrcValue, e2ap_ENB_ID_Choice* pDstValue);
-EXTERN int asn1Init_e2ap_ENB_ID_Choice (e2ap_ENB_ID_Choice* pvalue);
-EXTERN void asn1Free_e2ap_ENB_ID_Choice (OSCTXT* pctxt, e2ap_ENB_ID_Choice* pvalue);
-
-// --- End of e2ap_ENB_ID_Choice.h ---
-
-/******************************************/
-/* File .h missing: e2ap_GlobalngeNB_ID.h */
-/******************************************/
-
-/****************************************/
-/* File .h missing: e2ap_macro_eNB_ID.h */
-/****************************************/
-
-/**************************************************/
-/* File .h missing: e2ap___________error_______.h */
-/**************************************************/
-
-/**********************************************/
-/* File .h missing: e2ap_short_Macro_eNB_ID.h */
-/**********************************************/
-
-/*********************************************/
-/* File .h missing: e2ap_long_Macro_eNB_ID.h */
-/*********************************************/
-
-/**********************************/
-/* File .h missing: e2ap_ENB_ID.h */
-/**********************************/
-
-/****************************************/
-/* File .h missing: e2ap_GlobalENB_ID.h */
-/****************************************/
-
-// --- Begin of e2ap_NGENB_DU_ID.h ---
-/* e2ap_NGENB_DU_ID.h */
-typedef OSUINT32 e2ap_NGENB_DU_ID;
-
-EXTERN int asn1PE_e2ap_NGENB_DU_ID (OSCTXT* pctxt, e2ap_NGENB_DU_ID value);
-EXTERN int asn1PD_e2ap_NGENB_DU_ID (OSCTXT* pctxt, e2ap_NGENB_DU_ID* pvalue);
-EXTERN void asn1Print_e2ap_NGENB_DU_ID (const char* name, const e2ap_NGENB_DU_ID* pvalue);
-EXTERN int asn1PrtToStr_e2ap_NGENB_DU_ID (const char* name, e2ap_NGENB_DU_ID* pvalue, char* buffer, OSSIZE bufSize);
-EXTERN int asn1PrtToStrm_e2ap_NGENB_DU_ID (OSCTXT* pctxt, const char* name, const e2ap_NGENB_DU_ID* pvalue);
-// --- End of e2ap_NGENB_DU_ID.h ---
-
-/**************************************************/
-/* File .h missing: e2ap_GlobalE2node_ng_eNB_ID.h */
-/**************************************************/
-
-/***********************************************/
-/* File .h missing: e2ap_GlobalE2node_eNB_ID.h */
-/***********************************************/
-
-// --- Begin of e2ap_GlobalE2node_ID.h ---
-/* e2ap_GlobalE2node_ID.h */
-
-// choice
-typedef struct e2ap_GlobalE2node_ID {
-   OSINT32 t;  /* choice tag */
-   union {
-      e2ap_GlobalGNB_ID* gNB;
-      e2ap_GlobalNGeNB_ID* ng_eNB;
-      ASN1OpenType* extElem1;  /* extension */
-   } u;
-} e2ap_GlobalE2node_ID;
-
-EXTERN int asn1PE_e2ap_GlobalE2node_ID (OSCTXT* pctxt, e2ap_GlobalE2node_ID* pvalue);
-EXTERN int asn1PD_e2ap_GlobalE2node_ID (OSCTXT* pctxt, e2ap_GlobalE2node_ID* pvalue);
-EXTERN void asn1Print_e2ap_GlobalE2node_ID (const char* name, const e2ap_GlobalE2node_ID* pvalue);
-EXTERN int asn1PrtToStr_e2ap_GlobalE2node_ID (const char* name, e2ap_GlobalE2node_ID* pvalue, char* buffer, OSSIZE bufSize);
-EXTERN int asn1Copy_e2ap_GlobalE2node_ID (OSCTXT* pctxt, const e2ap_GlobalE2node_ID* pSrcValue, e2ap_GlobalE2node_ID* pDstValue);
-EXTERN int asn1Init_e2ap_GlobalE2node_ID (e2ap_GlobalE2node_ID* pvalue);
-EXTERN void asn1Free_e2ap_GlobalE2node_ID (OSCTXT* pctxt, e2ap_GlobalE2node_ID* pvalue);
-
-// --- End of e2ap_GlobalE2node_ID.h ---
-
 /*****************************************/
-/* File .h missing: e2ap_RANfunctionID.h */
+/* File .h missing: e2ap_ricInstanceID.h */
 /*****************************************/
 
-// --- Begin of e2ap_RANfunctionDefinition.h ---
-/* e2ap_RANfunctionDefinition.h */
-#ifndef _E2AP_RANFUNCTIONDEFINITION_H_
-#define _E2AP_RANFUNCTIONDEFINITION_H_
-
-#include "rtxsrc/rtxContext.h"
-#include "rtxsrc/rtxDList.h"
-
-typedef OSDynOctStr e2ap_RANfunctionDefinition;
-
-EXTERN int asn1PE_e2ap_RANfunctionDefinition (OSCTXT* pctxt, e2ap_RANfunctionDefinition* pvalue);
-EXTERN int asn1PD_e2ap_RANfunctionDefinition (OSCTXT* pctxt, e2ap_RANfunctionDefinition** ppvalue);
-EXTERN void asn1Print_e2ap_RANfunctionDefinition (const char* name, const e2ap_RANfunctionDefinition* pvalue);
-EXTERN int asn1PrtToStr_e2ap_RANfunctionDefinition (const char* name, e2ap_RANfunctionDefinition* pvalue, char* buffer, OSSIZE bufSize);
-EXTERN int asn1PrtToStrm_e2ap_RANfunctionDefinition (OSCTXT* pctxt, const char* name, const e2ap_RANfunctionDefinition* pvalue);
-EXTERN int asn1Copy_e2ap_RANfunctionDefinition (OSCTXT* pctxt, const e2ap_RANfunctionDefinition* pSrcValue, e2ap_RANfunctionDefinition* pDstValue);
-EXTERN int asn1Init_e2ap_RANfunctionDefinition (e2ap_RANfunctionDefinition* pvalue);
-EXTERN void asn1Free_e2ap_RANfunctionDefinition (OSCTXT* pctxt, e2ap_RANfunctionDefinition* pvalue);
-
-#endif
-// --- End of e2ap_RANfunctionDefinition.h ---
-
-/***********************************************/
-/* File .h missing: e2ap_RANfunctionRevision.h */
-/***********************************************/
-
-/*******************************************/
-/* File .h missing: e2ap_PrintableString.h */
-/*******************************************/
-
-// --- Begin of e2ap_RANfunctionOID.h ---
-/* e2ap_RANfunctionOID.h */
-#ifndef _E2AP_RANFUNCTIONOID_H_
-#define _E2AP_RANFUNCTIONOID_H_
-
-#include "rtxsrc/rtxContext.h"
-
-typedef const char* e2ap_RANfunctionOID;
-
-EXTERN int asn1PE_e2ap_RANfunctionOID (OSCTXT* pctxt, e2ap_RANfunctionOID value);
-EXTERN int asn1PD_e2ap_RANfunctionOID (OSCTXT* pctxt, e2ap_RANfunctionOID* ppvalue);
-EXTERN void asn1Print_e2ap_RANfunctionOID (const char* name, e2ap_RANfunctionOID pvalue);
-EXTERN int asn1PrtToStr_e2ap_RANfunctionOID (const char* name, e2ap_RANfunctionOID pvalue, char* buffer, OSSIZE bufSize);
-EXTERN int asn1PrtToStrm_e2ap_RANfunctionOID (OSCTXT* pctxt, const char* name, e2ap_RANfunctionOID pvalue);
-EXTERN int asn1Copy_e2ap_RANfunctionOID (OSCTXT* pctxt, e2ap_RANfunctionOID pSrcValue, e2ap_RANfunctionOID* ppDstValue);
-EXTERN void asn1Free_e2ap_RANfunctionOID (OSCTXT* pctxt, e2ap_RANfunctionOID pvalue);
-
-#endif
-// --- End of e2ap_RANfunctionOID.h ---
-
-// --- Begin of e2ap_RANfunction_Item.h ---
+// --- Begin of e2ap_RICrequestID.h ---
 
 //seq normal
 
-typedef struct e2ap_RANfunction_Item {
-   e2ap_RANfunctionID ranFunctionID;
-   e2ap_RANfunctionDefinition ranFunctionDefinition;
-   e2ap_RANfunctionRevision ranFunctionRevision;
-   e2ap_RANfunctionOID ranFunctionOID;
-} e2ap_RANfunction_Item;
+typedef struct e2ap_RICrequestID {
+   e2ap_ricRequestorID ricRequestorID;
+   e2ap_ricInstanceID ricInstanceID;
+ASN1OpenType extElem1; OSBOOL extElem1Present;} e2ap_RICrequestID;
 
-EXTERN int asn1PE_e2ap_RANfunction_Item (OSCTXT* pctxt, e2ap_RANfunction_Item* pvalue);
-EXTERN int asn1PD_e2ap_RANfunction_Item (OSCTXT* pctxt, e2ap_RANfunction_Item* pvalue);
-EXTERN void asn1Init_e2ap_RANfunction_Item (e2ap_RANfunction_Item* pvalue);
-EXTERN void asn1Free_e2ap_RANfunction_Item (OSCTXT* pctxt, e2ap_RANfunction_Item* pvalue);
-EXTERN void asn1Print_e2ap_RANfunction_Item (const char* name, const e2ap_RANfunction_Item* pvalue);
-// --- End of e2ap_RANfunction_Item.h ---
+EXTERN int asn1PE_e2ap_RICrequestID (OSCTXT* pctxt, e2ap_RICrequestID* pvalue);
+EXTERN int asn1PD_e2ap_RICrequestID (OSCTXT* pctxt, e2ap_RICrequestID* pvalue);
+EXTERN void asn1Init_e2ap_RICrequestID (e2ap_RICrequestID* pvalue);
+EXTERN void asn1Free_e2ap_RICrequestID (OSCTXT* pctxt, e2ap_RICrequestID* pvalue);
+EXTERN void asn1Print_e2ap_RICrequestID (const char* name, const e2ap_RICrequestID* pvalue);
+// --- End of e2ap_RICrequestID.h ---
 
-// --- Begin of e2ap_RANfunction_ItemIEs.h ---
-/* e2ap_RANfunction_ItemIEs.h */
-//IE
-/* Forward declaration for the enum */
-typedef enum {
-   T_E2AP_PDU_Contents_RANfunction_ItemIEs_UNDEF,
-   T_E2AP_PDU_Contents_RANfunction_ItemIEs_
-} T_E2AP_PDU_Contents_RANfunction_ItemIEs;
+// --- Begin of e2ap_RANfunctionID.h ---
+/* e2ap_RANfunctionID.h */
+typedef OSUINT16 e2ap_RANfunctionID;
 
-/* The actual IE container */
-typedef struct EXTERN e2ap_RANfunction_ItemIEs {
-   ASN1OpenType* extElem1;
-   OSSIZE        extElem1_n;
-   union {
-      e2ap_RANfunction-Item u_RANfunction_ItemIEs_;
-   } value;
-} e2ap_RANfunction_ItemIEs;
+EXTERN int asn1PE_e2ap_RANfunctionID (OSCTXT* pctxt, e2ap_RANfunctionID value);
+EXTERN int asn1PD_e2ap_RANfunctionID (OSCTXT* pctxt, e2ap_RANfunctionID* pvalue);
+EXTERN void asn1Print_e2ap_RANfunctionID (const char* name, const e2ap_RANfunctionID* pvalue);
+EXTERN int asn1PrtToStr_e2ap_RANfunctionID (const char* name, e2ap_RANfunctionID* pvalue, char* buffer, OSSIZE bufSize);
+EXTERN int asn1PrtToStrm_e2ap_RANfunctionID (OSCTXT* pctxt, const char* name, const e2ap_RANfunctionID* pvalue);
+// --- End of e2ap_RANfunctionID.h ---
 
-EXTERN int  asn1PE_e2ap_RANfunction_ItemIEs (OSCTXT* pctxt, e2ap_RANfunction_ItemIEs* pvalue);
-EXTERN int  asn1PD_e2ap_RANfunction_ItemIEs (OSCTXT* pctxt, e2ap_RANfunction_ItemIEs* pvalue);
-EXTERN void asn1Init_e2ap_RANfunction_ItemIEs (e2ap_RANfunction_ItemIEs* pvalue);
-EXTERN void asn1Free_e2ap_RANfunction_ItemIEs (OSCTXT* pctxt, e2ap_RANfunction_ItemIEs* pvalue);
-
-// --- End of e2ap_RANfunction_ItemIEs.h ---
-
-// --- Begin of e2ap_RANfunctions_List.h ---
-/* e2ap_RANfunctions_List.h */
-
-//seq_of_single_container.c
-
-typedef OSRTDList e2ap_RANfunctions_List;
-
-EXTERN int asn1PE_e2ap_RANfunctions_List (OSCTXT* pctxt, e2ap_RANfunctions_List* pvalue);
-EXTERN int asn1PD_e2ap_RANfunctions_List (OSCTXT* pctxt, e2ap_RANfunctions_List** ppvalue);
-EXTERN void asn1Init_e2ap_RANfunctions_List (e2ap_RANfunctions_List* pvalue);
-EXTERN void asn1Free_e2ap_RANfunctions_List (OSCTXT* pctxt, e2ap_RANfunctions_List* pvalue);
-// --- End of e2ap_RANfunctions_List.h ---
-
-// --- Begin of e2ap_E2nodeComponentInterfaceType.h ---
-/* e2ap_E2nodeComponentInterfaceType.h - enumurate*/
-/* e2ap_E2nodeComponentInterfaceType.h */
+// --- Begin of e2ap_CauseRICrequest.h ---
+/* e2ap_CauseRICrequest.h - enumurate*/
+/* e2ap_CauseRICrequest.h */
 
 /******************************************************/
 /*                                                    */
-/*    E2nodeComponentInterfaceType                                       */
+/*    CauseRICrequest                                       */
 /*                                                    */
 /******************************************************/
 
 typedef enum {
-    e2ap_ng = 0,    e2ap_xn = 1,    e2ap_e1 = 2,    e2ap_f1 = 3,    e2ap_w1 = 4,    e2ap_s1 = 5,    e2ap_x2 = 6//add other values as needed
-} e2ap_E2nodeComponentInterfaceType_Root;
+    e2ap_ran_function_id_invalid = 0,    e2ap_action_not_supported = 1,    e2ap_excessive_actions = 2,    e2ap_duplicate_action = 3,    e2ap_duplicate_event_trigger = 4,    e2ap_function_resource_limit = 5,    e2ap_request_id_unknown = 6,    e2ap_inconsistent_action_subsequent_action_sequence = 7,    e2ap_control_message_invalid = 8,    e2ap_ric_call_process_id_invalid = 9,    e2ap_control_timer_expired = 10,    e2ap_control_failed_to_execute = 11,    e2ap_system_not_ready = 12,    e2ap_unspecified = 13,    e2ap_ric_subscription_end_time_expired = 14,    e2ap_ric_subscription_end_time_invalid = 15,    e2ap_duplicate_ric_request_id = 16,    e2ap_eventTriggerNotSupported = 17,    e2ap_requested_information_unavailable = 18,    e2ap_invalid_information_request = 19//add other values as needed
+} e2ap_CauseRICrequest_Root;
 
-typedef OSUINT32 e2ap_E2nodeComponentInterfaceType;
+typedef OSUINT32 e2ap_CauseRICrequest;
 
 /* Encode / Decode */
-EXTERN int asn1PE_e2ap_E2nodeComponentInterfaceType (OSCTXT* pctxt, e2ap_E2nodeComponentInterfaceType value);
-EXTERN int asn1PD_e2ap_E2nodeComponentInterfaceType (OSCTXT* pctxt, e2ap_E2nodeComponentInterfaceType* pvalue);
+EXTERN int asn1PE_e2ap_CauseRICrequest (OSCTXT* pctxt, e2ap_CauseRICrequest value);
+EXTERN int asn1PD_e2ap_CauseRICrequest (OSCTXT* pctxt, e2ap_CauseRICrequest* pvalue);
 
 /* Print helpers */
-EXTERN void asn1Print_e2ap_E2nodeComponentInterfaceType (const char* name, const e2ap_E2nodeComponentInterfaceType* pvalue);
+EXTERN void asn1Print_e2ap_CauseRICrequest (const char* name, const e2ap_CauseRICrequest* pvalue);
 
 /* Convert to stream (pretty print to stream) */
-EXTERN int asn1PrtToStrm_e2ap_E2nodeComponentInterfaceType (OSCTXT* pctxt, const char* name, const e2ap_E2nodeComponentInterfaceType* pvalue);
+EXTERN int asn1PrtToStrm_e2ap_CauseRICrequest (OSCTXT* pctxt, const char* name, const e2ap_CauseRICrequest* pvalue);
 
 /* Convert to string (write into user buffer) */
-EXTERN int asn1PrtToStr_e2ap_E2nodeComponentInterfaceType (const char* name,const e2ap_E2nodeComponentInterfaceType* pvalue,char* buffer,OSSIZE bufSize);
+EXTERN int asn1PrtToStr_e2ap_CauseRICrequest (const char* name,const e2ap_CauseRICrequest* pvalue,char* buffer,OSSIZE bufSize);
 /* Enumeration table */
-EXTERN extern const OSEnumItem e2ap_E2nodeComponentInterfaceType_ENUMTAB[];
-#define e2ap_E2nodeComponentInterfaceType_ENUMTABSIZE 7
+EXTERN extern const OSEnumItem e2ap_CauseRICrequest_ENUMTAB[];
+#define e2ap_CauseRICrequest_ENUMTABSIZE 20
 
 /* Enum <-> String conversion */
-EXTERN const OSUTF8CHAR* e2ap_E2nodeComponentInterfaceType_ToString (OSUINT32 value);
-EXTERN int e2ap_E2nodeComponentInterfaceType_ToEnum (OSCTXT* pctxt,const OSUTF8CHAR* value,e2ap_E2nodeComponentInterfaceType* pvalue);
-EXTERN int e2ap_E2nodeComponentInterfaceType_ToEnum2 (OSCTXT* pctxt,const OSUTF8CHAR* value,OSSIZE valueLen,e2ap_E2nodeComponentInterfaceType* pvalue);
-// --- End of e2ap_E2nodeComponentInterfaceType.h ---
+EXTERN const OSUTF8CHAR* e2ap_CauseRICrequest_ToString (OSUINT32 value);
+EXTERN int e2ap_CauseRICrequest_ToEnum (OSCTXT* pctxt,const OSUTF8CHAR* value,e2ap_CauseRICrequest* pvalue);
+EXTERN int e2ap_CauseRICrequest_ToEnum2 (OSCTXT* pctxt,const OSUTF8CHAR* value,OSSIZE valueLen,e2ap_CauseRICrequest* pvalue);
+// --- End of e2ap_CauseRICrequest.h ---
 
-// --- Begin of e2ap_AMFName.h ---
-/* e2ap_AMFName.h */
-#ifndef _E2AP_AMFNAME_H_
-#define _E2AP_AMFNAME_H_
+// --- Begin of e2ap_CauseRICservice.h ---
+/* e2ap_CauseRICservice.h - enumurate*/
+/* e2ap_CauseRICservice.h */
+
+/******************************************************/
+/*                                                    */
+/*    CauseRICservice                                       */
+/*                                                    */
+/******************************************************/
+
+typedef enum {
+    e2ap_ran_function_not_supported = 0,    e2ap_excessive_functions = 1,    e2ap_ric_resource_limit = 2//add other values as needed
+} e2ap_CauseRICservice_Root;
+
+typedef OSUINT32 e2ap_CauseRICservice;
+
+/* Encode / Decode */
+EXTERN int asn1PE_e2ap_CauseRICservice (OSCTXT* pctxt, e2ap_CauseRICservice value);
+EXTERN int asn1PD_e2ap_CauseRICservice (OSCTXT* pctxt, e2ap_CauseRICservice* pvalue);
+
+/* Print helpers */
+EXTERN void asn1Print_e2ap_CauseRICservice (const char* name, const e2ap_CauseRICservice* pvalue);
+
+/* Convert to stream (pretty print to stream) */
+EXTERN int asn1PrtToStrm_e2ap_CauseRICservice (OSCTXT* pctxt, const char* name, const e2ap_CauseRICservice* pvalue);
+
+/* Convert to string (write into user buffer) */
+EXTERN int asn1PrtToStr_e2ap_CauseRICservice (const char* name,const e2ap_CauseRICservice* pvalue,char* buffer,OSSIZE bufSize);
+/* Enumeration table */
+EXTERN extern const OSEnumItem e2ap_CauseRICservice_ENUMTAB[];
+#define e2ap_CauseRICservice_ENUMTABSIZE 3
+
+/* Enum <-> String conversion */
+EXTERN const OSUTF8CHAR* e2ap_CauseRICservice_ToString (OSUINT32 value);
+EXTERN int e2ap_CauseRICservice_ToEnum (OSCTXT* pctxt,const OSUTF8CHAR* value,e2ap_CauseRICservice* pvalue);
+EXTERN int e2ap_CauseRICservice_ToEnum2 (OSCTXT* pctxt,const OSUTF8CHAR* value,OSSIZE valueLen,e2ap_CauseRICservice* pvalue);
+// --- End of e2ap_CauseRICservice.h ---
+
+// --- Begin of e2ap_CauseE2node.h ---
+/* e2ap_CauseE2node.h - enumurate*/
+/* e2ap_CauseE2node.h */
+
+/******************************************************/
+/*                                                    */
+/*    CauseE2node                                       */
+/*                                                    */
+/******************************************************/
+
+typedef enum {
+    e2ap_e2node_component_unknown = 0//add other values as needed
+} e2ap_CauseE2node_Root;
+
+typedef OSUINT32 e2ap_CauseE2node;
+
+/* Encode / Decode */
+EXTERN int asn1PE_e2ap_CauseE2node (OSCTXT* pctxt, e2ap_CauseE2node value);
+EXTERN int asn1PD_e2ap_CauseE2node (OSCTXT* pctxt, e2ap_CauseE2node* pvalue);
+
+/* Print helpers */
+EXTERN void asn1Print_e2ap_CauseE2node (const char* name, const e2ap_CauseE2node* pvalue);
+
+/* Convert to stream (pretty print to stream) */
+EXTERN int asn1PrtToStrm_e2ap_CauseE2node (OSCTXT* pctxt, const char* name, const e2ap_CauseE2node* pvalue);
+
+/* Convert to string (write into user buffer) */
+EXTERN int asn1PrtToStr_e2ap_CauseE2node (const char* name,const e2ap_CauseE2node* pvalue,char* buffer,OSSIZE bufSize);
+/* Enumeration table */
+EXTERN extern const OSEnumItem e2ap_CauseE2node_ENUMTAB[];
+#define e2ap_CauseE2node_ENUMTABSIZE 1
+
+/* Enum <-> String conversion */
+EXTERN const OSUTF8CHAR* e2ap_CauseE2node_ToString (OSUINT32 value);
+EXTERN int e2ap_CauseE2node_ToEnum (OSCTXT* pctxt,const OSUTF8CHAR* value,e2ap_CauseE2node* pvalue);
+EXTERN int e2ap_CauseE2node_ToEnum2 (OSCTXT* pctxt,const OSUTF8CHAR* value,OSSIZE valueLen,e2ap_CauseE2node* pvalue);
+// --- End of e2ap_CauseE2node.h ---
+
+// --- Begin of e2ap_CauseTransport.h ---
+/* e2ap_CauseTransport.h - enumurate*/
+/* e2ap_CauseTransport.h */
+
+/******************************************************/
+/*                                                    */
+/*    CauseTransport                                       */
+/*                                                    */
+/******************************************************/
+
+typedef enum {
+    e2ap_unspecified = 0,    e2ap_transport_resource_unavailable = 1//add other values as needed
+} e2ap_CauseTransport_Root;
+
+typedef OSUINT32 e2ap_CauseTransport;
+
+/* Encode / Decode */
+EXTERN int asn1PE_e2ap_CauseTransport (OSCTXT* pctxt, e2ap_CauseTransport value);
+EXTERN int asn1PD_e2ap_CauseTransport (OSCTXT* pctxt, e2ap_CauseTransport* pvalue);
+
+/* Print helpers */
+EXTERN void asn1Print_e2ap_CauseTransport (const char* name, const e2ap_CauseTransport* pvalue);
+
+/* Convert to stream (pretty print to stream) */
+EXTERN int asn1PrtToStrm_e2ap_CauseTransport (OSCTXT* pctxt, const char* name, const e2ap_CauseTransport* pvalue);
+
+/* Convert to string (write into user buffer) */
+EXTERN int asn1PrtToStr_e2ap_CauseTransport (const char* name,const e2ap_CauseTransport* pvalue,char* buffer,OSSIZE bufSize);
+/* Enumeration table */
+EXTERN extern const OSEnumItem e2ap_CauseTransport_ENUMTAB[];
+#define e2ap_CauseTransport_ENUMTABSIZE 2
+
+/* Enum <-> String conversion */
+EXTERN const OSUTF8CHAR* e2ap_CauseTransport_ToString (OSUINT32 value);
+EXTERN int e2ap_CauseTransport_ToEnum (OSCTXT* pctxt,const OSUTF8CHAR* value,e2ap_CauseTransport* pvalue);
+EXTERN int e2ap_CauseTransport_ToEnum2 (OSCTXT* pctxt,const OSUTF8CHAR* value,OSSIZE valueLen,e2ap_CauseTransport* pvalue);
+// --- End of e2ap_CauseTransport.h ---
+
+// --- Begin of e2ap_CauseProtocol.h ---
+/* e2ap_CauseProtocol.h - enumurate*/
+/* e2ap_CauseProtocol.h */
+
+/******************************************************/
+/*                                                    */
+/*    CauseProtocol                                       */
+/*                                                    */
+/******************************************************/
+
+typedef enum {
+    e2ap_transfer_syntax_error = 0,    e2ap_abstract_syntax_error_reject = 1,    e2ap_abstract_syntax_error_ignore_and_notify = 2,    e2ap_message_not_compatible_with_receiver_state = 3,    e2ap_©2025bytheO_RANALLIANCEe.V.Youruseissubjecttothecopyrightstatementonthecoverpageofthisspecification.142O_RAN.WG3.TS.E2AP_R004_v07.00semantic_error = 4,    e2ap_abstract_syntax_error_falsely_constructed_message = 5,    e2ap_unspecified = 6//add other values as needed
+} e2ap_CauseProtocol_Root;
+
+typedef OSUINT32 e2ap_CauseProtocol;
+
+/* Encode / Decode */
+EXTERN int asn1PE_e2ap_CauseProtocol (OSCTXT* pctxt, e2ap_CauseProtocol value);
+EXTERN int asn1PD_e2ap_CauseProtocol (OSCTXT* pctxt, e2ap_CauseProtocol* pvalue);
+
+/* Print helpers */
+EXTERN void asn1Print_e2ap_CauseProtocol (const char* name, const e2ap_CauseProtocol* pvalue);
+
+/* Convert to stream (pretty print to stream) */
+EXTERN int asn1PrtToStrm_e2ap_CauseProtocol (OSCTXT* pctxt, const char* name, const e2ap_CauseProtocol* pvalue);
+
+/* Convert to string (write into user buffer) */
+EXTERN int asn1PrtToStr_e2ap_CauseProtocol (const char* name,const e2ap_CauseProtocol* pvalue,char* buffer,OSSIZE bufSize);
+/* Enumeration table */
+EXTERN extern const OSEnumItem e2ap_CauseProtocol_ENUMTAB[];
+#define e2ap_CauseProtocol_ENUMTABSIZE 7
+
+/* Enum <-> String conversion */
+EXTERN const OSUTF8CHAR* e2ap_CauseProtocol_ToString (OSUINT32 value);
+EXTERN int e2ap_CauseProtocol_ToEnum (OSCTXT* pctxt,const OSUTF8CHAR* value,e2ap_CauseProtocol* pvalue);
+EXTERN int e2ap_CauseProtocol_ToEnum2 (OSCTXT* pctxt,const OSUTF8CHAR* value,OSSIZE valueLen,e2ap_CauseProtocol* pvalue);
+// --- End of e2ap_CauseProtocol.h ---
+
+// --- Begin of e2ap_CauseMisc.h ---
+/* e2ap_CauseMisc.h - enumurate*/
+/* e2ap_CauseMisc.h */
+
+/******************************************************/
+/*                                                    */
+/*    CauseMisc                                       */
+/*                                                    */
+/******************************************************/
+
+typedef enum {
+    e2ap_control_processing_overload = 0,    e2ap_hardware_failure = 1,    e2ap_om_intervention = 2,    e2ap_unspecified = 3//add other values as needed
+} e2ap_CauseMisc_Root;
+
+typedef OSUINT32 e2ap_CauseMisc;
+
+/* Encode / Decode */
+EXTERN int asn1PE_e2ap_CauseMisc (OSCTXT* pctxt, e2ap_CauseMisc value);
+EXTERN int asn1PD_e2ap_CauseMisc (OSCTXT* pctxt, e2ap_CauseMisc* pvalue);
+
+/* Print helpers */
+EXTERN void asn1Print_e2ap_CauseMisc (const char* name, const e2ap_CauseMisc* pvalue);
+
+/* Convert to stream (pretty print to stream) */
+EXTERN int asn1PrtToStrm_e2ap_CauseMisc (OSCTXT* pctxt, const char* name, const e2ap_CauseMisc* pvalue);
+
+/* Convert to string (write into user buffer) */
+EXTERN int asn1PrtToStr_e2ap_CauseMisc (const char* name,const e2ap_CauseMisc* pvalue,char* buffer,OSSIZE bufSize);
+/* Enumeration table */
+EXTERN extern const OSEnumItem e2ap_CauseMisc_ENUMTAB[];
+#define e2ap_CauseMisc_ENUMTABSIZE 4
+
+/* Enum <-> String conversion */
+EXTERN const OSUTF8CHAR* e2ap_CauseMisc_ToString (OSUINT32 value);
+EXTERN int e2ap_CauseMisc_ToEnum (OSCTXT* pctxt,const OSUTF8CHAR* value,e2ap_CauseMisc* pvalue);
+EXTERN int e2ap_CauseMisc_ToEnum2 (OSCTXT* pctxt,const OSUTF8CHAR* value,OSSIZE valueLen,e2ap_CauseMisc* pvalue);
+// --- End of e2ap_CauseMisc.h ---
+
+// --- Begin of e2ap_ServiceLayerCause.h ---
+/* e2ap_ServiceLayerCause.h */
+#ifndef _E2AP_SERVICELAYERCAUSE_H_
+#define _E2AP_SERVICELAYERCAUSE_H_
 
 #include "rtxsrc/rtxContext.h"
+#include "rtxsrc/rtxDList.h"
 
-typedef const char* e2ap_AMFName;
+typedef OSDynOctStr e2ap_ServiceLayerCause;
 
-EXTERN int asn1PE_e2ap_AMFName (OSCTXT* pctxt, e2ap_AMFName value);
-EXTERN int asn1PD_e2ap_AMFName (OSCTXT* pctxt, e2ap_AMFName* ppvalue);
-EXTERN void asn1Print_e2ap_AMFName (const char* name, e2ap_AMFName pvalue);
-EXTERN int asn1PrtToStr_e2ap_AMFName (const char* name, e2ap_AMFName pvalue, char* buffer, OSSIZE bufSize);
-EXTERN int asn1PrtToStrm_e2ap_AMFName (OSCTXT* pctxt, const char* name, e2ap_AMFName pvalue);
-EXTERN int asn1Copy_e2ap_AMFName (OSCTXT* pctxt, e2ap_AMFName pSrcValue, e2ap_AMFName* ppDstValue);
-EXTERN void asn1Free_e2ap_AMFName (OSCTXT* pctxt, e2ap_AMFName pvalue);
+EXTERN int asn1PE_e2ap_ServiceLayerCause (OSCTXT* pctxt, e2ap_ServiceLayerCause* pvalue);
+EXTERN int asn1PD_e2ap_ServiceLayerCause (OSCTXT* pctxt, e2ap_ServiceLayerCause** ppvalue);
+EXTERN void asn1Print_e2ap_ServiceLayerCause (const char* name, const e2ap_ServiceLayerCause* pvalue);
+EXTERN int asn1PrtToStr_e2ap_ServiceLayerCause (const char* name, e2ap_ServiceLayerCause* pvalue, char* buffer, OSSIZE bufSize);
+EXTERN int asn1PrtToStrm_e2ap_ServiceLayerCause (OSCTXT* pctxt, const char* name, const e2ap_ServiceLayerCause* pvalue);
+EXTERN int asn1Copy_e2ap_ServiceLayerCause (OSCTXT* pctxt, const e2ap_ServiceLayerCause* pSrcValue, e2ap_ServiceLayerCause* pDstValue);
+EXTERN int asn1Init_e2ap_ServiceLayerCause (e2ap_ServiceLayerCause* pvalue);
+EXTERN void asn1Free_e2ap_ServiceLayerCause (OSCTXT* pctxt, e2ap_ServiceLayerCause* pvalue);
 
 #endif
-// --- End of e2ap_AMFName.h ---
+// --- End of e2ap_ServiceLayerCause.h ---
 
-/******************************************************/
-/* File .h missing: e2ap_E2nodeComponentInterfaceNG.h */
-/******************************************************/
-
-/***********************************************/
-/* File .h missing: e2ap_GlobalNG_RANNode_ID.h */
-/***********************************************/
-
-/******************************************************/
-/* File .h missing: e2ap_E2nodeComponentInterfaceXn.h */
-/******************************************************/
-
-/******************************************************/
-/* File .h missing: e2ap_E2nodeComponentInterfaceE1.h */
-/******************************************************/
-
-/******************************************************/
-/* File .h missing: e2ap_E2nodeComponentInterfaceF1.h */
-/******************************************************/
-
-/******************************************************/
-/* File .h missing: e2ap_E2nodeComponentInterfaceW1.h */
-/******************************************************/
-
-/***********************************/
-/* File .h missing: e2ap_MMEname.h */
-/***********************************/
-
-// --- Begin of e2ap_E2nodeComponentInterfaceS1.h ---
+// --- Begin of e2ap_CauseServiceLayer.h ---
 
 //seq normal
 
-typedef struct e2ap_E2nodeComponentInterfaceS1 {
-   e2ap_MMEname mme_name ;
-} e2ap_E2nodeComponentInterfaceS1;
+typedef struct e2ap_CauseServiceLayer {
+   e2ap_ServiceLayerCause serviceLayerCause;
+ASN1OpenType extElem1; OSBOOL extElem1Present;} e2ap_CauseServiceLayer;
 
-EXTERN int asn1PE_e2ap_E2nodeComponentInterfaceS1 (OSCTXT* pctxt, e2ap_E2nodeComponentInterfaceS1* pvalue);
-EXTERN int asn1PD_e2ap_E2nodeComponentInterfaceS1 (OSCTXT* pctxt, e2ap_E2nodeComponentInterfaceS1* pvalue);
-EXTERN void asn1Init_e2ap_E2nodeComponentInterfaceS1 (e2ap_E2nodeComponentInterfaceS1* pvalue);
-EXTERN void asn1Free_e2ap_E2nodeComponentInterfaceS1 (OSCTXT* pctxt, e2ap_E2nodeComponentInterfaceS1* pvalue);
-EXTERN void asn1Print_e2ap_E2nodeComponentInterfaceS1 (const char* name, const e2ap_E2nodeComponentInterfaceS1* pvalue);
-// --- End of e2ap_E2nodeComponentInterfaceS1.h ---
+EXTERN int asn1PE_e2ap_CauseServiceLayer (OSCTXT* pctxt, e2ap_CauseServiceLayer* pvalue);
+EXTERN int asn1PD_e2ap_CauseServiceLayer (OSCTXT* pctxt, e2ap_CauseServiceLayer* pvalue);
+EXTERN void asn1Init_e2ap_CauseServiceLayer (e2ap_CauseServiceLayer* pvalue);
+EXTERN void asn1Free_e2ap_CauseServiceLayer (OSCTXT* pctxt, e2ap_CauseServiceLayer* pvalue);
+EXTERN void asn1Print_e2ap_CauseServiceLayer (const char* name, const e2ap_CauseServiceLayer* pvalue);
+// --- End of e2ap_CauseServiceLayer.h ---
 
-// --- Begin of e2ap_E2nodeComponentInterfaceX2.h ---
+// --- Begin of e2ap_Cause.h ---
+/* e2ap_Cause.h */
 
-//seq normal
-
-typedef struct e2ap_E2nodeComponentInterfaceX2 {
-   e2ap_GlobalENB-ID global_eNB_ID;
-   e2ap_GlobalenGNB-ID global_en_gNB_ID;
-} e2ap_E2nodeComponentInterfaceX2;
-
-EXTERN int asn1PE_e2ap_E2nodeComponentInterfaceX2 (OSCTXT* pctxt, e2ap_E2nodeComponentInterfaceX2* pvalue);
-EXTERN int asn1PD_e2ap_E2nodeComponentInterfaceX2 (OSCTXT* pctxt, e2ap_E2nodeComponentInterfaceX2* pvalue);
-EXTERN void asn1Init_e2ap_E2nodeComponentInterfaceX2 (e2ap_E2nodeComponentInterfaceX2* pvalue);
-EXTERN void asn1Free_e2ap_E2nodeComponentInterfaceX2 (OSCTXT* pctxt, e2ap_E2nodeComponentInterfaceX2* pvalue);
-EXTERN void asn1Print_e2ap_E2nodeComponentInterfaceX2 (const char* name, const e2ap_E2nodeComponentInterfaceX2* pvalue);
-// --- End of e2ap_E2nodeComponentInterfaceX2.h ---
-
-/*********************************************/
-/* File .h missing: e2ap_E2nodeComponentID.h */
-/*********************************************/
-
-/******************************************************/
-/* File .h missing: e2ap_e2nodeComponentRequestPart.h */
-/******************************************************/
-
-/*******************************************************/
-/* File .h missing: e2ap_e2nodeComponentResponsePart.h */
-/*******************************************************/
-
-/********************************************************/
-/* File .h missing: e2ap_E2nodeComponentConfiguration.h */
-/********************************************************/
-
-// --- Begin of e2ap_E2nodeComponentConfigAddition_Item.h ---
-
-//seq normal
-
-typedef struct e2ap_E2nodeComponentConfigAddition_Item {
-   e2ap_E2nodeComponentInterfaceType e2nodeComponentInterfaceType;
-   e2ap_E2nodeComponentID e2nodeComponentID;
-   e2ap_E2nodeComponentConfiguration e2nodeComponentConfiguration;
-} e2ap_E2nodeComponentConfigAddition_Item;
-
-EXTERN int asn1PE_e2ap_E2nodeComponentConfigAddition_Item (OSCTXT* pctxt, e2ap_E2nodeComponentConfigAddition_Item* pvalue);
-EXTERN int asn1PD_e2ap_E2nodeComponentConfigAddition_Item (OSCTXT* pctxt, e2ap_E2nodeComponentConfigAddition_Item* pvalue);
-EXTERN void asn1Init_e2ap_E2nodeComponentConfigAddition_Item (e2ap_E2nodeComponentConfigAddition_Item* pvalue);
-EXTERN void asn1Free_e2ap_E2nodeComponentConfigAddition_Item (OSCTXT* pctxt, e2ap_E2nodeComponentConfigAddition_Item* pvalue);
-EXTERN void asn1Print_e2ap_E2nodeComponentConfigAddition_Item (const char* name, const e2ap_E2nodeComponentConfigAddition_Item* pvalue);
-// --- End of e2ap_E2nodeComponentConfigAddition_Item.h ---
-
-// --- Begin of e2ap_E2nodeComponentConfigAddition_ItemIEs.h ---
-/* e2ap_E2nodeComponentConfigAddition_ItemIEs.h */
-//IE
-/* Forward declaration for the enum */
-typedef enum {
-   T_E2AP_PDU_Contents_E2nodeComponentConfigAddition_ItemIEs_UNDEF,
-   T_E2AP_PDU_Contents_E2nodeComponentConfigAddition_ItemIEs_
-} T_E2AP_PDU_Contents_E2nodeComponentConfigAddition_ItemIEs;
-
-/* The actual IE container */
-typedef struct EXTERN e2ap_E2nodeComponentConfigAddition_ItemIEs {
-   ASN1OpenType* extElem1;
-   OSSIZE        extElem1_n;
+// choice
+typedef struct e2ap_Cause {
+   OSINT32 t;  /* choice tag */
    union {
-      e2ap_E2nodeComponentConfigAddition-Item u_E2nodeComponentConfigAddition_ItemIEs_;
-   } value;
-} e2ap_E2nodeComponentConfigAddition_ItemIEs;
+      e2ap_CauseRICrequest* ricRequest;
+      e2ap_CauseRICservice* ricService;
+      e2ap_CauseE2node* e2Node;
+      e2ap_CauseTransport* transport;
+      e2ap_CauseProtocol* protocol;
+      e2ap_CauseMisc* misc;
+      e2ap_CauseServiceLayer* serviceLayer;
+      ASN1OpenType* extElem1;  /* extension */
+   } u;
+} e2ap_Cause;
 
-EXTERN int  asn1PE_e2ap_E2nodeComponentConfigAddition_ItemIEs (OSCTXT* pctxt, e2ap_E2nodeComponentConfigAddition_ItemIEs* pvalue);
-EXTERN int  asn1PD_e2ap_E2nodeComponentConfigAddition_ItemIEs (OSCTXT* pctxt, e2ap_E2nodeComponentConfigAddition_ItemIEs* pvalue);
-EXTERN void asn1Init_e2ap_E2nodeComponentConfigAddition_ItemIEs (e2ap_E2nodeComponentConfigAddition_ItemIEs* pvalue);
-EXTERN void asn1Free_e2ap_E2nodeComponentConfigAddition_ItemIEs (OSCTXT* pctxt, e2ap_E2nodeComponentConfigAddition_ItemIEs* pvalue);
+EXTERN int asn1PE_e2ap_Cause (OSCTXT* pctxt, e2ap_Cause* pvalue);
+EXTERN int asn1PD_e2ap_Cause (OSCTXT* pctxt, e2ap_Cause* pvalue);
+EXTERN void asn1Print_e2ap_Cause (const char* name, const e2ap_Cause* pvalue);
+EXTERN int asn1PrtToStr_e2ap_Cause (const char* name, e2ap_Cause* pvalue, char* buffer, OSSIZE bufSize);
+EXTERN int asn1Copy_e2ap_Cause (OSCTXT* pctxt, const e2ap_Cause* pSrcValue, e2ap_Cause* pDstValue);
+EXTERN int asn1Init_e2ap_Cause (e2ap_Cause* pvalue);
+EXTERN void asn1Free_e2ap_Cause (OSCTXT* pctxt, e2ap_Cause* pvalue);
 
-// --- End of e2ap_E2nodeComponentConfigAddition_ItemIEs.h ---
+// --- End of e2ap_Cause.h ---
 
-// --- Begin of e2ap_E2nodeComponentConfigAddition_List.h ---
-/* e2ap_E2nodeComponentConfigAddition_List.h */
+// --- Begin of e2ap_ProcedureCode.h ---
+/* e2ap_ProcedureCode.h */
+typedef OSUINT8 e2ap_ProcedureCode;
 
-//seq_of_single_container.c
+EXTERN int asn1PE_e2ap_ProcedureCode (OSCTXT* pctxt, e2ap_ProcedureCode value);
+EXTERN int asn1PD_e2ap_ProcedureCode (OSCTXT* pctxt, e2ap_ProcedureCode* pvalue);
+EXTERN void asn1Print_e2ap_ProcedureCode (const char* name, const e2ap_ProcedureCode* pvalue);
+EXTERN int asn1PrtToStr_e2ap_ProcedureCode (const char* name, e2ap_ProcedureCode* pvalue, char* buffer, OSSIZE bufSize);
+EXTERN int asn1PrtToStrm_e2ap_ProcedureCode (OSCTXT* pctxt, const char* name, const e2ap_ProcedureCode* pvalue);
+// --- End of e2ap_ProcedureCode.h ---
 
-typedef OSRTDList e2ap_E2nodeComponentConfigAddition_List;
+// --- Begin of e2ap_TriggeringMessage.h ---
+/* e2ap_TriggeringMessage.h - enumurate*/
+/* e2ap_TriggeringMessage.h */
 
-EXTERN int asn1PE_e2ap_E2nodeComponentConfigAddition_List (OSCTXT* pctxt, e2ap_E2nodeComponentConfigAddition_List* pvalue);
-EXTERN int asn1PD_e2ap_E2nodeComponentConfigAddition_List (OSCTXT* pctxt, e2ap_E2nodeComponentConfigAddition_List** ppvalue);
-EXTERN void asn1Init_e2ap_E2nodeComponentConfigAddition_List (e2ap_E2nodeComponentConfigAddition_List* pvalue);
-EXTERN void asn1Free_e2ap_E2nodeComponentConfigAddition_List (OSCTXT* pctxt, e2ap_E2nodeComponentConfigAddition_List* pvalue);
-// --- End of e2ap_E2nodeComponentConfigAddition_List.h ---
+/******************************************************/
+/*                                                    */
+/*    TriggeringMessage                                       */
+/*                                                    */
+/******************************************************/
 
-/*********************************************/
-/* File .h missing: e2ap_E2setupRequestIEs.h */
-/*********************************************/
+typedef enum {
+    e2ap_initiating_message = 0,    e2ap_successful_outcome = 1,    e2ap_unsuccessfull_outcome = 2//add other values as needed
+} e2ap_TriggeringMessage_Root;
 
-// --- Begin of e2ap_E2setupRequest.h ---
-/* e2ap_E2SetupRequest.h */
-#ifndef _E2AP_E2SETUPREQUEST_H_
-#define _E2AP_E2SETUPREQUEST_H_
+typedef OSUINT32 e2ap_TriggeringMessage;
 
-#include "e2ap_E2nodeComponentConfigAddition_List.h"
-#include "e2ap_GlobalE2node_ID.h"
-#include "e2ap_RANfunctions_List.h"
-#include "e2ap_TransactionID.h"
+/* Encode / Decode */
+EXTERN int asn1PE_e2ap_TriggeringMessage (OSCTXT* pctxt, e2ap_TriggeringMessage value);
+EXTERN int asn1PD_e2ap_TriggeringMessage (OSCTXT* pctxt, e2ap_TriggeringMessage* pvalue);
 
-/* T_VALUE Union */
-typedef union e2ap_E2SetupRequestIEs_T_VALUE {
-   T_E2AP_PDU_Contents_e2ap__transactionID;
-   T_E2AP_PDU_Contents_e2ap__globalE2node_ID;
-   T_E2AP_PDU_Contents_e2ap__rANfunctionsAdded;
-   T_E2AP_PDU_Contents_e2ap__e2nodeComponentConfigAddition;
-} e2ap_E2SetupRequestIEs_TVALUE;
+/* Print helpers */
+EXTERN void asn1Print_e2ap_TriggeringMessage (const char* name, const e2ap_TriggeringMessage* pvalue);
 
-/* IE Struct */
-typedef struct e2ap_E2SetupRequestIEs {
-   e2ap_ProtocolIE_ID id;
-   e2ap_Criticality criticality;
-   e2ap_E2SetupRequestIEs_T_VALUE value;
-} e2ap_E2SetupRequestIEs;
+/* Convert to stream (pretty print to stream) */
+EXTERN int asn1PrtToStrm_e2ap_TriggeringMessage (OSCTXT* pctxt, const char* name, const e2ap_TriggeringMessage* pvalue);
 
-/* Container */
-typedef struct e2ap_E2SetupRequest_protocolIEs_Container {
-   e2ap_E2SetupRequestIEs* elem;
-   OSUINT16 n;
-} e2ap_E2SetupRequest_protocolIEs_Container;
+/* Convert to string (write into user buffer) */
+EXTERN int asn1PrtToStr_e2ap_TriggeringMessage (const char* name,const e2ap_TriggeringMessage* pvalue,char* buffer,OSSIZE bufSize);
+/* Enumeration table */
+EXTERN extern const OSEnumItem e2ap_TriggeringMessage_ENUMTAB[];
+#define e2ap_TriggeringMessage_ENUMTABSIZE 3
 
-/* Message */
-typedef struct e2ap_E2SetupRequest {
-   e2ap_E2SetupRequest_protocolIEs_Container protocolIEs;
-} e2ap_E2SetupRequest;
+/* Enum <-> String conversion */
+EXTERN const OSUTF8CHAR* e2ap_TriggeringMessage_ToString (OSUINT32 value);
+EXTERN int e2ap_TriggeringMessage_ToEnum (OSCTXT* pctxt,const OSUTF8CHAR* value,e2ap_TriggeringMessage* pvalue);
+EXTERN int e2ap_TriggeringMessage_ToEnum2 (OSCTXT* pctxt,const OSUTF8CHAR* value,OSSIZE valueLen,e2ap_TriggeringMessage* pvalue);
+// --- End of e2ap_TriggeringMessage.h ---
 
-EXTERN int asn1PE_e2ap_E2SetupRequest (OSCTXT* pctxt, e2ap_E2SetupRequest* pvalue);
-EXTERN int asn1PD_e2ap_E2SetupRequest (OSCTXT* pctxt, e2ap_E2SetupRequest* pvalue);
-EXTERN int asn1Init_e2ap_E2SetupRequest (e2ap_E2SetupRequest* pvalue);
-EXTERN void asn1Free_e2ap_E2SetupRequest (OSCTXT* pctxt, e2ap_E2SetupRequest* pvalue);
+// --- Begin of e2ap_Criticality.h ---
+/* e2ap_Criticality.h - enumurate*/
+/* e2ap_Criticality.h */
 
-#endif
-// --- End of e2ap_E2setupRequest.h ---
+/******************************************************/
+/*                                                    */
+/*    Criticality                                       */
+/*                                                    */
+/******************************************************/
+
+typedef enum {
+    e2ap_reject = 0,    e2ap_ignore = 1,    e2ap_notify = 2//add other values as needed
+} e2ap_Criticality_Root;
+
+typedef OSUINT32 e2ap_Criticality;
+
+/* Encode / Decode */
+EXTERN int asn1PE_e2ap_Criticality (OSCTXT* pctxt, e2ap_Criticality value);
+EXTERN int asn1PD_e2ap_Criticality (OSCTXT* pctxt, e2ap_Criticality* pvalue);
+
+/* Print helpers */
+EXTERN void asn1Print_e2ap_Criticality (const char* name, const e2ap_Criticality* pvalue);
+
+/* Convert to stream (pretty print to stream) */
+EXTERN int asn1PrtToStrm_e2ap_Criticality (OSCTXT* pctxt, const char* name, const e2ap_Criticality* pvalue);
+
+/* Convert to string (write into user buffer) */
+EXTERN int asn1PrtToStr_e2ap_Criticality (const char* name,const e2ap_Criticality* pvalue,char* buffer,OSSIZE bufSize);
+/* Enumeration table */
+EXTERN extern const OSEnumItem e2ap_Criticality_ENUMTAB[];
+#define e2ap_Criticality_ENUMTABSIZE 3
+
+/* Enum <-> String conversion */
+EXTERN const OSUTF8CHAR* e2ap_Criticality_ToString (OSUINT32 value);
+EXTERN int e2ap_Criticality_ToEnum (OSCTXT* pctxt,const OSUTF8CHAR* value,e2ap_Criticality* pvalue);
+EXTERN int e2ap_Criticality_ToEnum2 (OSCTXT* pctxt,const OSUTF8CHAR* value,OSSIZE valueLen,e2ap_Criticality* pvalue);
+// --- End of e2ap_Criticality.h ---
+
+/************************************/
+/* File .h missing: e2ap_SEQUENCE.h */
+/************************************/
+
+// --- Begin of e2ap_CriticalityDiagnostics_IE_List.h ---
+
+//seq normal
+
+typedef struct e2ap_CriticalityDiagnostics_IE_List {
+   e2ap_Criticality iECriticality;
+   e2ap_ProtocolIE-ID iE_ID;
+   e2ap_TypeOfError typeOfError;
+ASN1OpenType extElem1; OSBOOL extElem1Present;} e2ap_CriticalityDiagnostics_IE_List;
+
+EXTERN int asn1PE_e2ap_CriticalityDiagnostics_IE_List (OSCTXT* pctxt, e2ap_CriticalityDiagnostics_IE_List* pvalue);
+EXTERN int asn1PD_e2ap_CriticalityDiagnostics_IE_List (OSCTXT* pctxt, e2ap_CriticalityDiagnostics_IE_List* pvalue);
+EXTERN void asn1Init_e2ap_CriticalityDiagnostics_IE_List (e2ap_CriticalityDiagnostics_IE_List* pvalue);
+EXTERN void asn1Free_e2ap_CriticalityDiagnostics_IE_List (OSCTXT* pctxt, e2ap_CriticalityDiagnostics_IE_List* pvalue);
+EXTERN void asn1Print_e2ap_CriticalityDiagnostics_IE_List (const char* name, const e2ap_CriticalityDiagnostics_IE_List* pvalue);
+// --- End of e2ap_CriticalityDiagnostics_IE_List.h ---
+
+// --- Begin of e2ap_CriticalityDiagnostics.h ---
+
+//seq normal
+
+typedef struct e2ap_CriticalityDiagnostics {
+   e2ap_ProcedureCode procedureCode;
+OSBOOL m_procedureCodePresent;   e2ap_TriggeringMessage triggeringMessage;
+OSBOOL m_triggeringMessagePresent;   e2ap_Criticality procedureCriticality;
+OSBOOL m_procedureCriticalityPresent;   e2ap_RICrequestID ricRequestorID;
+OSBOOL m_ricRequestorIDPresent;   e2ap_CriticalityDiagnostics-IE-List iEsCriticalityDiagnostics;
+OSBOOL m_iEsCriticalityDiagnosticsPresent;ASN1OpenType extElem1; OSBOOL extElem1Present;} e2ap_CriticalityDiagnostics;
+
+EXTERN int asn1PE_e2ap_CriticalityDiagnostics (OSCTXT* pctxt, e2ap_CriticalityDiagnostics* pvalue);
+EXTERN int asn1PD_e2ap_CriticalityDiagnostics (OSCTXT* pctxt, e2ap_CriticalityDiagnostics* pvalue);
+EXTERN void asn1Init_e2ap_CriticalityDiagnostics (e2ap_CriticalityDiagnostics* pvalue);
+EXTERN void asn1Free_e2ap_CriticalityDiagnostics (OSCTXT* pctxt, e2ap_CriticalityDiagnostics* pvalue);
+EXTERN void asn1Print_e2ap_CriticalityDiagnostics (const char* name, const e2ap_CriticalityDiagnostics* pvalue);
+// --- End of e2ap_CriticalityDiagnostics.h ---
+
+/***********************************************/
+/* File .h missing: e2ap_ErrorIndication_IEs.h */
+/***********************************************/
+
+// --- Begin of e2ap_ErrorIndication.h ---
+
+//seq normal
+
+typedef struct e2ap_ErrorIndication {
+   e2ap_ProtocolIE-Container protocolIEs;
+ASN1OpenType extElem1; OSBOOL extElem1Present;} e2ap_ErrorIndication;
+
+EXTERN int asn1PE_e2ap_ErrorIndication (OSCTXT* pctxt, e2ap_ErrorIndication* pvalue);
+EXTERN int asn1PD_e2ap_ErrorIndication (OSCTXT* pctxt, e2ap_ErrorIndication* pvalue);
+EXTERN void asn1Init_e2ap_ErrorIndication (e2ap_ErrorIndication* pvalue);
+EXTERN void asn1Free_e2ap_ErrorIndication (OSCTXT* pctxt, e2ap_ErrorIndication* pvalue);
+EXTERN void asn1Print_e2ap_ErrorIndication (const char* name, const e2ap_ErrorIndication* pvalue);
+// --- End of e2ap_ErrorIndication.h ---
 

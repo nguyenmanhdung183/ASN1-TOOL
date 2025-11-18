@@ -8,8 +8,8 @@ import re
 env = Environment(loader=FileSystemLoader("templates"), trim_blocks=True, lstrip_blocks=True)
 
 # Đọc Excel
-df = pd.read_excel("data_e2setup.xlsx", sheet_name=None)
-
+#df = pd.read_excel("data_e2setup.xlsx", sheet_name=None)
+df = pd.read_excel("data_xlsx/data_excel.xlsx", sheet_name=None)
 # Tạo thư mục output
 os.makedirs("output", exist_ok=True)
 

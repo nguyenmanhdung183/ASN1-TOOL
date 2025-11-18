@@ -6,7 +6,7 @@ EXTERN int asn1PE_e2ap_NGENB_DU_ID (OSCTXT* pctxt, e2ap_NGENB_DU_ID value)
 {
    int stat = 0;
    RTXCTXPUSHTYPENAME (pctxt, "NGENB_DU_ID");
-   stat = pe_ConsUnsigned (pctxt, value, nan, 68719476735.0);
+   stat = pe_ConsUnsigned (pctxt, value, 0.0, 68719476735.0);
    if (stat != 0) return LOG_RTERR (pctxt, stat);
    RTXCTXPOPEXTNAME (pctxt);
    return stat;

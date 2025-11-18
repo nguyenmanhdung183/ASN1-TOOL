@@ -20,19 +20,19 @@ EXTERN int asn1PE_e2ap_ENB_ID_Choice (OSCTXT* pctxt, e2ap_ENB_ID_Choice* pvalue)
    }
 
    switch (pvalue->t) {
-      case 1.0:
+      case 0.0:
          RTXCTXPUSHELEMNAME (pctxt, "enb_ID_macro");
          stat = asn1PE_e2ap_BIT STRING (pctxt, pvalue->u.enb_ID_macro);
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXPOPELEMNAME (pctxt);
          break;
-      case 2.0:
+      case 1.0:
          RTXCTXPUSHELEMNAME (pctxt, "enb_ID_shortmacro");
          stat = asn1PE_e2ap_BIT STRING (pctxt, pvalue->u.enb_ID_shortmacro);
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXPOPELEMNAME (pctxt);
          break;
-      case 3.0:
+      case 2.0:
          RTXCTXPUSHELEMNAME (pctxt, "enb_ID_longmacro");
          stat = asn1PE_e2ap_BIT STRING (pctxt, pvalue->u.enb_ID_longmacro);
          if (stat != 0) return LOG_RTERR (pctxt, stat);
@@ -66,7 +66,7 @@ EXTERN int asn1PD_e2ap_ENB_ID_Choice (OSCTXT* pctxt, e2ap_ENB_ID_Choice* pvalue)
    }
 
    switch (pvalue->t) {
-      case 1.0:
+      case 0.0:
          RTXCTXPUSHELEMNAME (pctxt, "enb_ID_macro");
          pvalue->u.enb_ID_macro = rtxMemAllocType (pctxt, e2ap_BIT STRING);
          if (pvalue->u.enb_ID_macro == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
@@ -74,7 +74,7 @@ EXTERN int asn1PD_e2ap_ENB_ID_Choice (OSCTXT* pctxt, e2ap_ENB_ID_Choice* pvalue)
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXPOPELEMNAME (pctxt);
          break;
-      case 2.0:
+      case 1.0:
          RTXCTXPUSHELEMNAME (pctxt, "enb_ID_shortmacro");
          pvalue->u.enb_ID_shortmacro = rtxMemAllocType (pctxt, e2ap_BIT STRING);
          if (pvalue->u.enb_ID_shortmacro == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
@@ -82,7 +82,7 @@ EXTERN int asn1PD_e2ap_ENB_ID_Choice (OSCTXT* pctxt, e2ap_ENB_ID_Choice* pvalue)
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXPOPELEMNAME (pctxt);
          break;
-      case 3.0:
+      case 2.0:
          RTXCTXPUSHELEMNAME (pctxt, "enb_ID_longmacro");
          pvalue->u.enb_ID_longmacro = rtxMemAllocType (pctxt, e2ap_BIT STRING);
          if (pvalue->u.enb_ID_longmacro == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
@@ -110,19 +110,19 @@ void asn1Free_e2ap_ENB_ID_Choice (OSCTXT* pctxt, e2ap_ENB_ID_Choice* pvalue)
 {
    if (pvalue == 0) return;
    switch (pvalue->t) {
-      case 1.0:
+      case 0.0:
          if (pvalue->u.enb_ID_macro) {
             asn1Free_e2ap_BIT STRING (pctxt, pvalue->u.enb_ID_macro);
             rtxMemFreePtr (pctxt, (void*)pvalue->u.enb_ID_macro);
          }
          break;
-      case 2.0:
+      case 1.0:
          if (pvalue->u.enb_ID_shortmacro) {
             asn1Free_e2ap_BIT STRING (pctxt, pvalue->u.enb_ID_shortmacro);
             rtxMemFreePtr (pctxt, (void*)pvalue->u.enb_ID_shortmacro);
          }
          break;
-      case 3.0:
+      case 2.0:
          if (pvalue->u.enb_ID_longmacro) {
             asn1Free_e2ap_BIT STRING (pctxt, pvalue->u.enb_ID_longmacro);
             rtxMemFreePtr (pctxt, (void*)pvalue->u.enb_ID_longmacro);

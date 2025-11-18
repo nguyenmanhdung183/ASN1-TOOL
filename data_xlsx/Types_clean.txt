@@ -1,0 +1,283 @@
+Type_Name	ASN1_Type	Parent_Type	Tag/ID	Field_Name	IE_Type	Criticality	Optional	Extensible	Min_Value	Max_Value
+Cause	CHOICE	Cause	1	ricrequest	ricRequest					
+Cause	CHOICE	Cause	2	ricservice	ricService					
+Cause	CHOICE	Cause	3	e2node	e2Node					
+Cause	CHOICE	Cause	4	transport	transport					
+Cause	CHOICE	Cause	5	protocol	protocol					
+Cause	CHOICE	Cause	6	misc	misc					
+Cause	CHOICE	Cause	7	...	...					
+Cause	CHOICE	Cause	8	servicelayer	serviceLayer					
+CauseServiceLayer	SEQUENCE	CauseServiceLayer		serviceLayerCause	ServiceLayerCause					
+CriticalityDiagnostics	SEQUENCE	CriticalityDiagnostics		iEsCriticalityDiagnostics	CriticalityDiagnostics-IE-List					
+CriticalityDiagnostics	SEQUENCE	CriticalityDiagnostics		procedureCode	ProcedureCode					
+CriticalityDiagnostics	SEQUENCE	CriticalityDiagnostics		procedureCriticality	Criticality					
+CriticalityDiagnostics	SEQUENCE	CriticalityDiagnostics		ricRequestorID	RICrequestID					
+CriticalityDiagnostics	SEQUENCE	CriticalityDiagnostics		triggeringMessage	TriggeringMessage					
+CriticalityDiagnostics-IE-Item	SEQUENCE	CriticalityDiagnostics-IE-Item		iE-ID	ProtocolIE-ID					
+CriticalityDiagnostics-IE-Item	SEQUENCE	CriticalityDiagnostics-IE-Item		iECriticality	Criticality					
+CriticalityDiagnostics-IE-Item	SEQUENCE	CriticalityDiagnostics-IE-Item		typeOfError	TypeOfError					
+E2AP-PDU	CHOICE	E2AP-PDU	1	initiatingmessage	initiatingMessage					
+E2AP-PDU	CHOICE	E2AP-PDU	2	successfuloutcome	successfulOutcome					
+E2AP-PDU	CHOICE	E2AP-PDU	3	unsuccessfuloutcome	unsuccessfulOutcome					
+E2AP-PDU	CHOICE	E2AP-PDU	4	...	...					
+E2AP_PDU	CHOICE	E2AP_PDU	1	initiatingMessage	InitiatingMessage					
+E2AP_PDU	CHOICE	E2AP_PDU	2	successfulOutcome	SuccessfulOutcome					
+E2AP_PDU	CHOICE	E2AP_PDU	3	unsuccessfulOutcome	UnsuccessfulOutcome					
+E2RemovalFailure	SEQUENCE	E2RemovalFailure		protocolIEs	ProtocolIE-Container					
+E2RemovalRequest	SEQUENCE	E2RemovalRequest		protocolIEs	ProtocolIE-Container					
+E2RemovalResponse	SEQUENCE	E2RemovalResponse		protocolIEs	ProtocolIE-Container					
+E2connectionSetupFailed-Item	SEQUENCE	E2connectionSetupFailed-Item		cause	Cause					
+E2connectionSetupFailed-Item	SEQUENCE	E2connectionSetupFailed-Item		tnlInformation	TNLinformation					
+E2connectionUpdate	SEQUENCE	E2connectionUpdate		protocolIEs	ProtocolIE-Container					
+E2connectionUpdate-Item	SEQUENCE	E2connectionUpdate-Item		tnlInformation	TNLinformation					
+E2connectionUpdate-Item	SEQUENCE	E2connectionUpdate-Item		tnlUsage	TNLusage					
+E2connectionUpdateAcknowledge	SEQUENCE	E2connectionUpdateAcknowledge		protocolIEs	ProtocolIE-Container					
+E2connectionUpdateFailure	SEQUENCE	E2connectionUpdateFailure		protocolIEs	ProtocolIE-Container					
+E2connectionUpdateRemove-Item	SEQUENCE	E2connectionUpdateRemove-Item		tnlInformation	TNLinformation					
+E2nodeComponentConfigAddition-Item	SEQUENCE	E2nodeComponentConfigAddition-Item		e2nodeComponentConfiguration	E2nodeComponentConfiguration					
+E2nodeComponentConfigAddition-Item	SEQUENCE	E2nodeComponentConfigAddition-Item		e2nodeComponentID	E2nodeComponentID					
+E2nodeComponentConfigAddition-Item	SEQUENCE	E2nodeComponentConfigAddition-Item		e2nodeComponentInterfaceType	E2nodeComponentInterfaceType					
+E2nodeComponentConfigAdditionAck-Item	SEQUENCE	E2nodeComponentConfigAdditionAck-Item		e2nodeComponentConfigurationAck	E2nodeComponentConfigurationAck					
+E2nodeComponentConfigAdditionAck-Item	SEQUENCE	E2nodeComponentConfigAdditionAck-Item		e2nodeComponentID	E2nodeComponentID					
+E2nodeComponentConfigAdditionAck-Item	SEQUENCE	E2nodeComponentConfigAdditionAck-Item		e2nodeComponentInterfaceType	E2nodeComponentInterfaceType					
+E2nodeComponentConfigRemoval-Item	SEQUENCE	E2nodeComponentConfigRemoval-Item		e2nodeComponentID	E2nodeComponentID					
+E2nodeComponentConfigRemoval-Item	SEQUENCE	E2nodeComponentConfigRemoval-Item		e2nodeComponentInterfaceType	E2nodeComponentInterfaceType					
+E2nodeComponentConfigRemovalAck-Item	SEQUENCE	E2nodeComponentConfigRemovalAck-Item		e2nodeComponentConfigurationAck	E2nodeComponentConfigurationAck					
+E2nodeComponentConfigRemovalAck-Item	SEQUENCE	E2nodeComponentConfigRemovalAck-Item		e2nodeComponentID	E2nodeComponentID					
+E2nodeComponentConfigRemovalAck-Item	SEQUENCE	E2nodeComponentConfigRemovalAck-Item		e2nodeComponentInterfaceType	E2nodeComponentInterfaceType					
+E2nodeComponentConfigUpdate-Item	SEQUENCE	E2nodeComponentConfigUpdate-Item		e2nodeComponentConfiguration	E2nodeComponentConfiguration					
+E2nodeComponentConfigUpdate-Item	SEQUENCE	E2nodeComponentConfigUpdate-Item		e2nodeComponentID	E2nodeComponentID					
+E2nodeComponentConfigUpdate-Item	SEQUENCE	E2nodeComponentConfigUpdate-Item		e2nodeComponentInterfaceType	E2nodeComponentInterfaceType					
+E2nodeComponentConfigUpdateAck-Item	SEQUENCE	E2nodeComponentConfigUpdateAck-Item		e2nodeComponentConfigurationAck	E2nodeComponentConfigurationAck					
+E2nodeComponentConfigUpdateAck-Item	SEQUENCE	E2nodeComponentConfigUpdateAck-Item		e2nodeComponentID	E2nodeComponentID					
+E2nodeComponentConfigUpdateAck-Item	SEQUENCE	E2nodeComponentConfigUpdateAck-Item		e2nodeComponentInterfaceType	E2nodeComponentInterfaceType					
+E2nodeComponentConfiguration	SEQUENCE	E2nodeComponentConfiguration		e2nodeComponentRequestPart	OCTET					
+E2nodeComponentConfiguration	SEQUENCE	E2nodeComponentConfiguration		e2nodeComponentResponsePart	OCTET					
+E2nodeComponentConfigurationAck	SEQUENCE	E2nodeComponentConfigurationAck		updateOutcome	ENUMERATED					
+E2nodeComponentID	CHOICE	E2nodeComponentID	1	e2nodecomponentinterfacetypeng	e2nodeComponentInterfaceTypeNG					
+E2nodeComponentID	CHOICE	E2nodeComponentID	2	e2nodecomponentinterfacetypexn	e2nodeComponentInterfaceTypeXn					
+E2nodeComponentID	CHOICE	E2nodeComponentID	3	e2nodecomponentinterfacetypee1	e2nodeComponentInterfaceTypeE1					
+E2nodeComponentID	CHOICE	E2nodeComponentID	4	e2nodecomponentinterfacetypef1	e2nodeComponentInterfaceTypeF1					
+E2nodeComponentID	CHOICE	E2nodeComponentID	5	e2nodecomponentinterfacetypew1	e2nodeComponentInterfaceTypeW1					
+E2nodeComponentID	CHOICE	E2nodeComponentID	6	e2nodecomponentinterfacetypes1	e2nodeComponentInterfaceTypeS1					
+E2nodeComponentID	CHOICE	E2nodeComponentID	7	e2nodecomponentinterfacetypex2	e2nodeComponentInterfaceTypeX2					
+E2nodeComponentID	CHOICE	E2nodeComponentID	8	...	...					
+E2nodeComponentInterfaceE1	SEQUENCE	E2nodeComponentInterfaceE1		gNB-CU-UP-ID	GNB-CU-UP-ID					
+E2nodeComponentInterfaceF1	SEQUENCE	E2nodeComponentInterfaceF1		gNB-DU-ID	GNB-DU-ID					
+E2nodeComponentInterfaceNG	SEQUENCE	E2nodeComponentInterfaceNG		amf-name	AMFName					
+E2nodeComponentInterfaceS1	SEQUENCE	E2nodeComponentInterfaceS1		mme-name	MMEname					
+E2nodeComponentInterfaceW1	SEQUENCE	E2nodeComponentInterfaceW1		ng-eNB-DU-ID	NGENB-DU-ID					
+E2nodeComponentInterfaceX2	SEQUENCE	E2nodeComponentInterfaceX2		global-eNB-ID	GlobalENB-ID					
+E2nodeComponentInterfaceX2	SEQUENCE	E2nodeComponentInterfaceX2		global-en-gNB-ID	GlobalenGNB-ID					
+E2nodeComponentInterfaceXn	SEQUENCE	E2nodeComponentInterfaceXn		global-NG-RAN-Node-ID	GlobalNG-RANNode-ID					
+E2nodeConfigurationUpdate	SEQUENCE	E2nodeConfigurationUpdate		protocolIEs	ProtocolIE-Container					
+E2nodeConfigurationUpdateAcknowledge	SEQUENCE	E2nodeConfigurationUpdateAcknowledge		protocolIEs	ProtocolIE-Container					
+E2nodeConfigurationUpdateFailure	SEQUENCE	E2nodeConfigurationUpdateFailure		protocolIEs	ProtocolIE-Container					
+E2nodeTNLassociationRemoval-Item	SEQUENCE	E2nodeTNLassociationRemoval-Item		tnlInformation	TNLinformation					
+E2nodeTNLassociationRemoval-Item	SEQUENCE	E2nodeTNLassociationRemoval-Item		tnlInformationRIC	TNLinformation					
+E2setupFailure	SEQUENCE	E2setupFailure		protocolIEs	ProtocolIE-Container					
+E2setupRequest	SEQUENCE	E2setupRequest		protocolIEs	ProtocolIE-Container					
+E2setupResponse	SEQUENCE	E2setupResponse		protocolIEs	ProtocolIE-Container					
+ENB-ID	CHOICE	ENB-ID	1	macroenbid	macro-eNB-ID					
+ENB-ID	CHOICE	ENB-ID	2	©	©					
+ENB-ID	CHOICE	ENB-ID	3	...	...					
+ENB-ID	CHOICE	ENB-ID	4	shortmacroenbid	short-Macro-eNB-ID					
+ENB-ID	CHOICE	ENB-ID	5	longmacroenbid	long-Macro-eNB-ID					
+ENB-ID-Choice	CHOICE	ENB-ID-Choice	1	enbidmacro	enb-ID-macro					
+ENB-ID-Choice	CHOICE	ENB-ID-Choice	2	enbidshortmacro	enb-ID-shortmacro					
+ENB-ID-Choice	CHOICE	ENB-ID-Choice	3	enbidlongmacro	enb-ID-longmacro					
+ENB-ID-Choice	CHOICE	ENB-ID-Choice	4	...	...					
+ENGNB-ID	CHOICE	ENGNB-ID	1	gnbid	gNB-ID					
+ENGNB-ID	CHOICE	ENGNB-ID	2	...	...					
+ErrorIndication	SEQUENCE	ErrorIndication		protocolIEs	ProtocolIE-Container					
+GNB-ID-Choice	CHOICE	GNB-ID-Choice	1	gnbid	gnb-ID					
+GNB-ID-Choice	CHOICE	GNB-ID-Choice	2	...	...					
+GlobalE2node-ID	CHOICE	GlobalE2node-ID	1	gnb	gNB					
+GlobalE2node-ID	CHOICE	GlobalE2node-ID	2	engnb	en-gNB					
+GlobalE2node-ID	CHOICE	GlobalE2node-ID	3	ngenb	ng-eNB					
+GlobalE2node-ID	CHOICE	GlobalE2node-ID	4	enb	eNB					
+GlobalE2node-ID	CHOICE	GlobalE2node-ID	5	...	...					
+GlobalE2node-eNB-ID	SEQUENCE	GlobalE2node-eNB-ID		global-eNB-ID	GlobalENB-ID					
+GlobalE2node-en-gNB-ID	SEQUENCE	GlobalE2node-en-gNB-ID		en-gNB-CU-UP-ID	GNB-CU-UP-ID					
+GlobalE2node-en-gNB-ID	SEQUENCE	GlobalE2node-en-gNB-ID		en-gNB-DU-ID	GNB-DU-ID					
+GlobalE2node-en-gNB-ID	SEQUENCE	GlobalE2node-en-gNB-ID		global-en-gNB-ID	GlobalenGNB-ID					
+GlobalE2node-gNB-ID	SEQUENCE	GlobalE2node-gNB-ID		gNB-CU-UP-ID	GNB-CU-UP-ID					
+GlobalE2node-gNB-ID	SEQUENCE	GlobalE2node-gNB-ID		gNB-DU-ID	GNB-DU-ID					
+GlobalE2node-gNB-ID	SEQUENCE	GlobalE2node-gNB-ID		global-en-gNB-ID	GlobalenGNB-ID					
+GlobalE2node-gNB-ID	SEQUENCE	GlobalE2node-gNB-ID		global-gNB-ID	GlobalgNB-ID					
+GlobalE2node-ng-eNB-ID	SEQUENCE	GlobalE2node-ng-eNB-ID		global-eNB-ID	GlobalENB-ID					
+GlobalE2node-ng-eNB-ID	SEQUENCE	GlobalE2node-ng-eNB-ID		global-ng-eNB-ID	GlobalngeNB-ID					
+GlobalE2node-ng-eNB-ID	SEQUENCE	GlobalE2node-ng-eNB-ID		ngENB-DU-ID	NGENB-DU-ID					
+GlobalENB-ID	SEQUENCE	GlobalENB-ID		eNB-ID	ENB-ID					
+GlobalENB-ID	SEQUENCE	GlobalENB-ID		pLMN-Identity	PLMN-Identity					
+GlobalNG-RANNode-ID	CHOICE	GlobalNG-RANNode-ID	1	gnb	gNB					
+GlobalNG-RANNode-ID	CHOICE	GlobalNG-RANNode-ID	2	ngenb	ng-eNB					
+GlobalNG-RANNode-ID	CHOICE	GlobalNG-RANNode-ID	3	...	...					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		pLMN-Identity	PLMN-Identity					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		ric-ID	BIT					
+GlobalenGNB-ID	SEQUENCE	GlobalenGNB-ID		gNB-ID	ENGNB-ID					
+GlobalenGNB-ID	SEQUENCE	GlobalenGNB-ID		pLMN-Identity	PLMN-Identity					
+GlobalgNB-ID	SEQUENCE	GlobalgNB-ID		gnb-id	GNB-ID-Choice					
+GlobalgNB-ID	SEQUENCE	GlobalgNB-ID		plmn-id	PLMN-Identity					
+GlobalngeNB-ID	SEQUENCE	GlobalngeNB-ID		enb-id	ENB-ID-Choice					
+GlobalngeNB-ID	SEQUENCE	GlobalngeNB-ID		plmn-id	PLMN-Identity					
+InitiatingMessage	SEQUENCE	InitiatingMessage		procedureCode	E2AP-ELEMENTARY-PROCEDURE					
+RANfunction-Item	SEQUENCE	RANfunction-Item		ranFunctionDefinition	RANfunctionDefinition				1	
+RANfunction-Item	SEQUENCE	RANfunction-Item		ranFunctionID	RANfunctionID				1	
+RANfunction-Item	SEQUENCE	RANfunction-Item		ranFunctionOID	RANfunctionOID				1	
+RANfunction-Item	SEQUENCE	RANfunction-Item		ranFunctionRevision	RANfunctionRevision				1	
+RANfunctionID-Item	SEQUENCE	RANfunctionID-Item		ranFunctionID	RANfunctionID				1	
+RANfunctionID-Item	SEQUENCE	RANfunctionID-Item		ranFunctionRevision	RANfunctionRevision				1	
+RANfunctionIDcause-Item	SEQUENCE	RANfunctionIDcause-Item		cause	Cause				1	
+RANfunctionIDcause-Item	SEQUENCE	RANfunctionIDcause-Item		ranFunctionID	RANfunctionID				1	
+RANfunctionLoad-Item	SEQUENCE	RANfunctionLoad-Item		ranFunctionID	RANfunctionID				1	
+RANfunctionLoad-Item	SEQUENCE	RANfunctionLoad-Item		ranFunctionLoadInformation	RICloadInformation				1	
+RANfunctionLoad-Item	SEQUENCE	RANfunctionLoad-Item		ricServiceLoadInformation	RICserviceLoadInformation				1	
+RANfunctionLoad-Item	SEQUENCE	RANfunctionLoad-Item		ricSubscriptionLoad-list	RICsubscriptionLoad-List				1	
+RANfunctionLoadConfirm-Item	SEQUENCE	RANfunctionLoadConfirm-Item		ranFunctionID	RANfunctionID				1	
+RANfunctionLoadConfirm-Item	SEQUENCE	RANfunctionLoadConfirm-Item		ranFunctionLoadConfirm	RICloadConfirm				1	
+RANfunctionLoadConfirm-Item	SEQUENCE	RANfunctionLoadConfirm-Item		ricServiceLoadConfirm	RICserviceLoadConfirm				1	
+RANfunctionLoadConfirm-Item	SEQUENCE	RANfunctionLoadConfirm-Item		ricSubscriptionLoadConfirm-list	RICsubscriptionLoadConfirm-List				1	
+RANfunctionLoadRequest-Item	SEQUENCE	RANfunctionLoadRequest-Item		ranFunctionID	RANfunctionID				1	
+RANfunctionLoadRequest-Item	SEQUENCE	RANfunctionLoadRequest-Item		ranFunctionLoadRequest	RICloadRequest				1	
+RANfunctionLoadRequest-Item	SEQUENCE	RANfunctionLoadRequest-Item		ricServiceLoadRequest	RICserviceLoadRequest				1	
+RANfunctionLoadRequest-Item	SEQUENCE	RANfunctionLoadRequest-Item		ricSubscriptionLoadRequest-list	RICsubscriptionLoadRequest-List				1	
+RANfunctionStateConfirm-Item	SEQUENCE	RANfunctionStateConfirm-Item		ranFunctionID	RANfunctionID				1	
+RANfunctionStateConfirm-Item	SEQUENCE	RANfunctionStateConfirm-Item		ricSubscriptionResumed-list	RICsubscriptionResumed-List				1	
+RANfunctionStateConfirm-Item	SEQUENCE	RANfunctionStateConfirm-Item		ricSubscriptionSuspended-list	RICsubscriptionSuspended-List				1	
+RANfunctionStateControl-Item	SEQUENCE	RANfunctionStateControl-Item		ranFunctionID	RANfunctionID				1	
+RANfunctionStateControl-Item	SEQUENCE	RANfunctionStateControl-Item		ricSubscriptionToBeResumed-list	RICsubscriptionToBeResumed-List				1	
+RANfunctionStateControl-Item	SEQUENCE	RANfunctionStateControl-Item		ricSubscriptionToBeSuspended-list	RICsubscriptionToBeSuspended-List				1	
+RICaction-AddedForModification-Item	SEQUENCE	RICaction-AddedForModification-Item		ricActionID	RICactionID					
+RICaction-Admitted-Item	SEQUENCE	RICaction-Admitted-Item		ricActionID	RICactionID					
+RICaction-ConfirmedForModification-Item	SEQUENCE	RICaction-ConfirmedForModification-Item		ricActionID	RICactionID					
+RICaction-ConfirmedForRemoval-Item	SEQUENCE	RICaction-ConfirmedForRemoval-Item		ricActionID	RICactionID					
+RICaction-FailedToBeAddedForModification-Item	SEQUENCE	RICaction-FailedToBeAddedForModification-Item		cause	Cause					
+RICaction-FailedToBeAddedForModification-Item	SEQUENCE	RICaction-FailedToBeAddedForModification-Item		ricActionID	RICactionID					
+RICaction-FailedToBeModifiedForModification-Item	SEQUENCE	RICaction-FailedToBeModifiedForModification-Item		cause	Cause					
+RICaction-FailedToBeModifiedForModification-Item	SEQUENCE	RICaction-FailedToBeModifiedForModification-Item		ricActionID	RICactionID					
+RICaction-FailedToBeRemovedForModification-Item	SEQUENCE	RICaction-FailedToBeRemovedForModification-Item		cause	Cause					
+RICaction-FailedToBeRemovedForModification-Item	SEQUENCE	RICaction-FailedToBeRemovedForModification-Item		ricActionID	RICactionID					
+RICaction-ModifiedForModification-Item	SEQUENCE	RICaction-ModifiedForModification-Item		ricActionID	RICactionID					
+RICaction-NotAdmitted-Item	SEQUENCE	RICaction-NotAdmitted-Item		cause	Cause					
+RICaction-NotAdmitted-Item	SEQUENCE	RICaction-NotAdmitted-Item		ricActionID	RICactionID					
+RICaction-RefusedToBeModified-Item	SEQUENCE	RICaction-RefusedToBeModified-Item		cause	Cause					
+RICaction-RefusedToBeModified-Item	SEQUENCE	RICaction-RefusedToBeModified-Item		ricActionID	RICactionID					
+RICaction-RefusedToBeRemoved-Item	SEQUENCE	RICaction-RefusedToBeRemoved-Item		cause	Cause					
+RICaction-RefusedToBeRemoved-Item	SEQUENCE	RICaction-RefusedToBeRemoved-Item		ricActionID	RICactionID					
+RICaction-RemovedForModification-Item	SEQUENCE	RICaction-RemovedForModification-Item		ricActionID	RICactionID					
+RICaction-RequiredToBeModified-Item	SEQUENCE	RICaction-RequiredToBeModified-Item		ricActionID	RICactionID					
+RICaction-RequiredToBeModified-Item	SEQUENCE	RICaction-RequiredToBeModified-Item		ricTimeToWait	RICtimeToWait					
+RICaction-RequiredToBeRemoved-Item	SEQUENCE	RICaction-RequiredToBeRemoved-Item		cause	Cause					
+RICaction-RequiredToBeRemoved-Item	SEQUENCE	RICaction-RequiredToBeRemoved-Item		ricActionID	RICactionID					
+RICaction-ToBeAddedForModification-Item	SEQUENCE	RICaction-ToBeAddedForModification-Item		ricActionDefinition	RICactionDefinition					
+RICaction-ToBeAddedForModification-Item	SEQUENCE	RICaction-ToBeAddedForModification-Item		ricActionExecutionOrder	RICactionExecutionOrder					
+RICaction-ToBeAddedForModification-Item	SEQUENCE	RICaction-ToBeAddedForModification-Item		ricActionID	RICactionID					
+RICaction-ToBeAddedForModification-Item	SEQUENCE	RICaction-ToBeAddedForModification-Item		ricActionType	RICactionType					
+RICaction-ToBeAddedForModification-Item	SEQUENCE	RICaction-ToBeAddedForModification-Item		ricSubsequentAction	RICsubsequentAction					
+RICaction-ToBeModifiedForModification-Item	SEQUENCE	RICaction-ToBeModifiedForModification-Item		ricActionDefinition	RICactionDefinition					
+RICaction-ToBeModifiedForModification-Item	SEQUENCE	RICaction-ToBeModifiedForModification-Item		ricActionExecutionOrder	RICactionExecutionOrder					
+RICaction-ToBeModifiedForModification-Item	SEQUENCE	RICaction-ToBeModifiedForModification-Item		ricActionID	RICactionID					
+RICaction-ToBeModifiedForModification-Item	SEQUENCE	RICaction-ToBeModifiedForModification-Item		ricSubsequentAction	RICsubsequentAction					
+RICaction-ToBeRemovedForModification-Item	SEQUENCE	RICaction-ToBeRemovedForModification-Item		ricActionID	RICactionID					
+RICaction-ToBeSetup-Item	SEQUENCE	RICaction-ToBeSetup-Item		New	in					
+RICaction-ToBeSetup-Item	SEQUENCE	RICaction-ToBeSetup-Item		OPTIONAL	--					
+RICaction-ToBeSetup-Item	SEQUENCE	RICaction-ToBeSetup-Item		ricActionDefinition	RICactionDefinition					
+RICaction-ToBeSetup-Item	SEQUENCE	RICaction-ToBeSetup-Item		ricActionExecutionOrder	RICactionExecutionOrder					
+RICaction-ToBeSetup-Item	SEQUENCE	RICaction-ToBeSetup-Item		ricActionID	RICactionID					
+RICaction-ToBeSetup-Item	SEQUENCE	RICaction-ToBeSetup-Item		ricActionType	RICactionType					
+RICaction-ToBeSetup-Item	SEQUENCE	RICaction-ToBeSetup-Item		ricSubsequentAction	RICsubsequentAction					
+RICactionList-Item	SEQUENCE	RICactionList-Item		ricActionID	RICactionID					
+RICactionLoad-Item	SEQUENCE	RICactionLoad-Item		ricActionID	RICactionID					
+RICactionLoad-Item	SEQUENCE	RICactionLoad-Item		ricActionLoadInformation	RICloadInformation					
+RICactionLoadConfirm-Item	SEQUENCE	RICactionLoadConfirm-Item		ricActionID	RICactionID					
+RICactionLoadConfirm-Item	SEQUENCE	RICactionLoadConfirm-Item		ricActionLoadConfirm	RICloadConfirm					
+RICactionLoadRequest-Item	SEQUENCE	RICactionLoadRequest-Item		ricActionID	RICactionID					
+RICactionLoadRequest-Item	SEQUENCE	RICactionLoadRequest-Item		ricActionLoadRequest	RICloadRequest					
+RICassistanceFailure	SEQUENCE	RICassistanceFailure		protocolIEs	ProtocolIE-Container					
+RICassistanceHalt	SEQUENCE	RICassistanceHalt		protocolIEs	ProtocolIE-Container					
+RICassistanceIndication	SEQUENCE	RICassistanceIndication		protocolIEs	ProtocolIE-Container					
+RICassistanceRequest	SEQUENCE	RICassistanceRequest		protocolIEs	ProtocolIE-Container					
+RICassistanceResponse	SEQUENCE	RICassistanceResponse		protocolIEs	ProtocolIE-Container					
+RICcontrolAcknowledge	SEQUENCE	RICcontrolAcknowledge		protocolIEs	ProtocolIE-Container					
+RICcontrolFailure	SEQUENCE	RICcontrolFailure		protocolIEs	ProtocolIE-Container					
+RICcontrolRequest	SEQUENCE	RICcontrolRequest		protocolIEs	ProtocolIE-Container					
+RICindication	SEQUENCE	RICindication		protocolIEs	ProtocolIE-Container					
+RICloadInformation	SEQUENCE	RICloadInformation		loadStatus	ENUMERATED					
+RICqueryFailure	SEQUENCE	RICqueryFailure		protocolIEs	ProtocolIE-Container					
+RICqueryRequest	SEQUENCE	RICqueryRequest		protocolIEs	ProtocolIE-Container					
+RICqueryResponse	SEQUENCE	RICqueryResponse		protocolIEs	ProtocolIE-Container					
+RICrequestID	SEQUENCE	RICrequestID		ricInstanceID	INTEGER					
+RICrequestID	SEQUENCE	RICrequestID		ricRequestorID	INTEGER					
+RICserviceLoadConfirm	SEQUENCE	RICserviceLoadConfirm		ricServiceControlLoadConfirm	RICloadConfirm					
+RICserviceLoadConfirm	SEQUENCE	RICserviceLoadConfirm		ricServiceInsertLoadConfirm	RICloadConfirm					
+RICserviceLoadConfirm	SEQUENCE	RICserviceLoadConfirm		ricServicePolicyLoadConfirm	RICloadConfirm					
+RICserviceLoadConfirm	SEQUENCE	RICserviceLoadConfirm		ricServiceQueryLoadConfirm	RICloadConfirm					
+RICserviceLoadConfirm	SEQUENCE	RICserviceLoadConfirm		ricServiceReportLoadConfirm	RICloadConfirm					
+RICserviceLoadInformation	SEQUENCE	RICserviceLoadInformation		ricServiceControlLoadInformation	RICloadInformation					
+RICserviceLoadInformation	SEQUENCE	RICserviceLoadInformation		ricServiceInsertLoadInformation	RICloadInformation					
+RICserviceLoadInformation	SEQUENCE	RICserviceLoadInformation		ricServicePolicyLoadInformation	RICloadInformation					
+RICserviceLoadInformation	SEQUENCE	RICserviceLoadInformation		ricServiceQueryLoadInformation	RICloadInformation					
+RICserviceLoadInformation	SEQUENCE	RICserviceLoadInformation		ricServiceReportLoadInformation	RICloadInformation					
+RICserviceLoadRequest	SEQUENCE	RICserviceLoadRequest		ricServiceControlLoadRequest	RICloadRequest					
+RICserviceLoadRequest	SEQUENCE	RICserviceLoadRequest		ricServiceInsertLoadRequest	RICloadRequest					
+RICserviceLoadRequest	SEQUENCE	RICserviceLoadRequest		ricServicePolicyLoadRequest	RICloadRequest					
+RICserviceLoadRequest	SEQUENCE	RICserviceLoadRequest		ricServiceQueryLoadRequest	RICloadRequest					
+RICserviceLoadRequest	SEQUENCE	RICserviceLoadRequest		ricServiceReportLoadRequest	RICloadRequest					
+RICserviceLoadStatusFailure	SEQUENCE	RICserviceLoadStatusFailure		protocolIEs	ProtocolIE-Container					
+RICserviceLoadStatusRequest	SEQUENCE	RICserviceLoadStatusRequest		protocolIEs	ProtocolIE-Container					
+RICserviceLoadStatusResponse	SEQUENCE	RICserviceLoadStatusResponse		protocolIEs	ProtocolIE-Container					
+RICserviceLoadUpdate	SEQUENCE	RICserviceLoadUpdate		protocolIEs	ProtocolIE-Container					
+RICserviceQuery	SEQUENCE	RICserviceQuery		protocolIEs	ProtocolIE-Container					
+RICserviceUpdate	SEQUENCE	RICserviceUpdate		protocolIEs	ProtocolIE-Container					
+RICserviceUpdateAcknowledge	SEQUENCE	RICserviceUpdateAcknowledge		protocolIEs	ProtocolIE-Container					
+RICserviceUpdateFailure	SEQUENCE	RICserviceUpdateFailure		protocolIEs	ProtocolIE-Container					
+RICsubscription-withCause-Item	SEQUENCE	RICsubscription-withCause-Item		cause	Cause					
+RICsubscription-withCause-Item	SEQUENCE	RICsubscription-withCause-Item		ranFunctionID	RANfunctionID					
+RICsubscription-withCause-Item	SEQUENCE	RICsubscription-withCause-Item		ricRequestID	RICrequestID					
+RICsubscriptionAudit-Item	SEQUENCE	RICsubscriptionAudit-Item		ranFunctionID	RANfunctionID					
+RICsubscriptionAudit-Item	SEQUENCE	RICsubscriptionAudit-Item		ricRequestID	RICrequestID					
+RICsubscriptionAuditAction-Item	SEQUENCE	RICsubscriptionAuditAction-Item		ranFunctionID	RANfunctionID					
+RICsubscriptionAuditAction-Item	SEQUENCE	RICsubscriptionAuditAction-Item		ricAction-Admitted-List	RICaction-Admitted-List					
+RICsubscriptionAuditAction-Item	SEQUENCE	RICsubscriptionAuditAction-Item		ricRequestID	RICrequestID					
+RICsubscriptionAuditFailure	SEQUENCE	RICsubscriptionAuditFailure		protocolIEs	ProtocolIE-Container					
+RICsubscriptionAuditFlag	SEQUENCE	RICsubscriptionAuditFlag		listedRecordsOnly	ListedRecordsOnly					
+RICsubscriptionAuditRequest	SEQUENCE	RICsubscriptionAuditRequest		protocolIEs	ProtocolIE-Container					
+RICsubscriptionAuditResponse	SEQUENCE	RICsubscriptionAuditResponse		protocolIEs	ProtocolIE-Container					
+RICsubscriptionDeleteFailure	SEQUENCE	RICsubscriptionDeleteFailure		protocolIEs	ProtocolIE-Container					
+RICsubscriptionDeleteRequest	SEQUENCE	RICsubscriptionDeleteRequest		protocolIEs	ProtocolIE-Container					
+RICsubscriptionDeleteRequired	SEQUENCE	RICsubscriptionDeleteRequired		protocolIEs	ProtocolIE-Container					
+RICsubscriptionDeleteResponse	SEQUENCE	RICsubscriptionDeleteResponse		protocolIEs	ProtocolIE-Container					
+RICsubscriptionDetails	SEQUENCE	RICsubscriptionDetails		ricAction-ToBeSetup-List	RICactions-ToBeSetup-List					
+RICsubscriptionDetails	SEQUENCE	RICsubscriptionDetails		ricEventTriggerDefinition	RICeventTriggerDefinition					
+RICsubscriptionFailure	SEQUENCE	RICsubscriptionFailure		protocolIEs	ProtocolIE-Container					
+RICsubscriptionList-Item	SEQUENCE	RICsubscriptionList-Item		ricAction-list	RICaction-List					
+RICsubscriptionList-Item	SEQUENCE	RICsubscriptionList-Item		ricRequestID	RICrequestID					
+RICsubscriptionLoad-ItemIE	SEQUENCE	RICsubscriptionLoad-ItemIE		ricActionLoad-list	RICactionLoad-List					
+RICsubscriptionLoad-ItemIE	SEQUENCE	RICsubscriptionLoad-ItemIE		ricRequestID	RICrequestID					
+RICsubscriptionLoad-ItemIE	SEQUENCE	RICsubscriptionLoad-ItemIE		ricSubscriptionLoadInformation	RICloadInformation					
+RICsubscriptionLoadConfirm-ItemIE	SEQUENCE	RICsubscriptionLoadConfirm-ItemIE		ricActionLoadConfirm-list	RICactionLoadConfirm-List					
+RICsubscriptionLoadConfirm-ItemIE	SEQUENCE	RICsubscriptionLoadConfirm-ItemIE		ricRequestID	RICrequestID					
+RICsubscriptionLoadConfirm-ItemIE	SEQUENCE	RICsubscriptionLoadConfirm-ItemIE		ricSubscriptionLoadConfirm	RICloadConfirm					
+RICsubscriptionLoadRequest-ItemIE	SEQUENCE	RICsubscriptionLoadRequest-ItemIE		ricActionLoadRequest-list	RICactionLoadRequest-List					
+RICsubscriptionLoadRequest-ItemIE	SEQUENCE	RICsubscriptionLoadRequest-ItemIE		ricRequestID	RICrequestID					
+RICsubscriptionLoadRequest-ItemIE	SEQUENCE	RICsubscriptionLoadRequest-ItemIE		ricSubscriptionLoadRequest	RICloadRequest					
+RICsubscriptionModificationConfirm	SEQUENCE	RICsubscriptionModificationConfirm		protocolIEs	ProtocolIE-Container					
+RICsubscriptionModificationFailure	SEQUENCE	RICsubscriptionModificationFailure		protocolIEs	ProtocolIE-Container					
+RICsubscriptionModificationRefuse	SEQUENCE	RICsubscriptionModificationRefuse		protocolIEs	ProtocolIE-Container					
+RICsubscriptionModificationRequest	SEQUENCE	RICsubscriptionModificationRequest		protocolIEs	ProtocolIE-Container					
+RICsubscriptionModificationRequired	SEQUENCE	RICsubscriptionModificationRequired		protocolIEs	ProtocolIE-Container					
+RICsubscriptionModificationResponse	SEQUENCE	RICsubscriptionModificationResponse		protocolIEs	ProtocolIE-Container					
+RICsubscriptionRequest	SEQUENCE	RICsubscriptionRequest		protocolIEs	ProtocolIE-Container					
+RICsubscriptionResponse	SEQUENCE	RICsubscriptionResponse		protocolIEs	ProtocolIE-Container					
+RICsubscriptionStateControlFailure	SEQUENCE	RICsubscriptionStateControlFailure		protocolIEs	ProtocolIE-Container					
+RICsubscriptionStateControlRequest	SEQUENCE	RICsubscriptionStateControlRequest		protocolIEs	ProtocolIE-Container					
+RICsubscriptionStateControlResponse	SEQUENCE	RICsubscriptionStateControlResponse		protocolIEs	ProtocolIE-Container					
+RICsubsequentAction	SEQUENCE	RICsubsequentAction		ricSubsequentActionType	RICsubsequentActionType					
+RICsubsequentAction	SEQUENCE	RICsubsequentAction		ricTimeToWait	RICtimeToWait					
+ResetRequest	SEQUENCE	ResetRequest		protocolIEs	ProtocolIE-Container					
+ResetResponse	SEQUENCE	ResetResponse		protocolIEs	ProtocolIE-Container					
+SuccessfulOutcome	SEQUENCE	SuccessfulOutcome		procedureCode	E2AP-ELEMENTARY-PROCEDURE					
+TNLinformation	SEQUENCE	TNLinformation		tnlAddress	BIT					
+TNLinformation	SEQUENCE	TNLinformation		tnlPort	BIT					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		procedureCode	E2AP-ELEMENTARY-PROCEDURE					

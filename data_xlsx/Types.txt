@@ -1,0 +1,1551 @@
+Type_Name	ASN1_Type	Parent_Type	Tag/ID	Field_Name	IE_Type	Criticality	Optional	Extensible	Min_Value	Max_Value
+E2AP_PDU	CHOICE	E2AP_PDU	1	initiatingMessage	InitiatingMessageMessage					
+E2AP_PDU	CHOICE	E2AP_PDU	2	successfulOutcome	SuccessfulOutcomeMessage					
+E2AP_PDU	CHOICE	E2AP_PDU	3	unsuccessfulOutcome	unSuccessfulOutcomeMessage					
+RICactions-ToBeSetup-List	SEQUENCE	RICactions-ToBeSetup-List			ProtocolIE-SingleContainer				1	maxList
+RICaction-Admitted-List	SEQUENCE	RICaction-Admitted-List			ProtocolIE-SingleContainer				1	maxList
+RICaction-NotAdmitted-List	SEQUENCE	RICaction-NotAdmitted-List			ProtocolIE-SingleContainer				1	maxList
+RICsubscriptionAuditList	SEQUENCE	RICsubscriptionAuditList			ProtocolIE-SingleContainer				1	maxRICsubscriptionAuditList
+RICsubscriptionAuditActionList	SEQUENCE	RICsubscriptionAuditActionList			ProtocolIE-SingleContainer				1	maxRICsubscriptionAuditActionList
+RICsubscription-List-withCause	SEQUENCE	RICsubscription-List-withCause			ProtocolIE-SingleContainer				1	maxwithCause
+RICactions-ToBeRemovedForModification-List	SEQUENCE	RICactions-ToBeRemovedForModification-List			ProtocolIESingleContainer				1	maxList
+RICactions-ToBeModifiedForModification-List	SEQUENCE	RICactions-ToBeModifiedForModification-List			ProtocolIESingleContainer				1	maxList
+RICactions-ToBeAddedForModification-List	SEQUENCE	RICactions-ToBeAddedForModification-List			ProtocolIESingleContainer				1	maxList
+RICactions-RemovedForModification-List	SEQUENCE	RICactions-RemovedForModification-List			ProtocolIESingleContainer				1	maxList
+RICactions-FailedToBeRemovedForModification-List	SEQUENCE	RICactions-FailedToBeRemovedForModification-List			ProtocolIESingleContainer				1	maxList
+RICactions-ModifiedForModification-List	SEQUENCE	RICactions-ModifiedForModification-List			ProtocolIESingleContainer				1	maxList
+RICactions-FailedToBeModifiedForModification-List	SEQUENCE	RICactions-FailedToBeModifiedForModification-List			ProtocolIESingleContainer				1	maxList
+RICactions-AddedForModification-List	SEQUENCE	RICactions-AddedForModification-List			ProtocolIESingleContainer				1	maxList
+RICactions-FailedToBeAddedForModification-List	SEQUENCE	RICactions-FailedToBeAddedForModification-List			ProtocolIESingleContainer				1	maxList
+RICactions-RequiredToBeModified-List	SEQUENCE	RICactions-RequiredToBeModified-List			ProtocolIESingleContainer				1	maxList
+RICactions-RequiredToBeRemoved-List	SEQUENCE	RICactions-RequiredToBeRemoved-List			ProtocolIE-SingleContainer				1	maxList
+RICactions-ConfirmedForModification-List	SEQUENCE	RICactions-ConfirmedForModification-List			ProtocolIESingleContainer				1	maxList
+RICactions-RefusedToBeModified-List	SEQUENCE	RICactions-RefusedToBeModified-List			ProtocolIE-SingleContainer				1	maxList
+RICactions-ConfirmedForRemoval-List	SEQUENCE	RICactions-ConfirmedForRemoval-List			ProtocolIE-SingleContainer				1	maxList
+RICactions-RefusedToBeRemoved-List	SEQUENCE	RICactions-RefusedToBeRemoved-List			ProtocolIE-SingleContainer				1	maxList
+RANfunctionStateControl-List	SEQUENCE	RANfunctionStateControl-List			ProtocolIE-SingleContainer				1	maxList
+RICsubscriptionToBeSuspended-List	SEQUENCE	RICsubscriptionToBeSuspended-List			ProtocolIE-SingleContainer				1	maxList
+RICsubscriptionToBeResumed-List	SEQUENCE	RICsubscriptionToBeResumed-List			ProtocolIE-SingleContainer				1	maxList
+RICaction-List	SEQUENCE	RICaction-List			ProtocolIE-SingleContainer				1	maxList
+RANfunctionStateConfirm-List	SEQUENCE	RANfunctionStateConfirm-List			ProtocolIE-SingleContainer				1	maxList
+RICsubscriptionSuspended-List	SEQUENCE	RICsubscriptionSuspended-List			ProtocolIE-SingleContainer				1	maxList
+RICsubscriptionResumed-List	SEQUENCE	RICsubscriptionResumed-List			ProtocolIE-SingleContainer				1	maxList
+RANfunctionLoadRequest-List	SEQUENCE	RANfunctionLoadRequest-List			ProtocolIE-SingleContainer				1	maxList
+RICsubscriptionLoadRequest-List	SEQUENCE	RICsubscriptionLoadRequest-List			ProtocolIE-SingleContainer				1	maxList
+RICactionLoadRequest-List	SEQUENCE	RICactionLoadRequest-List			ProtocolIE-SingleContainer				1	maxList
+RANfunctionLoadConfirm-List	SEQUENCE	RANfunctionLoadConfirm-List			ProtocolIE-SingleContainer				1	maxList
+RICsubscriptionLoadConfirm-List	SEQUENCE	RICsubscriptionLoadConfirm-List			ProtocolIE-SingleContainer				1	maxList
+RICactionLoadConfirm-List	SEQUENCE	RICactionLoadConfirm-List			ProtocolIE-SingleContainer				1	maxList
+RANfunctionLoad-List	SEQUENCE	RANfunctionLoad-List			ProtocolIE-SingleContainer				1	maxList
+RICsubscriptionLoad-List	SEQUENCE	RICsubscriptionLoad-List			ProtocolIE-SingleContainer				1	maxList
+RICactionLoad-List	SEQUENCE	RICactionLoad-List			ProtocolIE-SingleContainer				1	maxList
+E2connectionUpdate-List	SEQUENCE	E2connectionUpdate-List			ProtocolIE-SingleContainer				1	maxList
+E2connectionUpdateRemove-List	SEQUENCE	E2connectionUpdateRemove-List			ProtocolIE-SingleContainer				1	maxList
+E2connectionSetupFailed-List	SEQUENCE	E2connectionSetupFailed-List			ProtocolIE-SingleContainer				1	maxList
+E2nodeComponentConfigAddition-List	SEQUENCE	E2nodeComponentConfigAddition-List			ProtocolIESingleContainer				1	maxList
+E2nodeComponentConfigUpdate-List	SEQUENCE	E2nodeComponentConfigUpdate-List			ProtocolIESingleContainer				1	maxList
+E2nodeComponentConfigRemoval-List	SEQUENCE	E2nodeComponentConfigRemoval-List			ProtocolIESingleContainer				1	maxList
+E2nodeTNLassociationRemoval-List	SEQUENCE	E2nodeTNLassociationRemoval-List			ProtocolIE-SingleContainer				1	maxList
+E2nodeComponentConfigAdditionAck-List	SEQUENCE	E2nodeComponentConfigAdditionAck-List			ProtocolIESingleContainer				1	maxList
+E2nodeComponentConfigUpdateAck-List	SEQUENCE	E2nodeComponentConfigUpdateAck-List			ProtocolIESingleContainer				1	maxList
+E2nodeComponentConfigRemovalAck-List	SEQUENCE	E2nodeComponentConfigRemovalAck-List			ProtocolIESingleContainer				1	maxList
+RANfunctions-List	SEQUENCE	RANfunctions-List			ProtocolIE-SingleContainer				1	maxList
+RANfunctionsID-List	SEQUENCE	RANfunctionsID-List			ProtocolIESingleContainer				1	maxList
+RANfunctionsIDcause-List	SEQUENCE	RANfunctionsIDcause-List			ProtocolIE-SingleContainer				1	maxList
+CriticalityDiagnostics-IE-List	SEQUENCE	CriticalityDiagnostics-IE-List			CriticalityDiagnostics-IE-Item				1	maxList
+InitiatingMessage	SEQUENCE	InitiatingMessage		procedureCode	E2AP-ELEMENTARY-PROCEDURE					
+InitiatingMessage	SEQUENCE	InitiatingMessage		criticality	E2AP-ELEMENTARY-PROCEDURE					
+InitiatingMessage	SEQUENCE	InitiatingMessage		value	E2AP-ELEMENTARY-PROCEDURE					
+SuccessfulOutcome	SEQUENCE	SuccessfulOutcome		procedureCode	E2AP-ELEMENTARY-PROCEDURE					
+SuccessfulOutcome	SEQUENCE	SuccessfulOutcome		criticality	E2AP-ELEMENTARY-PROCEDURE					
+SuccessfulOutcome	SEQUENCE	SuccessfulOutcome		value	E2AP-ELEMENTARY-PROCEDURE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		procedureCode	E2AP-ELEMENTARY-PROCEDURE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		criticality	E2AP-ELEMENTARY-PROCEDURE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		value	E2AP-ELEMENTARY-PROCEDURE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		---	Interface					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		E2AP-ELEMENTARY-PROCEDURES	E2AP-ELEMENTARY-PROCEDURE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		E2AP-ELEMENTARY-PROCEDURES-CLASS-1	E2AP-ELEMENTARY-PROCEDURE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		2025	by					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		E2AP-ELEMENTARY-PROCEDURES-CLASS-2	E2AP-ELEMENTARY-PROCEDURE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		---	Interface					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		--	New					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		e2connectionUpdate	E2AP-ELEMENTARY-PROCEDURE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		INITIATING	MESSAGE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		SUCCESSFUL	OUTCOME					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		UNSUCCESSFUL	OUTCOME					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		PROCEDURE	CODE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		CRITICALITY	reject					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		e2nodeConfigurationUpdate	E2AP-ELEMENTARY-PROCEDURE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		INITIATING	MESSAGE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		SUCCESSFUL	OUTCOME					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		UNSUCCESSFUL	OUTCOME					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		PROCEDURE	CODE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		CRITICALITY	reject					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		--	New					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		e2removal	E2AP-ELEMENTARY-PROCEDURE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		INITIATING	MESSAGE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		SUCCESSFUL	OUTCOME					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		UNSUCCESSFUL	OUTCOME					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		PROCEDURE	CODE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		CRITICALITY	reject					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		e2setup	E2AP-ELEMENTARY-PROCEDURE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		INITIATING	MESSAGE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		SUCCESSFUL	OUTCOME					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		UNSUCCESSFUL	OUTCOME					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		PROCEDURE	CODE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		CRITICALITY	reject					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		errorIndication	E2AP-ELEMENTARY-PROCEDURE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		INITIATING	MESSAGE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		PROCEDURE	CODE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		CRITICALITY	ignore					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		reset	E2AP-ELEMENTARY-PROCEDURE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		INITIATING	MESSAGE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		2025	by					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		SUCCESSFUL	OUTCOME					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		PROCEDURE	CODE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		CRITICALITY	reject					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		ricAssistance	E2AP-ELEMENTARY-PROCEDURE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		INITIATING	MESSAGE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		SUCCESSFUL	OUTCOME					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		UNSUCCESSFUL	OUTCOME					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		PROCEDURE	CODE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		CRITICALITY	reject					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		ricAssistanceIndication	E2AP-ELEMENTARY-PROCEDURE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		INITIATING	MESSAGE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		PROCEDURE	CODE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		CRITICALITY	reject					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		ricAssistanceHalt	E2AP-ELEMENTARY-PROCEDURE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		INITIATING	MESSAGE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		PROCEDURE	CODE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		CRITICALITY	reject					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		ricControl	E2AP-ELEMENTARY-PROCEDURE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		INITIATING	MESSAGE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		SUCCESSFUL	OUTCOME					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		UNSUCCESSFUL	OUTCOME					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		PROCEDURE	CODE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		CRITICALITY	reject					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		ricIndication	E2AP-ELEMENTARY-PROCEDURE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		INITIATING	MESSAGE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		PROCEDURE	CODE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		CRITICALITY	ignore					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		ricServiceLoadStatus	E2AP-ELEMENTARY-PROCEDURE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		INITIATING	MESSAGE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		SUCCESSFUL	OUTCOME					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		UNSUCCESSFUL	OUTCOME					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		PROCEDURE	CODE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		CRITICALITY	ignore					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		ricServiceLoadUpdate	E2AP-ELEMENTARY-PROCEDURE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		INITIATING	MESSAGE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		PROCEDURE	CODE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		CRITICALITY	ignore					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		ricServiceQuery	E2AP-ELEMENTARY-PROCEDURE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		INITIATING	MESSAGE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		PROCEDURE	CODE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		CRITICALITY	ignore					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		ricServiceUpdate	E2AP-ELEMENTARY-PROCEDURE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		INITIATING	MESSAGE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		SUCCESSFUL	OUTCOME					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		UNSUCCESSFUL	OUTCOME					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		PROCEDURE	CODE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		CRITICALITY	reject					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		ricSubscription	E2AP-ELEMENTARY-PROCEDURE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		INITIATING	MESSAGE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		SUCCESSFUL	OUTCOME					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		UNSUCCESSFUL	OUTCOME					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		2025	by					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		PROCEDURE	CODE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		CRITICALITY	reject					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		ricSubscriptionAudit	E2AP-ELEMENTARY-PROCEDURE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		INITIATING	MESSAGE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		SUCCESSFUL	OUTCOME					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		UNSUCCESSFUL	OUTCOME					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		PROCEDURE	CODE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		CRITICALITY	reject					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		ricSubscriptionDelete	E2AP-ELEMENTARY-PROCEDURE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		INITIATING	MESSAGE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		SUCCESSFUL	OUTCOME					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		UNSUCCESSFUL	OUTCOME					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		PROCEDURE	CODE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		CRITICALITY	reject					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		ricSubscriptionDeleteRequired	E2AP-ELEMENTARY-PROCEDURE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		INITIATING	MESSAGE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		PROCEDURE	CODE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		CRITICALITY	ignore					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		ricSubscriptionModification	E2AP-ELEMENTARY-PROCEDURE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		INITIATING	MESSAGE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		SUCCESSFUL	OUTCOME					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		UNSUCCESSFUL	OUTCOME					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		PROCEDURE	CODE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		CRITICALITY	reject					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		ricSubscriptionModificationRequired	E2AP-ELEMENTARY-PROCEDURE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		INITIATING	MESSAGE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		SUCCESSFUL	OUTCOME					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		UNSUCCESSFUL	OUTCOME					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		PROCEDURE	CODE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		CRITICALITY	reject					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		ricSubscriptionStateControl	E2AP-ELEMENTARY-PROCEDURE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		INITIATING	MESSAGE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		SUCCESSFUL	OUTCOME					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		UNSUCCESSFUL	OUTCOME					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		PROCEDURE	CODE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		CRITICALITY	reject					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		ricQuery	E2AP-ELEMENTARY-PROCEDURE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		INITIATING	MESSAGE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		SUCCESSFUL	OUTCOME					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		UNSUCCESSFUL	OUTCOME					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		PROCEDURE	CODE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		CRITICALITY	reject					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		--	ASN1STOP					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		4	PDU					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		--	ASN1START					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		---	PDU					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		--	Derived					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		2025	by					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		53148	e2					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		DEFINITIONS	AUTOMATIC					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		---	IE					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		FROM	E2AP-IEs					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		2025	by					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		FROM	E2AP-Containers					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		2025	by					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		2025	by					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		FROM	E2AP-Constants					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		---	MESSAGES					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		---	RIC					
+UnsuccessfulOutcome	SEQUENCE	UnsuccessfulOutcome		---	RIC					
+RICsubscriptionRequest	SEQUENCE	RICsubscriptionRequest		protocolIEs	ProtocolIE-Container					
+RICsubscriptionRequest	SEQUENCE	RICsubscriptionRequest		RICsubscriptionRequest-IEs	E2AP-PROTOCOL-IES					
+RICsubscriptionRequest	SEQUENCE	RICsubscriptionRequest		ID	id-RICrequestID					
+RICsubscriptionRequest	SEQUENCE	RICsubscriptionRequest		ID	id-RANfunctionID					
+RICsubscriptionRequest	SEQUENCE	RICsubscriptionRequest		ID	id-RICsubscriptionDetails					
+RICsubscriptionRequest	SEQUENCE	RICsubscriptionRequest		ID	id-RICsubscriptionStartTime					
+RICsubscriptionRequest	SEQUENCE	RICsubscriptionRequest		ID	id-RICsubscriptionEndTime					
+RICsubscriptionDetails	SEQUENCE	RICsubscriptionDetails		ricEventTriggerDefinition	RICeventTriggerDefinition					
+RICsubscriptionDetails	SEQUENCE	RICsubscriptionDetails		ricAction-ToBeSetup-List	RICactions-ToBeSetup-List					
+RICactions-ToBeSetup-List	SEQUENCE	RICactions-ToBeSetup-List		OF	ProtocolIE-SingleContainer				1	
+RICactions-ToBeSetup-List	SEQUENCE	RICactions-ToBeSetup-List		RICaction-ToBeSetup-ItemIEs	E2AP-PROTOCOL-IES				1	
+RICactions-ToBeSetup-List	SEQUENCE	RICactions-ToBeSetup-List		ID	id-RICaction-ToBeSetup-Item				1	
+RICaction-ToBeSetup-Item	SEQUENCE	RICaction-ToBeSetup-Item		ricActionID	RICactionID					
+RICaction-ToBeSetup-Item	SEQUENCE	RICaction-ToBeSetup-Item		ricActionType	RICactionType					
+RICaction-ToBeSetup-Item	SEQUENCE	RICaction-ToBeSetup-Item		ricActionDefinition	RICactionDefinition		YES			
+RICaction-ToBeSetup-Item	SEQUENCE	RICaction-ToBeSetup-Item		ricSubsequentAction	RICsubsequentAction		YES			
+RICaction-ToBeSetup-Item	SEQUENCE	RICaction-ToBeSetup-Item		ricActionExecutionOrder	RICactionExecutionOrder		YES			
+RICaction-ToBeSetup-Item	SEQUENCE	RICaction-ToBeSetup-Item		---	RIC					
+RICaction-ToBeSetup-Item	SEQUENCE	RICaction-ToBeSetup-Item		2025	by					
+RICsubscriptionResponse	SEQUENCE	RICsubscriptionResponse		protocolIEs	ProtocolIE-Container					
+RICsubscriptionResponse	SEQUENCE	RICsubscriptionResponse		RICsubscriptionResponse-IEs	E2AP-PROTOCOL-IES					
+RICsubscriptionResponse	SEQUENCE	RICsubscriptionResponse		ID	id-RICrequestID					
+RICsubscriptionResponse	SEQUENCE	RICsubscriptionResponse		ID	id-RANfunctionID					
+RICsubscriptionResponse	SEQUENCE	RICsubscriptionResponse		ID	id-RICactions-Admitted					
+RICsubscriptionResponse	SEQUENCE	RICsubscriptionResponse		ID	id-RICactions-NotAdmitted					
+RICaction-Admitted-List	SEQUENCE	RICaction-Admitted-List		OF	ProtocolIE-SingleContainer				1	
+RICaction-Admitted-List	SEQUENCE	RICaction-Admitted-List		RICaction-Admitted-ItemIEs	E2AP-PROTOCOL-IES				1	
+RICaction-Admitted-List	SEQUENCE	RICaction-Admitted-List		ID	id-RICaction-Admitted-Item				1	
+RICaction-Admitted-Item	SEQUENCE	RICaction-Admitted-Item		ricActionID	RICactionID					
+RICaction-NotAdmitted-List	SEQUENCE	RICaction-NotAdmitted-List		OF	ProtocolIE-SingleContainer				1	
+RICaction-NotAdmitted-List	SEQUENCE	RICaction-NotAdmitted-List		RICaction-NotAdmitted-ItemIEs	E2AP-PROTOCOL-IES				1	
+RICaction-NotAdmitted-List	SEQUENCE	RICaction-NotAdmitted-List		ID	id-RICaction-NotAdmitted-Item				1	
+RICaction-NotAdmitted-Item	SEQUENCE	RICaction-NotAdmitted-Item		ricActionID	RICactionID					
+RICaction-NotAdmitted-Item	SEQUENCE	RICaction-NotAdmitted-Item		cause	Cause					
+RICaction-NotAdmitted-Item	SEQUENCE	RICaction-NotAdmitted-Item		---	RIC					
+RICsubscriptionFailure	SEQUENCE	RICsubscriptionFailure		protocolIEs	ProtocolIE-Container					
+RICsubscriptionFailure	SEQUENCE	RICsubscriptionFailure		RICsubscriptionFailure-IEs	E2AP-PROTOCOL-IES					
+RICsubscriptionFailure	SEQUENCE	RICsubscriptionFailure		ID	id-RICrequestID					
+RICsubscriptionFailure	SEQUENCE	RICsubscriptionFailure		ID	id-RANfunctionID					
+RICsubscriptionFailure	SEQUENCE	RICsubscriptionFailure		ID	id-Cause					
+RICsubscriptionFailure	SEQUENCE	RICsubscriptionFailure		ID	id-CriticalityDiagnostics					
+RICsubscriptionFailure	SEQUENCE	RICsubscriptionFailure		2025	by					
+RICsubscriptionFailure	SEQUENCE	RICsubscriptionFailure		---	RIC					
+RICsubscriptionFailure	SEQUENCE	RICsubscriptionFailure		---	RIC					
+RICsubscriptionAuditRequest	SEQUENCE	RICsubscriptionAuditRequest		protocolIEs	ProtocolIE-Container					
+RICsubscriptionAuditRequest	SEQUENCE	RICsubscriptionAuditRequest		RICsubscriptionAuditRequest-IEs	E2AP-PROTOCOL-IES					
+RICsubscriptionAuditRequest	SEQUENCE	RICsubscriptionAuditRequest		ID	id-RICrequestID					
+RICsubscriptionAuditRequest	SEQUENCE	RICsubscriptionAuditRequest		ID	id-RICsubscriptionAuditFlag					
+RICsubscriptionAuditRequest	SEQUENCE	RICsubscriptionAuditRequest		ID	id-RICsubscriptionAuditList					
+RICsubscriptionAuditList	SEQUENCE	RICsubscriptionAuditList		OF	ProtocolIE-SingleContainer				1	
+RICsubscriptionAuditList	SEQUENCE	RICsubscriptionAuditList		RICsubscriptionAudit-ItemIEs	E2AP-PROTOCOL-IES				1	
+RICsubscriptionAuditList	SEQUENCE	RICsubscriptionAuditList		ID	id-RICsubscriptionAudit-Item				1	
+RICsubscriptionAudit-Item	SEQUENCE	RICsubscriptionAudit-Item		ricRequestID	RICrequestID					
+RICsubscriptionAudit-Item	SEQUENCE	RICsubscriptionAudit-Item		ranFunctionID	RANfunctionID					
+RICsubscriptionAudit-Item	SEQUENCE	RICsubscriptionAudit-Item		---	RIC					
+RICsubscriptionAuditResponse	SEQUENCE	RICsubscriptionAuditResponse		protocolIEs	ProtocolIE-Container					
+RICsubscriptionAuditResponse	SEQUENCE	RICsubscriptionAuditResponse		RICsubscriptionAuditResponse-IEs	E2AP-PROTOCOL-IES					
+RICsubscriptionAuditResponse	SEQUENCE	RICsubscriptionAuditResponse		ID	id-RICrequestID					
+RICsubscriptionAuditResponse	SEQUENCE	RICsubscriptionAuditResponse		PRESENCE	mandatory					
+RICsubscriptionAuditResponse	SEQUENCE	RICsubscriptionAuditResponse		ID	id-RICsubscriptionAuditConfirmedList					
+RICsubscriptionAuditResponse	SEQUENCE	RICsubscriptionAuditResponse		RICsubscriptionAuditActionList	PRESENCE					
+RICsubscriptionAuditResponse	SEQUENCE	RICsubscriptionAuditResponse		ID	id-RICsubscriptionAuditUnkownList					
+RICsubscriptionAuditResponse	SEQUENCE	RICsubscriptionAuditResponse		PRESENCE	optional					
+RICsubscriptionAuditResponse	SEQUENCE	RICsubscriptionAuditResponse		ID	id-RICsubscriptionAuditMissingList					
+RICsubscriptionAuditResponse	SEQUENCE	RICsubscriptionAuditResponse		RICsubscriptionAuditActionList	PRESENCE					
+RICsubscriptionAuditActionList	SEQUENCE	RICsubscriptionAuditActionList		OF	ProtocolIE-SingleContainer				1	
+RICsubscriptionAuditActionList	SEQUENCE	RICsubscriptionAuditActionList		RICsubscriptionAuditAction-ItemIEs	E2AP-PROTOCOL-IES				1	
+RICsubscriptionAuditActionList	SEQUENCE	RICsubscriptionAuditActionList		ID	id-RICsubscriptionAuditAction-Item				1	
+RICsubscriptionAuditActionList	SEQUENCE	RICsubscriptionAuditActionList		PRESENCE	mandatory				1	
+RICsubscriptionAuditActionList	SEQUENCE	RICsubscriptionAuditActionList		2025	by				1	
+RICsubscriptionAuditAction-Item	SEQUENCE	RICsubscriptionAuditAction-Item		ricRequestID	RICrequestID					
+RICsubscriptionAuditAction-Item	SEQUENCE	RICsubscriptionAuditAction-Item		ranFunctionID	RANfunctionID					
+RICsubscriptionAuditAction-Item	SEQUENCE	RICsubscriptionAuditAction-Item		ricAction-Admitted-List	RICaction-Admitted-List					
+RICsubscriptionAuditAction-Item	SEQUENCE	RICsubscriptionAuditAction-Item		---	RIC					
+RICsubscriptionAuditFailure	SEQUENCE	RICsubscriptionAuditFailure		protocolIEs	ProtocolIE-Container					
+RICsubscriptionAuditFailure	SEQUENCE	RICsubscriptionAuditFailure		RICsubscriptionAuditFailure-IEs	E2AP-PROTOCOL-IES					
+RICsubscriptionAuditFailure	SEQUENCE	RICsubscriptionAuditFailure		ID	id-RICrequestID					
+RICsubscriptionAuditFailure	SEQUENCE	RICsubscriptionAuditFailure		ID	id-Cause					
+RICsubscriptionAuditFailure	SEQUENCE	RICsubscriptionAuditFailure		ID	id-CriticalityDiagnostics					
+RICsubscriptionAuditFailure	SEQUENCE	RICsubscriptionAuditFailure		---	RIC					
+RICsubscriptionAuditFailure	SEQUENCE	RICsubscriptionAuditFailure		---	RIC					
+RICsubscriptionDeleteRequest	SEQUENCE	RICsubscriptionDeleteRequest		protocolIEs	ProtocolIE-Container					
+RICsubscriptionDeleteRequest	SEQUENCE	RICsubscriptionDeleteRequest		RICsubscriptionDeleteRequest-IEs	E2AP-PROTOCOL-IES					
+RICsubscriptionDeleteRequest	SEQUENCE	RICsubscriptionDeleteRequest		ID	id-RICrequestID					
+RICsubscriptionDeleteRequest	SEQUENCE	RICsubscriptionDeleteRequest		ID	id-RANfunctionID					
+RICsubscriptionDeleteRequest	SEQUENCE	RICsubscriptionDeleteRequest		---	RIC					
+RICsubscriptionDeleteResponse	SEQUENCE	RICsubscriptionDeleteResponse		protocolIEs	ProtocolIE-Container					
+RICsubscriptionDeleteResponse	SEQUENCE	RICsubscriptionDeleteResponse		RICsubscriptionDeleteResponse-IEs	E2AP-PROTOCOL-IES					
+RICsubscriptionDeleteResponse	SEQUENCE	RICsubscriptionDeleteResponse		ID	id-RICrequestID					
+RICsubscriptionDeleteResponse	SEQUENCE	RICsubscriptionDeleteResponse		ID	id-RANfunctionID					
+RICsubscriptionDeleteResponse	SEQUENCE	RICsubscriptionDeleteResponse		2025	by					
+RICsubscriptionDeleteResponse	SEQUENCE	RICsubscriptionDeleteResponse		---	RIC					
+RICsubscriptionDeleteFailure	SEQUENCE	RICsubscriptionDeleteFailure		protocolIEs	ProtocolIE-Container					
+RICsubscriptionDeleteFailure	SEQUENCE	RICsubscriptionDeleteFailure		RICsubscriptionDeleteFailure-IEs	E2AP-PROTOCOL-IES					
+RICsubscriptionDeleteFailure	SEQUENCE	RICsubscriptionDeleteFailure		ID	id-RICrequestID					
+RICsubscriptionDeleteFailure	SEQUENCE	RICsubscriptionDeleteFailure		ID	id-RANfunctionID					
+RICsubscriptionDeleteFailure	SEQUENCE	RICsubscriptionDeleteFailure		ID	id-Cause					
+RICsubscriptionDeleteFailure	SEQUENCE	RICsubscriptionDeleteFailure		ID	id-CriticalityDiagnostics					
+RICsubscriptionDeleteFailure	SEQUENCE	RICsubscriptionDeleteFailure		---	RIC					
+RICsubscriptionDeleteFailure	SEQUENCE	RICsubscriptionDeleteFailure		---	RIC					
+RICsubscriptionDeleteRequired	SEQUENCE	RICsubscriptionDeleteRequired		protocolIEs	ProtocolIE-Container					
+RICsubscriptionDeleteRequired	SEQUENCE	RICsubscriptionDeleteRequired		RICsubscriptionDeleteRequired-IEs	E2AP-PROTOCOL-IES					
+RICsubscriptionDeleteRequired	SEQUENCE	RICsubscriptionDeleteRequired		ID	id-RICsubscriptionToBeRemoved					
+RICsubscriptionDeleteRequired	SEQUENCE	RICsubscriptionDeleteRequired		PRESENCE	mandatory					
+RICsubscription-List-withCause	SEQUENCE	RICsubscription-List-withCause		OF	ProtocolIE-SingleContainer				1	
+RICsubscription-List-withCause	SEQUENCE	RICsubscription-List-withCause		RICsubscription-withCause-ItemIEs	E2AP-PROTOCOL-IES				1	
+RICsubscription-List-withCause	SEQUENCE	RICsubscription-List-withCause		ID	id-RICsubscription-withCause-Item				1	
+RICsubscription-List-withCause	SEQUENCE	RICsubscription-List-withCause		PRESENCE	mandatory				1	
+RICsubscription-withCause-Item	SEQUENCE	RICsubscription-withCause-Item		ricRequestID	RICrequestID					
+RICsubscription-withCause-Item	SEQUENCE	RICsubscription-withCause-Item		ranFunctionID	RANfunctionID					
+RICsubscription-withCause-Item	SEQUENCE	RICsubscription-withCause-Item		cause	Cause					
+RICsubscription-withCause-Item	SEQUENCE	RICsubscription-withCause-Item		---	RIC					
+RICsubscription-withCause-Item	SEQUENCE	RICsubscription-withCause-Item		---	RIC					
+RICsubscription-withCause-Item	SEQUENCE	RICsubscription-withCause-Item		2025	by					
+RICsubscriptionModificationRequest	SEQUENCE	RICsubscriptionModificationRequest		protocolIEs	ProtocolIE-Container					
+RICsubscriptionModificationRequest	SEQUENCE	RICsubscriptionModificationRequest		RICsubscriptionModificationRequest-IEs	E2AP-PROTOCOL-IES					
+RICsubscriptionModificationRequest	SEQUENCE	RICsubscriptionModificationRequest		ID	id-RICrequestID					
+RICsubscriptionModificationRequest	SEQUENCE	RICsubscriptionModificationRequest		PRESENCE	mandatory					
+RICsubscriptionModificationRequest	SEQUENCE	RICsubscriptionModificationRequest		ID	id-RANfunctionID					
+RICsubscriptionModificationRequest	SEQUENCE	RICsubscriptionModificationRequest		PRESENCE	mandatory					
+RICsubscriptionModificationRequest	SEQUENCE	RICsubscriptionModificationRequest		ID	id-RICeventTriggerDefinitionToBeModified					
+RICsubscriptionModificationRequest	SEQUENCE	RICsubscriptionModificationRequest		PRESENCE	optional					
+RICsubscriptionModificationRequest	SEQUENCE	RICsubscriptionModificationRequest		ID	id-RICactionsToBeRemovedForModification-List					
+RICsubscriptionModificationRequest	SEQUENCE	RICsubscriptionModificationRequest		ID	id-RICactionsToBeModifiedForModification-List					
+RICsubscriptionModificationRequest	SEQUENCE	RICsubscriptionModificationRequest		ID	id-RICactionsToBeAddedForModification-List					
+RICactions-ToBeRemovedForModification-List	SEQUENCE	RICactions-ToBeRemovedForModification-List		OF	ProtocolIESingleContainer				1	
+RICactions-ToBeRemovedForModification-List	SEQUENCE	RICactions-ToBeRemovedForModification-List		RICaction-ToBeRemovedForModification-ItemIEs	E2AP-PROTOCOL-IES				1	
+RICactions-ToBeRemovedForModification-List	SEQUENCE	RICactions-ToBeRemovedForModification-List		ID	id-RICaction-ToBeRemovedForModification-Item				1	
+RICaction-ToBeRemovedForModification-Item	SEQUENCE	RICaction-ToBeRemovedForModification-Item		ricActionID	RICactionID					
+RICactions-ToBeModifiedForModification-List	SEQUENCE	RICactions-ToBeModifiedForModification-List		OF	ProtocolIESingleContainer				1	
+RICactions-ToBeModifiedForModification-List	SEQUENCE	RICactions-ToBeModifiedForModification-List		RICaction-ToBeModifiedForModification-ItemIEs	E2AP-PROTOCOL-IES				1	
+RICactions-ToBeModifiedForModification-List	SEQUENCE	RICactions-ToBeModifiedForModification-List		ID	id-RICaction-ToBeModifiedForModification-Item				1	
+RICaction-ToBeModifiedForModification-Item	SEQUENCE	RICaction-ToBeModifiedForModification-Item		ricActionID	RICactionID					
+RICaction-ToBeModifiedForModification-Item	SEQUENCE	RICaction-ToBeModifiedForModification-Item		ricActionDefinition	RICactionDefinition		YES			
+RICaction-ToBeModifiedForModification-Item	SEQUENCE	RICaction-ToBeModifiedForModification-Item		ricActionExecutionOrder	RICactionExecutionOrder		YES			
+RICaction-ToBeModifiedForModification-Item	SEQUENCE	RICaction-ToBeModifiedForModification-Item		ricSubsequentAction	RICsubsequentAction		YES			
+RICactions-ToBeAddedForModification-List	SEQUENCE	RICactions-ToBeAddedForModification-List		OF	ProtocolIESingleContainer				1	
+RICactions-ToBeAddedForModification-List	SEQUENCE	RICactions-ToBeAddedForModification-List		RICaction-ToBeAddedForModification-ItemIEs	E2AP-PROTOCOL-IES				1	
+RICactions-ToBeAddedForModification-List	SEQUENCE	RICactions-ToBeAddedForModification-List		ID	id-RICaction-ToBeAddedForModification-Item				1	
+RICaction-ToBeAddedForModification-Item	SEQUENCE	RICaction-ToBeAddedForModification-Item		ricActionID	RICactionID					
+RICaction-ToBeAddedForModification-Item	SEQUENCE	RICaction-ToBeAddedForModification-Item		ricActionType	RICactionType					
+RICaction-ToBeAddedForModification-Item	SEQUENCE	RICaction-ToBeAddedForModification-Item		ricActionDefinition	RICactionDefinition					
+RICaction-ToBeAddedForModification-Item	SEQUENCE	RICaction-ToBeAddedForModification-Item		ricActionExecutionOrder	RICactionExecutionOrder					
+RICaction-ToBeAddedForModification-Item	SEQUENCE	RICaction-ToBeAddedForModification-Item		ricSubsequentAction	RICsubsequentAction		YES			
+RICaction-ToBeAddedForModification-Item	SEQUENCE	RICaction-ToBeAddedForModification-Item		2025	by					
+RICaction-ToBeAddedForModification-Item	SEQUENCE	RICaction-ToBeAddedForModification-Item		---	RIC					
+RICsubscriptionModificationResponse	SEQUENCE	RICsubscriptionModificationResponse		protocolIEs	ProtocolIE-Container					
+RICsubscriptionModificationResponse	SEQUENCE	RICsubscriptionModificationResponse		RICsubscriptionModificationResponse-IEs	E2AP-PROTOCOL-IES					
+RICsubscriptionModificationResponse	SEQUENCE	RICsubscriptionModificationResponse		ID	id-RICrequestID					
+RICsubscriptionModificationResponse	SEQUENCE	RICsubscriptionModificationResponse		PRESENCE	mandatory					
+RICsubscriptionModificationResponse	SEQUENCE	RICsubscriptionModificationResponse		ID	id-RANfunctionID					
+RICsubscriptionModificationResponse	SEQUENCE	RICsubscriptionModificationResponse		PRESENCE	mandatory					
+RICsubscriptionModificationResponse	SEQUENCE	RICsubscriptionModificationResponse		ID	id-RICactionsRemovedForModification-List					
+RICsubscriptionModificationResponse	SEQUENCE	RICsubscriptionModificationResponse		ID	id-RICactionsFailedToBeRemovedForModification-List					
+RICsubscriptionModificationResponse	SEQUENCE	RICsubscriptionModificationResponse		ID	id-RICactionsModifiedForModification-List					
+RICsubscriptionModificationResponse	SEQUENCE	RICsubscriptionModificationResponse		ID	id-RICactionsFailedToBeModifiedForModification-List					
+RICsubscriptionModificationResponse	SEQUENCE	RICsubscriptionModificationResponse		ID	id-RICactionsAddedForModification-List					
+RICsubscriptionModificationResponse	SEQUENCE	RICsubscriptionModificationResponse		ID	id-RICactionsFailedToBeAddedForModification-List					
+RICactions-RemovedForModification-List	SEQUENCE	RICactions-RemovedForModification-List		OF	ProtocolIESingleContainer				1	
+RICactions-RemovedForModification-List	SEQUENCE	RICactions-RemovedForModification-List		RICaction-RemovedForModification-ItemIEs	E2AP-PROTOCOL-IES				1	
+RICactions-RemovedForModification-List	SEQUENCE	RICactions-RemovedForModification-List		ID	id-RICaction-RemovedForModification-Item				1	
+RICaction-RemovedForModification-Item	SEQUENCE	RICaction-RemovedForModification-Item		ricActionID	RICactionID					
+RICactions-FailedToBeRemovedForModification-List	SEQUENCE	RICactions-FailedToBeRemovedForModification-List		OF	ProtocolIESingleContainer				1	
+RICactions-FailedToBeRemovedForModification-List	SEQUENCE	RICactions-FailedToBeRemovedForModification-List		RICaction-FailedToBeRemovedForModification-ItemIEs	E2AP-PROTOCOL-IES				1	
+RICactions-FailedToBeRemovedForModification-List	SEQUENCE	RICactions-FailedToBeRemovedForModification-List		ID	id-RICaction-FailedToBeRemovedForModification-Item				1	
+RICaction-FailedToBeRemovedForModification-Item	SEQUENCE	RICaction-FailedToBeRemovedForModification-Item		ricActionID	RICactionID					
+RICaction-FailedToBeRemovedForModification-Item	SEQUENCE	RICaction-FailedToBeRemovedForModification-Item		cause	Cause					
+RICactions-ModifiedForModification-List	SEQUENCE	RICactions-ModifiedForModification-List		OF	ProtocolIESingleContainer				1	
+RICactions-ModifiedForModification-List	SEQUENCE	RICactions-ModifiedForModification-List		RICaction-ModifiedForModification-ItemIEs	E2AP-PROTOCOL-IES				1	
+RICactions-ModifiedForModification-List	SEQUENCE	RICactions-ModifiedForModification-List		ID	id-RICaction-ModifiedForModification-Item				1	
+RICaction-ModifiedForModification-Item	SEQUENCE	RICaction-ModifiedForModification-Item		ricActionID	RICactionID					
+RICaction-ModifiedForModification-Item	SEQUENCE	RICaction-ModifiedForModification-Item		2025	by					
+RICactions-FailedToBeModifiedForModification-List	SEQUENCE	RICactions-FailedToBeModifiedForModification-List		OF	ProtocolIESingleContainer				1	
+RICactions-FailedToBeModifiedForModification-List	SEQUENCE	RICactions-FailedToBeModifiedForModification-List		RICaction-FailedToBeModifiedForModification-ItemIEs	E2AP-PROTOCOL-IES				1	
+RICactions-FailedToBeModifiedForModification-List	SEQUENCE	RICactions-FailedToBeModifiedForModification-List		ID	id-RICaction-FailedToBeModifiedForModification-Item				1	
+RICaction-FailedToBeModifiedForModification-Item	SEQUENCE	RICaction-FailedToBeModifiedForModification-Item		ricActionID	RICactionID					
+RICaction-FailedToBeModifiedForModification-Item	SEQUENCE	RICaction-FailedToBeModifiedForModification-Item		cause	Cause					
+RICactions-AddedForModification-List	SEQUENCE	RICactions-AddedForModification-List		OF	ProtocolIESingleContainer				1	
+RICactions-AddedForModification-List	SEQUENCE	RICactions-AddedForModification-List		RICaction-AddedForModification-ItemIEs	E2AP-PROTOCOL-IES				1	
+RICactions-AddedForModification-List	SEQUENCE	RICactions-AddedForModification-List		ID	id-RICaction-AddedForModification-Item				1	
+RICaction-AddedForModification-Item	SEQUENCE	RICaction-AddedForModification-Item		ricActionID	RICactionID					
+RICactions-FailedToBeAddedForModification-List	SEQUENCE	RICactions-FailedToBeAddedForModification-List		OF	ProtocolIESingleContainer				1	
+RICactions-FailedToBeAddedForModification-List	SEQUENCE	RICactions-FailedToBeAddedForModification-List		RICaction-FailedToBeAddedForModification-ItemIEs	E2AP-PROTOCOL-IES				1	
+RICactions-FailedToBeAddedForModification-List	SEQUENCE	RICactions-FailedToBeAddedForModification-List		ID	id-RICaction-FailedToBeAddedForModification-Item				1	
+RICaction-FailedToBeAddedForModification-Item	SEQUENCE	RICaction-FailedToBeAddedForModification-Item		ricActionID	RICactionID					
+RICaction-FailedToBeAddedForModification-Item	SEQUENCE	RICaction-FailedToBeAddedForModification-Item		cause	Cause					
+RICaction-FailedToBeAddedForModification-Item	SEQUENCE	RICaction-FailedToBeAddedForModification-Item		---	RIC					
+RICsubscriptionModificationFailure	SEQUENCE	RICsubscriptionModificationFailure		protocolIEs	ProtocolIE-Container					
+RICsubscriptionModificationFailure	SEQUENCE	RICsubscriptionModificationFailure		RICsubscriptionModificationFailure-IEs	E2AP-PROTOCOL-IES					
+RICsubscriptionModificationFailure	SEQUENCE	RICsubscriptionModificationFailure		ID	id-RICrequestID					
+RICsubscriptionModificationFailure	SEQUENCE	RICsubscriptionModificationFailure		ID	id-RANfunctionID					
+RICsubscriptionModificationFailure	SEQUENCE	RICsubscriptionModificationFailure		ID	id-Cause					
+RICsubscriptionModificationFailure	SEQUENCE	RICsubscriptionModificationFailure		ID	id-CriticalityDiagnostics					
+RICsubscriptionModificationFailure	SEQUENCE	RICsubscriptionModificationFailure		---	RIC					
+RICsubscriptionModificationFailure	SEQUENCE	RICsubscriptionModificationFailure		2025	by					
+RICsubscriptionModificationFailure	SEQUENCE	RICsubscriptionModificationFailure		---	RIC					
+RICsubscriptionModificationRequired	SEQUENCE	RICsubscriptionModificationRequired		protocolIEs	ProtocolIE-Container					
+RICsubscriptionModificationRequired	SEQUENCE	RICsubscriptionModificationRequired		RICsubscriptionModificationRequired-IEs	E2AP-PROTOCOL-IES					
+RICsubscriptionModificationRequired	SEQUENCE	RICsubscriptionModificationRequired		ID	id-RICrequestID					
+RICsubscriptionModificationRequired	SEQUENCE	RICsubscriptionModificationRequired		PRESENCE	mandatory					
+RICsubscriptionModificationRequired	SEQUENCE	RICsubscriptionModificationRequired		ID	id-RANfunctionID					
+RICsubscriptionModificationRequired	SEQUENCE	RICsubscriptionModificationRequired		PRESENCE	mandatory					
+RICsubscriptionModificationRequired	SEQUENCE	RICsubscriptionModificationRequired		ID	id-RICactionsRequiredToBeModified-List					
+RICsubscriptionModificationRequired	SEQUENCE	RICsubscriptionModificationRequired		ID	id-RICactionsRequiredToBeRemoved-List					
+RICactions-RequiredToBeModified-List	SEQUENCE	RICactions-RequiredToBeModified-List		OF	ProtocolIESingleContainer				1	
+RICactions-RequiredToBeModified-List	SEQUENCE	RICactions-RequiredToBeModified-List		RICaction-RequiredToBeModified-ItemIEs	E2AP-PROTOCOL-IES				1	
+RICactions-RequiredToBeModified-List	SEQUENCE	RICactions-RequiredToBeModified-List		ID	id-RICaction-RequiredToBeModified-Item				1	
+RICaction-RequiredToBeModified-Item	SEQUENCE	RICaction-RequiredToBeModified-Item		ricActionID	RICactionID					
+RICaction-RequiredToBeModified-Item	SEQUENCE	RICaction-RequiredToBeModified-Item		ricTimeToWait	RICtimeToWait					
+RICactions-RequiredToBeRemoved-List	SEQUENCE	RICactions-RequiredToBeRemoved-List		OF	ProtocolIE-SingleContainer				1	
+RICactions-RequiredToBeRemoved-List	SEQUENCE	RICactions-RequiredToBeRemoved-List		RICaction-RequiredToBeRemoved-ItemIEs	E2AP-PROTOCOL-IES				1	
+RICactions-RequiredToBeRemoved-List	SEQUENCE	RICactions-RequiredToBeRemoved-List		ID	id-RICaction-RequiredToBeRemoved-Item				1	
+RICaction-RequiredToBeRemoved-Item	SEQUENCE	RICaction-RequiredToBeRemoved-Item		ricActionID	RICactionID					
+RICaction-RequiredToBeRemoved-Item	SEQUENCE	RICaction-RequiredToBeRemoved-Item		cause	Cause					
+RICaction-RequiredToBeRemoved-Item	SEQUENCE	RICaction-RequiredToBeRemoved-Item		---	RIC					
+RICsubscriptionModificationConfirm	SEQUENCE	RICsubscriptionModificationConfirm		protocolIEs	ProtocolIE-Container					
+RICsubscriptionModificationConfirm	SEQUENCE	RICsubscriptionModificationConfirm		RICsubscriptionModificationConfirm-IEs	E2AP-PROTOCOL-IES					
+RICsubscriptionModificationConfirm	SEQUENCE	RICsubscriptionModificationConfirm		ID	id-RICrequestID					
+RICsubscriptionModificationConfirm	SEQUENCE	RICsubscriptionModificationConfirm		PRESENCE	mandatory					
+RICsubscriptionModificationConfirm	SEQUENCE	RICsubscriptionModificationConfirm		ID	id-RANfunctionID					
+RICsubscriptionModificationConfirm	SEQUENCE	RICsubscriptionModificationConfirm		PRESENCE	mandatory					
+RICsubscriptionModificationConfirm	SEQUENCE	RICsubscriptionModificationConfirm		ID	id-RICactionsConfirmedForModification-List					
+RICsubscriptionModificationConfirm	SEQUENCE	RICsubscriptionModificationConfirm		ID	id-RICactionsRefusedToBeModified-List					
+RICsubscriptionModificationConfirm	SEQUENCE	RICsubscriptionModificationConfirm		2025	by					
+RICsubscriptionModificationConfirm	SEQUENCE	RICsubscriptionModificationConfirm		ID	id-RICactionsConfirmedForRemoval-List					
+RICsubscriptionModificationConfirm	SEQUENCE	RICsubscriptionModificationConfirm		ID	id-RICactionsRefusedToBeRemoved-List					
+RICactions-ConfirmedForModification-List	SEQUENCE	RICactions-ConfirmedForModification-List		OF	ProtocolIESingleContainer				1	
+RICactions-ConfirmedForModification-List	SEQUENCE	RICactions-ConfirmedForModification-List		RICaction-ConfirmedForModification-ItemIEs	E2AP-PROTOCOL-IES				1	
+RICactions-ConfirmedForModification-List	SEQUENCE	RICactions-ConfirmedForModification-List		ID	id-RICaction-ConfirmedForModification-Item				1	
+RICaction-ConfirmedForModification-Item	SEQUENCE	RICaction-ConfirmedForModification-Item		ricActionID	RICactionID					
+RICactions-RefusedToBeModified-List	SEQUENCE	RICactions-RefusedToBeModified-List		OF	ProtocolIE-SingleContainer				1	
+RICactions-RefusedToBeModified-List	SEQUENCE	RICactions-RefusedToBeModified-List		RICaction-RefusedToBeModified-ItemIEs	E2AP-PROTOCOL-IES				1	
+RICactions-RefusedToBeModified-List	SEQUENCE	RICactions-RefusedToBeModified-List		ID	id-RICaction-RefusedToBeModified-Item				1	
+RICaction-RefusedToBeModified-Item	SEQUENCE	RICaction-RefusedToBeModified-Item		ricActionID	RICactionID					
+RICaction-RefusedToBeModified-Item	SEQUENCE	RICaction-RefusedToBeModified-Item		cause	Cause					
+RICactions-ConfirmedForRemoval-List	SEQUENCE	RICactions-ConfirmedForRemoval-List		OF	ProtocolIE-SingleContainer				1	
+RICactions-ConfirmedForRemoval-List	SEQUENCE	RICactions-ConfirmedForRemoval-List		RICaction-ConfirmedForRemoval-ItemIEs	E2AP-PROTOCOL-IES				1	
+RICactions-ConfirmedForRemoval-List	SEQUENCE	RICactions-ConfirmedForRemoval-List		ID	id-RICaction-ConfirmedForRemoval-Item				1	
+RICaction-ConfirmedForRemoval-Item	SEQUENCE	RICaction-ConfirmedForRemoval-Item		ricActionID	RICactionID					
+RICactions-RefusedToBeRemoved-List	SEQUENCE	RICactions-RefusedToBeRemoved-List		OF	ProtocolIE-SingleContainer				1	
+RICactions-RefusedToBeRemoved-List	SEQUENCE	RICactions-RefusedToBeRemoved-List		RICaction-RefusedToBeRemoved-ItemIEs	E2AP-PROTOCOL-IES				1	
+RICactions-RefusedToBeRemoved-List	SEQUENCE	RICactions-RefusedToBeRemoved-List		ID	id-RICaction-RefusedToBeRemoved-Item				1	
+RICaction-RefusedToBeRemoved-Item	SEQUENCE	RICaction-RefusedToBeRemoved-Item		ricActionID	RICactionID					
+RICaction-RefusedToBeRemoved-Item	SEQUENCE	RICaction-RefusedToBeRemoved-Item		cause	Cause					
+RICaction-RefusedToBeRemoved-Item	SEQUENCE	RICaction-RefusedToBeRemoved-Item		---	RIC					
+RICsubscriptionModificationRefuse	SEQUENCE	RICsubscriptionModificationRefuse		protocolIEs	ProtocolIE-Container					
+RICsubscriptionModificationRefuse	SEQUENCE	RICsubscriptionModificationRefuse		2025	by					
+RICsubscriptionModificationRefuse	SEQUENCE	RICsubscriptionModificationRefuse		RICsubscriptionModificationRefuse-IEs	E2AP-PROTOCOL-IES					
+RICsubscriptionModificationRefuse	SEQUENCE	RICsubscriptionModificationRefuse		ID	id-RICrequestID					
+RICsubscriptionModificationRefuse	SEQUENCE	RICsubscriptionModificationRefuse		ID	id-RANfunctionID					
+RICsubscriptionModificationRefuse	SEQUENCE	RICsubscriptionModificationRefuse		ID	id-Cause					
+RICsubscriptionModificationRefuse	SEQUENCE	RICsubscriptionModificationRefuse		ID	id-CriticalityDiagnostics					
+RICsubscriptionModificationRefuse	SEQUENCE	RICsubscriptionModificationRefuse		---	RIC					
+RICsubscriptionModificationRefuse	SEQUENCE	RICsubscriptionModificationRefuse		---	RIC					
+RICsubscriptionStateControlRequest	SEQUENCE	RICsubscriptionStateControlRequest		protocolIEs	ProtocolIE-Container					
+RICsubscriptionStateControlRequest	SEQUENCE	RICsubscriptionStateControlRequest		RICsubscriptionStateControlRequest-IEs	E2AP-PROTOCOL-IES					
+RICsubscriptionStateControlRequest	SEQUENCE	RICsubscriptionStateControlRequest		ID	id-RICrequestID					
+RICsubscriptionStateControlRequest	SEQUENCE	RICsubscriptionStateControlRequest		ID	id-RANfunctionStateControl-List					
+RANfunctionStateControl-List	SEQUENCE	RANfunctionStateControl-List		OF	ProtocolIE-SingleContainer				1	
+RANfunctionStateControl-List	SEQUENCE	RANfunctionStateControl-List		RANfunctionStateControl-ItemIEs	E2AP-PROTOCOL-IES				1	
+RANfunctionStateControl-List	SEQUENCE	RANfunctionStateControl-List		ID	id-RANfunctionStateControl-Item				1	
+RANfunctionStateControl-List	SEQUENCE	RANfunctionStateControl-List		PRESENCE	mandatory				1	
+RANfunctionStateControl-Item	SEQUENCE	RANfunctionStateControl-Item		ranFunctionID	RANfunctionID					
+RANfunctionStateControl-Item	SEQUENCE	RANfunctionStateControl-Item		ricSubscriptionToBeSuspended-list	RICsubscriptionToBeSuspended-List		YES			
+RANfunctionStateControl-Item	SEQUENCE	RANfunctionStateControl-Item		ricSubscriptionToBeResumed-list	RICsubscriptionToBeResumed-List		YES			
+RICsubscriptionToBeSuspended-List	SEQUENCE	RICsubscriptionToBeSuspended-List		OF	ProtocolIE-SingleContainer				1	
+RICsubscriptionToBeResumed-List	SEQUENCE	RICsubscriptionToBeResumed-List		OF	ProtocolIE-SingleContainer				1	
+RICsubscriptionToBeResumed-List	SEQUENCE	RICsubscriptionToBeResumed-List		RICsubscriptionList-ItemIEs	E2AP-PROTOCOL-IES				1	
+RICsubscriptionToBeResumed-List	SEQUENCE	RICsubscriptionToBeResumed-List		ID	id-RICsubscriptionList-Item				1	
+RICsubscriptionList-Item	SEQUENCE	RICsubscriptionList-Item		ricRequestID	RICrequestID				1	
+RICsubscriptionList-Item	SEQUENCE	RICsubscriptionList-Item		ricAction-list	RICaction-List		YES		1	
+RICsubscriptionList-Item	SEQUENCE	RICsubscriptionList-Item		2025	by				1	
+RICaction-List	SEQUENCE	RICaction-List		OF	ProtocolIE-SingleContainer				1	
+RICaction-List	SEQUENCE	RICaction-List		RICaction-ItemIEs	E2AP-PROTOCOL-IES				1	
+RICaction-List	SEQUENCE	RICaction-List		ID	id-RICactionList-Item				1	
+RICactionList-Item	SEQUENCE	RICactionList-Item		ricActionID	RICactionID				1	
+RICactionList-Item	SEQUENCE	RICactionList-Item		---	RIC				1	
+RICsubscriptionStateControlResponse	SEQUENCE	RICsubscriptionStateControlResponse		protocolIEs	ProtocolIE-Container					
+RICsubscriptionStateControlResponse	SEQUENCE	RICsubscriptionStateControlResponse		RICsubscriptionStateControlResponse-IEs	E2AP-PROTOCOL-IES					
+RICsubscriptionStateControlResponse	SEQUENCE	RICsubscriptionStateControlResponse		ID	id-RICrequestID					
+RICsubscriptionStateControlResponse	SEQUENCE	RICsubscriptionStateControlResponse		ID	id-RANfunctionStateConfirm-List					
+RANfunctionStateConfirm-List	SEQUENCE	RANfunctionStateConfirm-List		OF	ProtocolIE-SingleContainer				1	
+RANfunctionStateConfirm-List	SEQUENCE	RANfunctionStateConfirm-List		RANfunctionStateConfirm-ItemIEs	E2AP-PROTOCOL-IES				1	
+RANfunctionStateConfirm-List	SEQUENCE	RANfunctionStateConfirm-List		ID	id-RANfunctionStateConfirm-Item				1	
+RANfunctionStateConfirm-List	SEQUENCE	RANfunctionStateConfirm-List		PRESENCE	mandatory				1	
+RANfunctionStateConfirm-Item	SEQUENCE	RANfunctionStateConfirm-Item		ranFunctionID	RANfunctionID					
+RANfunctionStateConfirm-Item	SEQUENCE	RANfunctionStateConfirm-Item		ricSubscriptionSuspended-list	RICsubscriptionSuspended-List		YES			
+RANfunctionStateConfirm-Item	SEQUENCE	RANfunctionStateConfirm-Item		ricSubscriptionResumed-list	RICsubscriptionResumed-List		YES			
+RICsubscriptionSuspended-List	SEQUENCE	RICsubscriptionSuspended-List		OF	ProtocolIE-SingleContainer				1	
+RICsubscriptionResumed-List	SEQUENCE	RICsubscriptionResumed-List		OF	ProtocolIE-SingleContainer				1	
+RICsubscriptionResumed-List	SEQUENCE	RICsubscriptionResumed-List		---	RIC				1	
+RICsubscriptionStateControlFailure	SEQUENCE	RICsubscriptionStateControlFailure		protocolIEs	ProtocolIE-Container					
+RICsubscriptionStateControlFailure	SEQUENCE	RICsubscriptionStateControlFailure		RICsubscriptionStateControlFailure-IEs	E2AP-PROTOCOL-IES					
+RICsubscriptionStateControlFailure	SEQUENCE	RICsubscriptionStateControlFailure		ID	id-RICrequestID					
+RICsubscriptionStateControlFailure	SEQUENCE	RICsubscriptionStateControlFailure		PRESENCE	mandatory					
+RICsubscriptionStateControlFailure	SEQUENCE	RICsubscriptionStateControlFailure		2025	by					
+RICsubscriptionStateControlFailure	SEQUENCE	RICsubscriptionStateControlFailure		ID	id-Cause					
+RICsubscriptionStateControlFailure	SEQUENCE	RICsubscriptionStateControlFailure		PRESENCE	mandatory					
+RICsubscriptionStateControlFailure	SEQUENCE	RICsubscriptionStateControlFailure		ID	id-CriticalityDiagnostics					
+RICsubscriptionStateControlFailure	SEQUENCE	RICsubscriptionStateControlFailure		PRESENCE	optional					
+RICsubscriptionStateControlFailure	SEQUENCE	RICsubscriptionStateControlFailure		---	RIC					
+RICsubscriptionStateControlFailure	SEQUENCE	RICsubscriptionStateControlFailure		---	RIC					
+RICassistanceRequest	SEQUENCE	RICassistanceRequest		protocolIEs	ProtocolIE-Container					
+RICassistanceRequest	SEQUENCE	RICassistanceRequest		RICassistanceRequest-IEs	E2AP-PROTOCOL-IES					
+RICassistanceRequest	SEQUENCE	RICassistanceRequest		ID	id-RICrequestID					
+RICassistanceRequest	SEQUENCE	RICassistanceRequest		ID	id-RICassistanceHeader					
+RICassistanceRequest	SEQUENCE	RICassistanceRequest		ID	id-RICassistanceMessage					
+RICassistanceRequest	SEQUENCE	RICassistanceRequest		ID	id-RICassistanceUpdate					
+RICassistanceRequest	SEQUENCE	RICassistanceRequest		ID	id-RICassistanceUpdateNumber					
+RICassistanceRequest	SEQUENCE	RICassistanceRequest		---	RIC					
+RICassistanceResponse	SEQUENCE	RICassistanceResponse		protocolIEs	ProtocolIE-Container					
+RICassistanceResponse	SEQUENCE	RICassistanceResponse		RICassistanceResponse-IEs	E2AP-PROTOCOL-IES					
+RICassistanceResponse	SEQUENCE	RICassistanceResponse		ID	id-RICrequestID					
+RICassistanceResponse	SEQUENCE	RICassistanceResponse		ID	id-RICassistanceHeader					
+RICassistanceResponse	SEQUENCE	RICassistanceResponse		ID	id-RICassistanceOutcome					
+RICassistanceResponse	SEQUENCE	RICassistanceResponse		---	RIC					
+RICassistanceFailure	SEQUENCE	RICassistanceFailure		protocolIEs	ProtocolIE-Container					
+RICassistanceFailure	SEQUENCE	RICassistanceFailure		RICassistanceFailure-IEs	E2AP-PROTOCOL-IES					
+RICassistanceFailure	SEQUENCE	RICassistanceFailure		ID	id-RICrequestID					
+RICassistanceFailure	SEQUENCE	RICassistanceFailure		ID	id-Cause					
+RICassistanceFailure	SEQUENCE	RICassistanceFailure		2025	by					
+RICassistanceFailure	SEQUENCE	RICassistanceFailure		ID	id-CriticalityDiagnostics					
+RICassistanceFailure	SEQUENCE	RICassistanceFailure		---	RIC					
+RICassistanceFailure	SEQUENCE	RICassistanceFailure		---	RIC					
+RICassistanceIndication	SEQUENCE	RICassistanceIndication		protocolIEs	ProtocolIE-Container					
+RICassistanceIndication	SEQUENCE	RICassistanceIndication		RICassistanceIndication-IEs	E2AP-PROTOCOL-IES					
+RICassistanceIndication	SEQUENCE	RICassistanceIndication		ID	id-RICrequestID					
+RICassistanceIndication	SEQUENCE	RICassistanceIndication		ID	id-RICassistanceSN					
+RICassistanceIndication	SEQUENCE	RICassistanceIndication		ID	id-RICassistanceHeader					
+RICassistanceIndication	SEQUENCE	RICassistanceIndication		ID	id-RICassistanceOutcome					
+RICassistanceIndication	SEQUENCE	RICassistanceIndication		---	RIC					
+RICassistanceIndication	SEQUENCE	RICassistanceIndication		---	RIC					
+RICassistanceHalt	SEQUENCE	RICassistanceHalt		protocolIEs	ProtocolIE-Container					
+RICassistanceHalt	SEQUENCE	RICassistanceHalt		RICassistanceHalt-IEs	E2AP-PROTOCOL-IES					
+RICassistanceHalt	SEQUENCE	RICassistanceHalt		ID	id-RICrequestID					
+RICassistanceHalt	SEQUENCE	RICassistanceHalt		---	RIC					
+RICassistanceHalt	SEQUENCE	RICassistanceHalt		---	RIC					
+RICindication	SEQUENCE	RICindication		protocolIEs	ProtocolIE-Container					
+RICindication	SEQUENCE	RICindication		RICindication-IEs	E2AP-PROTOCOL-IES					
+RICindication	SEQUENCE	RICindication		ID	id-RICrequestID					
+RICindication	SEQUENCE	RICindication		2025	by					
+RICindication	SEQUENCE	RICindication		ID	id-RANfunctionID					
+RICindication	SEQUENCE	RICindication		ID	id-RICactionID					
+RICindication	SEQUENCE	RICindication		ID	id-RICindicationSN					
+RICindication	SEQUENCE	RICindication		ID	id-RICindicationType					
+RICindication	SEQUENCE	RICindication		ID	id-RICindicationHeader					
+RICindication	SEQUENCE	RICindication		ID	id-RICindicationMessage					
+RICindication	SEQUENCE	RICindication		ID	id-RICcallProcessID					
+RICindication	SEQUENCE	RICindication		---	RIC					
+RICindication	SEQUENCE	RICindication		---	RIC					
+RICcontrolRequest	SEQUENCE	RICcontrolRequest		protocolIEs	ProtocolIE-Container					
+RICcontrolRequest	SEQUENCE	RICcontrolRequest		RICcontrolRequest-IEs	E2AP-PROTOCOL-IES					
+RICcontrolRequest	SEQUENCE	RICcontrolRequest		ID	id-RICrequestID					
+RICcontrolRequest	SEQUENCE	RICcontrolRequest		ID	id-RANfunctionID					
+RICcontrolRequest	SEQUENCE	RICcontrolRequest		ID	id-RICcallProcessID					
+RICcontrolRequest	SEQUENCE	RICcontrolRequest		ID	id-RICcontrolHeader					
+RICcontrolRequest	SEQUENCE	RICcontrolRequest		ID	id-RICcontrolMessage					
+RICcontrolRequest	SEQUENCE	RICcontrolRequest		ID	id-RICcontrolAckRequest					
+RICcontrolRequest	SEQUENCE	RICcontrolRequest		---	RIC					
+RICcontrolAcknowledge	SEQUENCE	RICcontrolAcknowledge		protocolIEs	ProtocolIE-Container					
+RICcontrolAcknowledge	SEQUENCE	RICcontrolAcknowledge		RICcontrolAcknowledge-IEs	E2AP-PROTOCOL-IES					
+RICcontrolAcknowledge	SEQUENCE	RICcontrolAcknowledge		ID	id-RICrequestID					
+RICcontrolAcknowledge	SEQUENCE	RICcontrolAcknowledge		ID	id-RANfunctionID					
+RICcontrolAcknowledge	SEQUENCE	RICcontrolAcknowledge		ID	id-RICcallProcessID					
+RICcontrolAcknowledge	SEQUENCE	RICcontrolAcknowledge		ID	id-RICcontrolOutcome					
+RICcontrolAcknowledge	SEQUENCE	RICcontrolAcknowledge		---	RIC					
+RICcontrolAcknowledge	SEQUENCE	RICcontrolAcknowledge		2025	by					
+RICcontrolFailure	SEQUENCE	RICcontrolFailure		protocolIEs	ProtocolIE-Container					
+RICcontrolFailure	SEQUENCE	RICcontrolFailure		RICcontrolFailure-IEs	E2AP-PROTOCOL-IES					
+RICcontrolFailure	SEQUENCE	RICcontrolFailure		ID	id-RICrequestID					
+RICcontrolFailure	SEQUENCE	RICcontrolFailure		ID	id-RANfunctionID					
+RICcontrolFailure	SEQUENCE	RICcontrolFailure		ID	id-RICcallProcessID					
+RICcontrolFailure	SEQUENCE	RICcontrolFailure		ID	id-Cause					
+RICcontrolFailure	SEQUENCE	RICcontrolFailure		ID	id-RICcontrolOutcome					
+RICcontrolFailure	SEQUENCE	RICcontrolFailure		ID	id-CriticalityDiagnostics					
+RICcontrolFailure	SEQUENCE	RICcontrolFailure		---	RIC					
+RICcontrolFailure	SEQUENCE	RICcontrolFailure		---	RIC					
+RICqueryRequest	SEQUENCE	RICqueryRequest		protocolIEs	ProtocolIE-Container					
+RICqueryRequest	SEQUENCE	RICqueryRequest		RICqueryRequest-IEs	E2AP-PROTOCOL-IES					
+RICqueryRequest	SEQUENCE	RICqueryRequest		ID	id-RICrequestID					
+RICqueryRequest	SEQUENCE	RICqueryRequest		ID	id-RANfunctionID					
+RICqueryRequest	SEQUENCE	RICqueryRequest		ID	id-RICqueryHeader					
+RICqueryRequest	SEQUENCE	RICqueryRequest		ID	id-RICqueryDefinition					
+RICqueryRequest	SEQUENCE	RICqueryRequest		---	RIC					
+RICqueryResponse	SEQUENCE	RICqueryResponse		protocolIEs	ProtocolIE-Container					
+RICqueryResponse	SEQUENCE	RICqueryResponse		RICqueryResponse-IEs	E2AP-PROTOCOL-IES					
+RICqueryResponse	SEQUENCE	RICqueryResponse		ID	id-RICrequestID					
+RICqueryResponse	SEQUENCE	RICqueryResponse		ID	id-RANfunctionID					
+RICqueryResponse	SEQUENCE	RICqueryResponse		ID	id-RICqueryOutcome					
+RICqueryResponse	SEQUENCE	RICqueryResponse		2025	by					
+RICqueryResponse	SEQUENCE	RICqueryResponse		--	RIC					
+RICqueryFailure	SEQUENCE	RICqueryFailure		protocolIEs	ProtocolIE-Container					
+RICqueryFailure	SEQUENCE	RICqueryFailure		RICqueryFailure-IEs	E2AP-PROTOCOL-IES					
+RICqueryFailure	SEQUENCE	RICqueryFailure		ID	id-RICrequestID					
+RICqueryFailure	SEQUENCE	RICqueryFailure		ID	id-RANfunctionID					
+RICqueryFailure	SEQUENCE	RICqueryFailure		ID	id-Cause					
+RICqueryFailure	SEQUENCE	RICqueryFailure		ID	id-CriticalityDiagnostics					
+RICqueryFailure	SEQUENCE	RICqueryFailure		---	RIC					
+RICqueryFailure	SEQUENCE	RICqueryFailure		---	RIC					
+RICserviceLoadStatusRequest	SEQUENCE	RICserviceLoadStatusRequest		protocolIEs	ProtocolIE-Container					
+RICserviceLoadStatusRequest	SEQUENCE	RICserviceLoadStatusRequest		RICserviceLoadStatusRequest-IEs	E2AP-PROTOCOL-IES					
+RICserviceLoadStatusRequest	SEQUENCE	RICserviceLoadStatusRequest		ID	id-RICloadMeasurementID					
+RICserviceLoadStatusRequest	SEQUENCE	RICserviceLoadStatusRequest		ID	id-E2nodeLoadMeasurementID					
+RICserviceLoadStatusRequest	SEQUENCE	RICserviceLoadStatusRequest		ID	id-RegistrationRequest					
+RICserviceLoadStatusRequest	SEQUENCE	RICserviceLoadStatusRequest		ID	id-RANfunctionLoadRequest-List					
+RICserviceLoadStatusRequest	SEQUENCE	RICserviceLoadStatusRequest		ID	id-ReportingPeriodicity					
+RANfunctionLoadRequest-List	SEQUENCE	RANfunctionLoadRequest-List		OF	ProtocolIE-SingleContainer				1	
+RANfunctionLoadRequest-List	SEQUENCE	RANfunctionLoadRequest-List		RANfunctionLoadRequest-ItemIEs	E2AP-PROTOCOL-IES				1	
+RANfunctionLoadRequest-List	SEQUENCE	RANfunctionLoadRequest-List		ID	id-RANfunctionLoadRequest-Item				1	
+RANfunctionLoadRequest-Item	SEQUENCE	RANfunctionLoadRequest-Item		ranFunctionID	RANfunctionID					
+RANfunctionLoadRequest-Item	SEQUENCE	RANfunctionLoadRequest-Item		ranFunctionLoadRequest	RICloadRequest		YES			
+RANfunctionLoadRequest-Item	SEQUENCE	RANfunctionLoadRequest-Item		ricServiceLoadRequest	RICserviceLoadRequest		YES			
+RANfunctionLoadRequest-Item	SEQUENCE	RANfunctionLoadRequest-Item		ricSubscriptionLoadRequest-list	RICsubscriptionLoadRequest-List		YES			
+RICsubscriptionLoadRequest-List	SEQUENCE	RICsubscriptionLoadRequest-List		OF	ProtocolIE-SingleContainer				1	
+RICsubscriptionLoadRequest-List	SEQUENCE	RICsubscriptionLoadRequest-List		RICsubscriptionLoadRequest-ItemIEs	E2AP-PROTOCOL-IES				1	
+RICsubscriptionLoadRequest-List	SEQUENCE	RICsubscriptionLoadRequest-List		2025	by				1	
+RICsubscriptionLoadRequest-List	SEQUENCE	RICsubscriptionLoadRequest-List		ID	id-RICsubscriptionLoadRequest-Item				1	
+RICsubscriptionLoadRequest-List	SEQUENCE	RICsubscriptionLoadRequest-List		PRESENCE	mandatory				1	
+RICsubscriptionLoadRequest-ItemIE	SEQUENCE	RICsubscriptionLoadRequest-ItemIE		ricRequestID	RICrequestID					
+RICsubscriptionLoadRequest-ItemIE	SEQUENCE	RICsubscriptionLoadRequest-ItemIE		ricSubscriptionLoadRequest	RICloadRequest		YES			
+RICsubscriptionLoadRequest-ItemIE	SEQUENCE	RICsubscriptionLoadRequest-ItemIE		ricActionLoadRequest-list	RICactionLoadRequest-List		YES			
+RICactionLoadRequest-List	SEQUENCE	RICactionLoadRequest-List		OF	ProtocolIE-SingleContainer				1	
+RICactionLoadRequest-List	SEQUENCE	RICactionLoadRequest-List		RICactionLoadRequest-ItemIEs	E2AP-PROTOCOL-IES				1	
+RICactionLoadRequest-List	SEQUENCE	RICactionLoadRequest-List		ID	id-RICactionLoadRequest-Item				1	
+RICactionLoadRequest-List	SEQUENCE	RICactionLoadRequest-List		PRESENCE	mandatory				1	
+RICactionLoadRequest-Item	SEQUENCE	RICactionLoadRequest-Item		ricActionID	RICactionID					
+RICactionLoadRequest-Item	SEQUENCE	RICactionLoadRequest-Item		ricActionLoadRequest	RICloadRequest					
+RICactionLoadRequest-Item	SEQUENCE	RICactionLoadRequest-Item		---	RIC					
+RICserviceLoadStatusResponse	SEQUENCE	RICserviceLoadStatusResponse		protocolIEs	ProtocolIE-Container					
+RICserviceLoadStatusResponse	SEQUENCE	RICserviceLoadStatusResponse		RICserviceLoadStatusResponse-IEs	E2AP-PROTOCOL-IES					
+RICserviceLoadStatusResponse	SEQUENCE	RICserviceLoadStatusResponse		ID	id-RICloadMeasurementID					
+RICserviceLoadStatusResponse	SEQUENCE	RICserviceLoadStatusResponse		ID	id-E2nodeLoadMeasurementID					
+RICserviceLoadStatusResponse	SEQUENCE	RICserviceLoadStatusResponse		ID	id-RANfunctionLoadConfirm-List					
+RANfunctionLoadConfirm-List	SEQUENCE	RANfunctionLoadConfirm-List		OF	ProtocolIE-SingleContainer				1	
+RANfunctionLoadConfirm-List	SEQUENCE	RANfunctionLoadConfirm-List		RANfunctionLoadConfirm-ItemIEs	E2AP-PROTOCOL-IES				1	
+RANfunctionLoadConfirm-List	SEQUENCE	RANfunctionLoadConfirm-List		ID	id-RANfunctionLoadConfirm-Item				1	
+RANfunctionLoadConfirm-Item	SEQUENCE	RANfunctionLoadConfirm-Item		ranFunctionID	RANfunctionID					
+RANfunctionLoadConfirm-Item	SEQUENCE	RANfunctionLoadConfirm-Item		ranFunctionLoadConfirm	RICloadConfirm		YES			
+RANfunctionLoadConfirm-Item	SEQUENCE	RANfunctionLoadConfirm-Item		ricServiceLoadConfirm	RICserviceLoadConfirm		YES			
+RANfunctionLoadConfirm-Item	SEQUENCE	RANfunctionLoadConfirm-Item		ricSubscriptionLoadConfirm-list	RICsubscriptionLoadConfirm-List		YES			
+RICsubscriptionLoadConfirm-List	SEQUENCE	RICsubscriptionLoadConfirm-List		OF	ProtocolIE-SingleContainer				1	
+RICsubscriptionLoadConfirm-List	SEQUENCE	RICsubscriptionLoadConfirm-List		RICsubscriptionLoadConfirm-ItemIEs	E2AP-PROTOCOL-IES				1	
+RICsubscriptionLoadConfirm-List	SEQUENCE	RICsubscriptionLoadConfirm-List		ID	id-RICsubscriptionLoadConfirm-Item				1	
+RICsubscriptionLoadConfirm-List	SEQUENCE	RICsubscriptionLoadConfirm-List		PRESENCE	mandatory				1	
+RICsubscriptionLoadConfirm-List	SEQUENCE	RICsubscriptionLoadConfirm-List		2025	by				1	
+RICsubscriptionLoadConfirm-ItemIE	SEQUENCE	RICsubscriptionLoadConfirm-ItemIE		ricRequestID	RICrequestID					
+RICsubscriptionLoadConfirm-ItemIE	SEQUENCE	RICsubscriptionLoadConfirm-ItemIE		ricSubscriptionLoadConfirm	RICloadConfirm		YES			
+RICsubscriptionLoadConfirm-ItemIE	SEQUENCE	RICsubscriptionLoadConfirm-ItemIE		ricActionLoadConfirm-list	RICactionLoadConfirm-List		YES			
+RICactionLoadConfirm-List	SEQUENCE	RICactionLoadConfirm-List		OF	ProtocolIE-SingleContainer				1	
+RICactionLoadConfirm-List	SEQUENCE	RICactionLoadConfirm-List		RICactionLoadConfirm-ItemIEs	E2AP-PROTOCOL-IES				1	
+RICactionLoadConfirm-List	SEQUENCE	RICactionLoadConfirm-List		ID	id-RICactionLoadConfirm-Item				1	
+RICactionLoadConfirm-List	SEQUENCE	RICactionLoadConfirm-List		PRESENCE	mandatory				1	
+RICactionLoadConfirm-Item	SEQUENCE	RICactionLoadConfirm-Item		ricActionID	RICactionID					
+RICactionLoadConfirm-Item	SEQUENCE	RICactionLoadConfirm-Item		ricActionLoadConfirm	RICloadConfirm					
+RICactionLoadConfirm-Item	SEQUENCE	RICactionLoadConfirm-Item		---	RIC					
+RICserviceLoadStatusFailure	SEQUENCE	RICserviceLoadStatusFailure		protocolIEs	ProtocolIE-Container					
+RICserviceLoadStatusFailure	SEQUENCE	RICserviceLoadStatusFailure		RICserviceLoadStatusFailure-IEs	E2AP-PROTOCOL-IES					
+RICserviceLoadStatusFailure	SEQUENCE	RICserviceLoadStatusFailure		ID	id-RICloadMeasurementID					
+RICserviceLoadStatusFailure	SEQUENCE	RICserviceLoadStatusFailure		ID	id-E2nodeLoadMeasurementID					
+RICserviceLoadStatusFailure	SEQUENCE	RICserviceLoadStatusFailure		ID	id-Cause					
+RICserviceLoadStatusFailure	SEQUENCE	RICserviceLoadStatusFailure		ID	id-CriticalityDiagnostics					
+RICserviceLoadStatusFailure	SEQUENCE	RICserviceLoadStatusFailure		---	RIC					
+RICserviceLoadStatusFailure	SEQUENCE	RICserviceLoadStatusFailure		---	RIC					
+RICserviceLoadUpdate	SEQUENCE	RICserviceLoadUpdate		protocolIEs	ProtocolIE-Container					
+RICserviceLoadUpdate	SEQUENCE	RICserviceLoadUpdate		RICserviceLoadUpdate-IEs	E2AP-PROTOCOL-IES					
+RICserviceLoadUpdate	SEQUENCE	RICserviceLoadUpdate		ID	id-RICloadMeasurementID					
+RICserviceLoadUpdate	SEQUENCE	RICserviceLoadUpdate		ID	id-E2nodeLoadMeasurementID					
+RICserviceLoadUpdate	SEQUENCE	RICserviceLoadUpdate		ID	id-RANfunctionLoad-List					
+RICserviceLoadUpdate	SEQUENCE	RICserviceLoadUpdate		2025	by					
+RANfunctionLoad-List	SEQUENCE	RANfunctionLoad-List		OF	ProtocolIE-SingleContainer				1	
+RANfunctionLoad-List	SEQUENCE	RANfunctionLoad-List		RANfunctionLoad-ItemIEs	E2AP-PROTOCOL-IES				1	
+RANfunctionLoad-List	SEQUENCE	RANfunctionLoad-List		ID	id-RANfunctionLoad-Item				1	
+RANfunctionLoad-Item	SEQUENCE	RANfunctionLoad-Item		ranFunctionID	RANfunctionID					
+RANfunctionLoad-Item	SEQUENCE	RANfunctionLoad-Item		ranFunctionLoadInformation	RICloadInformation		YES			
+RANfunctionLoad-Item	SEQUENCE	RANfunctionLoad-Item		ricServiceLoadInformation	RICserviceLoadInformation		YES			
+RANfunctionLoad-Item	SEQUENCE	RANfunctionLoad-Item		ricSubscriptionLoad-list	RICsubscriptionLoad-List		YES			
+RICsubscriptionLoad-List	SEQUENCE	RICsubscriptionLoad-List		OF	ProtocolIE-SingleContainer				1	
+RICsubscriptionLoad-List	SEQUENCE	RICsubscriptionLoad-List		RICsubscriptionLoad-ItemIEs	E2AP-PROTOCOL-IES				1	
+RICsubscriptionLoad-List	SEQUENCE	RICsubscriptionLoad-List		ID	id-RICsubscriptionLoad-Item				1	
+RICsubscriptionLoad-ItemIE	SEQUENCE	RICsubscriptionLoad-ItemIE		ricRequestID	RICrequestID					
+RICsubscriptionLoad-ItemIE	SEQUENCE	RICsubscriptionLoad-ItemIE		ricSubscriptionLoadInformation	RICloadInformation		YES			
+RICsubscriptionLoad-ItemIE	SEQUENCE	RICsubscriptionLoad-ItemIE		ricActionLoad-list	RICactionLoad-List		YES			
+RICactionLoad-List	SEQUENCE	RICactionLoad-List		OF	ProtocolIE-SingleContainer				1	
+RICactionLoad-List	SEQUENCE	RICactionLoad-List		RICactionLoad-ItemIEs	E2AP-PROTOCOL-IES				1	
+RICactionLoad-List	SEQUENCE	RICactionLoad-List		ID	id-RICactionLoad-Item				1	
+RICactionLoad-Item	SEQUENCE	RICactionLoad-Item		ricActionID	RICactionID					
+RICactionLoad-Item	SEQUENCE	RICactionLoad-Item		ricActionLoadInformation	RICloadInformation					
+RICactionLoad-Item	SEQUENCE	RICactionLoad-Item		---	MESSAGES					
+RICactionLoad-Item	SEQUENCE	RICactionLoad-Item		---	Error					
+RICactionLoad-Item	SEQUENCE	RICactionLoad-Item		---	ERROR					
+ErrorIndication	SEQUENCE	ErrorIndication		protocolIEs	ProtocolIE-Container					
+ErrorIndication	SEQUENCE	ErrorIndication		ErrorIndication-IEs	E2AP-PROTOCOL-IES					
+ErrorIndication	SEQUENCE	ErrorIndication		2025	by					
+ErrorIndication	SEQUENCE	ErrorIndication		ID	id-TransactionID					
+ErrorIndication	SEQUENCE	ErrorIndication		ID	id-RICrequestID					
+ErrorIndication	SEQUENCE	ErrorIndication		ID	id-RANfunctionID					
+ErrorIndication	SEQUENCE	ErrorIndication		ID	id-Cause					
+ErrorIndication	SEQUENCE	ErrorIndication		ID	id-CriticalityDiagnostics					
+ErrorIndication	SEQUENCE	ErrorIndication		---	E2					
+ErrorIndication	SEQUENCE	ErrorIndication		---	E2					
+E2setupRequest	SEQUENCE	E2setupRequest		protocolIEs	ProtocolIE-Container					
+E2setupRequest	SEQUENCE	E2setupRequest		E2setupRequestIEs	E2AP-PROTOCOL-IES					
+E2setupRequest	SEQUENCE	E2setupRequest		ID	id-TransactionID					
+E2setupRequest	SEQUENCE	E2setupRequest		PRESENCE	mandatory					
+E2setupRequest	SEQUENCE	E2setupRequest		ID	id-GlobalE2node-ID					
+E2setupRequest	SEQUENCE	E2setupRequest		ID	id-RANfunctionsAdded					
+E2setupRequest	SEQUENCE	E2setupRequest		ID	id-E2nodeComponentConfigAddition					
+E2setupRequest	SEQUENCE	E2setupRequest		PRESENCE	mandatory					
+E2setupRequest	SEQUENCE	E2setupRequest		---	E2					
+E2setupResponse	SEQUENCE	E2setupResponse		protocolIEs	ProtocolIE-Container					
+E2setupResponse	SEQUENCE	E2setupResponse		E2setupResponseIEs	E2AP-PROTOCOL-IES					
+E2setupResponse	SEQUENCE	E2setupResponse		ID	id-TransactionID					
+E2setupResponse	SEQUENCE	E2setupResponse		PRESENCE	mandatory					
+E2setupResponse	SEQUENCE	E2setupResponse		ID	id-GlobalRIC-ID					
+E2setupResponse	SEQUENCE	E2setupResponse		PRESENCE	mandatory					
+E2setupResponse	SEQUENCE	E2setupResponse		ID	id-RANfunctionsAccepted					
+E2setupResponse	SEQUENCE	E2setupResponse		PRESENCE	optional					
+E2setupResponse	SEQUENCE	E2setupResponse		ID	id-RANfunctionsRejected					
+E2setupResponse	SEQUENCE	E2setupResponse		PRESENCE	optional					
+E2setupResponse	SEQUENCE	E2setupResponse		ID	id-E2nodeComponentConfigAdditionAck					
+E2setupResponse	SEQUENCE	E2setupResponse		---	E2					
+E2setupResponse	SEQUENCE	E2setupResponse		2025	by					
+E2setupFailure	SEQUENCE	E2setupFailure		protocolIEs	ProtocolIE-Container					
+E2setupFailure	SEQUENCE	E2setupFailure		E2setupFailureIEs	E2AP-PROTOCOL-IES					
+E2setupFailure	SEQUENCE	E2setupFailure		ID	id-TransactionID					
+E2setupFailure	SEQUENCE	E2setupFailure		ID	id-Cause					
+E2setupFailure	SEQUENCE	E2setupFailure		ID	id-TimeToWait					
+E2setupFailure	SEQUENCE	E2setupFailure		ID	id-CriticalityDiagnostics					
+E2setupFailure	SEQUENCE	E2setupFailure		ID	id-TNLinformation					
+E2setupFailure	SEQUENCE	E2setupFailure		---	E2					
+E2setupFailure	SEQUENCE	E2setupFailure		---	E2					
+E2connectionUpdate	SEQUENCE	E2connectionUpdate		protocolIEs	ProtocolIE-Container					
+E2connectionUpdate	SEQUENCE	E2connectionUpdate		E2connectionUpdate-IEs	E2AP-PROTOCOL-IES					
+E2connectionUpdate	SEQUENCE	E2connectionUpdate		ID	id-TransactionID					
+E2connectionUpdate	SEQUENCE	E2connectionUpdate		ID	id-E2connectionUpdateAdd					
+E2connectionUpdate	SEQUENCE	E2connectionUpdate		ID	id-E2connectionUpdateRemove					
+E2connectionUpdate	SEQUENCE	E2connectionUpdate		ID	id-E2connectionUpdateModify					
+E2connectionUpdate-List	SEQUENCE	E2connectionUpdate-List		OF	ProtocolIE-SingleContainer				1	
+E2connectionUpdate-List	SEQUENCE	E2connectionUpdate-List		E2connectionUpdate-ItemIEs	E2AP-PROTOCOL-IES				1	
+E2connectionUpdate-List	SEQUENCE	E2connectionUpdate-List		ID	id-E2connectionUpdate-Item				1	
+E2connectionUpdate-Item	SEQUENCE	E2connectionUpdate-Item		tnlInformation	TNLinformation					
+E2connectionUpdate-Item	SEQUENCE	E2connectionUpdate-Item		tnlUsage	TNLusage					
+E2connectionUpdateRemove-List	SEQUENCE	E2connectionUpdateRemove-List		OF	ProtocolIE-SingleContainer				1	
+E2connectionUpdateRemove-List	SEQUENCE	E2connectionUpdateRemove-List		E2connectionUpdateRemove-ItemIEs	E2AP-PROTOCOL-IES				1	
+E2connectionUpdateRemove-List	SEQUENCE	E2connectionUpdateRemove-List		ID	id-E2connectionUpdateRemove-Item				1	
+E2connectionUpdateRemove-List	SEQUENCE	E2connectionUpdateRemove-List		PRESENCE	mandatory				1	
+E2connectionUpdateRemove-List	SEQUENCE	E2connectionUpdateRemove-List		2025	by				1	
+E2connectionUpdateRemove-Item	SEQUENCE	E2connectionUpdateRemove-Item		tnlInformation	TNLinformation					
+E2connectionUpdateRemove-Item	SEQUENCE	E2connectionUpdateRemove-Item		---	E2					
+E2connectionUpdateAcknowledge	SEQUENCE	E2connectionUpdateAcknowledge		protocolIEs	ProtocolIE-Container					
+E2connectionUpdateAcknowledge	SEQUENCE	E2connectionUpdateAcknowledge		E2connectionUpdateAck-IEs	E2AP-PROTOCOL-IES					
+E2connectionUpdateAcknowledge	SEQUENCE	E2connectionUpdateAcknowledge		ID	id-TransactionID					
+E2connectionUpdateAcknowledge	SEQUENCE	E2connectionUpdateAcknowledge		ID	id-E2connectionSetup					
+E2connectionUpdateAcknowledge	SEQUENCE	E2connectionUpdateAcknowledge		ID	id-E2connectionSetupFailed					
+E2connectionSetupFailed-List	SEQUENCE	E2connectionSetupFailed-List		OF	ProtocolIE-SingleContainer				1	
+E2connectionSetupFailed-List	SEQUENCE	E2connectionSetupFailed-List		E2connectionSetupFailed-ItemIEs	E2AP-PROTOCOL-IES				1	
+E2connectionSetupFailed-List	SEQUENCE	E2connectionSetupFailed-List		ID	id-E2connectionSetupFailed-Item				1	
+E2connectionSetupFailed-List	SEQUENCE	E2connectionSetupFailed-List		PRESENCE	mandatory				1	
+E2connectionSetupFailed-Item	SEQUENCE	E2connectionSetupFailed-Item		tnlInformation	TNLinformation					
+E2connectionSetupFailed-Item	SEQUENCE	E2connectionSetupFailed-Item		cause	Cause					
+E2connectionSetupFailed-Item	SEQUENCE	E2connectionSetupFailed-Item		---	E2					
+E2connectionUpdateFailure	SEQUENCE	E2connectionUpdateFailure		protocolIEs	ProtocolIE-Container					
+E2connectionUpdateFailure	SEQUENCE	E2connectionUpdateFailure		E2connectionUpdateFailure-IEs	E2AP-PROTOCOL-IES					
+E2connectionUpdateFailure	SEQUENCE	E2connectionUpdateFailure		ID	id-TransactionID					
+E2connectionUpdateFailure	SEQUENCE	E2connectionUpdateFailure		PRESENCE	mandatory					
+E2connectionUpdateFailure	SEQUENCE	E2connectionUpdateFailure		ID	id-Cause					
+E2connectionUpdateFailure	SEQUENCE	E2connectionUpdateFailure		PRESENCE	optional					
+E2connectionUpdateFailure	SEQUENCE	E2connectionUpdateFailure		ID	id-TimeToWait					
+E2connectionUpdateFailure	SEQUENCE	E2connectionUpdateFailure		PRESENCE	optional					
+E2connectionUpdateFailure	SEQUENCE	E2connectionUpdateFailure		ID	id-CriticalityDiagnostics					
+E2connectionUpdateFailure	SEQUENCE	E2connectionUpdateFailure		PRESENCE	optional					
+E2connectionUpdateFailure	SEQUENCE	E2connectionUpdateFailure		---	E2					
+E2connectionUpdateFailure	SEQUENCE	E2connectionUpdateFailure		2025	by					
+E2connectionUpdateFailure	SEQUENCE	E2connectionUpdateFailure		--	E2					
+E2nodeConfigurationUpdate	SEQUENCE	E2nodeConfigurationUpdate		protocolIEs	ProtocolIE-Container					
+E2nodeConfigurationUpdate	SEQUENCE	E2nodeConfigurationUpdate		E2nodeConfigurationUpdate-IEs	E2AP-PROTOCOL-IES					
+E2nodeConfigurationUpdate	SEQUENCE	E2nodeConfigurationUpdate		ID	id-TransactionID					
+E2nodeConfigurationUpdate	SEQUENCE	E2nodeConfigurationUpdate		PRESENCE	mandatory					
+E2nodeConfigurationUpdate	SEQUENCE	E2nodeConfigurationUpdate		ID	id-GlobalE2node-ID					
+E2nodeConfigurationUpdate	SEQUENCE	E2nodeConfigurationUpdate		PRESENCE	optional					
+E2nodeConfigurationUpdate	SEQUENCE	E2nodeConfigurationUpdate		ID	id-E2nodeComponentConfigAddition					
+E2nodeConfigurationUpdate	SEQUENCE	E2nodeConfigurationUpdate		PRESENCE	optional					
+E2nodeConfigurationUpdate	SEQUENCE	E2nodeConfigurationUpdate		ID	id-E2nodeComponentConfigUpdate					
+E2nodeConfigurationUpdate	SEQUENCE	E2nodeConfigurationUpdate		PRESENCE	optional					
+E2nodeConfigurationUpdate	SEQUENCE	E2nodeConfigurationUpdate		ID	id-E2nodeComponentConfigRemoval					
+E2nodeConfigurationUpdate	SEQUENCE	E2nodeConfigurationUpdate		PRESENCE	optional					
+E2nodeConfigurationUpdate	SEQUENCE	E2nodeConfigurationUpdate		ID	id-E2nodeTNLassociationRemoval					
+E2nodeConfigurationUpdate	SEQUENCE	E2nodeConfigurationUpdate		PRESENCE	optional					
+E2nodeComponentConfigAddition-List	SEQUENCE	E2nodeComponentConfigAddition-List		OF	ProtocolIESingleContainer				1	
+E2nodeComponentConfigAddition-List	SEQUENCE	E2nodeComponentConfigAddition-List		E2nodeComponentConfigAddition-ItemIEs	E2AP-PROTOCOL-IES				1	
+E2nodeComponentConfigAddition-List	SEQUENCE	E2nodeComponentConfigAddition-List		ID	id-E2nodeComponentConfigAddition-Item				1	
+E2nodeComponentConfigAddition-Item	SEQUENCE	E2nodeComponentConfigAddition-Item		e2nodeComponentInterfaceType	E2nodeComponentInterfaceType					
+E2nodeComponentConfigAddition-Item	SEQUENCE	E2nodeComponentConfigAddition-Item		e2nodeComponentID	E2nodeComponentID					
+E2nodeComponentConfigAddition-Item	SEQUENCE	E2nodeComponentConfigAddition-Item		e2nodeComponentConfiguration	E2nodeComponentConfiguration					
+E2nodeComponentConfigUpdate-List	SEQUENCE	E2nodeComponentConfigUpdate-List		OF	ProtocolIESingleContainer				1	
+E2nodeComponentConfigUpdate-List	SEQUENCE	E2nodeComponentConfigUpdate-List		E2nodeComponentConfigUpdate-ItemIEs	E2AP-PROTOCOL-IES				1	
+E2nodeComponentConfigUpdate-List	SEQUENCE	E2nodeComponentConfigUpdate-List		ID	id-E2nodeComponentConfigUpdate-Item				1	
+E2nodeComponentConfigUpdate-List	SEQUENCE	E2nodeComponentConfigUpdate-List		PRESENCE	mandatory				1	
+E2nodeComponentConfigUpdate-Item	SEQUENCE	E2nodeComponentConfigUpdate-Item		e2nodeComponentInterfaceType	E2nodeComponentInterfaceType					
+E2nodeComponentConfigUpdate-Item	SEQUENCE	E2nodeComponentConfigUpdate-Item		e2nodeComponentID	E2nodeComponentID					
+E2nodeComponentConfigUpdate-Item	SEQUENCE	E2nodeComponentConfigUpdate-Item		e2nodeComponentConfiguration	E2nodeComponentConfiguration					
+E2nodeComponentConfigRemoval-List	SEQUENCE	E2nodeComponentConfigRemoval-List		OF	ProtocolIESingleContainer				1	
+E2nodeComponentConfigRemoval-List	SEQUENCE	E2nodeComponentConfigRemoval-List		E2nodeComponentConfigRemoval-ItemIEs	E2AP-PROTOCOL-IES				1	
+E2nodeComponentConfigRemoval-List	SEQUENCE	E2nodeComponentConfigRemoval-List		ID	id-E2nodeComponentConfigRemoval-Item				1	
+E2nodeComponentConfigRemoval-List	SEQUENCE	E2nodeComponentConfigRemoval-List		PRESENCE	mandatory				1	
+E2nodeComponentConfigRemoval-Item	SEQUENCE	E2nodeComponentConfigRemoval-Item		e2nodeComponentInterfaceType	E2nodeComponentInterfaceType					
+E2nodeComponentConfigRemoval-Item	SEQUENCE	E2nodeComponentConfigRemoval-Item		e2nodeComponentID	E2nodeComponentID					
+E2nodeComponentConfigRemoval-Item	SEQUENCE	E2nodeComponentConfigRemoval-Item		2025	by					
+E2nodeTNLassociationRemoval-List	SEQUENCE	E2nodeTNLassociationRemoval-List		OF	ProtocolIE-SingleContainer				1	
+E2nodeTNLassociationRemoval-List	SEQUENCE	E2nodeTNLassociationRemoval-List		E2nodeTNLassociationRemoval-ItemIEs	E2AP-PROTOCOL-IES				1	
+E2nodeTNLassociationRemoval-List	SEQUENCE	E2nodeTNLassociationRemoval-List		ID	id-E2nodeTNLassociationRemoval-Item				1	
+E2nodeTNLassociationRemoval-List	SEQUENCE	E2nodeTNLassociationRemoval-List		PRESENCE	mandatory				1	
+E2nodeTNLassociationRemoval-Item	SEQUENCE	E2nodeTNLassociationRemoval-Item		tnlInformation	TNLinformation					
+E2nodeTNLassociationRemoval-Item	SEQUENCE	E2nodeTNLassociationRemoval-Item		tnlInformationRIC	TNLinformation					
+E2nodeTNLassociationRemoval-Item	SEQUENCE	E2nodeTNLassociationRemoval-Item		---	E2					
+E2nodeConfigurationUpdateAcknowledge	SEQUENCE	E2nodeConfigurationUpdateAcknowledge		protocolIEs	ProtocolIE-Container					
+E2nodeConfigurationUpdateAcknowledge	SEQUENCE	E2nodeConfigurationUpdateAcknowledge		E2nodeConfigurationUpdateAcknowledge-IEs	E2AP-PROTOCOL-IES					
+E2nodeConfigurationUpdateAcknowledge	SEQUENCE	E2nodeConfigurationUpdateAcknowledge		ID	id-TransactionID					
+E2nodeConfigurationUpdateAcknowledge	SEQUENCE	E2nodeConfigurationUpdateAcknowledge		PRESENCE	mandatory					
+E2nodeConfigurationUpdateAcknowledge	SEQUENCE	E2nodeConfigurationUpdateAcknowledge		ID	id-E2nodeComponentConfigAdditionAck					
+E2nodeConfigurationUpdateAcknowledge	SEQUENCE	E2nodeConfigurationUpdateAcknowledge		E2nodeComponentConfigAdditionAck-List	PRESENCE					
+E2nodeConfigurationUpdateAcknowledge	SEQUENCE	E2nodeConfigurationUpdateAcknowledge		ID	id-E2nodeComponentConfigUpdateAck					
+E2nodeConfigurationUpdateAcknowledge	SEQUENCE	E2nodeConfigurationUpdateAcknowledge		E2nodeComponentConfigUpdateAck-List	PRESENCE					
+E2nodeConfigurationUpdateAcknowledge	SEQUENCE	E2nodeConfigurationUpdateAcknowledge		ID	id-E2nodeComponentConfigRemovalAck					
+E2nodeConfigurationUpdateAcknowledge	SEQUENCE	E2nodeConfigurationUpdateAcknowledge		E2nodeComponentConfigRemovalAck-List	PRESENCE					
+E2nodeComponentConfigAdditionAck-List	SEQUENCE	E2nodeComponentConfigAdditionAck-List		OF	ProtocolIESingleContainer				1	
+E2nodeComponentConfigAdditionAck-List	SEQUENCE	E2nodeComponentConfigAdditionAck-List		E2nodeComponentConfigAdditionAck-ItemIEs	E2AP-PROTOCOL-IES				1	
+E2nodeComponentConfigAdditionAck-List	SEQUENCE	E2nodeComponentConfigAdditionAck-List		ID	id-E2nodeComponentConfigAdditionAck-Item				1	
+E2nodeComponentConfigAdditionAck-List	SEQUENCE	E2nodeComponentConfigAdditionAck-List		E2nodeComponentConfigAdditionAck-Item	PRESENCE				1	
+E2nodeComponentConfigAdditionAck-Item	SEQUENCE	E2nodeComponentConfigAdditionAck-Item		e2nodeComponentInterfaceType	E2nodeComponentInterfaceType					
+E2nodeComponentConfigAdditionAck-Item	SEQUENCE	E2nodeComponentConfigAdditionAck-Item		e2nodeComponentID	E2nodeComponentID					
+E2nodeComponentConfigAdditionAck-Item	SEQUENCE	E2nodeComponentConfigAdditionAck-Item		e2nodeComponentConfigurationAck	E2nodeComponentConfigurationAck					
+E2nodeComponentConfigUpdateAck-List	SEQUENCE	E2nodeComponentConfigUpdateAck-List		OF	ProtocolIESingleContainer				1	
+E2nodeComponentConfigUpdateAck-List	SEQUENCE	E2nodeComponentConfigUpdateAck-List		E2nodeComponentConfigUpdateAck-ItemIEs	E2AP-PROTOCOL-IES				1	
+E2nodeComponentConfigUpdateAck-List	SEQUENCE	E2nodeComponentConfigUpdateAck-List		ID	id-E2nodeComponentConfigUpdateAck-Item				1	
+E2nodeComponentConfigUpdateAck-List	SEQUENCE	E2nodeComponentConfigUpdateAck-List		E2nodeComponentConfigUpdateAck-Item	PRESENCE				1	
+E2nodeComponentConfigUpdateAck-Item	SEQUENCE	E2nodeComponentConfigUpdateAck-Item		e2nodeComponentInterfaceType	E2nodeComponentInterfaceType					
+E2nodeComponentConfigUpdateAck-Item	SEQUENCE	E2nodeComponentConfigUpdateAck-Item		e2nodeComponentID	E2nodeComponentID					
+E2nodeComponentConfigUpdateAck-Item	SEQUENCE	E2nodeComponentConfigUpdateAck-Item		e2nodeComponentConfigurationAck	E2nodeComponentConfigurationAck					
+E2nodeComponentConfigRemovalAck-List	SEQUENCE	E2nodeComponentConfigRemovalAck-List		OF	ProtocolIESingleContainer				1	
+E2nodeComponentConfigRemovalAck-List	SEQUENCE	E2nodeComponentConfigRemovalAck-List		2025	by				1	
+E2nodeComponentConfigRemovalAck-List	SEQUENCE	E2nodeComponentConfigRemovalAck-List		E2nodeComponentConfigRemovalAck-ItemIEs	E2AP-PROTOCOL-IES				1	
+E2nodeComponentConfigRemovalAck-List	SEQUENCE	E2nodeComponentConfigRemovalAck-List		ID	id-E2nodeComponentConfigRemovalAck-Item				1	
+E2nodeComponentConfigRemovalAck-List	SEQUENCE	E2nodeComponentConfigRemovalAck-List		E2nodeComponentConfigRemovalAck-Item	PRESENCE				1	
+E2nodeComponentConfigRemovalAck-Item	SEQUENCE	E2nodeComponentConfigRemovalAck-Item		e2nodeComponentInterfaceType	E2nodeComponentInterfaceType					
+E2nodeComponentConfigRemovalAck-Item	SEQUENCE	E2nodeComponentConfigRemovalAck-Item		e2nodeComponentID	E2nodeComponentID					
+E2nodeComponentConfigRemovalAck-Item	SEQUENCE	E2nodeComponentConfigRemovalAck-Item		e2nodeComponentConfigurationAck	E2nodeComponentConfigurationAck					
+E2nodeComponentConfigRemovalAck-Item	SEQUENCE	E2nodeComponentConfigRemovalAck-Item		---	E2					
+E2nodeConfigurationUpdateFailure	SEQUENCE	E2nodeConfigurationUpdateFailure		protocolIEs	ProtocolIE-Container					
+E2nodeConfigurationUpdateFailure	SEQUENCE	E2nodeConfigurationUpdateFailure		E2nodeConfigurationUpdateFailure-IEs	E2AP-PROTOCOL-IES					
+E2nodeConfigurationUpdateFailure	SEQUENCE	E2nodeConfigurationUpdateFailure		ID	id-TransactionID					
+E2nodeConfigurationUpdateFailure	SEQUENCE	E2nodeConfigurationUpdateFailure		PRESENCE	mandatory					
+E2nodeConfigurationUpdateFailure	SEQUENCE	E2nodeConfigurationUpdateFailure		ID	id-Cause					
+E2nodeConfigurationUpdateFailure	SEQUENCE	E2nodeConfigurationUpdateFailure		PRESENCE	mandatory					
+E2nodeConfigurationUpdateFailure	SEQUENCE	E2nodeConfigurationUpdateFailure		ID	id-TimeToWait					
+E2nodeConfigurationUpdateFailure	SEQUENCE	E2nodeConfigurationUpdateFailure		PRESENCE	optional					
+E2nodeConfigurationUpdateFailure	SEQUENCE	E2nodeConfigurationUpdateFailure		ID	id-CriticalityDiagnostics					
+E2nodeConfigurationUpdateFailure	SEQUENCE	E2nodeConfigurationUpdateFailure		PRESENCE	optional					
+E2nodeConfigurationUpdateFailure	SEQUENCE	E2nodeConfigurationUpdateFailure		---	Reset					
+E2nodeConfigurationUpdateFailure	SEQUENCE	E2nodeConfigurationUpdateFailure		---	RESET					
+ResetRequest	SEQUENCE	ResetRequest		protocolIEs	ProtocolIE-Container					
+ResetRequest	SEQUENCE	ResetRequest		ResetRequestIEs	E2AP-PROTOCOL-IES					
+ResetRequest	SEQUENCE	ResetRequest		ID	id-TransactionID					
+ResetRequest	SEQUENCE	ResetRequest		ID	id-Cause					
+ResetRequest	SEQUENCE	ResetRequest		---	RESET					
+ResetResponse	SEQUENCE	ResetResponse		protocolIEs	ProtocolIE-Container					
+ResetResponse	SEQUENCE	ResetResponse		2025	by					
+ResetResponse	SEQUENCE	ResetResponse		ResetResponseIEs	E2AP-PROTOCOL-IES					
+ResetResponse	SEQUENCE	ResetResponse		ID	id-TransactionID					
+ResetResponse	SEQUENCE	ResetResponse		ID	id-CriticalityDiagnostics					
+ResetResponse	SEQUENCE	ResetResponse		---	RIC					
+ResetResponse	SEQUENCE	ResetResponse		---	RIC					
+RICserviceUpdate	SEQUENCE	RICserviceUpdate		protocolIEs	ProtocolIE-Container					
+RICserviceUpdate	SEQUENCE	RICserviceUpdate		RICserviceUpdate-IEs	E2AP-PROTOCOL-IES					
+RICserviceUpdate	SEQUENCE	RICserviceUpdate		ID	id-TransactionID					
+RICserviceUpdate	SEQUENCE	RICserviceUpdate		ID	id-RANfunctionsAdded					
+RICserviceUpdate	SEQUENCE	RICserviceUpdate		ID	id-RANfunctionsModified					
+RICserviceUpdate	SEQUENCE	RICserviceUpdate		ID	id-RANfunctionsDeleted					
+RANfunctions-List	SEQUENCE	RANfunctions-List		OF	ProtocolIE-SingleContainer				1	
+RANfunctions-List	SEQUENCE	RANfunctions-List		RANfunction-ItemIEs	E2AP-PROTOCOL-IES				1	
+RANfunctions-List	SEQUENCE	RANfunctions-List		ID	id-RANfunction-Item				1	
+RANfunction-Item	SEQUENCE	RANfunction-Item		ranFunctionID	RANfunctionID					
+RANfunction-Item	SEQUENCE	RANfunction-Item		ranFunctionDefinition	RANfunctionDefinition					
+RANfunction-Item	SEQUENCE	RANfunction-Item		ranFunctionRevision	RANfunctionRevision					
+RANfunction-Item	SEQUENCE	RANfunction-Item		ranFunctionOID	RANfunctionOID					
+RANfunctionsID-List	SEQUENCE	RANfunctionsID-List		OF	ProtocolIESingleContainer				1	
+RANfunctionsID-List	SEQUENCE	RANfunctionsID-List		RANfunctionID-ItemIEs	E2AP-PROTOCOL-IES				1	
+RANfunctionsID-List	SEQUENCE	RANfunctionsID-List		ID	id-RANfunctionID-Item				1	
+RANfunctionID-Item	SEQUENCE	RANfunctionID-Item		ranFunctionID	RANfunctionID					
+RANfunctionID-Item	SEQUENCE	RANfunctionID-Item		ranFunctionRevision	RANfunctionRevision					
+RANfunctionID-Item	SEQUENCE	RANfunctionID-Item		2025	by					
+RANfunctionID-Item	SEQUENCE	RANfunctionID-Item		--	RIC					
+RICserviceUpdateAcknowledge	SEQUENCE	RICserviceUpdateAcknowledge		protocolIEs	ProtocolIE-Container					
+RICserviceUpdateAcknowledge	SEQUENCE	RICserviceUpdateAcknowledge		RICserviceUpdateAcknowledge-IEs	E2AP-PROTOCOL-IES					
+RICserviceUpdateAcknowledge	SEQUENCE	RICserviceUpdateAcknowledge		ID	id-TransactionID					
+RICserviceUpdateAcknowledge	SEQUENCE	RICserviceUpdateAcknowledge		ID	id-RANfunctionsAccepted					
+RICserviceUpdateAcknowledge	SEQUENCE	RICserviceUpdateAcknowledge		ID	id-RANfunctionsRejected					
+RANfunctionsIDcause-List	SEQUENCE	RANfunctionsIDcause-List		OF	ProtocolIE-SingleContainer				1	
+RANfunctionsIDcause-List	SEQUENCE	RANfunctionsIDcause-List		RANfunctionIDcause-ItemIEs	E2AP-PROTOCOL-IES				1	
+RANfunctionsIDcause-List	SEQUENCE	RANfunctionsIDcause-List		ID	id-RANfunctionIEcause-Item				1	
+RANfunctionIDcause-Item	SEQUENCE	RANfunctionIDcause-Item		ranFunctionID	RANfunctionID					
+RANfunctionIDcause-Item	SEQUENCE	RANfunctionIDcause-Item		cause	Cause					
+RANfunctionIDcause-Item	SEQUENCE	RANfunctionIDcause-Item		---	RIC					
+RICserviceUpdateFailure	SEQUENCE	RICserviceUpdateFailure		protocolIEs	ProtocolIE-Container					
+RICserviceUpdateFailure	SEQUENCE	RICserviceUpdateFailure		RICserviceUpdateFailure-IEs	E2AP-PROTOCOL-IES					
+RICserviceUpdateFailure	SEQUENCE	RICserviceUpdateFailure		ID	id-TransactionID					
+RICserviceUpdateFailure	SEQUENCE	RICserviceUpdateFailure		ID	id-Cause					
+RICserviceUpdateFailure	SEQUENCE	RICserviceUpdateFailure		ID	id-TimeToWait					
+RICserviceUpdateFailure	SEQUENCE	RICserviceUpdateFailure		ID	id-CriticalityDiagnostics					
+RICserviceUpdateFailure	SEQUENCE	RICserviceUpdateFailure		---	RIC					
+RICserviceUpdateFailure	SEQUENCE	RICserviceUpdateFailure		---	RIC					
+RICserviceQuery	SEQUENCE	RICserviceQuery		protocolIEs	ProtocolIE-Container					
+RICserviceQuery	SEQUENCE	RICserviceQuery		2025	by					
+RICserviceQuery	SEQUENCE	RICserviceQuery		RICserviceQuery-IEs	E2AP-PROTOCOL-IES					
+RICserviceQuery	SEQUENCE	RICserviceQuery		ID	id-TransactionID					
+RICserviceQuery	SEQUENCE	RICserviceQuery		ID	id-RANfunctionsAccepted					
+RICserviceQuery	SEQUENCE	RICserviceQuery		---	E2					
+RICserviceQuery	SEQUENCE	RICserviceQuery		---	E2					
+E2RemovalRequest	SEQUENCE	E2RemovalRequest		protocolIEs	ProtocolIE-Container					
+E2RemovalRequest	SEQUENCE	E2RemovalRequest		E2RemovalRequestIEs	E2AP-PROTOCOL-IES					
+E2RemovalRequest	SEQUENCE	E2RemovalRequest		ID	id-TransactionID					
+E2RemovalRequest	SEQUENCE	E2RemovalRequest		---	E2					
+E2RemovalResponse	SEQUENCE	E2RemovalResponse		protocolIEs	ProtocolIE-Container					
+E2RemovalResponse	SEQUENCE	E2RemovalResponse		E2RemovalResponseIEs	E2AP-PROTOCOL-IES					
+E2RemovalResponse	SEQUENCE	E2RemovalResponse		ID	id-TransactionID					
+E2RemovalResponse	SEQUENCE	E2RemovalResponse		PRESENCE	mandatory					
+E2RemovalResponse	SEQUENCE	E2RemovalResponse		ID	id-CriticalityDiagnostics					
+E2RemovalResponse	SEQUENCE	E2RemovalResponse		---	E2					
+E2RemovalFailure	SEQUENCE	E2RemovalFailure		protocolIEs	ProtocolIE-Container					
+E2RemovalFailure	SEQUENCE	E2RemovalFailure		E2RemovalFailureIEs	E2AP-PROTOCOL-IES					
+E2RemovalFailure	SEQUENCE	E2RemovalFailure		ID	id-TransactionID					
+E2RemovalFailure	SEQUENCE	E2RemovalFailure		ID	id-Cause					
+E2RemovalFailure	SEQUENCE	E2RemovalFailure		ID	id-CriticalityDiagnostics					
+E2RemovalFailure	SEQUENCE	E2RemovalFailure		2025	by					
+E2RemovalFailure	SEQUENCE	E2RemovalFailure		--	ASN1STOP					
+E2RemovalFailure	SEQUENCE	E2RemovalFailure		5	Information					
+E2RemovalFailure	SEQUENCE	E2RemovalFailure		--	ASN1START					
+E2RemovalFailure	SEQUENCE	E2RemovalFailure		--	E2AP					
+E2RemovalFailure	SEQUENCE	E2RemovalFailure		--	Information					
+E2RemovalFailure	SEQUENCE	E2RemovalFailure		53148	e2					
+E2RemovalFailure	SEQUENCE	E2RemovalFailure		DEFINITIONS	AUTOMATIC					
+E2RemovalFailure	SEQUENCE	E2RemovalFailure		FROM	E2AP-CommonDataTypes					
+E2RemovalFailure	SEQUENCE	E2RemovalFailure		FROM	E2AP-Constants					
+E2RemovalFailure	SEQUENCE	E2RemovalFailure		--	A					
+E2RemovalFailure	SEQUENCE	E2RemovalFailure		New	for					
+E2RemovalFailure	SEQUENCE	E2RemovalFailure		--	B					
+E2RemovalFailure	SEQUENCE	E2RemovalFailure		--	C					
+E2RemovalFailure	SEQUENCE	E2RemovalFailure		ricRequest	CauseRICrequest					
+E2RemovalFailure	SEQUENCE	E2RemovalFailure		ricService	CauseRICservice					
+E2RemovalFailure	SEQUENCE	E2RemovalFailure		e2Node	CauseE2node					
+E2RemovalFailure	SEQUENCE	E2RemovalFailure		transport	CauseTransport					
+E2RemovalFailure	SEQUENCE	E2RemovalFailure		protocol	CauseProtocol					
+E2RemovalFailure	SEQUENCE	E2RemovalFailure		misc	CauseMisc					
+E2RemovalFailure	SEQUENCE	E2RemovalFailure		serviceLayer	CauseServiceLayer					
+E2RemovalFailure	SEQUENCE	E2RemovalFailure		2025	by					
+CauseServiceLayer	SEQUENCE	CauseServiceLayer		serviceLayerCause	ServiceLayerCause					
+CauseServiceLayer	SEQUENCE	CauseServiceLayer		--	copied					
+CauseServiceLayer	SEQUENCE	CauseServiceLayer		--	note					
+CriticalityDiagnostics	SEQUENCE	CriticalityDiagnostics		procedureCode	ProcedureCode		YES			
+CriticalityDiagnostics	SEQUENCE	CriticalityDiagnostics		triggeringMessage	TriggeringMessage		YES			
+CriticalityDiagnostics	SEQUENCE	CriticalityDiagnostics		procedureCriticality	Criticality		YES			
+CriticalityDiagnostics	SEQUENCE	CriticalityDiagnostics		ricRequestorID	RICrequestID		YES			
+CriticalityDiagnostics	SEQUENCE	CriticalityDiagnostics		iEsCriticalityDiagnostics	CriticalityDiagnostics-IE-List		YES			
+CriticalityDiagnostics-IE-List	SEQUENCE	CriticalityDiagnostics-IE-List		OF	CriticalityDiagnostics-IE-Item				1	
+CriticalityDiagnostics-IE-Item	SEQUENCE	CriticalityDiagnostics-IE-Item		iECriticality	Criticality					
+CriticalityDiagnostics-IE-Item	SEQUENCE	CriticalityDiagnostics-IE-Item		iE-ID	ProtocolIE-ID					
+CriticalityDiagnostics-IE-Item	SEQUENCE	CriticalityDiagnostics-IE-Item		typeOfError	TypeOfError					
+CriticalityDiagnostics-IE-Item	SEQUENCE	CriticalityDiagnostics-IE-Item		--	D					
+CriticalityDiagnostics-IE-Item	SEQUENCE	CriticalityDiagnostics-IE-Item		2025	by					
+CriticalityDiagnostics-IE-Item	SEQUENCE	CriticalityDiagnostics-IE-Item		--	E					
+CriticalityDiagnostics-IE-Item	SEQUENCE	CriticalityDiagnostics-IE-Item		--	Following					
+E2nodeComponentConfiguration	SEQUENCE	E2nodeComponentConfiguration		e2nodeComponentRequestPart	OCTET					
+E2nodeComponentConfiguration	SEQUENCE	E2nodeComponentConfiguration		e2nodeComponentResponsePart	OCTET					
+E2nodeComponentConfigurationAck	SEQUENCE	E2nodeComponentConfigurationAck		updateOutcome	ENUMERATED					
+E2nodeComponentConfigurationAck	SEQUENCE	E2nodeComponentConfigurationAck		failureCause	Cause		YES			
+E2nodeComponentConfigurationAck	SEQUENCE	E2nodeComponentConfigurationAck		e2nodeComponentInterfaceTypeNG	E2nodeComponentInterfaceNG					
+E2nodeComponentConfigurationAck	SEQUENCE	E2nodeComponentConfigurationAck		e2nodeComponentInterfaceTypeXn	E2nodeComponentInterfaceXn					
+E2nodeComponentConfigurationAck	SEQUENCE	E2nodeComponentConfigurationAck		e2nodeComponentInterfaceTypeE1	E2nodeComponentInterfaceE1					
+E2nodeComponentConfigurationAck	SEQUENCE	E2nodeComponentConfigurationAck		e2nodeComponentInterfaceTypeF1	E2nodeComponentInterfaceF1					
+E2nodeComponentConfigurationAck	SEQUENCE	E2nodeComponentConfigurationAck		e2nodeComponentInterfaceTypeW1	E2nodeComponentInterfaceW1					
+E2nodeComponentConfigurationAck	SEQUENCE	E2nodeComponentConfigurationAck		e2nodeComponentInterfaceTypeS1	E2nodeComponentInterfaceS1					
+E2nodeComponentConfigurationAck	SEQUENCE	E2nodeComponentConfigurationAck		e2nodeComponentInterfaceTypeX2	E2nodeComponentInterfaceX2					
+E2nodeComponentInterfaceE1	SEQUENCE	E2nodeComponentInterfaceE1		gNB-CU-UP-ID	GNB-CU-UP-ID					
+E2nodeComponentInterfaceF1	SEQUENCE	E2nodeComponentInterfaceF1		gNB-DU-ID	GNB-DU-ID					
+E2nodeComponentInterfaceNG	SEQUENCE	E2nodeComponentInterfaceNG		amf-name	AMFName					
+E2nodeComponentInterfaceS1	SEQUENCE	E2nodeComponentInterfaceS1		mme-name	MMEname					
+E2nodeComponentInterfaceX2	SEQUENCE	E2nodeComponentInterfaceX2		global-eNB-ID	GlobalENB-ID		YES			
+E2nodeComponentInterfaceX2	SEQUENCE	E2nodeComponentInterfaceX2		global-en-gNB-ID	GlobalenGNB-ID		YES			
+E2nodeComponentInterfaceXn	SEQUENCE	E2nodeComponentInterfaceXn		global-NG-RAN-Node-ID	GlobalNG-RANNode-ID					
+E2nodeComponentInterfaceW1	SEQUENCE	E2nodeComponentInterfaceW1		ng-eNB-DU-ID	NGENB-DU-ID					
+E2nodeComponentInterfaceW1	SEQUENCE	E2nodeComponentInterfaceW1		--	copied					
+E2nodeComponentInterfaceW1	SEQUENCE	E2nodeComponentInterfaceW1		--	note					
+E2nodeComponentInterfaceW1	SEQUENCE	E2nodeComponentInterfaceW1		macro-eNB-ID	BIT					
+E2nodeComponentInterfaceW1	SEQUENCE	E2nodeComponentInterfaceW1		2025	by					
+E2nodeComponentInterfaceW1	SEQUENCE	E2nodeComponentInterfaceW1		home-eNB-ID	BIT					
+E2nodeComponentInterfaceW1	SEQUENCE	E2nodeComponentInterfaceW1		short-Macro-eNB-ID	BIT					
+E2nodeComponentInterfaceW1	SEQUENCE	E2nodeComponentInterfaceW1		long-Macro-eNB-ID	BIT					
+E2nodeComponentInterfaceW1	SEQUENCE	E2nodeComponentInterfaceW1		--	copied					
+E2nodeComponentInterfaceW1	SEQUENCE	E2nodeComponentInterfaceW1		--	note					
+E2nodeComponentInterfaceW1	SEQUENCE	E2nodeComponentInterfaceW1		enb-ID-macro	BIT					
+E2nodeComponentInterfaceW1	SEQUENCE	E2nodeComponentInterfaceW1		enb-ID-shortmacro	BIT					
+E2nodeComponentInterfaceW1	SEQUENCE	E2nodeComponentInterfaceW1		enb-ID-longmacro	BIT					
+E2nodeComponentInterfaceW1	SEQUENCE	E2nodeComponentInterfaceW1		--	copied					
+E2nodeComponentInterfaceW1	SEQUENCE	E2nodeComponentInterfaceW1		--	note					
+E2nodeComponentInterfaceW1	SEQUENCE	E2nodeComponentInterfaceW1		--	Note					
+E2nodeComponentInterfaceW1	SEQUENCE	E2nodeComponentInterfaceW1		gNB-ID	BIT					
+E2nodeComponentInterfaceW1	SEQUENCE	E2nodeComponentInterfaceW1		--	F					
+E2nodeComponentInterfaceW1	SEQUENCE	E2nodeComponentInterfaceW1		--	G					
+E2nodeComponentInterfaceW1	SEQUENCE	E2nodeComponentInterfaceW1		gNB	GlobalE2node-gNB-ID					
+E2nodeComponentInterfaceW1	SEQUENCE	E2nodeComponentInterfaceW1		en-gNB	GlobalE2node-en-gNB-ID					
+E2nodeComponentInterfaceW1	SEQUENCE	E2nodeComponentInterfaceW1		ng-eNB	GlobalE2node-ng-eNB-ID					
+E2nodeComponentInterfaceW1	SEQUENCE	E2nodeComponentInterfaceW1		eNB	GlobalE2node-eNB-ID					
+GlobalE2node-en-gNB-ID	SEQUENCE	GlobalE2node-en-gNB-ID		global-en-gNB-ID	GlobalenGNB-ID					
+GlobalE2node-en-gNB-ID	SEQUENCE	GlobalE2node-en-gNB-ID		en-gNB-CU-UP-ID	GNB-CU-UP-ID		YES			
+GlobalE2node-en-gNB-ID	SEQUENCE	GlobalE2node-en-gNB-ID		en-gNB-DU-ID	GNB-DU-ID		YES			
+GlobalE2node-eNB-ID	SEQUENCE	GlobalE2node-eNB-ID		global-eNB-ID	GlobalENB-ID					
+GlobalE2node-gNB-ID	SEQUENCE	GlobalE2node-gNB-ID		global-gNB-ID	GlobalgNB-ID					
+GlobalE2node-gNB-ID	SEQUENCE	GlobalE2node-gNB-ID		global-en-gNB-ID	GlobalenGNB-ID		YES			
+GlobalE2node-gNB-ID	SEQUENCE	GlobalE2node-gNB-ID		gNB-CU-UP-ID	GNB-CU-UP-ID		YES			
+GlobalE2node-gNB-ID	SEQUENCE	GlobalE2node-gNB-ID		gNB-DU-ID	GNB-DU-ID		YES			
+GlobalE2node-ng-eNB-ID	SEQUENCE	GlobalE2node-ng-eNB-ID		global-ng-eNB-ID	GlobalngeNB-ID					
+GlobalE2node-ng-eNB-ID	SEQUENCE	GlobalE2node-ng-eNB-ID		global-eNB-ID	GlobalENB-ID		YES			
+GlobalE2node-ng-eNB-ID	SEQUENCE	GlobalE2node-ng-eNB-ID		ngENB-DU-ID	NGENB-DU-ID		YES			
+GlobalE2node-ng-eNB-ID	SEQUENCE	GlobalE2node-ng-eNB-ID		--	copied					
+GlobalE2node-ng-eNB-ID	SEQUENCE	GlobalE2node-ng-eNB-ID		--	note					
+GlobalENB-ID	SEQUENCE	GlobalENB-ID		pLMN-Identity	PLMN-Identity					
+GlobalENB-ID	SEQUENCE	GlobalENB-ID		eNB-ID	ENB-ID					
+GlobalENB-ID	SEQUENCE	GlobalENB-ID		--	copied					
+GlobalENB-ID	SEQUENCE	GlobalENB-ID		2025	by					
+GlobalENB-ID	SEQUENCE	GlobalENB-ID		--	Note					
+GlobalenGNB-ID	SEQUENCE	GlobalenGNB-ID		pLMN-Identity	PLMN-Identity					
+GlobalenGNB-ID	SEQUENCE	GlobalenGNB-ID		gNB-ID	ENGNB-ID					
+GlobalenGNB-ID	SEQUENCE	GlobalenGNB-ID		--	copied					
+GlobalenGNB-ID	SEQUENCE	GlobalenGNB-ID		--	note					
+GlobalgNB-ID	SEQUENCE	GlobalgNB-ID		plmn-id	PLMN-Identity					
+GlobalgNB-ID	SEQUENCE	GlobalgNB-ID		gnb-id	GNB-ID-Choice					
+GlobalgNB-ID	SEQUENCE	GlobalgNB-ID		--	copied					
+GlobalgNB-ID	SEQUENCE	GlobalgNB-ID		--	note					
+GlobalngeNB-ID	SEQUENCE	GlobalngeNB-ID		plmn-id	PLMN-Identity					
+GlobalngeNB-ID	SEQUENCE	GlobalngeNB-ID		enb-id	ENB-ID-Choice					
+GlobalngeNB-ID	SEQUENCE	GlobalngeNB-ID		NEW	for					
+GlobalngeNB-ID	SEQUENCE	GlobalngeNB-ID		--	Note					
+GlobalngeNB-ID	SEQUENCE	GlobalngeNB-ID		gNB	GlobalgNB-ID					
+GlobalngeNB-ID	SEQUENCE	GlobalngeNB-ID		ng-eNB	GlobalngeNB-ID					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		pLMN-Identity	PLMN-Identity					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		ric-ID	BIT					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		--	copied					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		--	copied					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		--	copied					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		--	note					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		gnb-ID	BIT					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		--	H					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		--	I					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		--	J					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		--	K					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		--	L					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		2025	by					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		--	M					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		New	for					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		--	N					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		--	copied					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		--	O					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		--	P					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		--	copied					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		OCTET	STRING					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		--	Q					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		--	R					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		--	Following					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		OCTET	STRING					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		--	Following					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		OCTET	STRING					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		--	new					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		--	Following					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		OCTET	STRING					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		--	Following					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		OCTET	STRING					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		--	Following					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		2025	by					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		OCTET	STRING					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		--	Following					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		OCTET	STRING					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		--	Following					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		OCTET	STRING					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		--	Following					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		OCTET	STRING					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		--	Following					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		OCTET	STRING					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		--	Following					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		OCTET	STRING					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		--	Following					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		OCTET	STRING					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		--	Following					
+GlobalRIC-ID	SEQUENCE	GlobalRIC-ID		OCTET	STRING					
+RICloadInformation	SEQUENCE	RICloadInformation		loadStatus	ENUMERATED		YES			
+RICloadInformation	SEQUENCE	RICloadInformation		loadEstimate	INTEGER		YES			
+RICloadInformation	SEQUENCE	RICloadInformation		2025	by					
+RICrequestID	SEQUENCE	RICrequestID		ricRequestorID	INTEGER					
+RICrequestID	SEQUENCE	RICrequestID		ricInstanceID	INTEGER					
+RICserviceLoadConfirm	SEQUENCE	RICserviceLoadConfirm		ricServiceReportLoadConfirm	RICloadConfirm		YES			
+RICserviceLoadConfirm	SEQUENCE	RICserviceLoadConfirm		ricServiceInsertLoadConfirm	RICloadConfirm		YES			
+RICserviceLoadConfirm	SEQUENCE	RICserviceLoadConfirm		ricServiceControlLoadConfirm	RICloadConfirm		YES			
+RICserviceLoadConfirm	SEQUENCE	RICserviceLoadConfirm		ricServicePolicyLoadConfirm	RICloadConfirm		YES			
+RICserviceLoadConfirm	SEQUENCE	RICserviceLoadConfirm		ricServiceQueryLoadConfirm	RICloadConfirm		YES			
+RICserviceLoadInformation	SEQUENCE	RICserviceLoadInformation		ricServiceReportLoadInformation	RICloadInformation		YES			
+RICserviceLoadInformation	SEQUENCE	RICserviceLoadInformation		ricServiceInsertLoadInformation	RICloadInformation		YES			
+RICserviceLoadInformation	SEQUENCE	RICserviceLoadInformation		ricServiceControlLoadInformation	RICloadInformation		YES			
+RICserviceLoadInformation	SEQUENCE	RICserviceLoadInformation		ricServicePolicyLoadInformation	RICloadInformation		YES			
+RICserviceLoadInformation	SEQUENCE	RICserviceLoadInformation		ricServiceQueryLoadInformation	RICloadInformation		YES			
+RICserviceLoadRequest	SEQUENCE	RICserviceLoadRequest		ricServiceReportLoadRequest	RICloadRequest		YES			
+RICserviceLoadRequest	SEQUENCE	RICserviceLoadRequest		ricServiceInsertLoadRequest	RICloadRequest		YES			
+RICserviceLoadRequest	SEQUENCE	RICserviceLoadRequest		ricServiceControlLoadRequest	RICloadRequest		YES			
+RICserviceLoadRequest	SEQUENCE	RICserviceLoadRequest		ricServicePolicyLoadRequest	RICloadRequest		YES			
+RICserviceLoadRequest	SEQUENCE	RICserviceLoadRequest		ricServiceQueryLoadRequest	RICloadRequest		YES			
+RICserviceLoadRequest	SEQUENCE	RICserviceLoadRequest		OCTET	STRING					
+RICsubsequentAction	SEQUENCE	RICsubsequentAction		ricSubsequentActionType	RICsubsequentActionType					
+RICsubsequentAction	SEQUENCE	RICsubsequentAction		ricTimeToWait	RICtimeToWait					
+RICsubscriptionAuditFlag	SEQUENCE	RICsubscriptionAuditFlag		listedRecordsOnly	ListedRecordsOnly		YES			
+RICsubscriptionAuditFlag	SEQUENCE	RICsubscriptionAuditFlag		--	Following					
+RICsubscriptionAuditFlag	SEQUENCE	RICsubscriptionAuditFlag		OCTET	STRING					
+RICsubscriptionAuditFlag	SEQUENCE	RICsubscriptionAuditFlag		--	Following					
+RICsubscriptionAuditFlag	SEQUENCE	RICsubscriptionAuditFlag		OCTET	STRING					
+RICsubscriptionAuditFlag	SEQUENCE	RICsubscriptionAuditFlag		--	Following					
+RICsubscriptionAuditFlag	SEQUENCE	RICsubscriptionAuditFlag		2025	by					
+RICsubscriptionAuditFlag	SEQUENCE	RICsubscriptionAuditFlag		OCTET	STRING					
+RICsubscriptionAuditFlag	SEQUENCE	RICsubscriptionAuditFlag		--	S					
+RICsubscriptionAuditFlag	SEQUENCE	RICsubscriptionAuditFlag		--	Following					
+RICsubscriptionAuditFlag	SEQUENCE	RICsubscriptionAuditFlag		OCTET	STRING					
+RICsubscriptionAuditFlag	SEQUENCE	RICsubscriptionAuditFlag		--	T					
+RICsubscriptionAuditFlag	SEQUENCE	RICsubscriptionAuditFlag		--	copied					
+TNLinformation	SEQUENCE	TNLinformation		tnlAddress	BIT					
+TNLinformation	SEQUENCE	TNLinformation		tnlPort	BIT		YES			
+TNLinformation	SEQUENCE	TNLinformation		--	copied					
+TNLinformation	SEQUENCE	TNLinformation		--	U					
+TNLinformation	SEQUENCE	TNLinformation		--	V					
+TNLinformation	SEQUENCE	TNLinformation		--	W					
+TNLinformation	SEQUENCE	TNLinformation		--	X					
+TNLinformation	SEQUENCE	TNLinformation		--	Y					
+TNLinformation	SEQUENCE	TNLinformation		--	Z					
+TNLinformation	SEQUENCE	TNLinformation		--	ASN1STOP					
+TNLinformation	SEQUENCE	TNLinformation		6	Common					
+TNLinformation	SEQUENCE	TNLinformation		--	ASN1START					
+TNLinformation	SEQUENCE	TNLinformation		2025	by					
+TNLinformation	SEQUENCE	TNLinformation		---	Common					
+TNLinformation	SEQUENCE	TNLinformation		--	Derived					
+TNLinformation	SEQUENCE	TNLinformation		53148	e2					
+TNLinformation	SEQUENCE	TNLinformation		DEFINITIONS	AUTOMATIC					
+TNLinformation	SEQUENCE	TNLinformation		--	ASN1STOP					
+TNLinformation	SEQUENCE	TNLinformation		7	Constant					
+TNLinformation	SEQUENCE	TNLinformation		--	ASN1START					
+TNLinformation	SEQUENCE	TNLinformation		---	Constant					
+TNLinformation	SEQUENCE	TNLinformation		53148	e2					
+TNLinformation	SEQUENCE	TNLinformation		DEFINITIONS	AUTOMATIC					
+TNLinformation	SEQUENCE	TNLinformation		FROM	E2AP-CommonDataTypes					
+TNLinformation	SEQUENCE	TNLinformation		---	Elementary					
+TNLinformation	SEQUENCE	TNLinformation		id-E2setup	ProcedureCode					
+TNLinformation	SEQUENCE	TNLinformation		id-ErrorIndication	ProcedureCode					
+TNLinformation	SEQUENCE	TNLinformation		id-Reset	ProcedureCode					
+TNLinformation	SEQUENCE	TNLinformation		id-RICcontrol	ProcedureCode					
+TNLinformation	SEQUENCE	TNLinformation		id-RICindication	ProcedureCode					
+TNLinformation	SEQUENCE	TNLinformation		id-RICserviceQuery	ProcedureCode					
+TNLinformation	SEQUENCE	TNLinformation		id-RICserviceUpdate	ProcedureCode					
+TNLinformation	SEQUENCE	TNLinformation		id-RICsubscription	ProcedureCode					
+TNLinformation	SEQUENCE	TNLinformation		id-RICsubscriptionDelete	ProcedureCode					
+TNLinformation	SEQUENCE	TNLinformation		id-E2nodeConfigurationUpdate	ProcedureCode					
+TNLinformation	SEQUENCE	TNLinformation		id-E2connectionUpdate	ProcedureCode					
+TNLinformation	SEQUENCE	TNLinformation		id-RICsubscriptionDeleteRequired	ProcedureCode					
+TNLinformation	SEQUENCE	TNLinformation		id-E2removal	ProcedureCode					
+TNLinformation	SEQUENCE	TNLinformation		id-RICsubscriptionModification	ProcedureCode					
+TNLinformation	SEQUENCE	TNLinformation		id-RICsubscriptionModificationRequired	ProcedureCode					
+TNLinformation	SEQUENCE	TNLinformation		2025	by					
+TNLinformation	SEQUENCE	TNLinformation		id-RICquery	ProcedureCode					
+TNLinformation	SEQUENCE	TNLinformation		id-RICsubscriptionAudit	ProcedureCode					
+TNLinformation	SEQUENCE	TNLinformation		id-RICserviceLoadStatus	ProcedureCode					
+TNLinformation	SEQUENCE	TNLinformation		id-RICserviceLoadUpdate	ProcedureCode					
+TNLinformation	SEQUENCE	TNLinformation		id-RICsubscriptionStateControl	ProcedureCode					
+TNLinformation	SEQUENCE	TNLinformation		id-RICassistance	ProcedureCode					
+TNLinformation	SEQUENCE	TNLinformation		id-RICassistanceIndication	ProcedureCode					
+TNLinformation	SEQUENCE	TNLinformation		id-RICassistanceHalt	ProcedureCode					
+TNLinformation	SEQUENCE	TNLinformation		---	Extension					
+TNLinformation	SEQUENCE	TNLinformation		maxProtocolIEs	INTEGER					
+TNLinformation	SEQUENCE	TNLinformation		---	Lists					
+TNLinformation	SEQUENCE	TNLinformation		maxnoofErrors	INTEGER					
+TNLinformation	SEQUENCE	TNLinformation		maxofE2nodeComponents	INTEGER					
+TNLinformation	SEQUENCE	TNLinformation		maxofRANfunctionID	INTEGER					
+TNLinformation	SEQUENCE	TNLinformation		maxofRICactionID	INTEGER					
+TNLinformation	SEQUENCE	TNLinformation		maxofTNLA	INTEGER					
+TNLinformation	SEQUENCE	TNLinformation		maxofRICrequestID	INTEGER					
+TNLinformation	SEQUENCE	TNLinformation		maxofRICsubscriptions	INTEGER					
+TNLinformation	SEQUENCE	TNLinformation		---	IEs					
+TNLinformation	SEQUENCE	TNLinformation		id-Cause	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-CriticalityDiagnostics	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-GlobalE2node-ID	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-GlobalRIC-ID	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RANfunctionID	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RANfunctionID-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RANfunctionIEcause-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RANfunction-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RANfunctionsAccepted	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RANfunctionsAdded	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RANfunctionsDeleted	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RANfunctionsModified	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RANfunctionsRejected	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICaction-Admitted-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICactionID	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICaction-NotAdmitted-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICactions-Admitted	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICactions-NotAdmitted	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICaction-ToBeSetup-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICcallProcessID	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICcontrolAckRequest	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICcontrolHeader	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICcontrolMessage	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICcontrolStatus	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICindicationHeader	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICindicationMessage	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICindicationSN	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICindicationType	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICrequestID	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICsubscriptionDetails	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-TimeToWait	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICcontrolOutcome	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-E2nodeComponentConfigUpdate	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-E2nodeComponentConfigUpdate-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		2025	by					
+TNLinformation	SEQUENCE	TNLinformation		id-E2nodeComponentConfigUpdateAck	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-E2nodeComponentConfigUpdateAck-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-E2connectionSetup	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-E2connectionSetupFailed	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-E2connectionSetupFailed-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-E2connectionFailed-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-E2connectionUpdate-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-E2connectionUpdateAdd	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-E2connectionUpdateModify	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-E2connectionUpdateRemove	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-E2connectionUpdateRemove-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-TNLinformation	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-TransactionID	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-E2nodeComponentConfigAddition	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-E2nodeComponentConfigAddition-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-E2nodeComponentConfigAdditionAck	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-E2nodeComponentConfigAdditionAck-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-E2nodeComponentConfigRemoval	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-E2nodeComponentConfigRemoval-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-E2nodeComponentConfigRemovalAck	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-E2nodeComponentConfigRemovalAck-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-E2nodeTNLassociationRemoval	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-E2nodeTNLassociationRemoval-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICsubscriptionToBeRemoved	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICsubscription-withCause-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICsubscriptionStartTime	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICsubscriptionEndTime	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICeventTriggerDefinitionToBeModified	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICactionsToBeRemovedForModification-List	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICaction-ToBeRemovedForModification-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICactionsToBeModifiedForModification-List	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICaction-ToBeModifiedForModification-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICactionsToBeAddedForModification-List	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICaction-ToBeAddedForModification-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICactionsRemovedForModification-List	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICaction-RemovedForModification-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICactionsFailedToBeRemovedForModification-List	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICaction-FailedToBeRemovedForModification-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICactionsModifiedForModification-List	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICaction-ModifiedForModification-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICactionsFailedToBeModifiedForModification-List	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICaction-FailedToBeModifiedForModification-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICactionsAddedForModification-List	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICaction-AddedForModification-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICactionsFailedToBeAddedForModification-List	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICaction-FailedToBeAddedForModification-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICactionsRequiredToBeModified-List	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICaction-RequiredToBeModified-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICactionsRequiredToBeRemoved-List	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICaction-RequiredToBeRemoved-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICactionsConfirmedForModification-List	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICaction-ConfirmedForModification-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICactionsRefusedToBeModified-List	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICaction-RefusedToBeModified-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICactionsConfirmedForRemoval-List	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICaction-ConfirmedForRemoval-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICactionsRefusedToBeRemoved-List	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICaction-RefusedToBeRemoved-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICqueryHeader	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICqueryDefinition	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICqueryOutcome	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICsubscriptionAuditFlag	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICsubscriptionAuditList	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICsubscriptionAudit-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICsubscriptionAuditAction-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICsubscriptionAuditConfirmedList	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICsubscriptionAuditMissingList	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICsubscriptionAuditUnkownList	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-E2nodeLoadMeasurementID	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RANfunctionLoad-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RANfunctionLoad-List	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		2025	by					
+TNLinformation	SEQUENCE	TNLinformation		id-RANfunctionLoadConfirm-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RANfunctionLoadConfirm-List	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RANfunctionLoadRequest-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RANfunctionLoadRequest-List	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RegistrationRequest	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-ReportingPeriodicity	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICactionLoad-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICactionLoadConfirm-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICactionLoadRequest-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICloadMeasurementID	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICsubscriptionLoad-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICsubscriptionLoadConfirm-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICsubscriptionLoadRequest-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RANfunctionStateConfirm-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RANfunctionStateConfirm-List	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RANfunctionStateControl-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RANfunctionStateControl-List	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICactionList-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICsubscriptionList-Item	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICassistanceHeader	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICassistanceMessage	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICassistanceOutcome	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICassistanceSN	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICassistanceUpdate	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		id-RICassistanceUpdateNumber	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		--	ASN1STOP					
+TNLinformation	SEQUENCE	TNLinformation		8	Container					
+TNLinformation	SEQUENCE	TNLinformation		--	ASN1START					
+TNLinformation	SEQUENCE	TNLinformation		---	Container					
+TNLinformation	SEQUENCE	TNLinformation		---	derived					
+TNLinformation	SEQUENCE	TNLinformation		53148	e2					
+TNLinformation	SEQUENCE	TNLinformation		DEFINITIONS	AUTOMATIC					
+TNLinformation	SEQUENCE	TNLinformation		---	IE					
+TNLinformation	SEQUENCE	TNLinformation		FROM	E2AP-CommonDataTypes					
+TNLinformation	SEQUENCE	TNLinformation		FROM	E2AP-Constants					
+TNLinformation	SEQUENCE	TNLinformation		---	Class					
+TNLinformation	SEQUENCE	TNLinformation		id	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		2025	by					
+TNLinformation	SEQUENCE	TNLinformation		criticality	Criticality					
+TNLinformation	SEQUENCE	TNLinformation		presence	Presence					
+TNLinformation	SEQUENCE	TNLinformation		WITH	SYNTAX					
+TNLinformation	SEQUENCE	TNLinformation		---	Class					
+TNLinformation	SEQUENCE	TNLinformation		id	ProtocolIE-ID					
+TNLinformation	SEQUENCE	TNLinformation		firstCriticality	Criticality					
+TNLinformation	SEQUENCE	TNLinformation		secondCriticality	Criticality					
+TNLinformation	SEQUENCE	TNLinformation		presence	Presence					
+TNLinformation	SEQUENCE	TNLinformation		WITH	SYNTAX					
+TNLinformation	SEQUENCE	TNLinformation		FIRST	CRITICALITY					
+TNLinformation	SEQUENCE	TNLinformation		FIRST	TYPE					
+TNLinformation	SEQUENCE	TNLinformation		SECOND	CRITICALITY					
+TNLinformation	SEQUENCE	TNLinformation		SECOND	TYPE					
+TNLinformation	SEQUENCE	TNLinformation		---	Container					
+ProtocolIE-Field {E2AP-PROTOCOL-IES : IEsSetParam}	SEQUENCE	ProtocolIE-Field {E2AP-PROTOCOL-IES : IEsSetParam}		id	E2AP-PROTOCOL-IES					
+ProtocolIE-Field {E2AP-PROTOCOL-IES : IEsSetParam}	SEQUENCE	ProtocolIE-Field {E2AP-PROTOCOL-IES : IEsSetParam}		criticality	E2AP-PROTOCOL-IES					
+ProtocolIE-Field {E2AP-PROTOCOL-IES : IEsSetParam}	SEQUENCE	ProtocolIE-Field {E2AP-PROTOCOL-IES : IEsSetParam}		value	E2AP-PROTOCOL-IES					
+ProtocolIE-Field {E2AP-PROTOCOL-IES : IEsSetParam}	SEQUENCE	ProtocolIE-Field {E2AP-PROTOCOL-IES : IEsSetParam}		---	Container					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		id	E2AP-PROTOCOL-IES-PAIR					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		firstCriticality	E2AP-PROTOCOL-IES-PAIR					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		firstValue	E2AP-PROTOCOL-IES-PAIR					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		secondCriticality	E2AP-PROTOCOL-IES-PAIR					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		2025	by					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		secondValue	E2AP-PROTOCOL-IES-PAIR					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		---	Container					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		--	ASN1STOP					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		4	Message					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		E2AP	shall					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		Recommendation	ITU-T					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		5	Timers					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		The	following					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		-	Specifies					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		-	Specifies					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		-	Specifies					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		-	Specifies					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		-	Specifies					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		2025	by					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		10	Handling					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		protocol	data					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		Clause	10					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		2025	by					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		Change	History					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		Date	Revision					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		22	01					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		28	01					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		08	01					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		13	01					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		15	01					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		13	02					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		agreed	at					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		21	02					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		02-WG3-E2AP-CR-0002-TNLA	removal-v01					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		agreed	at					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		27	02					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		agreed	at					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		Endorsed	WG3					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		09	02					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		Re-implementation	of					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		11	02					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		10	02					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		service	procedures					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		20	02					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		02	02					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		Aligned	format					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		22	02					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		07	02					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		08	02					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		approved	at					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		25	02					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		21-WG3-CR-0010-E2AP-RIC	Service					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		28-WG3-CR-0002-E2AP-	RIC					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		03-WG3-CR-0012-E2AP-RIC	Service					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		03-WG3-CR-0011-E2AP-Reducing	MAX					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		This	version					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		impacting	RIC					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		04	02					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		29	02					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		20	02					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		15	02					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		20	02					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		2025	by					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		Date	Revision					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		02	02					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		02-WG3-CR-0017-E2AP-RIC	Subscription					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		01-WG3-CR-0016-E2AP-E1AP	reference					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		should	be					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		n	f					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		10	02					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		-	Correction					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		-	Rearrangement					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		-	Added					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		Addition	of					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		21-WG3-CR-0014-E2AP-RIC	subscription					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		error	in					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		E2AP	02					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		error	in					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		1	for					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		16	02					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		-	Alignment					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		-	Added					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		-	Updated					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		-	m					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		submitted	revised					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		-	Corrected					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		1	l					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		07	03					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		Editorial	and					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		27	03					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		16	03					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		17	03					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		correspondence	after					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		24	03					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		24	03					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		15	03					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		27	03					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		11	03					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		approved	WG3					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		26	03					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		28	03					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		28	04					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		2025	by					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		Date	Revision					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		04	04					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		201	and					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		15	04					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		21	04					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		21	05					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		29	05					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		13-WG3-CR-0026-E2AP-Change	history-v01					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		22	05					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		approved	WG3					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		ls	n					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		processing	of					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		21	05					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		WG3	Incheon					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		04-E2AP-CR-0029-Clause	8					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		WG3	Incheon					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		04-E2AP-CR-0030-Clause	8					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		approved	WG3					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		04-E2AP-CR-0031-Clause	8					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		WG3	Incheon					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		19-E2AP-CR-0032-Splitting	Clause					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		approved	WG3					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		26	05					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		26	06					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		09	06					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		22	06					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		23-WG3-CR-0036-E2AP-Handling	LS					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		1-E2AP-CR-0035-ErrorHandling	added					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		WG3	ArchTG					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		16-WG3-CR-0033-E2AP-E2	Overload-v05					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		16-WG3-CR-0037-E2AP-RIC	Subscription					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		approved	WG3					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		13-WG3-CR-0039-E2AP-Clause	9					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		08-E2AP-CR-0038-RIC	Assistance-v06					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		Editorial	corrections					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		03	06					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		Editorial	corrections					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		04	07					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		Implementation	of					
+ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}	SEQUENCE	ProtocolIE-FieldPair {E2AP-PROTOCOL-IES-PAIR : IEsSetParam}		2025	by					
+E2AP-PDU	CHOICE	E2AP-PDU	1	initiatingMessage	initiatingMessage					
+E2AP-PDU	CHOICE	E2AP-PDU	2	successfulOutcome	successfulOutcome					
+E2AP-PDU	CHOICE	E2AP-PDU	3	unsuccessfulOutcome	unsuccessfulOutcome					
+E2AP-PDU	CHOICE	E2AP-PDU	4	...	...					
+Cause	CHOICE	Cause	1	ricRequest	ricRequest					
+Cause	CHOICE	Cause	2	ricService	ricService					
+Cause	CHOICE	Cause	3	e2Node	e2Node					
+Cause	CHOICE	Cause	4	transport	transport					
+Cause	CHOICE	Cause	5	protocol	protocol					
+Cause	CHOICE	Cause	6	misc	misc					
+Cause	CHOICE	Cause	7	...	...					
+Cause	CHOICE	Cause	8	serviceLayer	serviceLayer					
+E2nodeComponentID	CHOICE	E2nodeComponentID	1	e2nodeComponentInterfaceTypeNG	e2nodeComponentInterfaceTypeNG					
+E2nodeComponentID	CHOICE	E2nodeComponentID	2	e2nodeComponentInterfaceTypeXn	e2nodeComponentInterfaceTypeXn					
+E2nodeComponentID	CHOICE	E2nodeComponentID	3	e2nodeComponentInterfaceTypeE1	e2nodeComponentInterfaceTypeE1					
+E2nodeComponentID	CHOICE	E2nodeComponentID	4	e2nodeComponentInterfaceTypeF1	e2nodeComponentInterfaceTypeF1					
+E2nodeComponentID	CHOICE	E2nodeComponentID	5	e2nodeComponentInterfaceTypeW1	e2nodeComponentInterfaceTypeW1					
+E2nodeComponentID	CHOICE	E2nodeComponentID	6	e2nodeComponentInterfaceTypeS1	e2nodeComponentInterfaceTypeS1					
+E2nodeComponentID	CHOICE	E2nodeComponentID	7	e2nodeComponentInterfaceTypeX2	e2nodeComponentInterfaceTypeX2					
+E2nodeComponentID	CHOICE	E2nodeComponentID	8	...	...					
+ENB-ID	CHOICE	ENB-ID	1	macro-eNB-ID	macro-eNB-ID					
+ENB-ID	CHOICE	ENB-ID	2	©	©					
+ENB-ID	CHOICE	ENB-ID	3	...	...					
+ENB-ID	CHOICE	ENB-ID	4	short-Macro-eNB-ID	short-Macro-eNB-ID					
+ENB-ID	CHOICE	ENB-ID	5	long-Macro-eNB-ID	long-Macro-eNB-ID					
+ENB-ID-Choice	CHOICE	ENB-ID-Choice	1	enb-ID-macro	enb-ID-macro					
+ENB-ID-Choice	CHOICE	ENB-ID-Choice	2	enb-ID-shortmacro	enb-ID-shortmacro					
+ENB-ID-Choice	CHOICE	ENB-ID-Choice	3	enb-ID-longmacro	enb-ID-longmacro					
+ENB-ID-Choice	CHOICE	ENB-ID-Choice	4	...	...					
+ENGNB-ID	CHOICE	ENGNB-ID	1	gNB-ID	gNB-ID					
+ENGNB-ID	CHOICE	ENGNB-ID	2	...	...					
+GlobalE2node-ID	CHOICE	GlobalE2node-ID	1	gNB	gNB					
+GlobalE2node-ID	CHOICE	GlobalE2node-ID	2	en-gNB	en-gNB					
+GlobalE2node-ID	CHOICE	GlobalE2node-ID	3	ng-eNB	ng-eNB					
+GlobalE2node-ID	CHOICE	GlobalE2node-ID	4	eNB	eNB					
+GlobalE2node-ID	CHOICE	GlobalE2node-ID	5	...	...					
+GlobalNG-RANNode-ID	CHOICE	GlobalNG-RANNode-ID	1	gNB	gNB					
+GlobalNG-RANNode-ID	CHOICE	GlobalNG-RANNode-ID	2	ng-eNB	ng-eNB					
+GlobalNG-RANNode-ID	CHOICE	GlobalNG-RANNode-ID	3	...	...					
+GNB-ID-Choice	CHOICE	GNB-ID-Choice	1	gnb-ID	gnb-ID					
+GNB-ID-Choice	CHOICE	GNB-ID-Choice	2	...	...					

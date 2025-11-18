@@ -688,6 +688,11 @@ if __name__ == "__main__":
         tp = sys.argv[1]
     if len(sys.argv) >= 3:
         pp = sys.argv[2]
+    with open('../msg.config', 'r') as file:
+        line = file.readline().strip()  # strip() để loại bỏ ký tự trắng dư thừa
+        word = line.split()[0] if line else None
+    print(word)
+    tp = word
     main(pp, tp)
 
 

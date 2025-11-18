@@ -33,6 +33,15 @@ if %ERRORLEVEL% neq 0 (
 echo Finished 3_gen_excel.py
 echo ------------------------
 
+echo Running 3_gen_excel_Types.py...
+python 3_gen_excel_Types.py
+if %ERRORLEVEL% neq 0 (
+    echo Error occurred in 3_gen_excel_Types.py, stopping.
+    exit /b 1
+)
+echo Finished 3_gen_excel_Types.py
+echo ------------------------
+
 echo Running 4_generate_all.py...
 python 4_generate_all.py
 if %ERRORLEVEL% neq 0 (
