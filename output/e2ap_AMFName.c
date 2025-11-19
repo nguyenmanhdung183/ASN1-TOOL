@@ -18,15 +18,17 @@ EXTERN int asn1PE_e2ap_AMFName (OSCTXT* pctxt, e2ap_AMFName value)
       char lbuf[2];
       lbuf[0] = c;
       lbuf[1] = 0;
-      rtxErrAddStrnParm (pctxt, lbuf);
+
+      rtxErrAddEleNameParm(pctxt);
+      rtxErrAddStrParm (pctxt, lbuf);
       return LOG_RTERR (pctxt, RTERR_CONSVIO);
    }
 
    stat = pe_ConstrainedStringEx (pctxt, value, 0, 8, 7, 7);
    if (stat != 0) return LOG_RTERR (pctxt, stat);
 
-   RTXCTXPOPEXTNAME (pctxt);
-   return 0;
+   RTXCTXPOPTYPENAME (pctxt);
+   return stat;
 }
 
 EXTERN int asn1PD_e2ap_AMFName (OSCTXT* pctxt, e2ap_AMFName* ppvalue)
@@ -39,20 +41,22 @@ EXTERN int asn1PD_e2ap_AMFName (OSCTXT* pctxt, e2ap_AMFName* ppvalue)
    stat = pd_ConstrainedStringEx (pctxt, ppvalue, 0, 8, 7, 7);
    if (stat != 0) return LOG_RTERR (pctxt, stat);
 
-   RTXCTXPOPEXTNAME (pctxt);
-   return 0;
+   RTXCTXPOPTYPENAME (pctxt);
+   return stat;
 }
 
 
 void asn1Free_e2ap_AMFName (OSCTXT* pctxt, e2ap_AMFName pvalue)
 {
-   if (pvalue) rtxMemFreePtr (pctxt, (void*)pvalue);
+   if(0==pvalue) return;
+   rtxMemFreePtr (pctxt, (void*)pvalue);
+   pvalue = 0;
 }
 
 /* Print to string */
 int asn1PrtToStr_e2ap_AMFName (const char* name, e2ap_AMFName pvalue, char* buffer, OSSIZE bufSize)
 {
-   if (rtPrintToStringIndent (buffer, bufSize) < 0) return -1;
-   if (rtPrintToStringStr (name, pvalue, buffer, bufSize) < 0) return -1;
+   if(rtPrintToStringIndent (buffer, bufSize) < 0) return -1;
+   if (rtPrintToStringCharStr (name, pvalue, buffer, bufSize) < 0) return -1;
    return 0;
 }

@@ -335,8 +335,12 @@ def parse_struct_block(name: str, block: str, detected_single_containers, detect
                 field = m1.group(2)
                 rest = m1.group(3).strip()
 
-                if BITSTRING_RE.search(rest):
-                    ie_type = "BIT STRING"
+                # if BITSTRING_RE.search(rest):
+                #     ie_type = "BIT STRING"
+                m_bit = re.search(r"BIT\s+STRING(\s*\([^\)]*\))?", rest, re.IGNORECASE)
+                if m_bit:
+                    ie_type = m_bit.group(0).strip()
+                    
                 elif PRIMITIVE_RE.search(rest):
                     ie_type = field
                 else:
@@ -366,8 +370,11 @@ def parse_struct_block(name: str, block: str, detected_single_containers, detect
                 field = m2.group(1)
                 rest = m2.group(2).strip()
 
-                if BITSTRING_RE.search(rest):
-                    ie_type = "BIT STRING"
+                # if BITSTRING_RE.search(rest):
+                #     ie_type = "BIT STRING"
+                m_bit = re.search(r"BIT\s+STRING(\s*\([^\)]*\))?", rest, re.IGNORECASE)
+                if m_bit:
+                    ie_type = m_bit.group(0).strip()                
                 elif PRIMITIVE_RE.search(rest):
                     ie_type = field
                 else:

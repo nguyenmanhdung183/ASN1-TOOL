@@ -3,30 +3,30 @@
 
 //interger no ext
 /*****************************************/
-/*           NGENB_DU_ID                */
+/*         NGENB-DU-ID     */
 /*****************************************/
 
 EXTERN int asn1PE_e2ap_NGENB_DU_ID (OSCTXT* pctxt, e2ap_NGENB_DU_ID value)
 {
    int stat = 0;
-   RTXCTXPUSHTYPENAME (pctxt, "NGENB_DU_ID");
-   stat = pe_ConsUnsigned (pctxt, value, 0.0, 68719476735.0);
+   RTXCTXPUSHTYPENAME (pctxt, "NGENB-DU-ID");
+   stat = pe_ConsUnsigned (pctxt, value, 0, 68719476735);
    if (stat != 0) return LOG_RTERR (pctxt, stat);
-   RTXCTXPOPEXTNAME (pctxt);
+   RTXCTXPOPTYPENAME (pctxt);
    return stat;
 }
 
 EXTERN int asn1PD_e2ap_NGENB_DU_ID (OSCTXT* pctxt, e2ap_NGENB_DU_ID* pvalue)
 {
    int stat = 0;
-   RTXCTXPUSHTYPENAME (pctxt, "NGENB_DU_ID");
+   RTXCTXPUSHTYPENAME (pctxt, "NGENB-DU-ID");
    if (pctxt->buffer.aligned) {
-      int stat2 = pd_ByteAlign (pctxt);
+      int stat2 = PD_BYTE_ALIGN (pctxt);
       if (stat2 != 0) return LOG_RTERR (pctxt, stat2);
    }
    stat = rtxDecBitsToByte (pctxt, pvalue, 64);
    if (stat != 0) return LOG_RTERR (pctxt, stat);
-   RTXCTXPOPEXTNAME (pctxt);
+   RTXCTXPOPTYPENAME (pctxt);
    return stat;
 }
 

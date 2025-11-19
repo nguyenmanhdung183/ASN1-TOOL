@@ -1,9 +1,18 @@
+============CÁCH CHẠY=================
+
+
+
+-> cái bản tin to nó sễ chèn protocol vào trước cái IE sau đó thêm element-> gen message
+-> bản tin về IE nó sẽ chỉ chèn protocol vào trước cái IE thôi
+
+
 ============= DỮ LIỆU CƠ BẢN - NODE CUỐI==============
 ENUM -> cần fix thêm
-INTERGER ->cần fix thêm
-OCTET STRING ->cần fix thêm
-BIT STRING  -> dùng ASN1BitStr32
-PRINTABLE STRING -> cần fix thêm
+INTERGER ->ok -> thiếu
+INTERGER no ext -> ok -> thiếu
+OCTET STRING ->done -> thiếu
+BIT STRING  -> dùng ASN1BitStr32 -> chưa xong, cần check cho có size và ko có size
+PRINTABLE STRING -> done-> nhưng thiếu 1 số hàm
 
 
 ===========================
@@ -14,7 +23,7 @@ SEQUENCE
 PROTOCOL IE
 PROTOCOL IE SINGALE CONTAINER
 PROTOCOL IE CONTAINER
-CHOICE  -> 
+CHOICE  -> chưa xong
 CLASS
 CONTAINER PAIR
 
@@ -25,3 +34,4 @@ chạy 2.py
 chạy 3.py
 chạy 4.py
 chạy 5.py
+==========================HƯỠNG DẪN CHẠY====================

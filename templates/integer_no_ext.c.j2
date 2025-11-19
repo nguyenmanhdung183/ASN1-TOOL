@@ -3,30 +3,30 @@
 
 //interger no ext
 /*****************************************/
-/*           {{name}}                */
+/*         {{name|replace("_", "-")}}     */
 /*****************************************/
 
 EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}} value)
 {
    int stat = 0;
-   RTXCTXPUSHTYPENAME (pctxt, "{{name}}");
-   stat = pe_ConsUnsigned (pctxt, value, {{min}}, {{max}});
+   RTXCTXPUSHTYPENAME (pctxt, "{{name|replace("_", "-")}}");
+   stat = pe_ConsUnsigned (pctxt, value, {{min|int}}, {{max|int}});
    if (stat != 0) return LOG_RTERR (pctxt, stat);
-   RTXCTXPOPEXTNAME (pctxt);
+   RTXCTXPOPTYPENAME (pctxt);
    return stat;
 }
 
 EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
 {
    int stat = 0;
-   RTXCTXPUSHTYPENAME (pctxt, "{{name}}");
+   RTXCTXPUSHTYPENAME (pctxt, "{{name|replace("_", "-")}}");
    if (pctxt->buffer.aligned) {
-      int stat2 = pd_ByteAlign (pctxt);
+      int stat2 = PD_BYTE_ALIGN (pctxt);
       if (stat2 != 0) return LOG_RTERR (pctxt, stat2);
    }
    stat = rtxDecBitsToByte (pctxt, pvalue, {{bits}});
    if (stat != 0) return LOG_RTERR (pctxt, stat);
-   RTXCTXPOPEXTNAME (pctxt);
+   RTXCTXPOPTYPENAME (pctxt);
    return stat;
 }
 

@@ -1,43 +1,13 @@
 /* e2ap_{{message_name}}.h */
 
-//message name
+//message name -> tao emlement thoi
 /*****************************************/
-/*           {{message_name}}                */
+/*           {{message_name}}   ->1N             */
 /*****************************************/
 
 
-{% for include in includes %}
-#include "{{include}}.h"
-{% endfor %}
 
-/* T_VALUE Union */
-typedef union e2ap_{{message_name}}IEs_T_VALUE {
-{% for ie in ies %}
-   T_E2AP_PDU_Contents_e2ap_{{ie.type}}_{{ie.field}};
-{% endfor %}
-} e2ap_{{message_name}}IEs_TVALUE;
-
-/* IE Struct */
-typedef struct e2ap_{{message_name}}IEs {
-   e2ap_ProtocolIE_ID id;
-   e2ap_Criticality criticality;
-   e2ap_{{message_name}}IEs_T_VALUE value;
-} e2ap_{{message_name}}IEs;
-
-/* Container */
-typedef struct e2ap_{{message_name}}_protocolIEs_Container {
-   e2ap_{{message_name}}IEs* elem;
-   OSUINT16 n;
-} e2ap_{{message_name}}_protocolIEs_Container;
-
-/* Message */
-typedef struct e2ap_{{message_name}} {
-   e2ap_{{message_name}}_protocolIEs_Container protocolIEs;
-} e2ap_{{message_name}};
-
-EXTERN int asn1PE_e2ap_{{message_name}} (OSCTXT* pctxt, e2ap_{{message_name}}* pvalue);
-EXTERN int asn1PD_e2ap_{{message_name}} (OSCTXT* pctxt, e2ap_{{message_name}}* pvalue);
-EXTERN int asn1Init_e2ap_{{message_name}} (e2ap_{{message_name}}* pvalue);
-EXTERN void asn1Free_e2ap_{{message_name}} (OSCTXT* pctxt, e2ap_{{message_name}}* pvalue);
-
-#endif
+EXTERN int asn1PE_e2ap_{{message_name}}_element (OSCTXT* pctxt, e2ap_{{message_name}}* pvalue);
+EXTERN int asn1PD_e2ap_{{message_name}}_element (OSCTXT* pctxt, e2ap_{{message_name}}* pvalue);
+EXTERN int asn1Init_e2ap_{{message_name}}_element (e2ap_{{message_name}}* pvalue);
+EXTERN void asn1Free_e2ap_{{message_name}}_element (OSCTXT* pctxt, e2ap_{{message_name}}* pvalue);

@@ -9,18 +9,19 @@
 
 
 EXTERN int asn1PE_e2ap_TransactionID (OSCTXT* pctxt, e2ap_TransactionID value)
-{
+{ 
    RTXCTXPUSHTYPENAME (pctxt, "TransactionID");
-   OSBOOL exbit = (value > 255.0) ? TRUE : FALSE;
+
+   OSBOOL exbit = (value > 255) ? TRUE : FALSE;
    int stat = rtxEncBit (pctxt, exbit);
    if (stat != 0) return LOG_RTERR (pctxt, stat);
    if (!exbit) {
-      stat = pe_ConsUnsigned (pctxt, value, 0.0, 255.0);
+      stat = pe_ConsUnsigned (pctxt, value, 0, 255);
    } else {
       stat = pe_UnconsUnsigned (pctxt, value);
    }
    if (stat != 0) return LOG_RTERR (pctxt, stat);
-   RTXCTXPOPEXTNAME (pctxt);
+   RTXCTXPOPTYPENAME (pctxt);
    return 0;
 }
 
@@ -32,12 +33,12 @@ EXTERN int asn1PD_e2ap_TransactionID (OSCTXT* pctxt, e2ap_TransactionID* pvalue)
    stat = rtxDecBit (pctxt, &extbit);
    if (stat != 0) return LOG_RTERR (pctxt, stat);
    if (!extbit) {
-      stat = pd_ConsUnsigned (pctxt, pvalue, 0.0, 255.0);
+      stat = pd_ConsUnsigned (pctxt, pvalue, 0, 255);
    } else {
       stat = pd_UnconsUnsigned (pctxt, pvalue);
    }
    if (stat != 0) return LOG_RTERR (pctxt, stat);
-   RTXCTXPOPEXTNAME (pctxt);
+   RTXCTXPOPTYPENAME (pctxt);
    return 0;
 }
 

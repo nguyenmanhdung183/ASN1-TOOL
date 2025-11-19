@@ -52,7 +52,8 @@ for _, row in primitive_df.iterrows():
             "name": name,
             "min_root": row["Min"],
             "max_root": row["Max"],
-            "type": "OSUINT8" if bits == 8 else ("OSUINT16" if bits == 16 else "OSUINT32")
+            "type": "OSUINT8" if bits == 8 else ("OSUINT16" if bits == 16 else ("OSUINT32" if bits ==32 else "OSUINT64"))
+            #"type": "OSUINT8" if bits == 8 else ("OSUINT16" if bits == 16 else ("OSUINT32"))
         }
 
     # INTEGER không extension
@@ -64,7 +65,9 @@ for _, row in primitive_df.iterrows():
             "min": row["Min"],
             "max": row["Max"],
             "bits": bits,
-            "type": "OSUINT8" if bits == 8 else ("OSUINT16" if bits == 16 else "OSUINT32")
+            "type": "OSUINT8" if bits == 8 else ("OSUINT16" if bits == 16 else ("OSUINT32" if bits ==32 else "OSUINT64"))
+
+            #"type": "OSUINT8" if bits == 8 else ("OSUINT16" if bits == 16 else "OSUINT32")
         }
 
     # ENUMERATED
@@ -119,11 +122,56 @@ for choice_name, group in choice_groups:
         if pd.isna(row["Field_Name"]): continue
         tag = row["Tag/ID"]
         field = row["Field_Name"]
+        extensible = row["Extensible"]
         #field = field.replace('-', '_')
         ctype = row["IE_Type"]
         includes.add(f"e2ap_{ctype}")
-        choices.append({"tag": tag, "field": field, "type": ctype, "name": field})
-    data = {"name": choice_name, "choices": choices, "includes": sorted(includes)}
+        
+        
+                # Chuẩn hoá BIT STRING và tách size
+        fixsize = None
+        minstr = None
+        maxstr = None
+
+        m_bit = re.match(r"BIT\s+STRING(?:\s*\((.*?)\))?", str(ctype), re.IGNORECASE)
+        if m_bit:
+            ctype = "BIT STRING"   # chuẩn hoá tên C-type
+
+            size_part = m_bit.group(1)
+            if size_part:
+                size_part = size_part.replace("SIZE", "").replace("(", "").replace(")", "").strip()
+
+                # TH1: dạng SIZE(n)
+                m_fixed = re.match(r"(\d+)$", size_part)
+                if m_fixed:
+                    fixsize = int(m_fixed.group(1))
+
+                # TH2: dạng SIZE(a..b)
+                m_range = re.match(r"(\d+)\s*\.\.\s*(\d+)", size_part)
+                if m_range:
+                    minstr = int(m_range.group(1))
+                    maxstr = int(m_range.group(2))
+                
+        #tag = tag.replace("-","_")
+        field = field.replace("-","_")
+        ctype = ctype.replace("-","_")
+        #name = name.replace("-","_")
+        
+        
+        
+        
+        choices.append({
+            "tag": tag,
+            "field": field,
+            "type": ctype,
+            "name": field,
+            "fixsize": fixsize,
+            "minstr": minstr,
+            "maxstr": maxstr,
+        })
+
+        
+    data = {"name": choice_name, "choices": choices, "includes": sorted(includes), "extensible": extensible}
     safe_write(f"output/e2ap_{choice_name}.h", env.get_template("choice.h.j2").render(data))
     safe_write(f"output/e2ap_{choice_name}.c", env.get_template("choice.c.j2").render(data))
 
@@ -313,19 +361,20 @@ for seq_name_raw in sequence_names:
 # =============================
 # 5. SINH MESSAGE (E2SetupRequest, ...)
 # =============================
-# message_df = df.get("Messages", pd.DataFrame())
-# for message_name, group in message_df.groupby("Message_Name"):
-#     message_name = message_name#.replace('-', '_')
-#     ies, includes = [], set()
-#     for _, row in group.iterrows():
-#         ie_type = row["IE_Type"]
-#         field_name = row["Field_Name"]
-#         ie_id = row["IE_ID_Constant"]
-#         includes.add(f"e2ap_{ie_type}")
-#         ies.append({"ie_type": ie_type, "field": field_name, "ie_id_constant": ie_id})
+message_df = df.get("Messages", pd.DataFrame())
+for message_name, group in message_df.groupby("Message_Name"):
+    message_name = message_name#.replace('-', '_')
+    message_name = message_name +"element"
+    ies, includes = [], set()
+    for _, row in group.iterrows():
+        ie_type = row["IE_Type"]
+        field_name = row["Field_Name"]
+        ie_id = row["IE_ID_Constant"]
+        includes.add(f"e2ap_{ie_type}")
+        ies.append({"ie_type": ie_type, "field": field_name, "ie_id_constant": ie_id})
 
-#     data = {"message_name": message_name, "ies": ies, "includes": sorted(includes)}
-#     safe_write(f"output/e2ap_{message_name}.h", env.get_template("message.h.j2").render(data))
-#     safe_write(f"output/e2ap_{message_name}.c", env.get_template("message.c.j2").render(data))
+    data = {"message_name": message_name, "ies": ies, "includes": sorted(includes)}
+    safe_write(f"output/e2ap_{message_name}.h", env.get_template("message.h.j2").render(data))
+    safe_write(f"output/e2ap_{message_name}.c", env.get_template("message.c.j2").render(data))
 
 print("=== TẤT CẢ ĐÃ HOÀN TẤT ===")

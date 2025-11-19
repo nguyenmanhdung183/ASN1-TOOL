@@ -1,14 +1,11 @@
 # thay thế các e2ap_BIT STRING bằng ASN1BitStr32 
 import os
 
-# Chuỗi cần thay thế
 STRING_A = "e2ap_BIT STRING"
 STRING_B = "ASN1BitStr32"
 
-# Hai thư mục cần xử lý
 TARGET_DIRS = ["merged_output", "output"]
 
-# Các phần mở rộng file cần xử lý
 EXTENSIONS = [".c", ".h"]
 
 def replace_in_file(filepath):

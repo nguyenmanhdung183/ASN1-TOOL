@@ -12,17 +12,16 @@ OUTPUT_TXT = "E2AP_ASN1_v07.00_clean_raw.txt"
 
 reader = PdfReader(PDF_PATH)
 
-# Thu thập toàn bộ text từ trang 104 đến trang 156
+
 raw_text = ""
-for page_num in range(103, 156):  # Chú ý: Trang trong PdfReader bắt đầu từ 0
+for page_num in range(103, 156):  
     text = reader.pages[page_num].extract_text()
     if text:
-        raw_text += text + "\n"  # Thêm newline giữa các trang
+        raw_text += text + "\n" 
 
-# Tách từng dòng
 lines = raw_text.splitlines()
 
-# Các pattern để loại bỏ header/footer và phần không cần thiết
+# Các pattern cần lọc bỏ 
 garbage_patterns = [
     r"^O-RAN\.WG3\.TS\.E2AP-R004-v07\.00",  # Header tài liệu
     r"© \d{4} by the O-RAN ALLIANCE",  # Bản quyền O-RAN
@@ -42,19 +41,19 @@ asn1_lines = []
 for line in lines:
     stripped = line.strip()
 
-    # Loại bỏ các dòng rác theo các pattern đã định
+    # Loại bỏ các dòng rác
     if any(re.match(pat, stripped) for pat in garbage_patterns):
         continue
 
-    # Giữ lại dòng trống (không loại bỏ)
+    # Giữ lại dòng trống
     if stripped == "":
         asn1_lines.append("")
         continue
 
-    # Nếu dòng có nội dung ASN.1, giữ nguyên
+    # Nếu dòng có nội dung ASN.1 thì giữ nguyên
     asn1_lines.append(line)
 
-# Ghi lại toàn bộ văn bản vào file, giữ nguyên định dạng
+# Ghi lại toàn bộ văn bản vào file txt
 with open(OUTPUT_TXT, "w", encoding="utf-8") as f:
     for field in asn1_lines:
         f.write(field + "\n")
@@ -69,7 +68,7 @@ def remove_blank_lines_inside_braces_v2(input_file, output_file=None):
         lines = f.readlines()
 
     result_lines = []
-    brace_level = 0  # Đếm mức lồng dấu ngoặc
+    brace_level = 0 
 
     for line in lines:
         stripped_line = line.strip()

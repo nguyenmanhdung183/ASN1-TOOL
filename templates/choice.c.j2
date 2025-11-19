@@ -1,45 +1,53 @@
 /* e2ap_{{name}}.c */
 
-// choice
-
 /*****************************************/
 /*           {{name}}                */
 /*****************************************/
+// choice
 
-
+{%if extensible%}
+// choice with extension typefef từ 1
 EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
 {
    int stat = 0;
    OSBOOL extbit = FALSE;
    RTXCTXPUSHTYPENAME (pctxt, "{{name|replace('_', '-')}}");
 
-   extbit = (OSBOOL)(pvalue->t > 0);
+   {% set numbits = (choices|length -1).bit_length() %}
+   extbit = (OSBOOL)(pvalue->t > {{choices|length -1}});
    stat = rtxEncBit (pctxt, extbit);
    if (stat != 0) return LOG_RTERR (pctxt, stat);
 
-   if (extbit) {
-      stat = pe_SmallNonNegWholeNumber (pctxt, pvalue->t - 4);
-      if (stat != 0) return LOG_RTERR (pctxt, stat);
-   } else {
-      stat = rtxEncBits (pctxt, pvalue->t - 1, 2);
-      if (stat != 0) return LOG_RTERR (pctxt, stat);
-   }
+   if(!extbit){
+      RTXCTXPUSHELEMNAME (pctxt, "t");
 
-   switch (pvalue->t) {
+      stat = rtxEncBits (pctxt, pvalue->t - 1, {{numbits}});// kha nang la numbits
+      if (stat != 0) return LOG_RTERR (pctxt, stat);
+      RTXCTXPOPELEMNAME (pctxt);
+
+      switch (pvalue->t) {
 {% for choice in choices %}
-      case {{choice.tag | int}}:
-         RTXCTXPUSHELEMNAME (pctxt, "{{choice.name}}");
-         stat = asn1PE_e2ap_{{choice.type}} (pctxt, pvalue->u.{{choice.field}});
+      case {{choice.tag|int}}:
+         RTXCTXPUSHELEMNAME (pctxt, "{{choice.name|replace('_', '-')}}");
+         stat = asn1PE_e2ap_{{choice.type}} (pctxt, pvalue->u.{{choice.field|replace("-","_")}});
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXPOPELEMNAME (pctxt);
          break;
 {% endfor %}
       default:
          return LOG_RTERR (pctxt, RTERR_INVOPT);
-   }
+      }
+   }else{
+      stat = pe_SmallNonNegWholeNumber (pctxt, pvalue->t - {{choices|length}});// can xem lai
+      if (stat != 0) return LOG_RTERR (pctxt, stat);
 
-   RTXCTXPOPELEMNAME (pctxt);
-   return 0;
+      RTXCTXPUSHELEMNAME (pctxt, "...");
+      stat = pe_OpenType (pctxt, pvalue->u.extElem1->numocts, pvalue->u.extElem1->data);
+      if (stat != 0) return LOG_RTERR (pctxt, stat);
+      RTXCTXPOPELEMNAME (pctxt);
+   }
+   RTXCTXPOPTYPENAME (pctxt);
+   return stat;
 }
 
 EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
@@ -50,34 +58,52 @@ EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
    ASN1OpenType openType;
    RTXCTXPUSHTYPENAME (pctxt, "{{name}}");
 
-   stat = rtxDecBit (pctxt, &extbit);
+   stat = DECBIT (pctxt, &extbit);
    if (stat != 0) return LOG_RTERR (pctxt, stat);
 
-   if (extbit) {
-      stat = pd_SmallNonNegWholeNumber (pctxt, &ui);
+   if(!extbit){
+      stat = rtxDecBits (pctxt, &ui, {{numbits}});// kha nang la numbits
       if (stat != 0) return LOG_RTERR (pctxt, stat);
-      pvalue->t = ui + 4;
-   } else {
-      pvalue->t = ui + 1;
-   }
+      else pvalue->t = ui + 1;
 
-   switch (pvalue->t) {
+      switch (ui)
+      {
 {% for choice in choices %}
-      case {{choice.tag}}:
-         RTXCTXPUSHELEMNAME (pctxt, "{{choice.name}}");
-         pvalue->u.{{choice.field}} = rtxMemAllocType (pctxt, e2ap_{{choice.type}});
-         if (pvalue->u.{{choice.field}} == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
-         stat = asn1PD_e2ap_{{choice.type}} (pctxt, pvalue->u.{{choice.field}});
+      case {{choice.tag|int}}:
+         RTXCTXPUSHELEMNAME (pctxt, "{{choice.name|replace('_', '-')}}");
+
+         pvalue->u.{{choice.field|replace("-","_")}} = rtxMemAllocType (pctxt, e2ap_{{choice.type}});
+
+         if (pvalue->u.{{choice.field|replace("-","_")}} == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
+         asn1Init_e2ap_{{choice.type}}(pvalue->u.{{choice.field|replace("-","_")}});
+         //stat = asn1PD_e2ap_{{choice.type}} (pctxt, pvalue->u.{{choice.field|replace("-","_")}});
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXPOPELEMNAME (pctxt);
          break;
 {% endfor %}
       default:
          return LOG_RTERR (pctxt, RTERR_INVOPT);
+      }
+   }else{
+      stat = pd_SmallNonNegWholeNumber (pctxt, &ui);
+      if (stat != 0) return LOG_RTERR (pctxt, stat);
+      else pvalue->t = ui + {{choices|length+1}};
+      if(pvalue->t < {{choices|length +1}}){
+         return LOG_RTERR (pctxt, RTERR_INVOPT);
+      }
+      stat = PD_BYTE_ALIGN (pctxt);
+      if (stat != 0) return LOG_RTERR (pctxt, stat);
+      RTXCTXPUSHELEMNAME (pctxt, "...");
+      stat = pd_OpenType (pctxt, &openType);
+      if (stat != 0) return LOG_RTERR (pctxt, stat);
+      pvalue->u.extElem1 = rtxMemAllocType (pctxt, ASN1OpenType);
+      if (pvalue->u.extElem1 == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
+      pvalue->u.extElem1->numocts = openType.numocts;
+      pvalue->u.extElem1->data = openType.data;
+      RTXCTXPOPELEMNAME (pctxt);
    }
-
-   RTXCTXPOPELEMNAME (pctxt);
-   return 0;
+   RTXCTXPOPTYPENAME (pctxt);
+   return (stat);
 }
 
 int asn1Init_e2ap_{{name}} (e2ap_{{name}}* pvalue)
@@ -92,14 +118,154 @@ void asn1Free_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
 {
    if (pvalue == 0) return;
    switch (pvalue->t) {
+      case 0: //no choice nothing to free
+         break;
 {% for choice in choices %}
-      case {{choice.tag}}:
-         if (pvalue->u.{{choice.field}}) {
-            asn1Free_e2ap_{{choice.type}} (pctxt, pvalue->u.{{choice.field}});
-            rtxMemFreePtr (pctxt, (void*)pvalue->u.{{choice.field}});
+      case {{(choice.tag+1)|int}}:
+         if (pvalue->u.{{choice.field|replace("-","_")}}) {
+            asn1Free_e2ap_{{choice.type}} (pctxt, pvalue->u.{{choice.field|replace("-","_")}});
+            rtxMemFreePtr (pctxt, (void*)pvalue->u.{{choice.field|replace("-","_")}});
+            pvalue->u.{{choice.field|replace("-","_")}} = 0;
          }
          break;
 {% endfor %}
+      default:
+         if(0!=pvalue->u.extElem1){
+            if(!rtxCtxtTestFlag(pctxt, ASN1FASTCOPY)){
+               rtxMemFreePtr(pctxt, (void*)pvalue->u.extElem1->data);
+               pvalue->u.extElem1->data = 0;
+            }
+            rtxMemFreePtr (pctxt, (void*)pvalue->u.extElem1);
+            pvalue->u.extElem1 = 0;
+         }
    }
-   pvalue->t = 0;
 }
+
+
+int asn1PtrToStr_e2ap_{{name}} (const char* name, e2ap_{{name}}* pvalue, char* buffer, OSSIZE bufSize)
+{
+   if(rtPrintToStringOpenBrace(name, buffer, bufSize) < 0) return -1;
+   
+
+   switch (pvalue->t) {
+{% for choice in choices %}
+      case T_e2ap_{{name}}_{{choice.name|replace('-','')}}:
+         if (asn1PrtToStr_e2ap_{{choice.type}} ( "{{choice.name}}", pvalue->u.{{choice.field|replace('-','_')}}, buffer, bufSize) < 0) return -1;
+         break;
+{% endfor %}
+      case T_e2ap_{{name}}_extElem1:
+         if(rtPrintToStringIdent(buffer, bufSize) < 0) return -1;
+         if(rtPrintToStringHexStr("extElem1", pvalue->u.extElem1->numocts, pvalue->u.extElem1->data, buffer, bufSize) < 0) return -1;
+         break;
+      default:;
+   }
+
+   if(rtPrintToStringCloseBrace(buffer, bufSize) < 0) return -1;
+   return 0;
+}
+
+
+{% else %}
+// choice without extension
+
+EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
+{
+   int stat = 0;
+   RTXCTXPUSHTYPENAME (pctxt, "{{name|replace('_','-')}}");
+   RTXCTXPOPELEMNAME (pctxt, "t");
+   {% set numbits = (choices|length -1).bit_length() %} 
+   stat = rtxEncBits (pctxt, pvalue->t - 1, {{numbits}});// kha nang la numbits
+   if (stat != 0) return LOG_RTERR (pctxt, stat);
+   RTXCTXPOPELEMNAME (pctxt);
+
+   switch (pvalue->t) {
+{% for choice in choices %}
+      case {{choice.tag|int}}:
+         RTXCTXPUSHELEMNAME (pctxt, "{{choice.name|replace('_', '-')}}");
+
+         {% if choice.type == "BIT STRING" %}
+         PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST(min_btr), OSUINTCONST(max_btr), 0, 0);
+         stat = pe_BitString32 (pctxt, pvalue->u.{{choice.field|replace('-','_')}}, OSUINTCONST(min_btr), OSUINTCONST(max_btr));
+         {%else%}
+         stat = asn1PE_e2ap_{{choice.type|replace("-","_")}} (pctxt, pvalue->u.{{choice.field|replace('-','_')}});
+         {%endif%}
+
+         if (stat != 0) return LOG_RTERR (pctxt, stat);
+         RTXCTXPOPELEMNAME (pctxt);
+         break;
+{% endfor %}
+      default:
+         return LOG_RTERR (pctxt, RTERR_INVOPT);
+   }
+
+   RTXCTXPOPTYPENAME (pctxt);
+   return (stat);
+}
+
+int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
+{
+   int stat = 0;
+   OSUINT32 ui;
+   RTXCTXPUSHTYPENAME (pctxt, "{{name|replace('_','-')}}");
+
+   {% set numbits = (choices|length -1).bit_length() %} 
+   stat = rtxDecBits (pctxt, &ui, {{numbits}});// kha nang la numbits
+   if (stat != 0) return LOG_RTERR (pctxt, stat);
+   else pvalue->t = ui + 1;
+   RTXCTXPOPELEMNAME (pctxt);
+
+   switch (ui) {
+{% for choice in choices %}
+      case {{choice.tag|int}}:
+         RTXCTXPUSHELEMNAME (pctxt, "{{choice.name|replace('_', '-')}}");
+
+         pvalue->u.{{choice.field|replace('-','_')}} = rtxMemAllocType (pctxt, e2ap_{{choice.type}});
+
+         if (pvalue->u.{{choice.field|replace('-','_')}} == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
+
+         {% if choice.type == "BIT STRING" %}
+         PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST(min_btr), OSUINTCONST(max_btr), 0, 0);
+         stat = pd_BitString32 (pctxt, pvalue->u.{{choice.field|replace('-','_')}}, OSUINTCONST(min_btr), OSUINTCONST(max_btr));
+         {% else %}
+         stat = asn1PD_e2ap_{{choice.type}} (pctxt, pvalue->u.{{choice.field|replace('-','_')}});
+         {% endif %}
+         if (stat != 0) return LOG_RTERR (pctxt, stat);
+         RTXCTXPOPELEMNAME (pctxt);
+         break;
+{% endfor %}
+      default:
+         return LOG_RTERR (pctxt, RTERR_INVOPT);
+   }
+
+   RTXCTXPOPTYPENAME (pctxt);
+   return (stat);
+}
+
+int asn1PtrToStr_e2ap_{{name}} (const char* name, e2ap_{{name}}* pvalue, char* buffer, OSSIZE bufSize)
+{
+   if(rtPrintToStringOpenBrace(name, buffer, bufSize) < 0) return -1;
+   
+
+   switch (pvalue->t) {
+{% for choice in choices %}
+      case T_e2ap_{{name}}_{{choice.name|replace('-','')}}:
+         if (asn1PrtToStr_e2ap_{{choice.type}} ( "{{choice.name}}", pvalue->u.{{choice.field|replace('-','_')}}, buffer, bufSize) < 0) return -1;
+         break;
+{% endfor %}
+      default:
+         return RTERR_INVOPT;
+   }
+
+   if(rtPrintToStringCloseBrace(buffer, bufSize) < 0) return -1;
+   return 0;
+}
+
+int asn1Init_e2ap_{{name}} (e2ap_{{name}}* pvalue)
+{
+   if (pvalue == 0) return RTERR_NULLPTR;
+   pvalue->t = 0;
+   OSRTLMEMSET (&pvalue->u, 0, sizeof(pvalue->u));
+   return 0;
+}
+
+{% endif %}

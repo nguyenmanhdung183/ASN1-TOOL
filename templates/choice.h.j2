@@ -1,24 +1,26 @@
 
-// choice
 
 /*****************************************/
 /*           {{name}}                */
 /*****************************************/
+// choice
 
 {% for choice in choices %}
-#define T_e2ap_{{name}}_{{choice.field |replace('-', '_')}} {{ loop.index}}
+#define T_e2ap_{{name}}_{{choice.field |replace('-', '_')}}  {{ loop.index}}
 {%endfor%}
-#define T_e2ap_{{name}}_extElem1 {{loops|length + 2}}
+#define T_e2ap_{{name}}_extElem1 {{choices|length + 1}}
 
 typedef struct e2ap_{{name}} {
    OSINT32 t;  /* choice tag */
    union {
 {% for choice in choices %}
       /* t =  {{ loop.index}} */
-      e2ap_{{choice.type}}* {{choice.field |replace('-', '_')}};
+      e2ap_{{choice.type}} *{{choice.field |replace('-', '_')}};
 {% endfor %}
-
-      ASN1OpenType* extElem1;  /* extension */
+{% if extensible %}
+      /* t = {{choices|length + 1}}*/
+      ASN1OpenType *extElem1;  /* extension */
+{% endif %}      
    } u;
 } e2ap_{{name}};
 
@@ -26,6 +28,7 @@ EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue);
 EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue);
 EXTERN void asn1Print_e2ap_{{name}} (const char* name, const e2ap_{{name}}* pvalue);
 EXTERN int asn1PrtToStr_e2ap_{{name}} (const char* name, e2ap_{{name}}* pvalue, char* buffer, OSSIZE bufSize);
+EXTERN int asn1PrtToStrm_e2ap_{{name}} (OSCTXT* pctxt, const char* name, const e2ap_{{name}}* pvalue);
 EXTERN int asn1Copy_e2ap_{{name}} (OSCTXT* pctxt, const e2ap_{{name}}* pSrcValue, e2ap_{{name}}* pDstValue);
 EXTERN int asn1Init_e2ap_{{name}} (e2ap_{{name}}* pvalue);
 EXTERN void asn1Free_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue);

@@ -3,11 +3,11 @@
 
 //interger no ext
 /*****************************************/
-/*           GNB_DU_ID                */
+/*           GNB-DU-ID         */
 /*****************************************/
 
 
-typedef OSUINT32 e2ap_GNB_DU_ID;
+typedef OSUINT64 e2ap_GNB_DU_ID;
 
 EXTERN int asn1PE_e2ap_GNB_DU_ID (OSCTXT* pctxt, e2ap_GNB_DU_ID value);
 EXTERN int asn1PD_e2ap_GNB_DU_ID (OSCTXT* pctxt, e2ap_GNB_DU_ID* pvalue);

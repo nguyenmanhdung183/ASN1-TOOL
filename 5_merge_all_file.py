@@ -7,6 +7,14 @@ MAIN_C_FILE = "output_main.c"
 MAIN_H_FILE = "output_main.h"
 PREFIX = "e2ap_"
 
+text_to_insert_c_header ="#include \"output_main.h\""
+text_to_insert_h_header ="""
+#ifndef OUTPUT_MAIN_H
+#define OUTPUT_MAIN_H
+"""
+text_to_insert_h_foter ="#endif"
+
+
 def rectangular_comment(text):
     lines = text.split("\n")
     width = max(len(line) for line in lines)
@@ -18,7 +26,6 @@ def rectangular_comment(text):
     return "\n".join(comment_lines) + "\n\n"
 
 def main():
-    # Tạo thư mục merged_output nếu chưa có
     os.makedirs(MERGED_DIR, exist_ok=True)
 
     leaf_files = glob.glob("Tool_read_pdf/*_bottomup_leaf.txt")
@@ -38,6 +45,12 @@ def main():
     h_out_path = os.path.join(MERGED_DIR, MAIN_H_FILE)
 
     with open(c_out_path, "w", encoding="utf-8") as c_out, open(h_out_path, "w", encoding="utf-8") as h_out:
+    
+        #-----------------
+        c_out.write(text_to_insert_c_header + "\n")
+        h_out.write(text_to_insert_h_header + "\n")
+        
+        
         for part in all_parts:
             part_file_base = PREFIX + part.replace("-", "_")
 
@@ -61,8 +74,10 @@ def main():
             else:
                 comment = rectangular_comment(f"File .h missing: {part_file_base}.h")
                 h_out.write(comment)
-
-    print(f"Đã tạo file {c_out_path} và {h_out_path} với tiền tố '{PREFIX}'")
+#------------------------
+        h_out.write(text_to_insert_h_foter + "\n")
+        
+    print(f"Đã tạo file {c_out_path} và {h_out_path} trong thư mục {MERGED_DIR}")
 
 if __name__ == "__main__":
     main()
