@@ -1,0 +1,152 @@
+{
+  "name": "RICqueryFailure",
+  "kind": "SEQUENCE",
+  "is_primitive": false,
+  "children": [
+    {
+      "name": "RICqueryFailure-IEs",
+      "kind": "IE-LIST",
+      "is_primitive": false,
+      "children": [
+        {
+          "name": "RICrequestID",
+          "kind": "SEQUENCE",
+          "is_primitive": false,
+          "children": [
+            {
+              "name": "ricRequestorID",
+              "kind": "PRIMITIVE",
+              "is_primitive": true,
+              "children": []
+            },
+            {
+              "name": "ricInstanceID",
+              "kind": "PRIMITIVE",
+              "is_primitive": true,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "RANfunctionID",
+          "kind": "PRIMITIVE",
+          "is_primitive": true,
+          "children": []
+        },
+        {
+          "name": "Cause",
+          "kind": "CHOICE",
+          "is_primitive": false,
+          "children": [
+            {
+              "name": "CauseRICrequest",
+              "kind": "PRIMITIVE_OR_EXTERNAL",
+              "is_primitive": true,
+              "children": []
+            },
+            {
+              "name": "CauseRICservice",
+              "kind": "PRIMITIVE_OR_EXTERNAL",
+              "is_primitive": true,
+              "children": []
+            },
+            {
+              "name": "CauseE2node",
+              "kind": "PRIMITIVE_OR_EXTERNAL",
+              "is_primitive": true,
+              "children": []
+            },
+            {
+              "name": "CauseTransport",
+              "kind": "PRIMITIVE_OR_EXTERNAL",
+              "is_primitive": true,
+              "children": []
+            },
+            {
+              "name": "CauseProtocol",
+              "kind": "PRIMITIVE_OR_EXTERNAL",
+              "is_primitive": true,
+              "children": []
+            },
+            {
+              "name": "CauseMisc",
+              "kind": "PRIMITIVE_OR_EXTERNAL",
+              "is_primitive": true,
+              "children": []
+            },
+            {
+              "name": "CauseServiceLayer",
+              "kind": "SEQUENCE",
+              "is_primitive": false,
+              "children": [
+                {
+                  "name": "ServiceLayerCause",
+                  "kind": "PRIMITIVE",
+                  "is_primitive": true,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "CriticalityDiagnostics",
+          "kind": "SEQUENCE",
+          "is_primitive": false,
+          "children": [
+            {
+              "name": "ProcedureCode",
+              "kind": "PRIMITIVE",
+              "is_primitive": true,
+              "children": []
+            },
+            {
+              "name": "TriggeringMessage",
+              "kind": "PRIMITIVE_OR_EXTERNAL",
+              "is_primitive": true,
+              "children": []
+            },
+            {
+              "name": "Criticality",
+              "kind": "PRIMITIVE_OR_EXTERNAL",
+              "is_primitive": true,
+              "children": []
+            },
+            {
+              "name": "RICrequestID",
+              "kind": "SEQUENCE",
+              "is_primitive": false,
+              "children": [
+                {
+                  "name": "ricRequestorID",
+                  "kind": "PRIMITIVE",
+                  "is_primitive": true,
+                  "children": []
+                },
+                {
+                  "name": "ricInstanceID",
+                  "kind": "PRIMITIVE",
+                  "is_primitive": true,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "name": "CriticalityDiagnostics-IE-List",
+              "kind": "ALIAS",
+              "is_primitive": false,
+              "children": [
+                {
+                  "name": "SEQUENCE",
+                  "kind": "PRIMITIVE_OR_EXTERNAL",
+                  "is_primitive": true,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

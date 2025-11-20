@@ -22,8 +22,8 @@ int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
    if (pvalue->m_{{f.field}}Present) {
 {% endif %}
 
-   RTXCTXPUSHELEMNAME(pctxt, "{{f.field |replace('_', '-')}}");
-   stat = asn1PE_e2ap_{{f.ie_type|replace('-', '_')}} (pctxt, &pvalue->{{f.field}});
+   RTXCTXTPUSHELEMNAME(pctxt, "{{f.field |replace('_', '-')}}");
+   stat = asn1PE_e2ap_{{f.ie_type|replace('-', '_')}} (pctxt, &pvalue->{{f.field|replace('-', '_') }});
    if (stat != 0) return LOG_RTERR(pctxt, stat);
    RTXPOPELEMNAME(pctxt);
 
@@ -59,7 +59,7 @@ int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
    }
 
    RTXCTXPOPTYPENAME(pctxt);
-   return 0;
+   return (stat);
 }
 
 int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
@@ -88,12 +88,12 @@ int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
    /*decode root elements*/
 {% for f in fields %}
    /* decode field {{f.field}} */
-   RTXCTXPUSHELEMNAME(pctxt, "{{f.field |replace('_', '-')}}");
+   RTXCTXTPUSHELEMNAME(pctxt, "{{f.field |replace('_', '-')}}");
 {% if f.presence == "optional" %}
    if (optbits[0]) {
       pvalue->m_{{f.field}}Present = TRUE;
 {% endif %}
-      stat = asn1PD_e2ap_{{f.ie_type|replace('-', '_')}} (pctxt, &pvalue->{{f.field}});
+      stat = asn1PD_e2ap_{{f.ie_type|replace('-', '_')}} (pctxt, &pvalue->{{f.field|replace('-', '_')}});
       if (stat != 0) return LOG_RTERR(pctxt, stat);
 {% if f.presence == "optional" %}
    } else {

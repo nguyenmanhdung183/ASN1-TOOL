@@ -133,6 +133,8 @@ for choice_name, group in choice_groups:
         minstr = None
         maxstr = None
 
+
+
         m_bit = re.match(r"BIT\s+STRING(?:\s*\((.*?)\))?", str(ctype), re.IGNORECASE)
         if m_bit:
             ctype = "BIT STRING"   # chuẩn hoá tên C-type
@@ -152,6 +154,10 @@ for choice_name, group in choice_groups:
                     minstr = int(m_range.group(1))
                     maxstr = int(m_range.group(2))
                 
+                if(fixsize):
+                    minstr= fixsize
+                    maxstr = fixsize    
+        
         #tag = tag.replace("-","_")
         field = field.replace("-","_")
         ctype = ctype.replace("-","_")
@@ -268,6 +274,8 @@ for ies_name_raw, group in ie_rows.groupby("Type_Name"):
         field_name = row["Field_Name"]
         optional_val = row.get("Optional")
         presence = "optional" if (pd.notna(optional_val) and str(optional_val).strip() != "") else "mandatory"
+      
+        field_name = field_name.replace("-","_")
 
         # Thêm tất cả các trường vào choices
         choices.append({
@@ -319,7 +327,7 @@ for seq_name_raw in sequence_names:
         if pd.isna(field_name_raw):
             continue
 
-        field_name = field_name_raw#.replace('-', '_')
+        field_name = field_name_raw.replace('-', '_')
         ie_type = row["IE_Type"]
 
         # Xác định presence: nếu cột Optional có giá trị (Yes/O, v.v.) → optional
@@ -331,6 +339,8 @@ for seq_name_raw in sequence_names:
             "ie_type": ie_type,
             "presence": presence,
         })
+        
+        field_name = field_name.replace("-","_")
 
     # Kiểm tra extensible
     extensible = False
@@ -363,18 +373,31 @@ for seq_name_raw in sequence_names:
 # =============================
 message_df = df.get("Messages", pd.DataFrame())
 for message_name, group in message_df.groupby("Message_Name"):
-    message_name = message_name#.replace('-', '_')
-    message_name = message_name +"element"
+    message_name = message_name.replace('-', '_')
+    message_name = message_name# +"element"
     ies, includes = [], set()
     for _, row in group.iterrows():
         ie_type = row["IE_Type"]
         field_name = row["Field_Name"]
+        origin_name = row["Original_IE_Name"]
+        critical = row["Critical"]
+        presence = row["Presence"]
         ie_id = row["IE_ID_Constant"]
         includes.add(f"e2ap_{ie_type}")
-        ies.append({"ie_type": ie_type, "field": field_name, "ie_id_constant": ie_id})
+        #ies.append({"ie_type": ie_type, "field": field_name, "ie_id_constant": ie_id})
+        ies.append({
+            "ie_type": ie_type,
+            "field": field_name,
+            "ie_id_constant": ie_id,
+            "origin_name": origin_name,   # <-- thêm dòng này
+            "critical": critical,
+            "presence": presence,
+        })
+
+        field_name = field_name.replace("-","_")
 
     data = {"message_name": message_name, "ies": ies, "includes": sorted(includes)}
-    safe_write(f"output/e2ap_{message_name}.h", env.get_template("message.h.j2").render(data))
-    safe_write(f"output/e2ap_{message_name}.c", env.get_template("message.c.j2").render(data))
+    safe_write(f"output/e2ap_{message_name+"_protocolIEs_element"}.h", env.get_template("message.h.j2").render(data))
+    safe_write(f"output/e2ap_{message_name+"_protocolIEs_element"}.c", env.get_template("message.c.j2").render(data))
 
 print("=== TẤT CẢ ĐÃ HOÀN TẤT ===")

@@ -1,0 +1,24 @@
+RICqueryFailure:
+  RICqueryFailure-IEs:
+    RICrequestID:
+      ricRequestorID: {}
+      ricInstanceID: {}
+    RANfunctionID: {}
+    Cause:
+      CauseRICrequest: {}
+      CauseRICservice: {}
+      CauseE2node: {}
+      CauseTransport: {}
+      CauseProtocol: {}
+      CauseMisc: {}
+      CauseServiceLayer:
+        ServiceLayerCause: {}
+    CriticalityDiagnostics:
+      ProcedureCode: {}
+      TriggeringMessage: {}
+      Criticality: {}
+      RICrequestID:
+        ricRequestorID: {}
+        ricInstanceID: {}
+      CriticalityDiagnostics-IE-List:
+        SEQUENCE: {}

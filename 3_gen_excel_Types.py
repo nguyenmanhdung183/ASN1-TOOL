@@ -519,21 +519,39 @@ def main():
     ws_types = wb["Types"]
     message_rows = []
 
-    # Build messages
-    for row in ws_types.iter_rows(min_row=2, values_only=True):
-        type_name, asn1_type, parent_type, tag_id, field_name, ie_type, *_ = row
+    # Build messages-> nếu tìm trong type có trường là msg base và kết thúc với IEs hoặc -IEs và có asn1 type = IE thì lấy
+    # Lấy danh sách tất cả rows từ Types
+    types_data = list(ws_types.iter_rows(min_row=2, values_only=True))
 
-        if asn1_type != "IE":
-            continue
+    # Duyệt từng row tìm Message Base
+    for row in types_data:
+        type_name, asn1_type, parent_type, tag_id, field_name, ie_type,critical,presence, *_ = row
 
-        msg_name = type_name[:-3] if type_name.endswith("IEs") else type_name
-        ie_id_const = f"ID_id_{ie_type}"
-        field_camel = to_camel(ie_type)
-
-        message_rows.append([msg_name, ie_id_const, ie_type, field_camel])
-
+        # Chỉ quan tâm SEQUENCE có field_name là protocolIEs
+        if asn1_type == "SEQUENCE" and field_name == "protocolIEs":
+            msg_base = type_name
+            # Tìm tất cả Type trong sheet Types bắt đầu bằng msg_base và kết thúc bằng "IEs" hoặc "-IEs"
+            for t_row in types_data:
+                t_type_name, t_asn1_type, *_ = t_row[:3]
+                if (t_asn1_type == "IE" and
+                    (t_type_name.startswith(msg_base) and 
+                    (t_type_name.endswith("IEs") or t_type_name.endswith("-IEs")))):
+                    ie_type = t_row[5]  # IE_Type
+                    critical = t_row[6]  # Critical
+                    presence = t_row[7]  # Present
+                    ie_id_const = f"ID_id_{ie_type}"
+                    field_camel = to_camel(ie_type)
+                    #message_rows.append([msg_base, ie_id_const, ie_type, field_camel])
+                    
+                    if presence != "OPTIONAL":
+                        presence = "MANDATORY"
+                    
+                    message_rows.append([msg_base, ie_id_const, ie_type, field_camel, t_type_name, critical, presence])
+            
     # Prepare sheet Messages
-    msg_headers = ["Message_Name", "IE_ID_Constant", "IE_Type", "Field_Name"]
+    #msg_headers = ["Message_Name", "IE_ID_Constant", "IE_Type", "Field_Name"]
+    msg_headers = ["Message_Name", "IE_ID_Constant", "IE_Type", "Field_Name", "Original_IE_Name", "Critical", "Presence"]
+
 
     if "Messages" in wb.sheetnames:
         ws_msg = wb["Messages"]

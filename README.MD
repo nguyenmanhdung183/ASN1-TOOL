@@ -19,11 +19,11 @@ PRINTABLE STRING -> done-> nhưng thiếu 1 số hàm
 sau khi xong các trường cơ bản - .h .c thì cần tổng quát về node khác node cuối -> XÂY STRUCT, CÁC HÀM (TÌM TEMPLATE)
 sau đó từ pdf gen ra dữ liệu json (sẽ không dùng dùng excel nữa) về thông tin dữ liệu cơ bản và mối quan hệ hierachy với các node cha
 
-SEQUENCE
+SEQUENCE ->OK
 PROTOCOL IE
 PROTOCOL IE SINGALE CONTAINER
 PROTOCOL IE CONTAINER
-CHOICE  -> chưa xong
+CHOICE  -> ok
 CLASS
 CONTAINER PAIR
 
@@ -35,3 +35,9 @@ chạy 3.py
 chạy 4.py
 chạy 5.py
 ==========================HƯỠNG DẪN CHẠY====================
+Để gen cho 1 bản tin -> lấy tên bản tin dán vào dòng 1 của msg.config
+->chạy quick.bat
+
+Để gen tất cả 54 bản tin -> ở file ./automate/list.txt đã điền đủ 54 bản tin
+-> chạy auto.py trong thư mục ./automate
+

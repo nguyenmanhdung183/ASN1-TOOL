@@ -5,8 +5,8 @@
 /*****************************************/
 // choice
 
-{%if extensible%}
-// choice with extension typefef từ 1
+{%if not extensible%}
+// choice with extension typefef từ 1 -> mẫu từ PDU
 EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
 {
    int stat = 0;
@@ -19,19 +19,19 @@ EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
    if (stat != 0) return LOG_RTERR (pctxt, stat);
 
    if(!extbit){
-      RTXCTXPUSHELEMNAME (pctxt, "t");
+      RTXCTXTPUSHELEMNAME (pctxt, "t");
 
       stat = rtxEncBits (pctxt, pvalue->t - 1, {{numbits}});// kha nang la numbits
       if (stat != 0) return LOG_RTERR (pctxt, stat);
-      RTXCTXPOPELEMNAME (pctxt);
+      RTXCTXTPOPELEMNAME (pctxt);
 
       switch (pvalue->t) {
 {% for choice in choices %}
-      case {{choice.tag|int}}:
-         RTXCTXPUSHELEMNAME (pctxt, "{{choice.name|replace('_', '-')}}");
+      case {{(choice.tag+1)|int}}:
+         RTXCTXTPUSHELEMNAME (pctxt, "{{choice.name|replace('_', '-')}}");
          stat = asn1PE_e2ap_{{choice.type}} (pctxt, pvalue->u.{{choice.field|replace("-","_")}});
          if (stat != 0) return LOG_RTERR (pctxt, stat);
-         RTXCTXPOPELEMNAME (pctxt);
+         RTXCTXTPOPELEMNAME (pctxt);
          break;
 {% endfor %}
       default:
@@ -41,10 +41,10 @@ EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
       stat = pe_SmallNonNegWholeNumber (pctxt, pvalue->t - {{choices|length}});// can xem lai
       if (stat != 0) return LOG_RTERR (pctxt, stat);
 
-      RTXCTXPUSHELEMNAME (pctxt, "...");
+      RTXCTXTPUSHELEMNAME (pctxt, "...");
       stat = pe_OpenType (pctxt, pvalue->u.extElem1->numocts, pvalue->u.extElem1->data);
       if (stat != 0) return LOG_RTERR (pctxt, stat);
-      RTXCTXPOPELEMNAME (pctxt);
+      RTXCTXTPOPELEMNAME (pctxt);
    }
    RTXCTXPOPTYPENAME (pctxt);
    return stat;
@@ -56,7 +56,7 @@ EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
    OSUINT32 ui;
    OSBOOL extbit = FALSE;
    ASN1OpenType openType;
-   RTXCTXPUSHTYPENAME (pctxt, "{{name}}");
+   RTXCTXPUSHTYPENAME (pctxt, "{{name|replace('_', '-')}}");
 
    stat = DECBIT (pctxt, &extbit);
    if (stat != 0) return LOG_RTERR (pctxt, stat);
@@ -70,7 +70,7 @@ EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
       {
 {% for choice in choices %}
       case {{choice.tag|int}}:
-         RTXCTXPUSHELEMNAME (pctxt, "{{choice.name|replace('_', '-')}}");
+         RTXCTXTPUSHELEMNAME (pctxt, "{{choice.name|replace('_', '-')}}");
 
          pvalue->u.{{choice.field|replace("-","_")}} = rtxMemAllocType (pctxt, e2ap_{{choice.type}});
 
@@ -78,7 +78,7 @@ EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
          asn1Init_e2ap_{{choice.type}}(pvalue->u.{{choice.field|replace("-","_")}});
          //stat = asn1PD_e2ap_{{choice.type}} (pctxt, pvalue->u.{{choice.field|replace("-","_")}});
          if (stat != 0) return LOG_RTERR (pctxt, stat);
-         RTXCTXPOPELEMNAME (pctxt);
+         RTXCTXTPOPELEMNAME (pctxt);
          break;
 {% endfor %}
       default:
@@ -93,14 +93,14 @@ EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
       }
       stat = PD_BYTE_ALIGN (pctxt);
       if (stat != 0) return LOG_RTERR (pctxt, stat);
-      RTXCTXPUSHELEMNAME (pctxt, "...");
-      stat = pd_OpenType (pctxt, &openType);
+      RTXCTXTPUSHELEMNAME (pctxt, "...");
+      stat = pd_OpenType (pctxt, &openType.data, &openType.numocts);
       if (stat != 0) return LOG_RTERR (pctxt, stat);
       pvalue->u.extElem1 = rtxMemAllocType (pctxt, ASN1OpenType);
       if (pvalue->u.extElem1 == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
       pvalue->u.extElem1->numocts = openType.numocts;
       pvalue->u.extElem1->data = openType.data;
-      RTXCTXPOPELEMNAME (pctxt);
+      RTXCTXTPOPELEMNAME (pctxt);
    }
    RTXCTXPOPTYPENAME (pctxt);
    return (stat);
@@ -110,7 +110,7 @@ int asn1Init_e2ap_{{name}} (e2ap_{{name}}* pvalue)
 {
    if (pvalue == 0) return RTERR_NULLPTR;
    pvalue->t = 0;
-   OSRTLMEMSET (&pvalue->u, 0, sizeof(pvalue->u));
+   OSCRTLMEMSET (&pvalue->u, 0, sizeof(pvalue->u));
    return 0;
 }
 
@@ -172,26 +172,26 @@ EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
 {
    int stat = 0;
    RTXCTXPUSHTYPENAME (pctxt, "{{name|replace('_','-')}}");
-   RTXCTXPOPELEMNAME (pctxt, "t");
+   RTXCTXTPUSHELEMNAME (pctxt, "t");
    {% set numbits = (choices|length -1).bit_length() %} 
    stat = rtxEncBits (pctxt, pvalue->t - 1, {{numbits}});// kha nang la numbits
    if (stat != 0) return LOG_RTERR (pctxt, stat);
-   RTXCTXPOPELEMNAME (pctxt);
+   RTXCTXTPOPELEMNAME (pctxt);
 
    switch (pvalue->t) {
 {% for choice in choices %}
-      case {{choice.tag|int}}:
-         RTXCTXPUSHELEMNAME (pctxt, "{{choice.name|replace('_', '-')}}");
+      case {{(choice.tag+1)|int}}:
+         RTXCTXTPUSHELEMNAME (pctxt, "{{choice.name|replace('_', '-')}}");
 
          {% if choice.type == "BIT STRING" %}
-         PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST(min_btr), OSUINTCONST(max_btr), 0, 0);
-         stat = pe_BitString32 (pctxt, pvalue->u.{{choice.field|replace('-','_')}}, OSUINTCONST(min_btr), OSUINTCONST(max_btr));
+         PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST({{choice.minstr}}), OSUINTCONST({{choice.maxstr}}), 0, 0);
+         stat = pe_BitString32 (pctxt, pvalue->u.{{choice.field|replace('-','_')}}, OSUINTCONST({{choice.minstr}}), OSUINTCONST({{choice.maxstr}}));
          {%else%}
          stat = asn1PE_e2ap_{{choice.type|replace("-","_")}} (pctxt, pvalue->u.{{choice.field|replace('-','_')}});
          {%endif%}
 
          if (stat != 0) return LOG_RTERR (pctxt, stat);
-         RTXCTXPOPELEMNAME (pctxt);
+         RTXCTXTPOPELEMNAME (pctxt);
          break;
 {% endfor %}
       default:
@@ -212,25 +212,25 @@ int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
    stat = rtxDecBits (pctxt, &ui, {{numbits}});// kha nang la numbits
    if (stat != 0) return LOG_RTERR (pctxt, stat);
    else pvalue->t = ui + 1;
-   RTXCTXPOPELEMNAME (pctxt);
+   //RTXCTXTPOPELEMNAME (pctxt);
 
    switch (ui) {
 {% for choice in choices %}
       case {{choice.tag|int}}:
-         RTXCTXPUSHELEMNAME (pctxt, "{{choice.name|replace('_', '-')}}");
+         RTXCTXTPUSHELEMNAME (pctxt, "{{choice.name|replace('_', '-')}}");
 
          pvalue->u.{{choice.field|replace('-','_')}} = rtxMemAllocType (pctxt, e2ap_{{choice.type}});
 
          if (pvalue->u.{{choice.field|replace('-','_')}} == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
 
          {% if choice.type == "BIT STRING" %}
-         PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST(min_btr), OSUINTCONST(max_btr), 0, 0);
-         stat = pd_BitString32 (pctxt, pvalue->u.{{choice.field|replace('-','_')}}, OSUINTCONST(min_btr), OSUINTCONST(max_btr));
+         PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST({{choice.minstr}}), OSUINTCONST({{choice.maxstr}}), 0, 0);
+         stat = pd_BitString32 (pctxt, pvalue->u.{{choice.field|replace('-','_')}}, OSUINTCONST({{choice.minstr}}), OSUINTCONST({{choice.maxstr}}));
          {% else %}
          stat = asn1PD_e2ap_{{choice.type}} (pctxt, pvalue->u.{{choice.field|replace('-','_')}});
          {% endif %}
          if (stat != 0) return LOG_RTERR (pctxt, stat);
-         RTXCTXPOPELEMNAME (pctxt);
+         RTXCTXTPOPELEMNAME (pctxt);
          break;
 {% endfor %}
       default:
@@ -266,6 +266,25 @@ int asn1Init_e2ap_{{name}} (e2ap_{{name}}* pvalue)
    pvalue->t = 0;
    OSRTLMEMSET (&pvalue->u, 0, sizeof(pvalue->u));
    return 0;
+}
+
+
+void asn1Free_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
+{
+   if (pvalue == 0) return;
+   switch (pvalue->t) {
+      case 0: //no choice nothing to free
+         break;
+{% for choice in choices %}
+      case {{(choice.tag+1)|int}}:
+         if (pvalue->u.{{choice.field|replace('-','_')}}) {
+            asn1Free_e2ap_{{choice.type}} (pctxt, pvalue->u.{{choice.field|replace('-','_')}});
+            rtxMemFreePtr (pctxt, (void*)pvalue->u.{{choice.field|replace('-','_')}});
+            pvalue->u.{{choice.field|replace('-','_')}} = 0;
+         }
+         break;
+{% endfor %}
+   }
 }
 
 {% endif %}
