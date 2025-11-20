@@ -192,6 +192,8 @@ for _, row in single_containers.iterrows():
     item_type   = item_ies#.replace("IEs", "")                                       # E2nodeComponentConfigAddition_Item
     ie_id       = row["Tag/ID"]                                                     # ID_id_E2nodeComponentConfigAddition
     criticality = row["Criticality"] if pd.notna(row["Criticality"]) else "reject"
+    min_value = row["Min_Value"]
+    max_value = row["Max_Value"]
 
     # Size constraint từ cột Min_Value / Max_Value (nếu có)
     min_size = int(row["Min_Value"]) if pd.notna(row["Min_Value"]) else 1
@@ -213,6 +215,8 @@ for _, row in single_containers.iterrows():
         "criticality": f"e2ap_Criticality_{criticality}",
         "min_size":    min_size,
         "max_size":    max_size,
+        "min_value":   min_value,
+        "max_value":   max_value,
     }
 
     # 1. Sinh ProtocolIE-SingleContainer (ItemIEs) – struct
@@ -232,35 +236,18 @@ for _, row in single_containers.iterrows():
 # =============================
 # SINH IE (Protocol-IES) – CHỈ CẦN TÌM DÒNG ASN1_Type == "IE" + IE_Type kết thúc bằng "IEs"
 # =============================
-# ie_rows = types_df[
-#     (types_df["ASN1_Type"] == "IE") &
-#     (types_df["IE_Type"].str.endswith("IEs") == False) &  # IE thật, không phải container
-#     (types_df["Type_Name"].str.contains("ItemIEs"))       # chỉ lấy XXX-ItemIEs
-# ]
+# ================================
+# Bước 1: Lấy danh sách các Original_IE_Name từ sheet "Messages"
+# ================================
+message_df = df.get("Messages", pd.DataFrame())
+original_ies = set(message_df["Original_IE_Name"].dropna().unique())  # Lấy tất cả các Original_IE_Name
 
-# for _, row in ie_rows.iterrows():
-#     ies_name    = row["Type_Name"].replace("-", "_")# + "IEs"   # E2nodeComponentConfigAddition_ItemIEs
-#     item_type   = row["IE_Type"]                                # E2nodeComponentConfigAddition_Item
-#     ie_id       = row["Tag/ID"]
-#     criticality = row["Criticality"] if pd.notna(row["Criticality"]) else "reject"
-
-#     data = {
-#         "ies_name": ies_name,
-#         #"item_type": item_type,
-#         "choices": [{"item_type": item_type}],  
-#         "ie_id": ie_id,
-#         "criticality": f"e2ap_Criticality_{criticality}"
-#     }
-
-#     safe_write(f"output/e2ap_{ies_name}.h", env.get_template("ie.h.j2").render(data))
-#     safe_write(f"output/e2ap_{ies_name}.c", env.get_template("ie.c.j2").render(data))
-#     print(f"IE → e2ap_{ies_name}.h/c")
-# Nhóm các dòng dữ liệu có "IE" theo `Type_Name`
-# Nhóm các dòng dữ liệu có "IE" theo `Type_Name`
+# ================================
+# Bước 2: Sửa phần sinh IE dựa trên điều kiện kiểm tra với Original_IE_Name
+# ================================
 ie_rows = types_df[
     (types_df["ASN1_Type"] == "IE") &  # Kiểm tra ASN1_Type là "IE"
-    (~types_df["IE_Type"].str.endswith("IEs")) #&  # Loại bỏ những "IEs"
-    #(types_df["Type_Name"].str.contains("ItemIEs"))  # Chỉ lấy các Type_Name chứa "ItemIEs"
+    (~types_df["IE_Type"].str.endswith("IEs"))  # Loại bỏ những "IEs"
 ]
 
 # Group các dòng theo `Type_Name` để gom tất cả các trường cùng một IE
@@ -288,17 +275,47 @@ for ies_name_raw, group in ie_rows.groupby("Type_Name"):
     ie_id = group.iloc[0]["Tag/ID"]
     criticality = group.iloc[0]["Criticality"] if pd.notna(group.iloc[0]["Criticality"]) else "reject"
 
-    data = {
-        "ies_name": ies_name,
-        "choices": choices,  # Tất cả các trường được nhóm lại và xuất
-        "ie_id": ie_id,
-        "criticality": f"e2ap_Criticality_{criticality}"
-    }
 
-    # Tạo file header và source code cho `IE`
-    safe_write(f"output/e2ap_{ies_name}.h", env.get_template("ie.h.j2").render(data))
-    safe_write(f"output/e2ap_{ies_name}.c", env.get_template("ie.c.j2").render(data))
-    print(f"IE → e2ap_{ies_name}.h/c ({len(choices)} fields)")
+    # ================================
+    # Bước 3.1: Cắt phần đuôi "-IEs" hoặc "IEs"
+    # ================================
+    ies_name_cleaned = ies_name_raw
+    if ies_name_cleaned.endswith("IEs"):
+        ies_name_cleaned = ies_name_cleaned[:-3]  # Cắt bỏ "IEs" ở cuối
+    elif ies_name_cleaned.endswith("-IEs"):
+        ies_name_cleaned = ies_name_cleaned[:-4]  # Cắt bỏ "-IEs" ở cuối
+
+    # ================================
+    # Bước 3: Kiểm tra điều kiện sử dụng template "ie_big_msg"
+    # ================================
+    if ies_name_raw.endswith("IEs") and ies_name_raw in original_ies:
+        data = {
+            "ies_name": ies_name_cleaned,
+            "choices": choices,  # Tất cả các trường được nhóm lại và xuất
+            "ie_id": ie_id,
+            "criticality": f"e2ap_Criticality_{criticality}"
+        }
+    
+        
+        h_template = "ie_big_msg.h.j2"
+        c_template = "ie_big_msg.c.j2"
+        print(f"IE (BIG) → {ies_name_cleaned} dùng ie_big_msg.h/c")
+        safe_write(f"output/e2ap_{ies_name_cleaned}_protocolIEs.h", env.get_template(h_template).render(data))
+        safe_write(f"output/e2ap_{ies_name_cleaned}_protocolIEs.c", env.get_template(c_template).render(data))
+    else:
+        
+        data = {
+            "ies_name": ies_name,
+            "choices": choices,  # Tất cả các trường được nhóm lại và xuất
+            "ie_id": ie_id,
+            "criticality": f"e2ap_Criticality_{criticality}"
+        }
+        
+        h_template = "ie.h.j2"
+        c_template = "ie.c.j2"
+        print(f"IE → {ies_name} dùng ie.h/c")
+        safe_write(f"output/e2ap_{ies_name}.h", env.get_template(h_template).render(data))
+        safe_write(f"output/e2ap_{ies_name}.c", env.get_template(c_template).render(data))
 
 
 # =============================

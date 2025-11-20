@@ -446,7 +446,7 @@ def merge_sequence_singlecontainer(input_file, output_file=None):
                 if l:  # bỏ dòng trống
                     # Nếu dòng trước kết thúc bằng "-", nối liền không thêm space
                     if current.rstrip().endswith("-"):
-                        current = current.rstrip() + l
+                        current = current.rstrip() + l.lstrip()
                     else:
                         current += " " + l
                     brace_level += l.count("{") - l.count("}")
@@ -490,3 +490,35 @@ def replace_braces_inline_only(input_file, output_file=None):
 
 replace_braces_inline_only("E2AP_ASN1_v07.00_final.txt",
                           "E2AP_ASN1_v07.00_final.txt")
+
+def fix_spacing_inside_double_braces(input_file, output_file=None):
+    """
+    Trong {{ ... }}:
+    - Nếu có duy nhất 1 dấu cách giữa 2 ký tự -> xoá
+    - Nếu có >=2 dấu cách -> giữ nguyên
+    """
+
+    pattern = re.compile(r"\{\{(.*?)\}\}")
+
+    def fix_content(content):
+        # Chỉ xoá spacing 1 dấu giữa hai ký tự
+        return re.sub(r"([A-Za-z0-9\-]) ([A-Za-z0-9])", r"\1\2", content)
+
+    with open(input_file, "r", encoding="utf-8") as f:
+        text = f.read()
+
+    def replace(match):
+        inner = match.group(1)
+        fixed_inner = fix_content(inner)
+        return "{{" + fixed_inner + "}}"
+
+    fixed_text = pattern.sub(replace, text)
+
+    out_file = output_file if output_file else input_file
+    with open(out_file, "w", encoding="utf-8") as f:
+        f.write(fixed_text)
+
+    print(f"[OK] Fixed spacing inside {{}} → {out_file}")
+
+fix_spacing_inside_double_braces("E2AP_ASN1_v07.00_final.txt",
+                                 "E2AP_ASN1_v07.00_final.txt")    

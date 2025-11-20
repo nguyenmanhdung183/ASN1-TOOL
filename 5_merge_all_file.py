@@ -15,6 +15,40 @@ text_to_insert_h_header ="""
 text_to_insert_h_foter ="#endif"
 
 
+def add_protocol_files_to_main(c_out, h_out):
+    """
+    Hàm nối các file có đuôi protocolIEs.h, protocolIEs.c, protocolIEs_element.h, và protocolIEs_element.c vào cuối
+    các file output_main.c và output_main.h.
+    """
+    # Định nghĩa các đuôi file cần nối
+    protocol_file_patterns = [
+        "*protocolIEs.h", "*protocolIEs.c",
+        "*protocolIEs_element.h", "*protocolIEs_element.c"
+    ]
+    
+    # Lấy danh sách tất cả các file khớp với các đuôi trên trong OUTPUT_DIR
+    all_protocol_files = []
+    for pattern in protocol_file_patterns:
+        all_protocol_files.extend(glob.glob(os.path.join(OUTPUT_DIR, pattern)))
+
+    # Nối các file .c và .h vào các file chính
+    for file in all_protocol_files:
+        file_base = os.path.basename(file)
+        
+        if file_base.endswith(".c"):
+            with open(file, "r", encoding="utf-8") as cf:
+                c_out.write(f"// --- Begin of {file_base} ---\n")
+                c_out.write(cf.read())  # Nối nội dung của file .c
+                c_out.write(f"\n// --- End of {file_base} ---\n\n")
+        
+        elif file_base.endswith(".h"):
+            with open(file, "r", encoding="utf-8") as hf:
+                h_out.write(f"// --- Begin of {file_base} ---\n")
+                h_out.write(hf.read())  # Nối nội dung của file .h
+                h_out.write(f"\n// --- End of {file_base} ---\n\n")
+
+
+
 def rectangular_comment(text):
     lines = text.split("\n")
     width = max(len(line) for line in lines)
@@ -75,6 +109,8 @@ def main():
                 comment = rectangular_comment(f"File .h missing: {part_file_base}.h")
                 h_out.write(comment)
 #------------------------
+        add_protocol_files_to_main(c_out, h_out)
+
         h_out.write(text_to_insert_h_foter + "\n")
         
     print(f"Đã tạo file {c_out_path} và {h_out_path} trong thư mục {MERGED_DIR}")

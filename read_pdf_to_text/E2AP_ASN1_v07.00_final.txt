@@ -738,7 +738,7 @@ RICsubscriptionResponse-IEs E2AP-PROTOCOL-IES ::= {
 
 
 
-RICaction-Admitted-List ::= SEQUENCE (SIZE(1..maxofRICactionID)) OF ProtocolIE-SingleContainer{{RICaction- Admitted-ItemIEs}}
+RICaction-Admitted-List ::= SEQUENCE (SIZE(1..maxofRICactionID)) OF ProtocolIE-SingleContainer{{RICaction-Admitted-ItemIEs}}
 
 RICaction-Admitted-ItemIEs E2AP-PROTOCOL-IES ::= { 
  { ID id-RICaction-Admitted-Item  CRITICALITY ignore  TYPE RICaction-Admitted-Item PRESENCE mandatory },
@@ -1331,7 +1331,7 @@ RICsubscriptionModificationRefuse-IEs E2AP-PROTOCOL-IES ::= {
 -- 
 -- ************************************************************** 
 RICsubscriptionStateControlRequest ::= SEQUENCE { 
- protocolIEs       ProtocolIE-Container {{RICsubscriptionStateControlRequest- IEs}},
+ protocolIEs       ProtocolIE-Container {{RICsubscriptionStateControlRequest-IEs}},
  ... 
 } 
 
@@ -1376,7 +1376,7 @@ RICsubscriptionList-Item ::= SEQUENCE {
 
 
 
-RICaction-List ::= SEQUENCE (SIZE(1..maxofRICactionID)) OF ProtocolIE-SingleContainer {{RICaction- ItemIEs}}
+RICaction-List ::= SEQUENCE (SIZE(1..maxofRICactionID)) OF ProtocolIE-SingleContainer {{RICaction-ItemIEs}}
 
 RICaction-ItemIEs  E2AP-PROTOCOL-IES ::= { 
  { ID id-RICactionList-Item CRITICALITY reject  TYPE RICactionList-Item   PRESENCE mandatory }, ...
@@ -2361,7 +2361,7 @@ RICserviceUpdate-IEs E2AP-PROTOCOL-IES ::= {
  ... 
 } 
 
-RANfunctions-List ::= SEQUENCE (SIZE(1..maxofRANfunctionID)) OF ProtocolIE-SingleContainer {{RANfunction- ItemIEs}}
+RANfunctions-List ::= SEQUENCE (SIZE(1..maxofRANfunctionID)) OF ProtocolIE-SingleContainer {{RANfunction-ItemIEs}}
 
 RANfunction-ItemIEs  E2AP-PROTOCOL-IES ::= { 
  { ID id-RANfunction-Item   CRITICALITY ignore  TYPE RANfunction-Item     PRESENCE mandatory },

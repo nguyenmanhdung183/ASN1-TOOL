@@ -29,7 +29,7 @@ EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
 {
    int stat = 0;
    OSBOOL extbit = FALSE;
-   RTXCTXPUSHTYPENAME (pctxt, "{{name}}");
+   RTXCTXPUSHTYPENAME (pctxt, "{{name|replace('_','-')}}");
    stat = rtxDecBit (pctxt, &extbit);
    if (stat != 0) return LOG_RTERR (pctxt, stat);
    if (!extbit) {

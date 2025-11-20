@@ -10,7 +10,7 @@
 EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}} value)
 {
    int stat = 0;
-   RTXCTXPUSHTYPENAME (pctxt, "{{name}}");
+   RTXCTXPUSHTYPENAME (pctxt, "{{name|replace('_','-')}}");
 
    PU_SETSIZECONSTRAINT (pctxt, OSUINTCONST({{min_size}}), OSUINTCONST({{max_size}}), OSUINTCONST(0), OSUINT32_MAX);
 
@@ -35,7 +35,7 @@ EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}} value)
 EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* ppvalue)
 {
    int stat = 0;
-   RTXCTXPUSHTYPENAME (pctxt, "{{name}}");
+   RTXCTXPUSHTYPENAME (pctxt, "{{name|replace('_','-')}}");
 
    PU_SETSIZECONSTRAINT (pctxt, OSUINTCONST({{min_size}}), OSUINTCONST({{max_size}}), OSUINTCONST(0), OSUINT32_MAX);
 
@@ -51,7 +51,7 @@ EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* ppvalue)
 EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}} value)
 {
    int stat = 0;
-   RTXCTXPUSHTYPENAME (pctxt, "{{name}}");
+   RTXCTXPUSHTYPENAME (pctxt, "{{name|replace('_','-')}}");
 
    stat = pe_PrintableString (pctxt, value);
    if (stat != 0) return LOG_RTERR (pctxt, stat);
@@ -63,7 +63,7 @@ EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}} value)
 EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* ppvalue)
 {
    int stat = 0;
-   RTXCTXPUSHTYPENAME (pctxt, "{{name}}");
+   RTXCTXPUSHTYPENAME (pctxt, "{{name|replace('_','-')}}");
 
    stat = pd_PrintableString (pctxt, ppvalue);
    if (stat != 0) return LOG_RTERR (pctxt, stat);

@@ -142,7 +142,7 @@ void asn1Free_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
 }
 
 
-int asn1PtrToStr_e2ap_{{name}} (const char* name, e2ap_{{name}}* pvalue, char* buffer, OSSIZE bufSize)
+int asn1PrtToStr_e2ap_{{name}} (const char* name, e2ap_{{name}}* pvalue, char* buffer, OSSIZE bufSize)
 {
    if(rtPrintToStringOpenBrace(name, buffer, bufSize) < 0) return -1;
    
@@ -241,7 +241,7 @@ int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
    return (stat);
 }
 
-int asn1PtrToStr_e2ap_{{name}} (const char* name, e2ap_{{name}}* pvalue, char* buffer, OSSIZE bufSize)
+int asn1PrtToStr_e2ap_{{name}} (const char* name, e2ap_{{name}}* pvalue, char* buffer, OSSIZE bufSize)
 {
    if(rtPrintToStringOpenBrace(name, buffer, bufSize) < 0) return -1;
    
