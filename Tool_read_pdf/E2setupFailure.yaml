@@ -1,0 +1,26 @@
+E2setupFailure:
+  E2setupFailureIEs:
+    TransactionID: {}
+    Cause:
+      CauseRICrequest: {}
+      CauseRICservice: {}
+      CauseE2node: {}
+      CauseTransport: {}
+      CauseProtocol: {}
+      CauseMisc: {}
+      CauseServiceLayer:
+        ServiceLayerCause: {}
+    TimeToWait: {}
+    CriticalityDiagnostics:
+      ProcedureCode: {}
+      TriggeringMessage: {}
+      Criticality: {}
+      RICrequestID:
+        ricRequestorID: {}
+        ricInstanceID: {}
+      CriticalityDiagnostics-IE-List:
+        SEQUENCE: {}
+    TNLinformation:
+      tnlAddress: {}
+      '...': {}
+      tnlPort: {}

@@ -1,12 +1,10 @@
-/* e2ap_{{name}}.h - enumurate*/
 {% set name = name | replace('-', '_') %}
-
-//enumerated
 /******************************************************/
 /*                                                    */
 /*    {{name}}                             */
 /*                                                    */
 /*******************************************************/
+//enumerated
 
 typedef enum {
 {% for item in items %}

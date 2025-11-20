@@ -1,15 +1,13 @@
-
-//seq normal
-
 /*****************************************/
 /*           {{name}}                */
 /*****************************************/
+//seq normal
 
 
 typedef struct EXTERN e2ap_{{name}} {
 {% for f in fields %}
    e2ap_{{f.ie_type}} {{f.field|replace('-', '_')}};
-   {% if f.presence == "optional" %}OSBOOL m_{{f.field}}Present;{% endif %}
+   {% if f.presence == "optional" %}     OSBOOL m_{{f.field}}Present;{% endif %}
 {% endfor %}
 
    {% if extensible %}

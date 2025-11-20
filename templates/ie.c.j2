@@ -8,7 +8,7 @@
 int asn1PE_e2ap_{{ies_name}} (OSCTXT* pctxt, e2ap_{{ies_name}}* pvalue)
 {
    int stat = 0;
-   RTXCTXPUSHTYPENAME (pctxt, "{{ies_name}}");
+   RTXCTXTPUSHTYPENAME (pctxt, "{{ies_name|replace('_', '-')}}");
 
    /* encode id */
    RTXCTXTPUSHELEMNAME (pctxt, "id");

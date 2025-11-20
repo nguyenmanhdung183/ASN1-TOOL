@@ -128,7 +128,7 @@ for choice_name, group in choice_groups:
         includes.add(f"e2ap_{ctype}")
         
         
-                # Chuẩn hoá BIT STRING và tách size
+        # Chuẩn hoá BIT STRING và tách size
         fixsize = None
         minstr = None
         maxstr = None
@@ -280,10 +280,11 @@ for ies_name_raw, group in ie_rows.groupby("Type_Name"):
     # Bước 3.1: Cắt phần đuôi "-IEs" hoặc "IEs"
     # ================================
     ies_name_cleaned = ies_name_raw
-    if ies_name_cleaned.endswith("IEs"):
-        ies_name_cleaned = ies_name_cleaned[:-3]  # Cắt bỏ "IEs" ở cuối
-    elif ies_name_cleaned.endswith("-IEs"):
-        ies_name_cleaned = ies_name_cleaned[:-4]  # Cắt bỏ "-IEs" ở cuối
+    if ies_name_cleaned.endswith("-IEs"):
+        ies_name_cleaned = ies_name_cleaned[:-4]  # cắt "-IEs"
+    elif ies_name_cleaned.endswith("IEs"):
+        ies_name_cleaned = ies_name_cleaned[:-3]  # cắt "IEs"
+
 
     # ================================
     # Bước 3: Kiểm tra điều kiện sử dụng template "ie_big_msg"
@@ -300,8 +301,8 @@ for ies_name_raw, group in ie_rows.groupby("Type_Name"):
         h_template = "ie_big_msg.h.j2"
         c_template = "ie_big_msg.c.j2"
         print(f"IE (BIG) → {ies_name_cleaned} dùng ie_big_msg.h/c")
-        safe_write(f"output/e2ap_{ies_name_cleaned}_protocolIEs.h", env.get_template(h_template).render(data))
-        safe_write(f"output/e2ap_{ies_name_cleaned}_protocolIEs.c", env.get_template(c_template).render(data))
+        safe_write(f"output/e2ap_{ies_name_cleaned.replace('-', '_')}_protocolIEs.h", env.get_template(h_template).render(data))
+        safe_write(f"output/e2ap_{ies_name_cleaned.replace('-', '_')}_protocolIEs.c", env.get_template(c_template).render(data))
     else:
         
         data = {
@@ -321,18 +322,12 @@ for ies_name_raw, group in ie_rows.groupby("Type_Name"):
 # =============================
 # 4. SINH SEQUENCE (cả normal SEQUENCE và ProtocolIE-Container)
 # =============================
-sequence_rows = types_df[
-    (types_df["ASN1_Type"] == "SEQUENCE") #| (types_df["ASN1_Type"] == "Container") |(types_df["ASN1_Type"] == "IE")  # một số SEQUENCE được định nghĩa dưới dạng IE cha
-]
-
-# Lấy danh sách các SEQUENCE cần sinh (dựa vào Type_Name duy nhất)
 sequence_names = types_df[types_df["ASN1_Type"].isin(["SEQUENCE", "Container"])]["Type_Name"].unique()
 
 for seq_name_raw in sequence_names:
     seq_name = seq_name_raw.replace('-', '_')
 
-    # Tìm tất cả các IE con thuộc về SEQUENCE này
-    # Điều kiện: Parent_Type == seq_name_raw HOẶC Type_Name == seq_name_raw (trường hợp SEQUENCE chính)
+    # Tìm tất cả IE con
     child_rows = types_df[
         (types_df["Parent_Type"] == seq_name_raw) |
         ((types_df["Type_Name"] == seq_name_raw) & (types_df["ASN1_Type"] == "IE"))
@@ -346,8 +341,6 @@ for seq_name_raw in sequence_names:
 
         field_name = field_name_raw.replace('-', '_')
         ie_type = row["IE_Type"]
-
-        # Xác định presence: nếu cột Optional có giá trị (Yes/O, v.v.) → optional
         optional_val = row.get("Optional")
         presence = "optional" if (pd.notna(optional_val) and str(optional_val).strip() != "") else "mandatory"
 
@@ -356,35 +349,54 @@ for seq_name_raw in sequence_names:
             "ie_type": ie_type,
             "presence": presence,
         })
-        
-        field_name = field_name.replace("-","_")
 
     # Kiểm tra extensible
-    extensible = False
     ext_row = types_df[types_df["Type_Name"] == seq_name_raw]
+    extensible = False
     if not ext_row.empty:
         ext_val = ext_row.iloc[0].get("Extensible")
         if pd.notna(ext_val) and str(ext_val).strip().lower() in ["yes", "true", "1"]:
             extensible = True
 
-    # Nếu không có field nào → bỏ qua (tránh sinh file rỗng)
     if not fields and not extensible:
         print(f"Skip empty SEQUENCE: {seq_name}")
         continue
 
+    # Xử lý BIT STRING
+    fixsize = minstr = maxstr = None
+    for f in fields:
+        m_bit = re.match(r"BIT\s+STRING(?:\s*\((.*?)\))?", str(f["ie_type"]), re.IGNORECASE)
+        if m_bit:
+            f["ie_type"] = "BIT STRING"
+            size_part = m_bit.group(1)
+            if size_part:
+                size_part = size_part.replace("SIZE", "").replace("(", "").replace(")", "").strip()
+                m_fixed = re.match(r"(\d+)$", size_part)
+                m_range = re.match(r"(\d+)\s*\.\.\s*(\d+)", size_part)
+                if m_fixed:
+                    fixsize = int(m_fixed.group(1))
+                    minstr = maxstr = fixsize
+                elif m_range:
+                    minstr = int(m_range.group(1))
+                    maxstr = int(m_range.group(2))
+
     data = {
         "name": seq_name,
         "fields": fields,
-        "extensible": extensible
+        "extensible": extensible,
+        "fixsize": fixsize,
+        "minstr": minstr,
+        "maxstr": maxstr,
     }
 
-    # Sinh file .h và .c dùng đúng template seq_normal
+    # Sinh file
     safe_write(f"output/e2ap_{seq_name}.h",
                env.get_template("seq_normal.h.j2").render(data))
     safe_write(f"output/e2ap_{seq_name}.c",
                env.get_template("seq_normal.c.j2").render(data))
 
     print(f"SEQUENCE → e2ap_{seq_name}.h/c  ({len(fields)} fields, extensible={extensible})")
+
 # =============================
 # 5. SINH MESSAGE (E2SetupRequest, ...)
 # =============================

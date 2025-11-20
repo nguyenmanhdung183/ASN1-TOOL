@@ -1,11 +1,7 @@
-/* e2ap_{{name}}.c */
-
-
-//octet string
-
 /*****************************************/
 /*           {{name}}                */
 /*****************************************/
+//octet string
 
 {% if is_dynamic %}
 /* Dynamic OCTET STRING (no SIZE constraint) */
@@ -13,7 +9,7 @@ EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
 {
    int stat = 0;
   
-   RTXCTXPUSHTYPENAME (pctxt, "{{name|replace('_', '-')}}");
+   RTXCTXTPUSHTYPENAME (pctxt, "{{name|replace('_', '-')}}");
    
    stat = pe_OctetString (pctxt, pvalue->numocts, pvalue->data);
  
@@ -26,7 +22,7 @@ EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}** ppvalue)
 {
    int stat = 0;
   
-   RTXCTXPUSHTYPENAME (pctxt, "{{name|replace('_', '-')}}");
+   RTXCTXTPUSHTYPENAME (pctxt, "{{name|replace('_', '-')}}");
  
    stat = pd_DynOctetString (pctxt, (OSDynOctStr**)ppvalue);
    
@@ -59,7 +55,7 @@ EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
 {
    int stat = 0;
  
-   RTXCTXPUSHTYPENAME (pctxt, "{{name|replace('_', '-')}}");
+   RTXCTXTPUSHTYPENAME (pctxt, "{{name|replace('_', '-')}}");
   
    PU_SETSIZECONSTRAINT (pctxt, OSUINTCONST({{size}}), OSUINTCONST({{size}}), 0, 0);
   
@@ -74,7 +70,7 @@ EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
 {
    int stat = 0;
   
-   RTXCTXPUSHTYPENAME (pctxt, "{{name|replace('_', '-')}}");
+   RTXCTXTPUSHTYPENAME (pctxt, "{{name|replace('_', '-')}}");
   
    PU_SETSIZECONSTRAINT (pctxt, OSUINTCONST({{size}}), OSUINTCONST({{size}}), 0, 0);
   

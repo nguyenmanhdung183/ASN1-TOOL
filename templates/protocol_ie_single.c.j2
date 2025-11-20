@@ -9,7 +9,7 @@
 int asn1PE_e2ap_{{item_ies}} (OSCTXT* pctxt, e2ap_{{item_ies}}* pvalue)
 {
    int stat = 0;
-   RTXCTXPUSHTYPENAME(pctxt, "{{item_ies|replace('_', '-')}}");
+   RTXCTXTPUSHTYPENAME(pctxt, "{{item_ies|replace('_', '-')}}");
 
    stat = asn1PE_e2ap_ProtocolIE_ID (pctxt, &pvalue->id);
    if (stat != 0) return LOG_RTERR(pctxt, stat);

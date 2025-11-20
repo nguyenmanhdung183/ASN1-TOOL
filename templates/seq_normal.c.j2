@@ -9,7 +9,7 @@ int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
 {
    int stat = 0;
    OSBOOL extbit = FALSE;
-   RTXCTXPUSHTYPENAME(pctxt, "{{name|replace('_', '-')}}");
+   RTXCTXTPUSHTYPENAME(pctxt, "{{name|replace('_', '-')}}");
 
    /*extension bit*/
    extbit = (OSBOOL)(pvalue->extElem1.count > 0);
@@ -72,7 +72,7 @@ int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
    OSBOOL extbit = FALSE;
    OSBOOL optbits[1];
 
-   RTXCTXPUSHTYPENAME(pctxt, "{{name|replace('_', '-')}}");
+   RTXCTXTPUSHTYPENAME(pctxt, "{{name|replace('_', '-')}}");
 
    /*extension bit*/
    stat = DEC_BIT(pctxt, &extbit);

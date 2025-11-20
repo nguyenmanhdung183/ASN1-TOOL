@@ -27,8 +27,13 @@ CHOICE  -> ok
 CLASS
 CONTAINER PAIR
 
---->fix:   asn1Free_e2ap_ProtocolIE_Container (pctxt, &pvalue->protocolIEs); ko có
+---> fix:   asn1Free_e2ap_ProtocolIE_Container (pctxt, &pvalue->protocolIEs); ko có
 ---> gen TVALUE cho từng IEs -> để element gọi
+---> xem lại mục message
+---> RTXCTXTPUSHELEMNAME(pctxt, "e2ap_E2setupRequest_protocolIEs_element");
+--->   stat = asn1PE_e2ap_Criticality (pctxt, &pvalue->value.u_E2nodeComponentConfigAddition_ItemIEs_.criticality);
+--->OSBOOL m_tnlPortPresent;
+
 ==========================================
 chạy 1.py -> xem file .yaml và chỉnh lại nếu bị sai
 chạy 2.py

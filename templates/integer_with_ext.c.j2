@@ -1,16 +1,12 @@
-/* e2ap_{{name}}.c */
-
-
-
-//interger with ext
 /*****************************************/
 /*           {{name|replace("_", "-")}}                */
 /*****************************************/
+//interger with ext
 
 
 EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}} value)
 { 
-   RTXCTXPUSHTYPENAME (pctxt, "{{name|replace('_','-')}}");
+   RTXCTXTPUSHTYPENAME (pctxt, "{{name|replace('_','-')}}");
 
    OSBOOL exbit = (value > {{max_root|int}}) ? TRUE : FALSE;
    int stat = rtxEncBit (pctxt, exbit);
@@ -29,7 +25,7 @@ EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
 {
    int stat = 0;
    OSBOOL extbit = FALSE;
-   RTXCTXPUSHTYPENAME (pctxt, "{{name|replace('_','-')}}");
+   RTXCTXTPUSHTYPENAME (pctxt, "{{name|replace('_','-')}}");
    stat = rtxDecBit (pctxt, &extbit);
    if (stat != 0) return LOG_RTERR (pctxt, stat);
    if (!extbit) {

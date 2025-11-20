@@ -84,6 +84,30 @@ def main():
         c_out.write(text_to_insert_c_header + "\n")
         h_out.write(text_to_insert_h_header + "\n")
         
+        # ======================================================
+        # THÊM: Ghi doc/header.c và doc/header.h vào đầu file
+        # ======================================================
+        header_c_path = "doc/header.c"
+        header_h_path = "doc/header.h"
+
+        if os.path.isfile(header_c_path):
+            with open(header_c_path, "r", encoding="utf-8") as hcf:
+                c_out.write("// --- Begin of doc/header.c ---\n")
+                c_out.write(hcf.read())
+                c_out.write("\n// --- End of doc/header.c ---\n\n")
+        else:
+            c_out.write(rectangular_comment("Missing: doc/header.c"))
+
+        if os.path.isfile(header_h_path):
+            with open(header_h_path, "r", encoding="utf-8") as hhf:
+                h_out.write("// --- Begin of doc/header.h ---\n")
+                h_out.write(hhf.read())
+                h_out.write("\n// --- End of doc/header.h ---\n\n")
+        else:
+            h_out.write(rectangular_comment("Missing: doc/header.h"))
+        # ======================================================
+            
+        
         
         for part in all_parts:
             part_file_base = PREFIX + part.replace("-", "_")

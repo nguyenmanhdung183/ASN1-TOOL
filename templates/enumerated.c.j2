@@ -1,13 +1,10 @@
-/* e2ap_{{name}}.c - enum */
-
 {% set name = name | replace('-', '_') %}
-
-//enumerated
 /******************************************************/
 /*                                                    */
 /*    {{name}}                          */
 /*                                                    */
 /******************************************************/
+//enumerated
 
 
 const OSEnumItem e2ap_{{name}}_ENUMTAB[] = {
@@ -50,7 +47,7 @@ int e2ap_{{name}}_ToEnum2 (OSCTXT* pctxt, const OSUTF8CHAR* value, OSSIZE valueL
 EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}} value)
 {
    int stat = 0;
-   RTXCTXPUSHTYPENAME (pctxt, "{{name|replace('_', '-')}}");
+   RTXCTXTPUSHTYPENAME (pctxt, "{{name|replace('_', '-')}}");
    if (value >= {{items|length}}) {
       rtxErrAddIntParm (pctxt, value);
       return LOG_RTERR (pctxt, RTERR_INVENUM);
@@ -65,7 +62,7 @@ EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
 {
    int stat = 0;
 
-   RTXCTXPUSHTYPENAME (pctxt, "{{name|replace('_', '-')}}");
+   RTXCTXTPUSHTYPENAME (pctxt, "{{name|replace('_', '-')}}");
 
    stat = pd_ConsUnsigned (pctxt, pvalue, 0, OSUINTCONST({{items|length - 1}}));
    if(stat != 0) return LOG_RTERR (pctxt, stat);

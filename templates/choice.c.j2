@@ -11,7 +11,7 @@ EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
 {
    int stat = 0;
    OSBOOL extbit = FALSE;
-   RTXCTXPUSHTYPENAME (pctxt, "{{name|replace('_', '-')}}");
+   RTXCTXTPUSHTYPENAME (pctxt, "{{name|replace('_', '-')}}");
 
    {% set numbits = (choices|length -1).bit_length() %}
    extbit = (OSBOOL)(pvalue->t > {{choices|length -1}});
@@ -56,7 +56,7 @@ EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
    OSUINT32 ui;
    OSBOOL extbit = FALSE;
    ASN1OpenType openType;
-   RTXCTXPUSHTYPENAME (pctxt, "{{name|replace('_', '-')}}");
+   RTXCTXTPUSHTYPENAME (pctxt, "{{name|replace('_', '-')}}");
 
    stat = DECBIT (pctxt, &extbit);
    if (stat != 0) return LOG_RTERR (pctxt, stat);
@@ -171,7 +171,7 @@ int asn1PrtToStr_e2ap_{{name}} (const char* name, e2ap_{{name}}* pvalue, char* b
 EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
 {
    int stat = 0;
-   RTXCTXPUSHTYPENAME (pctxt, "{{name|replace('_','-')}}");
+   RTXCTXTPUSHTYPENAME (pctxt, "{{name|replace('_','-')}}");
    RTXCTXTPUSHELEMNAME (pctxt, "t");
    {% set numbits = (choices|length -1).bit_length() %} 
    stat = rtxEncBits (pctxt, pvalue->t - 1, {{numbits}});// kha nang la numbits
@@ -206,7 +206,7 @@ int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
 {
    int stat = 0;
    OSUINT32 ui;
-   RTXCTXPUSHTYPENAME (pctxt, "{{name|replace('_','-')}}");
+   RTXCTXTPUSHTYPENAME (pctxt, "{{name|replace('_','-')}}");
 
    {% set numbits = (choices|length -1).bit_length() %} 
    stat = rtxDecBits (pctxt, &ui, {{numbits}});// kha nang la numbits
