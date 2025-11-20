@@ -4,6 +4,16 @@
 //message  -> tao emlement cho ban tin to nhat nhe
 /*type was extract from {{message_name}}*/
 
+
+typedef enum{
+   T_E2AP_PDU_Contents_e2ap_{{ies[0].origin_name|replace('-', '_')}}_UNDEF_,
+{% for ie in ies %}
+   T_E2AP_PDU_Contents_e2ap_{{ie.origin_name|replace('-', '_')}}_id_{{ ie.ie_type|replace('-', '_') }} {% if not loop.last %},{% endif %}
+
+{% endfor %}
+}
+
+
 typedef struct EXTERN e2ap_{{message_name}}_protocolIEs_element {
    e2ap_ProtocolIE_ID id;
    e2ap_Criticality criticality;

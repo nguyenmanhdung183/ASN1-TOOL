@@ -1206,6 +1206,16 @@ EXTERN int asn1PrtToStrm_e2apE2setupRequest_protocolIEs (OSCTXT* pctxt, const ch
 //message  -> tao emlement cho ban tin to nhat nhe
 /*type was extract from E2setupRequest*/
 
+
+typedef enum{
+   T_E2AP_PDU_Contents_e2ap_E2setupRequestIEs_UNDEF_,
+   T_E2AP_PDU_Contents_e2ap_E2setupRequestIEs_id_TransactionID ,
+   T_E2AP_PDU_Contents_e2ap_E2setupRequestIEs_id_GlobalE2node_ID ,
+   T_E2AP_PDU_Contents_e2ap_E2setupRequestIEs_id_RANfunctions_List ,
+   T_E2AP_PDU_Contents_e2ap_E2setupRequestIEs_id_E2nodeComponentConfigAddition_List 
+}
+
+
 typedef struct EXTERN e2ap_E2setupRequest_protocolIEs_element {
    e2ap_ProtocolIE_ID id;
    e2ap_Criticality criticality;

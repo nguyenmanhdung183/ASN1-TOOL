@@ -28,7 +28,7 @@ CLASS
 CONTAINER PAIR
 
 --->fix:   asn1Free_e2ap_ProtocolIE_Container (pctxt, &pvalue->protocolIEs); ko có
-
+---> gen TVALUE cho từng IEs -> để element gọi
 ==========================================
 chạy 1.py -> xem file .yaml và chỉnh lại nếu bị sai
 chạy 2.py
