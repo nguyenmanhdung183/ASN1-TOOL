@@ -310,17 +310,17 @@ EXTERN int asn1PrtToStrm_e2apE2connectionUpdate_protocolIEs (OSCTXT* pctxt, cons
 
 typedef enum{
    T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_UNDEF_,
-   T_E2AP_PDU_Contents_e2ap_E2connectionUpdateIEs_id_id_TransactionID,
+   T_E2AP_PDU_Contents_e2ap_E2connectionUpdateIEs_id_TransactionID,
 
-   T_E2AP_PDU_Contents_e2ap_E2connectionUpdateIEs_id_id_E2connectionUpdateAdd,
+   T_E2AP_PDU_Contents_e2ap_E2connectionUpdateIEs_id_E2connectionUpdateAdd,
 
-   T_E2AP_PDU_Contents_e2ap_E2connectionUpdateIEs_id_id_E2connectionUpdateRemove,
+   T_E2AP_PDU_Contents_e2ap_E2connectionUpdateIEs_id_E2connectionUpdateRemove,
 
-   T_E2AP_PDU_Contents_e2ap_E2connectionUpdateIEs_id_id_E2connectionUpdateModify,
+   T_E2AP_PDU_Contents_e2ap_E2connectionUpdateIEs_id_E2connectionUpdateModify,
 
    T_E2AP_PDU_Contents_e2ap_E2connectionUpdateIEs_id_Extended_RANNodeName_
 
-}e2ap_E2connectionUpdate_IEs_TVALUE; 
+}e2ap_E2connectionUpdate_IEs_TVALUE;
 
 
 typedef struct EXTERN e2ap_E2connectionUpdate_protocolIEs_element {
