@@ -6,16 +6,6 @@
 
 
 typedef enum{
-   T_E2AP_PDU_Contents_e2ap_E2setupRequest_UNDEF_,
-   T_E2AP_PDU_Contents_e2ap_E2setupRequestIEs_id_TransactionID,
-   T_E2AP_PDU_Contents_e2ap_E2setupRequestIEs_id_GlobalE2node_ID,
-   T_E2AP_PDU_Contents_e2ap_E2setupRequestIEs_id_RANfunctionsAdded,
-   T_E2AP_PDU_Contents_e2ap_E2setupRequestIEs_id_E2nodeComponentConfigAddition,
-   T_E2AP_PDU_Contents_e2ap_E2setupRequestIEs_id_Extended_RANNodeName_
-}
-
-
-typedef enum{
    T_E2AP_PDU_Contents_e2ap_E2setupRequestIEs_UNDEF_,
    T_E2AP_PDU_Contents_e2ap_E2setupRequestIEs_id_TransactionID ,
    T_E2AP_PDU_Contents_e2ap_E2setupRequestIEs_id_GlobalE2node_ID ,
