@@ -1,6 +1,17 @@
 @echo off
 setlocal
 
+REM 0. xoá các file trong thư mục output nếu có
+if exist output (
+    echo Deleting existing files in output directory...
+    del /Q output\*
+    if %ERRORLEVEL% neq 0 (
+        echo Error occurred while deleting files in output directory, stopping.
+        exit /b 1
+    )
+    echo Existing files deleted.
+)
+
 REM 1. Chạy 2 script trong thư mục Tool_read_pdf
 pushd Tool_read_pdf
 echo Running 1_gen_yaml.py...

@@ -569,6 +569,9 @@ def main():
     for row in types_data:
         type_name, asn1_type, parent_type, tag_id, field_name, ie_type,critical,presence, *_ = row
 
+        # Bỏ qua nếu field_name có đuôi là "ItemIEs"
+        # if type_name.endswith("-ItemIEs"):
+        #     continue
         # Chỉ quan tâm SEQUENCE có field_name là protocolIEs
         if asn1_type == "SEQUENCE" and field_name == "protocolIEs":
             msg_base = type_name
@@ -577,7 +580,8 @@ def main():
                 t_type_name, t_asn1_type, *_ = t_row[:3]
                 if (t_asn1_type == "IE" and
                     (t_type_name.startswith(msg_base) and 
-                    (t_type_name.endswith("IEs") or t_type_name.endswith("-IEs")))):
+                    (t_type_name.endswith("IEs") or t_type_name.endswith("-IEs"))
+                    and not t_type_name.endswith("ItemIEs"))):
                     ie_type = t_row[5]  # IE_Type
                     critical = t_row[6]  # Critical
                     presence = t_row[7]  # Present
