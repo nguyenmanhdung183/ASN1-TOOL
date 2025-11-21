@@ -1,22 +1,22 @@
 /*****************************************/
-/*           {{list_name}}                */
+/*           RANfunctions_List                */
 /*****************************************/
 //seq_of_single_container
 
 
-int asn1PE_e2ap_{{list_name}} (OSCTXT* pctxt, e2ap_{{list_name}}* pvalue)
+int asn1PE_e2ap_RANfunctions_List (OSCTXT* pctxt, e2ap_RANfunctions_List* pvalue)
 {
    int stat = 0;
    OSRTDListNode* pnode;
    OSSIZE xx1 = 0;
    OSSIZE count = 0;
 
-   e2ap_{{item_ies|replace("-","_")}}* pdata;
+   e2ap_RANfunction_ItemIEs* pdata;
 
-   RTXCTXTPUSHTYPENAME (pctxt, "{{list_name|replace('_', '-')}}");
+   RTXCTXTPUSHTYPENAME (pctxt, "RANfunctions-List");
 
    /* encode length determinant */
-   PU_SETSIZECONSTRAINT (pctxt, OSUINTCONST({{min_value|int}}), OSUINTCONST(ASN1V_e2ap_{{max_value}}), 0, 0);
+   PU_SETSIZECONSTRAINT (pctxt, OSUINTCONST(1), OSUINTCONST(ASN1V_e2ap_maxofRANfunctionID), 0, 0);
 
    stat = pe_Length (pctxt, pvalue->count);
    if (stat < 0) return LOG_RTERR (pctxt, stat);
@@ -24,10 +24,10 @@ int asn1PE_e2ap_{{list_name}} (OSCTXT* pctxt, e2ap_{{list_name}}* pvalue)
    /* encode elements */
    pnode = pvalue->head;
    for (xx1 = 0; pnode != 0 && xx1 < pvalue->count; pnode = pnode->next, xx1++) {
-      pdata = (e2ap_{{item_ies|replace("-","_")}}*) pnode->data;
+      pdata = (e2ap_RANfunction_ItemIEs*) pnode->data;
       RTXCTXPUSHARRAYELEMNAME (pctxt, "SEQUENCE", xx1);
 
-      stat = asn1PE_e2ap_{{item_ies|replace("-","_")}} (pctxt, pdata);
+      stat = asn1PE_e2ap_RANfunction_ItemIEs (pctxt, pdata);
       if (stat != 0) return LOG_RTERR (pctxt, stat);
 
       xx1++;
@@ -38,17 +38,17 @@ int asn1PE_e2ap_{{list_name}} (OSCTXT* pctxt, e2ap_{{list_name}}* pvalue)
    return 0;
 }
 
-int asn1PD_e2ap_{{list_name}} (OSCTXT* pctxt, e2ap_{{list_name}}* ppvalue)
+int asn1PD_e2ap_RANfunctions_List (OSCTXT* pctxt, e2ap_RANfunctions_List* ppvalue)
 {
    int stat = 0;
    OSSIZE xx1 = 0;
    OSSIZE count = 0;
 
-   e2ap_{{item_ies|replace("-","_")}}* pdata;
+   e2ap_RANfunction_ItemIEs* pdata;
 
-   RTXCTXTPUSHTYPENAME (pctxt, "{{list_name|replace('_', '-')}}");
+   RTXCTXTPUSHTYPENAME (pctxt, "RANfunctions-List");
 
-   PU_SETSIZECONSTRAINT (pctxt, OSUINTCONST({{min_value|int}}), OSUINTCONST(ASN1V_e2ap_{{max_value}}), 0, 0);
+   PU_SETSIZECONSTRAINT (pctxt, OSUINTCONST(1), OSUINTCONST(ASN1V_e2ap_maxofRANfunctionID), 0, 0);
 
    stat = pd_Length64 (pctxt, &count);
    if (stat != 0) return LOG_RTERR (pctxt, stat);
@@ -58,12 +58,12 @@ int asn1PD_e2ap_{{list_name}} (OSCTXT* pctxt, e2ap_{{list_name}}* ppvalue)
    for (xx1 = 0; xx1 < count; xx1++) {
       RTXCTXPUSHARRAYELEMNAME (pctxt, "SEQUENCE", xx1);
 
-      pdata = rtxMemAllocType (pctxt, e2ap_{{item_ies|replace("-","_")}});
+      pdata = rtxMemAllocType (pctxt, e2ap_RANfunction_ItemIEs);
       if (!pdata) return LOG_RTERR (pctxt, RTERR_NOMEM);
 
-      asn1Init_e2ap_{{item_ies|replace("-","_")}} (pdata);
+      asn1Init_e2ap_RANfunction_ItemIEs (pdata);
 
-      stat = asn1PD_e2ap_{{item_ies|replace("-","_")}} (pctxt, pdata);
+      stat = asn1PD_e2ap_RANfunction_ItemIEs (pctxt, pdata);
       if (stat != 0) {
          rtxMemFreePtr (pctxt, pdata);
          return LOG_RTERR (pctxt, stat);
@@ -78,20 +78,20 @@ int asn1PD_e2ap_{{list_name}} (OSCTXT* pctxt, e2ap_{{list_name}}* ppvalue)
    return 0;
 }
 
-void asn1Init_e2ap_{{list_name}} (e2ap_{{list_name}}* pvalue)
+void asn1Init_e2ap_RANfunctions_List (e2ap_RANfunctions_List* pvalue)
 {
    if(0==pvalue) return RTERR_NULLPTR
    rtxDListFastInit (pvalue);
 }
 
-void asn1Free_e2ap_{{list_name}} (OSCTXT* pctxt, e2ap_{{list_name}}* pvalue)
+void asn1Free_e2ap_RANfunctions_List (OSCTXT* pctxt, e2ap_RANfunctions_List* pvalue)
 {
    if(pvalue==0) return;
    OSRTDListNode* pnode = pvalue->head;
    while (pnode) {
-      e2ap_{{item_ies|replace("-","_")}}* pdata = (e2ap_{{item_ies|replace("-","_")}}*) pnode->data;
+      e2ap_RANfunction_ItemIEs* pdata = (e2ap_RANfunction_ItemIEs*) pnode->data;
       if (pdata) {
-         asn1Free_e2ap_{{item_ies|replace("-","_")}} (pctxt, pdata);
+         asn1Free_e2ap_RANfunction_ItemIEs (pctxt, pdata);
          rtxMemFreePtr (pctxt, pdata);
       }
       pnode = pnode->next;
@@ -99,17 +99,16 @@ void asn1Free_e2ap_{{list_name}} (OSCTXT* pctxt, e2ap_{{list_name}}* pvalue)
    rtxDListFreeAll (pvalue);
 }
 
-void asn1Free_e2ap_{{list_name}} (OSCTXT* pctxt, e2ap_{{list_name}}* pvalue){
+void asn1Free_e2ap_RANfunctions_List (OSCTXT* pctxt, e2ap_RANfunctions_List* pvalue){
    if(0==pvalue ) return;
    {
-      e2ap_{{item_type|replace("-","_")}} * pdata;
+      e2ap_RANfunction_ItemIEs * pdata;
       OSRTDListNode *pnode = pvalue->head;
       while(0!=pnode){
-         pdata = (e2ap_{{item_type|replace("-","_")}}*)pnode->data;
-         asn1Free_e2ap_{{item_type|replace("-","_")}}(pctxt, pdata);
+         pdata = (e2ap_RANfunction_ItemIEs*)pnode->data;
+         asn1Free_e2ap_RANfunction_ItemIEs(pctxt, pdata);
          pnode = pnode->next;
       }
       rtxDListFreeAll(pctxt, pvalue);
    }
 }
-

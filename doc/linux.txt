@@ -1,0 +1,35 @@
+
+   1. Chuyển đổi file Batch (`.bat`):
+       * Linux không chạy được file .bat. Bạn cần chuyển nội dung của các file clean_all_msg.bat, clean.bat, quick.bat, start.bat sang shell script (.sh).
+       * Cú pháp của shell script khác với file batch. Ví dụ: del trong batch sẽ tương đương với rm trong shell, echo vẫn là echo, và cách gọi các script python sẽ là python3 3_gen_excel.py
+         thay vì py 3_gen_excel.py.
+
+
+   2. Đường dẫn file (File Paths):
+       * Đây là thay đổi quan trọng nhất. Linux dùng dấu gạch chéo tới (/) trong khi Windows dùng gạch chéo ngược (\).
+       * Bất kỳ đường dẫn nào được viết cứng trong code Python (ví dụ: data_xlsx\\data_excel.xlsx) sẽ gây lỗi.
+       * Giải pháp tốt nhất: Trong code Python, hãy sử dụng thư viện os.path.join() hoặc pathlib để tạo đường dẫn. Các thư viện này sẽ tự động sử dụng đúng ký tự phân cách cho hệ điều hành
+         đang chạy.
+
+
+   3. Môi trường ảo (`.venv`):
+       * Bạn không thể copy thư mục .venv từ Windows sang Linux vì các file thực thi bên trong (Scripts/activate, Scripts/pip.exe) không tương thích.
+       * Cách làm đúng:
+           1. Trên máy Linux, tạo lại môi trường ảo: python3 -m venv .venv
+           2. Kích hoạt môi trường đó: source .venv/bin/activate
+           3. Cài đặt lại tất cả các thư viện cần thiết từ file requirements.txt: pip install -r requirements.txt
+
+
+   4. Lệnh hệ thống trong Python:
+       * Nếu trong code Python có dùng os.system() hoặc subprocess.run() để gọi các file .bat hoặc các chương trình của Windows, bạn phải đổi chúng sang các lệnh hoặc script .sh tương ứng
+         trên Linux.
+
+
+   5. Cấu hình VS Code (`.vscode`):
+       * Các file như c_cpp_properties.json và launch.json có thể chứa đường dẫn đến compiler (ví dụ gcc) hoặc debugger của Windows. Bạn cần cập nhật chúng sang đường dẫn đúng trên môi
+         trường Linux (ví dụ: /usr/bin/gcc).
+
+
+   6. Phân biệt chữ hoa/thường (Case Sensitivity):
+       * Hệ thống file của Linux có phân biệt chữ hoa và chữ thường (File.txt là file khác với file.txt). Hãy đảm bảo code của bạn và các script gọi tên file một cách nhất quán và chính xác.
+

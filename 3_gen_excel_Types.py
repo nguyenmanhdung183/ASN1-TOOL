@@ -205,45 +205,87 @@ def parse_struct_block(name: str, block: str, detected_single_containers, detect
     has_ext = 1 if "..." in blk else 0
 
     # IE
+    # if "E2AP-PROTOCOL-IES" in blk:
+    #     inner = blk[blk.find("{")+1: blk.rfind("}")]
+    #     parts = re.split(r"\}\s*,", inner)
+
+    #     for ent in parts:
+    #         ent = ent.strip().strip(",")
+    #         if not ent:
+    #             continue
+
+    #         # Tìm tất cả các TYPE trong ent
+    #         ie_types = [mtype.group(1) for mtype in re.finditer(r"\bTYPE\s+([A-Za-z0-9\-\_]+)", ent)]
+            
+    #         # Nếu có nhiều TYPE, xuất tất cả
+    #         for ie_type in ie_types:
+    #             mcrit = re.search(r"\bCRITICALITY\s+([A-Za-z0-9\-\_]+)", ent)
+    #             crit = mcrit.group(1) if mcrit else ""
+
+    #             mpres = re.search(r"\bPRESENCE\s+([A-Za-z0-9\-\_]+)", ent)
+    #             pres = mpres.group(1) if mpres else ""
+    #             optional = "OPTIONAL" if pres and not pres.lower().startswith("mand") else ""
+
+    #             # Lấy tên field từ IE nếu có, hoặc đặt mặc định
+    #             mfield = re.search(r"\bID\s+([A-Za-z0-9\-\_]+)", ent)
+    #             field_name = mfield.group(1) if mfield else ""  # hoặc "IE_Field"
+
+    #             rows.append({
+    #                 "Type_Name": name,
+    #                 "ASN1_Type": "IE",
+    #                 "Parent_Type": name,
+    #                 "Tag/ID": "",
+    #                 "Field_Name": field_name,  # Sử dụng biến này
+    #                 "IE_Type": ie_type,
+    #                 "Criticality": crit,
+    #                 "Optional": optional,
+    #                 "Extensible": str(has_ext),
+    #                 "Min_Value": "",
+    #                 "Max_Value": ""
+    #             })
+
+
+    #     return rows
+    # IE
     if "E2AP-PROTOCOL-IES" in blk:
         inner = blk[blk.find("{")+1: blk.rfind("}")]
-        parts = re.split(r"\}\s*,", inner)
+
+        # bắt từng IE-block chính xác
+        parts = re.findall(r"\{([^{}]+)\}", inner)
 
         for ent in parts:
-            ent = ent.strip().strip(",")
-            if not ent:
-                continue
+            ent = ent.strip()
 
-            # Tìm tất cả các TYPE trong ent
-            ie_types = [mtype.group(1) for mtype in re.finditer(r"\bTYPE\s+([A-Za-z0-9\-\_]+)", ent)]
-            
-            # Nếu có nhiều TYPE, xuất tất cả
-            for ie_type in ie_types:
-                mcrit = re.search(r"\bCRITICALITY\s+([A-Za-z0-9\-\_]+)", ent)
-                crit = mcrit.group(1) if mcrit else ""
+            # Lấy ID IE (field_name)
+            mfield = re.search(r"\bID\s+([A-Za-z0-9\-_]+)", ent)
+            field_name = mfield.group(1) if mfield else ""
 
-                mpres = re.search(r"\bPRESENCE\s+([A-Za-z0-9\-\_]+)", ent)
-                pres = mpres.group(1) if mpres else ""
-                optional = "OPTIONAL" if pres and not pres.lower().startswith("mand") else ""
+            # Lấy TYPE
+            m_ie = re.search(r"\bTYPE\s+([A-Za-z0-9\-\_]+)", ent)
+            ie_type = m_ie.group(1) if m_ie else ""
 
-                # Lấy tên field từ IE nếu có, hoặc đặt mặc định
-                mfield = re.search(r"\bID\s+([A-Za-z0-9\-\_]+)", ent)
-                field_name = mfield.group(1) if mfield else ""  # hoặc "IE_Field"
+            # Criticality
+            mcrit = re.search(r"\bCRITICALITY\s+([A-Za-z0-9\-\_]+)", ent)
+            crit = mcrit.group(1) if mcrit else ""
 
-                rows.append({
-                    "Type_Name": name,
-                    "ASN1_Type": "IE",
-                    "Parent_Type": name,
-                    "Tag/ID": "",
-                    "Field_Name": field_name,  # Sử dụng biến này
-                    "IE_Type": ie_type,
-                    "Criticality": crit,
-                    "Optional": optional,
-                    "Extensible": str(has_ext),
-                    "Min_Value": "",
-                    "Max_Value": ""
-                })
+            # Presence
+            mpres = re.search(r"\bPRESENCE\s+([A-Za-z0-9\-\_]+)", ent)
+            pres = mpres.group(1) if mpres else ""
+            optional = "OPTIONAL" if pres.lower().startswith("opt") else ""
 
+            rows.append({
+                "Type_Name": name,
+                "ASN1_Type": "IE",
+                "Parent_Type": name,
+                #"Tag/ID": field_name,
+                "Field_Name": field_name,
+                "IE_Type": ie_type,
+                "Criticality": crit,
+                "Optional": optional,
+                "Extensible": str(has_ext),
+                "Min_Value": "",
+                "Max_Value": ""
+            })
 
         return rows
 
@@ -540,9 +582,10 @@ def main():
                     critical = t_row[6]  # Critical
                     presence = t_row[7]  # Present
                     ie_id_const = f"ID_id_{ie_type}"
-                    field_camel = to_camel(ie_type)
+                    #field_camel = to_camel(ie_type)
                     #message_rows.append([msg_base, ie_id_const, ie_type, field_camel])
-                    
+                    field_camel = t_row[4]  # Field_Name từ sheet Types
+
                     if presence != "OPTIONAL":
                         presence = "MANDATORY"
                     
