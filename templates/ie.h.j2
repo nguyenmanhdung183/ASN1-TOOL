@@ -22,10 +22,10 @@ typedef struct EXTERN e2ap_{{ies_name}} {
    e2ap_ProtocolIE_ID id;
    e2ap_Criticality criticality;
    struct{
-      e2ap_{{ies_name}}_TVALUE t;
+      e2ap_{{ies_name|replace('-', '_')}}_TVALUE t;
       union {
       {% for d in choices %}
-         e2ap_{{d.item_type}} * _e2ap{{ ies_name }}_{{ d.item_type | replace('-', '_') }};
+         e2ap_{{d.item_type|replace('-', '_')}} * _e2ap{{ ies_name }}_{{ d.item_type | replace('-', '_') }};
 
       {%endfor%}
 

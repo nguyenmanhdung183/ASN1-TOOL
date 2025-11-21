@@ -6,12 +6,12 @@
 
 
 typedef enum{
-   T_E2AP_PDU_Contents_e2ap_{{message_name|replace('-', '_')}}_UNDEF_,
+   T_E2AP_PDU_Contents_e2ap_{{ies[0].origin_name|replace('-', '_')}}_UNDEF_,
 {% for ie in ies %}
-   T_E2AP_PDU_Contents_e2ap_{{message_name|replace('-', '_')}}IEs_{{ ie.field|replace('-', '_') }},
+   T_E2AP_PDU_Contents_e2ap_{{ies[0].origin_name|replace('-', '_')}}_{{ ie.field|replace('-', '_') }},
 
 {% endfor %}
-   T_E2AP_PDU_Contents_e2ap_{{message_name}}IEs_id_Extended_RANNodeName_
+   T_E2AP_PDU_Contents_e2ap_{{ies[0].origin_name|replace('-', '_')}}_id_Extended_RANNodeName_
 
 }e2ap_{{ies[0].origin_name|replace('-', '_')}}_TVALUE;
 
@@ -28,14 +28,14 @@ typedef struct EXTERN e2ap_{{message_name}}_protocolIEs_element {
         *criticality: {{ ie.critical }}
         *presence: {{ ie.presence }}
         */
-        e2ap_{{ie.ie_type|replace('-', '_')}} *_e2ap_{{ message_name }}IEs_{{ ie.field|replace('-', '_') }};
+        e2ap_{{ie.ie_type|replace('-', '_')}} *_e2ap_{{ies[0].origin_name|replace('-', '_') }}_{{ ie.field|replace('-', '_') }};
 
 
 {% endfor %}
 
         ASN1OpenType* extElem1;  /* extension */
       } u;
-   }value
+   } value;
 } e2ap_{{message_name}}_protocolIEs_element;
 
 

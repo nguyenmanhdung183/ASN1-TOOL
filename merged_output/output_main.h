@@ -140,7 +140,7 @@ typedef struct EXTERN e2ap_E2connectionUpdate_ItemIEs {
    struct{
       e2ap_E2connectionUpdate_ItemIEs_TVALUE t;
       union {
-         e2ap_E2connectionUpdate-Item * _e2apE2connectionUpdate_ItemIEs_E2connectionUpdate_Item;
+         e2ap_E2connectionUpdate_Item * _e2apE2connectionUpdate_ItemIEs_E2connectionUpdate_Item;
 
 
          ASN1OpenType* extElem1;  /* extension */
@@ -171,7 +171,7 @@ EXTERN void asn1Init_e2ap_E2connectionUpdate_List (e2ap_E2connectionUpdate_List*
 EXTERN void asn1Free_e2ap_E2connectionUpdate_List (OSCTXT* pctxt, e2ap_E2connectionUpdate_List* pvalue);
 EXTERN int asn1PrtToStr_e2ap_E2connectionUpdate_List (const char* name, e2ap_E2connectionUpdate_List* pvalue, char* buffer, OSSIZE bufSize);
 EXTERN int asn1Copy_e2ap_E2connectionUpdate_List (OSCTXT* pctxt, const e2ap_E2connectionUpdate_List* pSrcValue, e2ap_E2connectionUpdate_List* pDstValue);
-EXTERN void asn1Print_e2ap_E2connectionUpdate_List (const char *name, const e2ap_* pvalue);
+EXTERN void asn1Print_e2ap_E2connectionUpdate_List (const char *name, const e2ap_E2connectionUpdate_List* pvalue);
 // --- End of e2ap_E2connectionUpdate_List.h ---
 
 // --- Begin of e2ap_E2connectionUpdateRemove_Item.h ---
@@ -221,7 +221,7 @@ typedef struct EXTERN e2ap_E2connectionUpdateRemove_ItemIEs {
    struct{
       e2ap_E2connectionUpdateRemove_ItemIEs_TVALUE t;
       union {
-         e2ap_E2connectionUpdateRemove-Item * _e2apE2connectionUpdateRemove_ItemIEs_E2connectionUpdateRemove_Item;
+         e2ap_E2connectionUpdateRemove_Item * _e2apE2connectionUpdateRemove_ItemIEs_E2connectionUpdateRemove_Item;
 
 
          ASN1OpenType* extElem1;  /* extension */
@@ -252,7 +252,7 @@ EXTERN void asn1Init_e2ap_E2connectionUpdateRemove_List (e2ap_E2connectionUpdate
 EXTERN void asn1Free_e2ap_E2connectionUpdateRemove_List (OSCTXT* pctxt, e2ap_E2connectionUpdateRemove_List* pvalue);
 EXTERN int asn1PrtToStr_e2ap_E2connectionUpdateRemove_List (const char* name, e2ap_E2connectionUpdateRemove_List* pvalue, char* buffer, OSSIZE bufSize);
 EXTERN int asn1Copy_e2ap_E2connectionUpdateRemove_List (OSCTXT* pctxt, const e2ap_E2connectionUpdateRemove_List* pSrcValue, e2ap_E2connectionUpdateRemove_List* pDstValue);
-EXTERN void asn1Print_e2ap_E2connectionUpdateRemove_List (const char *name, const e2ap_* pvalue);
+EXTERN void asn1Print_e2ap_E2connectionUpdateRemove_List (const char *name, const e2ap_E2connectionUpdateRemove_List* pvalue);
 // --- End of e2ap_E2connectionUpdateRemove_List.h ---
 
 /**************************************************/
@@ -311,16 +311,16 @@ EXTERN int asn1PrtToStrm_e2apE2connectionUpdate_protocolIEs (OSCTXT* pctxt, cons
 
 
 typedef enum{
-   T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_UNDEF_,
-   T_E2AP_PDU_Contents_e2ap_E2connectionUpdateIEs_id_TransactionID,
+   T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_UNDEF_,
+   T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_id_TransactionID,
 
-   T_E2AP_PDU_Contents_e2ap_E2connectionUpdateIEs_id_E2connectionUpdateAdd,
+   T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateAdd,
 
-   T_E2AP_PDU_Contents_e2ap_E2connectionUpdateIEs_id_E2connectionUpdateRemove,
+   T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove,
 
-   T_E2AP_PDU_Contents_e2ap_E2connectionUpdateIEs_id_E2connectionUpdateModify,
+   T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateModify,
 
-   T_E2AP_PDU_Contents_e2ap_E2connectionUpdateIEs_id_Extended_RANNodeName_
+   T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_id_Extended_RANNodeName_
 
 }e2ap_E2connectionUpdate_IEs_TVALUE;
 
@@ -336,7 +336,7 @@ typedef struct EXTERN e2ap_E2connectionUpdate_protocolIEs_element {
         *criticality: reject
         *presence: MANDATORY
         */
-        e2ap_TransactionID *_e2ap_E2connectionUpdateIEs_id_TransactionID;
+        e2ap_TransactionID *_e2ap_E2connectionUpdate_IEs_id_TransactionID;
 
 
         /*
@@ -344,7 +344,7 @@ typedef struct EXTERN e2ap_E2connectionUpdate_protocolIEs_element {
         *criticality: reject
         *presence: OPTIONAL
         */
-        e2ap_E2connectionUpdate_List *_e2ap_E2connectionUpdateIEs_id_E2connectionUpdateAdd;
+        e2ap_E2connectionUpdate_List *_e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateAdd;
 
 
         /*
@@ -352,7 +352,7 @@ typedef struct EXTERN e2ap_E2connectionUpdate_protocolIEs_element {
         *criticality: reject
         *presence: OPTIONAL
         */
-        e2ap_E2connectionUpdateRemove_List *_e2ap_E2connectionUpdateIEs_id_E2connectionUpdateRemove;
+        e2ap_E2connectionUpdateRemove_List *_e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove;
 
 
         /*
@@ -360,13 +360,13 @@ typedef struct EXTERN e2ap_E2connectionUpdate_protocolIEs_element {
         *criticality: reject
         *presence: OPTIONAL
         */
-        e2ap_E2connectionUpdate_List *_e2ap_E2connectionUpdateIEs_id_E2connectionUpdateModify;
+        e2ap_E2connectionUpdate_List *_e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateModify;
 
 
 
         ASN1OpenType* extElem1;  /* extension */
       } u;
-   }value
+   } value;
 } e2ap_E2connectionUpdate_protocolIEs_element;
 
 

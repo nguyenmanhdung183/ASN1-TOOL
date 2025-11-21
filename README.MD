@@ -33,7 +33,7 @@ CONTAINER PAIR
 ---> RTXCTXTPUSHELEMNAME(pctxt, "e2ap_E2setupRequest_protocolIEs_element");
 --->   stat = asn1PE_e2ap_Criticality (pctxt, &pvalue->value.u_E2nodeComponentConfigAddition_ItemIEs_.criticality);
 --->OSBOOL m_tnlPortPresent;
-
+--->TNLinformation decode – optional bits/Trong encode không viết optional bits, chỉ viết extension bit → decode đang đọc sai bit layout (bị lệch 1 bit).
 ==========================================
 chạy 1.py -> xem file .yaml và chỉnh lại nếu bị sai
 chạy 2.py

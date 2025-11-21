@@ -685,7 +685,7 @@ int asn1PE_e2ap_E2connectionUpdate_List (OSCTXT* pctxt, e2ap_E2connectionUpdate_
       stat = asn1PE_e2ap_E2connectionUpdate_ItemIEs (pctxt, pdata);
       if (stat != 0) return LOG_RTERR (pctxt, stat);
 
-      xx1++;
+      //xx1++;
       RTXCTXPPOPARRAYELEMNAME (pctxt);
    }
 
@@ -735,7 +735,7 @@ int asn1PD_e2ap_E2connectionUpdate_List (OSCTXT* pctxt, e2ap_E2connectionUpdate_
 
 void asn1Init_e2ap_E2connectionUpdate_List (e2ap_E2connectionUpdate_List* pvalue)
 {
-   if(0==pvalue) return RTERR_NULLPTR
+   if(0==pvalue) return RTERR_NULLPTR;
    rtxDListFastInit (pvalue);
 }
 
@@ -754,6 +754,7 @@ void asn1Free_e2ap_E2connectionUpdate_List (OSCTXT* pctxt, e2ap_E2connectionUpda
    rtxDListFreeAll (pvalue);
 }
 
+#if 0
 void asn1Free_e2ap_E2connectionUpdate_List (OSCTXT* pctxt, e2ap_E2connectionUpdate_List* pvalue){
    if(0==pvalue ) return;
    {
@@ -767,7 +768,7 @@ void asn1Free_e2ap_E2connectionUpdate_List (OSCTXT* pctxt, e2ap_E2connectionUpda
       rtxDListFreeAll(pctxt, pvalue);
    }
 }
-
+#endif
 // --- End of e2ap_E2connectionUpdate_List.c ---
 
 // --- Begin of e2ap_E2connectionUpdateRemove_Item.c ---
@@ -1074,7 +1075,7 @@ int asn1PE_e2ap_E2connectionUpdateRemove_List (OSCTXT* pctxt, e2ap_E2connectionU
       stat = asn1PE_e2ap_E2connectionUpdateRemove_ItemIEs (pctxt, pdata);
       if (stat != 0) return LOG_RTERR (pctxt, stat);
 
-      xx1++;
+      //xx1++;
       RTXCTXPPOPARRAYELEMNAME (pctxt);
    }
 
@@ -1124,7 +1125,7 @@ int asn1PD_e2ap_E2connectionUpdateRemove_List (OSCTXT* pctxt, e2ap_E2connectionU
 
 void asn1Init_e2ap_E2connectionUpdateRemove_List (e2ap_E2connectionUpdateRemove_List* pvalue)
 {
-   if(0==pvalue) return RTERR_NULLPTR
+   if(0==pvalue) return RTERR_NULLPTR;
    rtxDListFastInit (pvalue);
 }
 
@@ -1143,6 +1144,7 @@ void asn1Free_e2ap_E2connectionUpdateRemove_List (OSCTXT* pctxt, e2ap_E2connecti
    rtxDListFreeAll (pvalue);
 }
 
+#if 0
 void asn1Free_e2ap_E2connectionUpdateRemove_List (OSCTXT* pctxt, e2ap_E2connectionUpdateRemove_List* pvalue){
    if(0==pvalue ) return;
    {
@@ -1156,7 +1158,7 @@ void asn1Free_e2ap_E2connectionUpdateRemove_List (OSCTXT* pctxt, e2ap_E2connecti
       rtxDListFreeAll(pctxt, pvalue);
    }
 }
-
+#endif
 // --- End of e2ap_E2connectionUpdateRemove_List.c ---
 
 /**************************************************/
@@ -1470,37 +1472,37 @@ EXTERN int asn1PE_e2ap_E2connectionUpdate_protocolIEs_element (OSCTXT* pctxt, e2
             {
                 RTXCTXTPUSHELEMNAME (pctxt, "id-TransactionID");
 
-                stat = asn1PE_e2ap_TransactionID (pctxt, pvalue->value.u._e2ap_E2SetupRequestIEs_id_TransactionID);
+                stat = asn1PE_e2ap_TransactionID (pctxt, pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_TransactionID);
                 if (stat != 0) return LOG_RTERR (pctxt, stat);
 
                 RTXCTXTPOPELEMNAME (pctxt);
                 break;
             }
-            case T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_id_E2connectionUpdate_List:
+            case T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateAdd:
             {
                 RTXCTXTPUSHELEMNAME (pctxt, "id-E2connectionUpdateAdd");
 
-                stat = asn1PE_e2ap_TransactionID (pctxt, pvalue->value.u._e2ap_E2SetupRequestIEs_id_E2connectionUpdate_List);
+                stat = asn1PE_e2ap_E2connectionUpdate_List (pctxt, pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateAdd);
                 if (stat != 0) return LOG_RTERR (pctxt, stat);
 
                 RTXCTXTPOPELEMNAME (pctxt);
                 break;
             }
-            case T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove_List:
+            case T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove:
             {
                 RTXCTXTPUSHELEMNAME (pctxt, "id-E2connectionUpdateRemove");
 
-                stat = asn1PE_e2ap_TransactionID (pctxt, pvalue->value.u._e2ap_E2SetupRequestIEs_id_E2connectionUpdateRemove_List);
+                stat = asn1PE_e2ap_E2connectionUpdateRemove_List (pctxt, pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove);
                 if (stat != 0) return LOG_RTERR (pctxt, stat);
 
                 RTXCTXTPOPELEMNAME (pctxt);
                 break;
             }
-            case T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_id_E2connectionUpdate_List:
+            case T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateModify:
             {
                 RTXCTXTPUSHELEMNAME (pctxt, "id-E2connectionUpdateModify");
 
-                stat = asn1PE_e2ap_TransactionID (pctxt, pvalue->value.u._e2ap_E2SetupRequestIEs_id_E2connectionUpdate_List);
+                stat = asn1PE_e2ap_E2connectionUpdate_List (pctxt, pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateModify);
                 if (stat != 0) return LOG_RTERR (pctxt, stat);
 
                 RTXCTXTPOPELEMNAME (pctxt);
@@ -1534,10 +1536,11 @@ EXTERN int asn1PE_e2ap_E2connectionUpdate_protocolIEs_element (OSCTXT* pctxt, e2
         if(stat == 0) {
             stat = pe_OpenType (pctxt, openType.numocts, openType.data);
         }
-
-        if(decoded){
+    #if 0
+        if(encoded){//dungnm23 check lai nhe
             rtxMemFreePtr(pctxt, pDynamicEncodeBuffer);
         }
+    #endif
 
     }
 
@@ -1578,9 +1581,9 @@ EXTERN int  asn1PD_e2ap_E2connectionUpdate_protocolIEs_element (OSCTXT* pctxt, e
         bitStartOffset = PU_GETCTXBITOFFSET(pctxt);
         bitLength = openTypeLen * 8;
 
-        switch(pvalue->id){
+        switch(pvalue->id){//dungnm23 check case lai nhe
         
-            case ASN1V_e2ap_id:
+            case ASN1V_e2ap_id_TransactionID:
             pvalue->value.t = T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_id_TransactionID;
             RTXCTXTPUSHELEMNAME(pctxt, "id-TransactionID");
             pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_TransactionID 
@@ -1597,7 +1600,7 @@ EXTERN int  asn1PD_e2ap_E2connectionUpdate_protocolIEs_element (OSCTXT* pctxt, e
             break;
     
         
-            case ASN1V_e2ap_id:
+            case ASN1V_e2ap_id_E2connectionUpdateAdd:
             pvalue->value.t = T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_id_E2connectionUpdate_List;
             RTXCTXTPUSHELEMNAME(pctxt, "id-E2connectionUpdateAdd");
             pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdate_List 
@@ -1614,7 +1617,7 @@ EXTERN int  asn1PD_e2ap_E2connectionUpdate_protocolIEs_element (OSCTXT* pctxt, e
             break;
     
         
-            case ASN1V_e2ap_id:
+            case ASN1V_e2ap_id_E2connectionUpdateRemove:
             pvalue->value.t = T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove_List;
             RTXCTXTPUSHELEMNAME(pctxt, "id-E2connectionUpdateRemove");
             pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove_List 
@@ -1631,7 +1634,7 @@ EXTERN int  asn1PD_e2ap_E2connectionUpdate_protocolIEs_element (OSCTXT* pctxt, e
             break;
     
         
-            case ASN1V_e2ap_id:
+            case ASN1V_e2ap_id_E2connectionUpdateModify:
             pvalue->value.t = T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_id_E2connectionUpdate_List;
             RTXCTXTPUSHELEMNAME(pctxt, "id-E2connectionUpdateModify");
             pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdate_List 

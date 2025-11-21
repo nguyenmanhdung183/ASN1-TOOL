@@ -30,7 +30,7 @@ int asn1PE_e2ap_E2connectionUpdate_List (OSCTXT* pctxt, e2ap_E2connectionUpdate_
       stat = asn1PE_e2ap_E2connectionUpdate_ItemIEs (pctxt, pdata);
       if (stat != 0) return LOG_RTERR (pctxt, stat);
 
-      xx1++;
+      //xx1++;
       RTXCTXPPOPARRAYELEMNAME (pctxt);
    }
 
@@ -80,7 +80,7 @@ int asn1PD_e2ap_E2connectionUpdate_List (OSCTXT* pctxt, e2ap_E2connectionUpdate_
 
 void asn1Init_e2ap_E2connectionUpdate_List (e2ap_E2connectionUpdate_List* pvalue)
 {
-   if(0==pvalue) return RTERR_NULLPTR
+   if(0==pvalue) return RTERR_NULLPTR;
    rtxDListFastInit (pvalue);
 }
 
@@ -99,6 +99,7 @@ void asn1Free_e2ap_E2connectionUpdate_List (OSCTXT* pctxt, e2ap_E2connectionUpda
    rtxDListFreeAll (pvalue);
 }
 
+#if 0
 void asn1Free_e2ap_E2connectionUpdate_List (OSCTXT* pctxt, e2ap_E2connectionUpdate_List* pvalue){
    if(0==pvalue ) return;
    {
@@ -112,3 +113,4 @@ void asn1Free_e2ap_E2connectionUpdate_List (OSCTXT* pctxt, e2ap_E2connectionUpda
       rtxDListFreeAll(pctxt, pvalue);
    }
 }
+#endif

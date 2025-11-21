@@ -6,16 +6,16 @@
 
 
 typedef enum{
-   T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_UNDEF_,
-   T_E2AP_PDU_Contents_e2ap_E2connectionUpdateIEs_id_TransactionID,
+   T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_UNDEF_,
+   T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_id_TransactionID,
 
-   T_E2AP_PDU_Contents_e2ap_E2connectionUpdateIEs_id_E2connectionUpdateAdd,
+   T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateAdd,
 
-   T_E2AP_PDU_Contents_e2ap_E2connectionUpdateIEs_id_E2connectionUpdateRemove,
+   T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove,
 
-   T_E2AP_PDU_Contents_e2ap_E2connectionUpdateIEs_id_E2connectionUpdateModify,
+   T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateModify,
 
-   T_E2AP_PDU_Contents_e2ap_E2connectionUpdateIEs_id_Extended_RANNodeName_
+   T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_id_Extended_RANNodeName_
 
 }e2ap_E2connectionUpdate_IEs_TVALUE;
 
@@ -31,7 +31,7 @@ typedef struct EXTERN e2ap_E2connectionUpdate_protocolIEs_element {
         *criticality: reject
         *presence: MANDATORY
         */
-        e2ap_TransactionID *_e2ap_E2connectionUpdateIEs_id_TransactionID;
+        e2ap_TransactionID *_e2ap_E2connectionUpdate_IEs_id_TransactionID;
 
 
         /*
@@ -39,7 +39,7 @@ typedef struct EXTERN e2ap_E2connectionUpdate_protocolIEs_element {
         *criticality: reject
         *presence: OPTIONAL
         */
-        e2ap_E2connectionUpdate_List *_e2ap_E2connectionUpdateIEs_id_E2connectionUpdateAdd;
+        e2ap_E2connectionUpdate_List *_e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateAdd;
 
 
         /*
@@ -47,7 +47,7 @@ typedef struct EXTERN e2ap_E2connectionUpdate_protocolIEs_element {
         *criticality: reject
         *presence: OPTIONAL
         */
-        e2ap_E2connectionUpdateRemove_List *_e2ap_E2connectionUpdateIEs_id_E2connectionUpdateRemove;
+        e2ap_E2connectionUpdateRemove_List *_e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove;
 
 
         /*
@@ -55,13 +55,13 @@ typedef struct EXTERN e2ap_E2connectionUpdate_protocolIEs_element {
         *criticality: reject
         *presence: OPTIONAL
         */
-        e2ap_E2connectionUpdate_List *_e2ap_E2connectionUpdateIEs_id_E2connectionUpdateModify;
+        e2ap_E2connectionUpdate_List *_e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateModify;
 
 
 
         ASN1OpenType* extElem1;  /* extension */
       } u;
-   }value
+   } value;
 } e2ap_E2connectionUpdate_protocolIEs_element;
 
 
