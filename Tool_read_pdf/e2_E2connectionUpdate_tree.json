@@ -1,0 +1,170 @@
+{
+  "name": "E2connectionUpdate",
+  "kind": "SEQUENCE",
+  "is_primitive": false,
+  "children": [
+    {
+      "name": "E2connectionUpdate-IEs",
+      "kind": "IE-LIST",
+      "is_primitive": false,
+      "children": [
+        {
+          "name": "TransactionID",
+          "kind": "PRIMITIVE",
+          "is_primitive": true,
+          "children": []
+        },
+        {
+          "name": "E2connectionUpdate-List",
+          "kind": "SEQUENCE-OF-SINGLECONTAINER",
+          "is_primitive": false,
+          "children": [
+            {
+              "name": "E2connectionUpdate-ItemIEs",
+              "kind": "IE-LIST",
+              "is_primitive": false,
+              "children": [
+                {
+                  "name": "E2connectionUpdate-Item",
+                  "kind": "SEQUENCE",
+                  "is_primitive": false,
+                  "children": [
+                    {
+                      "name": "TNLinformation",
+                      "kind": "SEQUENCE",
+                      "is_primitive": false,
+                      "children": [
+                        {
+                          "name": "tnlAddress",
+                          "kind": "PRIMITIVE",
+                          "is_primitive": true,
+                          "children": []
+                        },
+                        {
+                          "name": "...",
+                          "kind": "PRIMITIVE_OR_EXTERNAL",
+                          "is_primitive": true,
+                          "children": []
+                        },
+                        {
+                          "name": "tnlPort",
+                          "kind": "PRIMITIVE",
+                          "is_primitive": true,
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "TNLusage",
+                      "kind": "PRIMITIVE_OR_EXTERNAL",
+                      "is_primitive": true,
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "E2connectionUpdateRemove-List",
+          "kind": "SEQUENCE-OF-SINGLECONTAINER",
+          "is_primitive": false,
+          "children": [
+            {
+              "name": "E2connectionUpdateRemove-ItemIEs",
+              "kind": "IE-LIST",
+              "is_primitive": false,
+              "children": [
+                {
+                  "name": "E2connectionUpdateRemove-Item",
+                  "kind": "SEQUENCE",
+                  "is_primitive": false,
+                  "children": [
+                    {
+                      "name": "TNLinformation",
+                      "kind": "SEQUENCE",
+                      "is_primitive": false,
+                      "children": [
+                        {
+                          "name": "tnlAddress",
+                          "kind": "PRIMITIVE",
+                          "is_primitive": true,
+                          "children": []
+                        },
+                        {
+                          "name": "...",
+                          "kind": "PRIMITIVE_OR_EXTERNAL",
+                          "is_primitive": true,
+                          "children": []
+                        },
+                        {
+                          "name": "tnlPort",
+                          "kind": "PRIMITIVE",
+                          "is_primitive": true,
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "E2connectionUpdate-List",
+          "kind": "SEQUENCE-OF-SINGLECONTAINER",
+          "is_primitive": false,
+          "children": [
+            {
+              "name": "E2connectionUpdate-ItemIEs",
+              "kind": "IE-LIST",
+              "is_primitive": false,
+              "children": [
+                {
+                  "name": "E2connectionUpdate-Item",
+                  "kind": "SEQUENCE",
+                  "is_primitive": false,
+                  "children": [
+                    {
+                      "name": "TNLinformation",
+                      "kind": "SEQUENCE",
+                      "is_primitive": false,
+                      "children": [
+                        {
+                          "name": "tnlAddress",
+                          "kind": "PRIMITIVE",
+                          "is_primitive": true,
+                          "children": []
+                        },
+                        {
+                          "name": "...",
+                          "kind": "PRIMITIVE_OR_EXTERNAL",
+                          "is_primitive": true,
+                          "children": []
+                        },
+                        {
+                          "name": "tnlPort",
+                          "kind": "PRIMITIVE",
+                          "is_primitive": true,
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "TNLusage",
+                      "kind": "PRIMITIVE_OR_EXTERNAL",
+                      "is_primitive": true,
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
