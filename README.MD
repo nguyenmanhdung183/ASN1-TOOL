@@ -46,4 +46,4 @@ chạy 5.py
 
 Để gen tất cả 54 bản tin -> ở file ./automate/list.txt đã điền đủ 54 bản tin
 -> chạy auto.py trong thư mục ./automate
-
+====================
