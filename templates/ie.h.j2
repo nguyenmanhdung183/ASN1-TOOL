@@ -25,7 +25,7 @@ typedef struct EXTERN e2ap_{{ies_name}} {
       e2ap_{{ies_name}}_TVALUE t;
       union {
       {% for d in choices %}
-         e2ap_{{d.item_type}} * _e2ap{{ ies_name }}_{{ d.item_type | replace('-', '_') }}{% if not loop.last %},{% endif %}
+         e2ap_{{d.item_type}} * _e2ap{{ ies_name }}_{{ d.item_type | replace('-', '_') }};
 
       {%endfor%}
 

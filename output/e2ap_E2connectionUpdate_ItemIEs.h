@@ -21,7 +21,8 @@ typedef struct EXTERN e2ap_E2connectionUpdate_ItemIEs {
    struct{
       e2ap_E2connectionUpdate_ItemIEs_TVALUE t;
       union {
-         e2ap_E2connectionUpdate-Item * _e2apE2connectionUpdate_ItemIEs_E2connectionUpdate_Item
+         e2ap_E2connectionUpdate-Item * _e2apE2connectionUpdate_ItemIEs_E2connectionUpdate_Item;
+
 
          ASN1OpenType* extElem1;  /* extension */
       } u;

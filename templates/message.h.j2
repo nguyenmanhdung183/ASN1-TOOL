@@ -28,7 +28,7 @@ typedef struct EXTERN e2ap_{{message_name}}_protocolIEs_element {
         *criticality: {{ ie.critical }}
         *presence: {{ ie.presence }}
         */
-        e2ap_{{ie.ie_type|replace('-', '_')}} *_e2ap_{{ message_name }}IEs_{{ ie.field|replace('-', '_') }}{% if not loop.last %},{% endif %}
+        e2ap_{{ie.ie_type|replace('-', '_')}} *_e2ap_{{ message_name }}IEs_{{ ie.field|replace('-', '_') }};
 
 
 {% endfor %}
