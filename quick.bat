@@ -4,7 +4,7 @@ setlocal
 REM 0. xoá các file trong thư mục output nếu có
 if exist output (
     echo Deleting existing files in output directory...
-    del /Q output\*
+    del /Q merged_output\*
     if %ERRORLEVEL% neq 0 (
         echo Error occurred while deleting files in output directory, stopping.
         exit /b 1

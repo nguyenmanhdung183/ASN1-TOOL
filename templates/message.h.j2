@@ -11,7 +11,9 @@ typedef enum{
    T_E2AP_PDU_Contents_e2ap_{{ie.origin_name|replace('-', '_')}}_id_{{ ie.ie_type|replace('-', '_') }} {% if not loop.last %},{% endif %}
 
 {% endfor %}
-}
+   T_E2AP_PDU_Contents_e2ap_{{message_name}}IEs_id_Extended_RANNodeName_
+
+}e2ap_{{ies[0].origin_name|replace('-', '_')}}_TVALUE;
 
 
 typedef struct EXTERN e2ap_{{message_name}}_protocolIEs_element {
