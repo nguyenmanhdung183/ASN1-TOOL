@@ -8,7 +8,7 @@
 typedef enum{
    T_E2AP_PDU_Contents_e2ap_{{message_name|replace('-', '_')}}_UNDEF_,
 {% for ie in ies %}
-   T_E2AP_PDU_Contents_e2ap_{{message_name|replace('-', '_')}}_id_{{ ie.ie_type|replace('-', '_') }},
+   T_E2AP_PDU_Contents_e2ap_{{message_name|replace('-', '_')}}IEs_id_{{ ie.ie_type|replace('-', '_') }},
 
 {% endfor %}
    T_E2AP_PDU_Contents_e2ap_{{message_name}}IEs_id_Extended_RANNodeName_
