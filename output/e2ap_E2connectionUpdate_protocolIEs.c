@@ -5,7 +5,7 @@
 /******************************************************/
 //ie big msg
 
-EXTERN int asn1PE_e2ap_E2connectionUpdate_protocolIEs (OSCTXT* pctxt, e2ap_E2connectionUpdate_protocolIEst* pvalue)
+EXTERN int asn1PE_e2ap_E2connectionUpdate_protocolIEs (OSCTXT* pctxt, e2ap_E2connectionUpdate_protocolIEs* pvalue)
 {
     int stat =0;
     OSRTDListNode* pnode;
@@ -47,7 +47,7 @@ EXTERN int  asn1PD_e2ap_E2connectionUpdate_protocolIEs(OSCTXT* pctxt, e2ap_E2con
 
     for(xx1=0; xx1 < count; xx1++){
         e2ap_E2connectionUpdate_protocolIEs_element* pdata;
-        RTXCTXTPUSHARRAYELEMNAME(pctxt, "SEQUENCE", &pnode, &pdata);
+        RTXCTXTPUSHARRAYELEMNAME(pctxt, "SEQUENCE",xx1);
 
         if(pnode == NULL) return LOG_RTERR(pctxt, RTERR_NOMEM);
 
@@ -68,7 +68,7 @@ int asn1Init_e2ap_E2connectionUpdate_protocolIEs(e2ap_E2connectionUpdate_protoco
     rtxDListFastInit (pvalue);
     return 0;
 }
-
+#if 0
 void asn1Free_e2ap_E2connectionUpdate_protocolIEs(OSCTXT* pctxt, e2ap_E2connectionUpdate_protocolIEs* pvalue)
 {
     if(0==pvalue) return;   
@@ -81,3 +81,4 @@ void asn1Free_e2ap_E2connectionUpdate_protocolIEs(OSCTXT* pctxt, e2ap_E2connecti
     }
     rtxDListFreeAll(pctxt, pvalue);
 }
+#endif

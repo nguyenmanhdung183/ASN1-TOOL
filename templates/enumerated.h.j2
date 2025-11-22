@@ -26,7 +26,7 @@ EXTERN void asn1Print_e2ap_{{name}} (const char* name, const e2ap_{{name}}* pval
 EXTERN int asn1PrtToStrm_e2ap_{{name}} (OSCTXT* pctxt, const char* name, const e2ap_{{name}}* pvalue);
 
 /* Convert to string (write into user buffer) */
-EXTERN int asn1PrtToStr_e2ap_{{name}} (const char* name,const e2ap_{{name}}* pvalue, char* buffer,OSSIZE bufSize);
+EXTERN int asn1PrtToStr_e2ap_{{name}} (const char* name,const e2ap_{{name}}* pvalue, const char* buffer,OSSIZE bufSize);
 /* Enumeration table */
 EXTERN extern const OSEnumItem e2ap_{{name}}_ENUMTAB[];
 #define e2ap_{{name}}_ENUMTABSIZE {{items|length}}

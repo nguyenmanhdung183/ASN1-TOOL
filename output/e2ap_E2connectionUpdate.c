@@ -97,7 +97,7 @@ int asn1PD_e2ap_E2connectionUpdate (OSCTXT* pctxt, e2ap_E2connectionUpdate* pval
       for(i_ = 0; i_ < bitcnt; i_++) {
          stat = DEC_BIT(pctxt, &poptbits[i_]);
          if (stat != 0) {
-            rtxMemFree(pctxt, poptbits);
+            rtxMemFreePtr(pctxt, poptbits);
             return LOG_RTERR(pctxt, stat);
          }
       }

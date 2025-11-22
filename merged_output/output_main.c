@@ -181,7 +181,7 @@ int asn1PD_e2ap_TNLinformation (OSCTXT* pctxt, e2ap_TNLinformation* pvalue)
       for(i_ = 0; i_ < bitcnt; i_++) {
          stat = DEC_BIT(pctxt, &poptbits[i_]);
          if (stat != 0) {
-            rtxMemFree(pctxt, poptbits);
+            rtxMemFreePtr(pctxt, poptbits);
             return LOG_RTERR(pctxt, stat);
          }
       }
@@ -475,7 +475,7 @@ int asn1PD_e2ap_E2connectionUpdate_Item (OSCTXT* pctxt, e2ap_E2connectionUpdate_
       for(i_ = 0; i_ < bitcnt; i_++) {
          stat = DEC_BIT(pctxt, &poptbits[i_]);
          if (stat != 0) {
-            rtxMemFree(pctxt, poptbits);
+            rtxMemFreePtr(pctxt, poptbits);
             return LOG_RTERR(pctxt, stat);
          }
       }
@@ -879,7 +879,7 @@ int asn1PD_e2ap_E2connectionUpdateRemove_Item (OSCTXT* pctxt, e2ap_E2connectionU
       for(i_ = 0; i_ < bitcnt; i_++) {
          stat = DEC_BIT(pctxt, &poptbits[i_]);
          if (stat != 0) {
-            rtxMemFree(pctxt, poptbits);
+            rtxMemFreePtr(pctxt, poptbits);
             return LOG_RTERR(pctxt, stat);
          }
       }
@@ -1283,7 +1283,7 @@ int asn1PD_e2ap_E2connectionUpdate (OSCTXT* pctxt, e2ap_E2connectionUpdate* pval
       for(i_ = 0; i_ < bitcnt; i_++) {
          stat = DEC_BIT(pctxt, &poptbits[i_]);
          if (stat != 0) {
-            rtxMemFree(pctxt, poptbits);
+            rtxMemFreePtr(pctxt, poptbits);
             return LOG_RTERR(pctxt, stat);
          }
       }
@@ -1365,7 +1365,7 @@ int asn1PrtToStr_e2ap_E2connectionUpdate (const char* name, e2ap_E2connectionUpd
 /******************************************************/
 //ie big msg
 
-EXTERN int asn1PE_e2ap_E2connectionUpdate_protocolIEs (OSCTXT* pctxt, e2ap_E2connectionUpdate_protocolIEst* pvalue)
+EXTERN int asn1PE_e2ap_E2connectionUpdate_protocolIEs (OSCTXT* pctxt, e2ap_E2connectionUpdate_protocolIEs* pvalue)
 {
     int stat =0;
     OSRTDListNode* pnode;
@@ -1407,7 +1407,7 @@ EXTERN int  asn1PD_e2ap_E2connectionUpdate_protocolIEs(OSCTXT* pctxt, e2ap_E2con
 
     for(xx1=0; xx1 < count; xx1++){
         e2ap_E2connectionUpdate_protocolIEs_element* pdata;
-        RTXCTXTPUSHARRAYELEMNAME(pctxt, "SEQUENCE", &pnode, &pdata);
+        RTXCTXTPUSHARRAYELEMNAME(pctxt, "SEQUENCE",xx1);
 
         if(pnode == NULL) return LOG_RTERR(pctxt, RTERR_NOMEM);
 
@@ -1428,7 +1428,7 @@ int asn1Init_e2ap_E2connectionUpdate_protocolIEs(e2ap_E2connectionUpdate_protoco
     rtxDListFastInit (pvalue);
     return 0;
 }
-
+#if 0
 void asn1Free_e2ap_E2connectionUpdate_protocolIEs(OSCTXT* pctxt, e2ap_E2connectionUpdate_protocolIEs* pvalue)
 {
     if(0==pvalue) return;   
@@ -1441,7 +1441,7 @@ void asn1Free_e2ap_E2connectionUpdate_protocolIEs(OSCTXT* pctxt, e2ap_E2connecti
     }
     rtxDListFreeAll(pctxt, pvalue);
 }
-
+#endif
 // --- End of e2ap_E2connectionUpdate_protocolIEs.c ---
 
 // --- Begin of e2ap_E2connectionUpdate_protocolIEs_element.c ---

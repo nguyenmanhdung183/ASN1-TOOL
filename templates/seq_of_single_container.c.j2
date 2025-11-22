@@ -96,7 +96,7 @@ void asn1Free_e2ap_{{list_name}} (OSCTXT* pctxt, e2ap_{{list_name}}* pvalue)
       }
       pnode = pnode->next;
    }
-   rtxDListFreeAll (pvalue);
+      rtxDListFreeAll(pctxt, pvalue);
 }
 
 #if 0
