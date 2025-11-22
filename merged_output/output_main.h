@@ -4,6 +4,7 @@
 
 // --- Begin of doc/header.h ---
 //======================E2AP.h========================//
+
 // --- End of doc/header.h ---
 
 // --- Begin of e2ap_TransactionID.h ---
@@ -145,7 +146,7 @@ typedef struct EXTERN e2ap_E2connectionUpdate_ItemIEs {
 
          ASN1OpenType* extElem1;  /* extension */
       } u;
-   }value
+   }value;
 } e2ap_E2connectionUpdate_ItemIEs;
 
 EXTERN int  asn1PE_e2ap_E2connectionUpdate_ItemIEs (OSCTXT* pctxt, e2ap_E2connectionUpdate_ItemIEs* pvalue);
@@ -226,7 +227,7 @@ typedef struct EXTERN e2ap_E2connectionUpdateRemove_ItemIEs {
 
          ASN1OpenType* extElem1;  /* extension */
       } u;
-   }value
+   }value;
 } e2ap_E2connectionUpdateRemove_ItemIEs;
 
 EXTERN int  asn1PE_e2ap_E2connectionUpdateRemove_ItemIEs (OSCTXT* pctxt, e2ap_E2connectionUpdateRemove_ItemIEs* pvalue);

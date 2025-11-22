@@ -34,7 +34,7 @@ int asn1PE_e2ap_E2connectionUpdate_List (OSCTXT* pctxt, e2ap_E2connectionUpdate_
       RTXCTXPPOPARRAYELEMNAME (pctxt);
    }
 
-   RTXCTXPOPEXTNAME (pctxt);
+   RTXCTXTPOPTYPENAME (pctxt);
    return 0;
 }
 
@@ -60,9 +60,7 @@ int asn1PD_e2ap_E2connectionUpdate_List (OSCTXT* pctxt, e2ap_E2connectionUpdate_
 
       pdata = rtxMemAllocType (pctxt, e2ap_E2connectionUpdate_ItemIEs);
       if (!pdata) return LOG_RTERR (pctxt, RTERR_NOMEM);
-
       asn1Init_e2ap_E2connectionUpdate_ItemIEs (pdata);
-
       stat = asn1PD_e2ap_E2connectionUpdate_ItemIEs (pctxt, pdata);
       if (stat != 0) {
          rtxMemFreePtr (pctxt, pdata);
@@ -74,7 +72,7 @@ int asn1PD_e2ap_E2connectionUpdate_List (OSCTXT* pctxt, e2ap_E2connectionUpdate_
       RTXCTXPPOPARRAYELEMNAME (pctxt);
    }
 
-   RTXCTXPOPEXTNAME (pctxt);
+   RTXCTXTPOPTYPENAME (pctxt);
    return 0;
 }
 

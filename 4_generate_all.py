@@ -3,7 +3,7 @@ import pandas as pd
 from jinja2 import Environment, FileSystemLoader
 import os
 import re
-
+from types import SimpleNamespace
 # Cấu hình Jinja2
 env = Environment(loader=FileSystemLoader("templates"), trim_blocks=True, lstrip_blocks=True)
 
@@ -16,6 +16,8 @@ os.makedirs("output", exist_ok=True)
 # Danh sách các file đã sinh (để tránh ghi đè)
 generated_files = set()
 
+
+
 def safe_write(path, content):
     if path in generated_files:
         print(f"Skip (already generated): {path}")
@@ -24,6 +26,35 @@ def safe_write(path, content):
         f.write(content)
     generated_files.add(path)
     print(f"Generated: {path}")
+
+#===== CHECK PRIMITIVE TYPE ====== đầu vào là dữ liệu Types/ IE_Type
+df_primitives = pd.read_excel("data_xlsx/data_excel.xlsx", sheet_name="Primitives")
+
+def check_if_primitive(ie_type_name):
+    """
+    Kiểm tra xem IE_Type có phải primitive không.
+    Trả về object có 2 thuộc tính:
+        - isprimitive: True/False
+        - primitive_name: ASN1_Type gốc (có SIZE/range nếu có)
+    """
+    global df_primitives
+    is_primitive = False
+    primitive_name = None
+
+    # Tìm IE_Type trong cột IE_Name
+    match = df_primitives[df_primitives["IE_Name"] == ie_type_name]
+
+    if not match.empty:
+        asn1_type = str(match.iloc[0]["ASN1_Type"])
+        # Loại bỏ số, range, SIZE để lấy tên kiểu
+        asn1_type_clean = re.sub(r"\(.*?\)", "", asn1_type).strip()
+
+        primitive_types = ["ENUMERATED", "INTEGER", "OCTET STRING", "PrintableString"]
+        if any(pt in asn1_type_clean for pt in primitive_types):
+            is_primitive = True
+            primitive_name = asn1_type
+
+    return SimpleNamespace(isprimitive=is_primitive, primitive_name=primitive_name)
 
 # =============================
 # 1. SINH CÁC IE PRIMITIVE
@@ -162,7 +193,7 @@ for choice_name, group in choice_groups:
         field = field.replace("-","_")
         ctype = ctype.replace("-","_")
         #name = name.replace("-","_")
-        
+        primitive_info = check_if_primitive(ctype)
         
         
         
@@ -174,6 +205,7 @@ for choice_name, group in choice_groups:
             "fixsize": fixsize,
             "minstr": minstr,
             "maxstr": maxstr,
+            "primitive": primitive_info,
         })
 
         
@@ -194,6 +226,7 @@ for _, row in single_containers.iterrows():
     criticality = row["Criticality"] if pd.notna(row["Criticality"]) else "reject"
     min_value = row["Min_Value"]
     max_value = row["Max_Value"]
+    primitive_info = check_if_primitive(item_type)
 
     # Size constraint từ cột Min_Value / Max_Value (nếu có)
     min_size = int(row["Min_Value"]) if pd.notna(row["Min_Value"]) else 1
@@ -217,6 +250,7 @@ for _, row in single_containers.iterrows():
         "max_size":    max_size,
         "min_value":   min_value,
         "max_value":   max_value,
+        "primitive":  primitive_info,
     }
 
     # 1. Sinh ProtocolIE-SingleContainer (ItemIEs) – struct
@@ -343,11 +377,13 @@ for seq_name_raw in sequence_names:
         ie_type = row["IE_Type"]
         optional_val = row.get("Optional")
         presence = "optional" if (pd.notna(optional_val) and str(optional_val).strip() != "") else "mandatory"
+        primitive_info = check_if_primitive(ie_type)
 
         fields.append({
             "field": field_name,
             "ie_type": ie_type,
             "presence": presence,
+            "primitive": primitive_info,
         })
 
     # Kiểm tra extensible
@@ -380,7 +416,7 @@ for seq_name_raw in sequence_names:
                     minstr = int(m_range.group(1))
                     maxstr = int(m_range.group(2))
 
-    data = {
+    data = {# xem lại minstr và maxstr ở đoạn trên vào fields thì ok hơn
         "name": seq_name,
         "fields": fields,
         "extensible": extensible,
@@ -414,6 +450,10 @@ for message_name, group in message_df.groupby("Message_Name"):
         ie_id = row["IE_ID_Constant"]
         includes.add(f"e2ap_{ie_type}")
         #ies.append({"ie_type": ie_type, "field": field_name, "ie_id_constant": ie_id})
+        
+        primitive_info = check_if_primitive(ie_type)
+      
+        
         ies.append({
             "ie_type": ie_type,
             "field": field_name,
@@ -421,6 +461,7 @@ for message_name, group in message_df.groupby("Message_Name"):
             "origin_name": origin_name,   # <-- thêm dòng này
             "critical": critical,
             "presence": presence,
+            "primitive": primitive_info,
         })
 
         field_name = field_name.replace("-","_")

@@ -46,7 +46,7 @@ EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
       if (stat != 0) return LOG_RTERR (pctxt, stat);
       RTXCTXTPOPELEMNAME (pctxt);
    }
-   RTXCTXPOPTYPENAME (pctxt);
+   RTXCTXTPOPTYPENAME (pctxt);
    return stat;
 }
 
@@ -75,7 +75,9 @@ EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
          pvalue->u.{{choice.field|replace("-","_")}} = rtxMemAllocType (pctxt, e2ap_{{choice.type}});
 
          if (pvalue->u.{{choice.field|replace("-","_")}} == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
+         {%if choice.type != "BIT STRING" and choice.primitive.isprimitive == False %}
          asn1Init_e2ap_{{choice.type}}(pvalue->u.{{choice.field|replace("-","_")}});
+         {% endif %}
          //stat = asn1PD_e2ap_{{choice.type}} (pctxt, pvalue->u.{{choice.field|replace("-","_")}});
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXTPOPELEMNAME (pctxt);
@@ -102,7 +104,7 @@ EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
       pvalue->u.extElem1->data = openType.data;
       RTXCTXTPOPELEMNAME (pctxt);
    }
-   RTXCTXPOPTYPENAME (pctxt);
+   RTXCTXTPOPTYPENAME (pctxt);
    return (stat);
 }
 
@@ -123,7 +125,9 @@ void asn1Free_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
 {% for choice in choices %}
       case {{(choice.tag+1)|int}}:
          if (pvalue->u.{{choice.field|replace("-","_")}}) {
+            {%if choice.type != "BIT STRING" and choice.primitive.isprimitive == False %}
             asn1Free_e2ap_{{choice.type}} (pctxt, pvalue->u.{{choice.field|replace("-","_")}});
+            {% endif %}
             rtxMemFreePtr (pctxt, (void*)pvalue->u.{{choice.field|replace("-","_")}});
             pvalue->u.{{choice.field|replace("-","_")}} = 0;
          }
@@ -198,7 +202,7 @@ EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
          return LOG_RTERR (pctxt, RTERR_INVOPT);
    }
 
-   RTXCTXPOPTYPENAME (pctxt);
+   RTXCTXTPOPTYPENAME (pctxt);
    return (stat);
 }
 
@@ -237,7 +241,7 @@ int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
          return LOG_RTERR (pctxt, RTERR_INVOPT);
    }
 
-   RTXCTXPOPTYPENAME (pctxt);
+   RTXCTXTPOPTYPENAME (pctxt);
    return (stat);
 }
 

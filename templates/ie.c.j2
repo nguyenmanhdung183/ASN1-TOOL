@@ -8,17 +8,17 @@
 int asn1PE_e2ap_{{ies_name}} (OSCTXT* pctxt, e2ap_{{ies_name}}* pvalue)
 {
    int stat = 0;
-   RTXCTXTPUSHTYPENAME (pctxt, "{{ies_name|replace('_', '-')}}");
+   //RTXCTXTPUSHTYPENAME (pctxt, "{{ies_name|replace('_', '-')}}");
 
    /* encode id */
    RTXCTXTPUSHELEMNAME (pctxt, "id");
-   stat = asn1PE_e2ap_ProtocolIE_ID (pctxt, &pvalue->value.u_{{ies_name}}_{{ie_id_const}}.id);
+   stat = asn1PE_e2ap_ProtocolIE_ID (pctxt, &pvalue->id);
    if (stat != 0) return LOG_RTERR (pctxt, stat);
    RTXCTXTPOPELEMNAME (pctxt);
 
    /* encode criticality */
    RTXCTXTPUSHELEMNAME (pctxt, "criticality");
-   stat = asn1PE_e2ap_Criticality (pctxt, &pvalue->value.u_{{ies_name}}_{{ie_id_const}}.criticality);
+   stat = asn1PE_e2ap_Criticality (pctxt, &pvalue->criticality);
    if (stat != 0) return LOG_RTERR (pctxt, stat);
    RTXCTXTPOPELEMNAME (pctxt);
 
@@ -41,16 +41,30 @@ int asn1PE_e2ap_{{ies_name}} (OSCTXT* pctxt, e2ap_{{ies_name}}* pvalue)
       if (stat != 0) return LOG_RTERR (pctxt, stat);
 
       switch (pvalue->value.t) {
-         case T_E2AP_PDU_Contents_{{ies_name}}_{{ie_id_const}}:
-            RTXCTXTPUSHELEMNAME (pctxt, "e2ap-E2nodeComponentConfigAddition-Item");
-            stat = asn1PE_e2ap_{{item_type}} (pctxt, &pvalue->value.u_{{ies_name}}_{{ie_id_const}}.value);
-            if (stat != 0) return LOG_RTERR (pctxt, stat);
-            RTXCTXTPOPELEMNAME (pctxt);
-            break;
+      {% for d in choices %}
+      case T_E2AP_PDU_Contents_{{ ies_name }}_{{ d.item_type | replace('-', '_') }}:
+         
+         RTXCTXTPUSHELEMNAME (pctxt, "_e2ap_{{ ies_name }}_id_{{ d.item_type | replace('-', '_') }}");
+         stat = asn1PE_e2ap_{{ d.item_type | replace('-', '_') }} (pctxt, pvalue->value.u._e2ap{{ ies_name }}_{{ d.item_type | replace('-', '_')}});
+         RTXCTXTPOPELEMNAME (pctxt);
+      
+         break;
+      {% endfor %}
 
-         default:
-            encoded = FALSE;
-            stat = RTERR_INVOPT;
+      case T_E2AP_PDU_Contents_e2ap_{{ ies_name }}_UNDEF_:
+      {
+          if(0!=pvalue->value.u.extElem1){
+              openType.numocts = pvalue->value.u.extElem1->numocts;
+              openType.data = pvalue->value.u.extElem1->data;
+          } else {
+              /* No extension element to encode */
+          }
+          encoded = FALSE;
+          break;
+      }
+      default:
+         encoded = FALSE;
+         stat = RTERR_INVOPT;
       }
 
       if (encoded) {
@@ -67,7 +81,7 @@ int asn1PE_e2ap_{{ies_name}} (OSCTXT* pctxt, e2ap_{{ies_name}}* pvalue)
       RTXCTXTPOPELEMNAME (pctxt);
    }
 
-   RTXCTXPOPEXTNAME (pctxt);
+   //RTXCTXTPOPTYPENAME (pctxt);
    return 0;
 }
 

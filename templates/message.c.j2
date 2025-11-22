@@ -127,17 +127,20 @@ EXTERN int  asn1PD_e2ap_{{message_name}}_protocolIEs_element (OSCTXT* pctxt, e2a
         switch(pvalue->id){//dungnm23 check case lai nhe
 {%for ie in ies%}        
             case ASN1V_e2ap_{{ie.field|replace('-', '_')}}:
-            pvalue->value.t = T_E2AP_PDU_Contents_e2ap_{{ie.origin_name|replace('-', '_')}}_id_{{ ie.ie_type|replace('-', '_') }};
+            pvalue->value.t = T_E2AP_PDU_Contents_e2ap_{{ie.origin_name|replace('-', '_')}}_{{ ie.field|replace('-', '_') }};
             RTXCTXTPUSHELEMNAME(pctxt, "{{ie.field|replace('_', '-')}}");
-            pvalue->value.u._e2ap_{{ie.origin_name|replace('-', '_')}}_id_{{ ie.ie_type|replace('-', '_') }} 
-                = rtxMemAllocType(pctxt, e2ap_{{ie.ie_type|replace('-', '_')}});
+            //pvalue->value.u._e2ap_{{ie.origin_name|replace('-', '_')}}_id_{{ ie.ie_type|replace('-', '_') }} 
+             pvalue->value.u._e2ap_{{ies[0].origin_name|replace('-', '_') }}_{{ ie.field|replace('-', '_') }} = rtxMemAllocType(pctxt, e2ap_{{ie.ie_type|replace('-', '_')}});
+{% if ie.primitive.isprimitive and ie.ie_type !="BIT STRING"%}
+            //asn1Init_e2ap_{{ie.ie_type|replace('-', '_')}}(pvalue->
+              //  value.u._e2ap_{{ie.origin_name|replace('-', '_')}}_id_{{ ie.ie_type|replace('-', '_') }});
 
-            asn1Init_e2ap_{{ie.ie_type|replace('-', '_')}}(pvalue->
-                value.u._e2ap_{{ie.origin_name|replace('-', '_')}}_id_{{ ie.ie_type|replace('-', '_') }});
-
+                 asn1Init_e2ap_{{ie.ie_type|replace('-', '_')}}(pvalue->
+                value.u._e2ap_{{ies[0].origin_name|replace('-', '_') }}_{{ ie.field|replace('-', '_') }});
+{% endif %}
             stat = asn1PD_e2ap_{{ie.ie_type|replace('-', '_')}} (pctxt,
                 (e2ap_{{ie.ie_type|replace('-', '_')}}*)pvalue->value.
-                u._e2ap_{{ie.origin_name|replace('-', '_')}}_id_{{ ie.ie_type|replace('-', '_') }});
+                u._e2ap_{{ies[0].origin_name|replace('-', '_') }}_{{ ie.field|replace('-', '_') }});
             if(stat!=0) return LOG_RTERR(pctxt, stat);
             RTXCTXTPOPELEMNAME(pctxt);
             break;
@@ -204,7 +207,8 @@ void asn1Free_e2ap_{{message_name}}_protocolIEs_element(OSCTXT* pctxt, e2ap_{{me
             if(pvalue->value.i._e2ap_{{ie.origin_name|replace('-', '_')}}_id_{{ ie.ie_type|replace('-', '_') }}!=NULL){
             asn1Free_e2ap_{{ie.ie_type|replace('-', '_')}}(pctxt, pvalue->value.u._e2ap_{{ie.origin_name|replace('-', '_')}}_id_{{ ie.ie_type|replace('-', '_') }});
             rtxMemFreePtr(pctxt, (void*)pvalue->value.u._e2ap_{{ie.origin_name|replace('-', '_')}}_id_{{ ie.ie_type|replace('-', '_') }});
-            pvalue->value.u._e2ap_{{ie.origin_name|replace('-', '_')}}_id_{{ ie.ie_type|replace('-', '_') }} = NULL;
+           // pvalue->value.u._e2ap_{{ie.origin_name|replace('-', '_')}}_id_{{ ie.ie_type|replace('-', '_') }} = NULL;
+           pvalue->value.u._e2ap_{{ies[0].origin_name|replace('-', '_')}}_{{ ie.field|replace('-', '_') }} = NULL;
             }
             break;
 {% endfor %}

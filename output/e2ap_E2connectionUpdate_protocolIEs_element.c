@@ -157,12 +157,13 @@ EXTERN int  asn1PD_e2ap_E2connectionUpdate_protocolIEs_element (OSCTXT* pctxt, e
             case ASN1V_e2ap_id_TransactionID:
             pvalue->value.t = T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_id_TransactionID;
             RTXCTXTPUSHELEMNAME(pctxt, "id-TransactionID");
-            pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_TransactionID 
-                = rtxMemAllocType(pctxt, e2ap_TransactionID);
+            //pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_TransactionID 
+             pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_TransactionID = rtxMemAllocType(pctxt, e2ap_TransactionID);
+            //asn1Init_e2ap_TransactionID(pvalue->
+              //  value.u._e2ap_E2connectionUpdate_IEs_id_TransactionID);
 
-            asn1Init_e2ap_TransactionID(pvalue->
+                 asn1Init_e2ap_TransactionID(pvalue->
                 value.u._e2ap_E2connectionUpdate_IEs_id_TransactionID);
-
             stat = asn1PD_e2ap_TransactionID (pctxt,
                 (e2ap_TransactionID*)pvalue->value.
                 u._e2ap_E2connectionUpdate_IEs_id_TransactionID);
@@ -172,51 +173,39 @@ EXTERN int  asn1PD_e2ap_E2connectionUpdate_protocolIEs_element (OSCTXT* pctxt, e
     
         
             case ASN1V_e2ap_id_E2connectionUpdateAdd:
-            pvalue->value.t = T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_id_E2connectionUpdate_List;
+            pvalue->value.t = T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateAdd;
             RTXCTXTPUSHELEMNAME(pctxt, "id-E2connectionUpdateAdd");
-            pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdate_List 
-                = rtxMemAllocType(pctxt, e2ap_E2connectionUpdate_List);
-
-            asn1Init_e2ap_E2connectionUpdate_List(pvalue->
-                value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdate_List);
-
+            //pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdate_List 
+             pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateAdd = rtxMemAllocType(pctxt, e2ap_E2connectionUpdate_List);
             stat = asn1PD_e2ap_E2connectionUpdate_List (pctxt,
                 (e2ap_E2connectionUpdate_List*)pvalue->value.
-                u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdate_List);
+                u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateAdd);
             if(stat!=0) return LOG_RTERR(pctxt, stat);
             RTXCTXTPOPELEMNAME(pctxt);
             break;
     
         
             case ASN1V_e2ap_id_E2connectionUpdateRemove:
-            pvalue->value.t = T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove_List;
+            pvalue->value.t = T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove;
             RTXCTXTPUSHELEMNAME(pctxt, "id-E2connectionUpdateRemove");
-            pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove_List 
-                = rtxMemAllocType(pctxt, e2ap_E2connectionUpdateRemove_List);
-
-            asn1Init_e2ap_E2connectionUpdateRemove_List(pvalue->
-                value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove_List);
-
+            //pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove_List 
+             pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove = rtxMemAllocType(pctxt, e2ap_E2connectionUpdateRemove_List);
             stat = asn1PD_e2ap_E2connectionUpdateRemove_List (pctxt,
                 (e2ap_E2connectionUpdateRemove_List*)pvalue->value.
-                u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove_List);
+                u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove);
             if(stat!=0) return LOG_RTERR(pctxt, stat);
             RTXCTXTPOPELEMNAME(pctxt);
             break;
     
         
             case ASN1V_e2ap_id_E2connectionUpdateModify:
-            pvalue->value.t = T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_id_E2connectionUpdate_List;
+            pvalue->value.t = T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateModify;
             RTXCTXTPUSHELEMNAME(pctxt, "id-E2connectionUpdateModify");
-            pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdate_List 
-                = rtxMemAllocType(pctxt, e2ap_E2connectionUpdate_List);
-
-            asn1Init_e2ap_E2connectionUpdate_List(pvalue->
-                value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdate_List);
-
+            //pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdate_List 
+             pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateModify = rtxMemAllocType(pctxt, e2ap_E2connectionUpdate_List);
             stat = asn1PD_e2ap_E2connectionUpdate_List (pctxt,
                 (e2ap_E2connectionUpdate_List*)pvalue->value.
-                u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdate_List);
+                u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateModify);
             if(stat!=0) return LOG_RTERR(pctxt, stat);
             RTXCTXTPOPELEMNAME(pctxt);
             break;
@@ -281,7 +270,8 @@ void asn1Free_e2ap_E2connectionUpdate_protocolIEs_element(OSCTXT* pctxt, e2ap_E2
             if(pvalue->value.i._e2ap_E2connectionUpdate_IEs_id_TransactionID!=NULL){
             asn1Free_e2ap_TransactionID(pctxt, pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_TransactionID);
             rtxMemFreePtr(pctxt, (void*)pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_TransactionID);
-            pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_TransactionID = NULL;
+           // pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_TransactionID = NULL;
+           pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_TransactionID = NULL;
             }
             break;
         case T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_id_E2connectionUpdate_List:
@@ -290,7 +280,8 @@ void asn1Free_e2ap_E2connectionUpdate_protocolIEs_element(OSCTXT* pctxt, e2ap_E2
             if(pvalue->value.i._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdate_List!=NULL){
             asn1Free_e2ap_E2connectionUpdate_List(pctxt, pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdate_List);
             rtxMemFreePtr(pctxt, (void*)pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdate_List);
-            pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdate_List = NULL;
+           // pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdate_List = NULL;
+           pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateAdd = NULL;
             }
             break;
         case T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove_List:
@@ -299,7 +290,8 @@ void asn1Free_e2ap_E2connectionUpdate_protocolIEs_element(OSCTXT* pctxt, e2ap_E2
             if(pvalue->value.i._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove_List!=NULL){
             asn1Free_e2ap_E2connectionUpdateRemove_List(pctxt, pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove_List);
             rtxMemFreePtr(pctxt, (void*)pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove_List);
-            pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove_List = NULL;
+           // pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove_List = NULL;
+           pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove = NULL;
             }
             break;
         case T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_id_E2connectionUpdate_List:
@@ -308,7 +300,8 @@ void asn1Free_e2ap_E2connectionUpdate_protocolIEs_element(OSCTXT* pctxt, e2ap_E2
             if(pvalue->value.i._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdate_List!=NULL){
             asn1Free_e2ap_E2connectionUpdate_List(pctxt, pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdate_List);
             rtxMemFreePtr(pctxt, (void*)pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdate_List);
-            pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdate_List = NULL;
+           // pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdate_List = NULL;
+           pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateModify = NULL;
             }
             break;
         case T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_UNDEF_:

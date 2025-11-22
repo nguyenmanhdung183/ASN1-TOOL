@@ -26,7 +26,7 @@ typedef struct EXTERN e2ap_E2connectionUpdateRemove_ItemIEs {
 
          ASN1OpenType* extElem1;  /* extension */
       } u;
-   }value
+   }value;
 } e2ap_E2connectionUpdateRemove_ItemIEs;
 
 EXTERN int  asn1PE_e2ap_E2connectionUpdateRemove_ItemIEs (OSCTXT* pctxt, e2ap_E2connectionUpdateRemove_ItemIEs* pvalue);

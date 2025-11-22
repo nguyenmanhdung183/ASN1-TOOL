@@ -28,7 +28,7 @@ EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}} value)
    stat = pe_ConstrainedStringEx (pctxt, value, 0, 8, 7, 7);
    if (stat != 0) return LOG_RTERR (pctxt, stat);
 
-   RTXCTXPOPTYPENAME (pctxt);
+   RTXCTXTPOPTYPENAME (pctxt);
    return stat;
 }
 
@@ -42,7 +42,7 @@ EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* ppvalue)
    stat = pd_ConstrainedStringEx (pctxt, ppvalue, 0, 8, 7, 7);
    if (stat != 0) return LOG_RTERR (pctxt, stat);
 
-   RTXCTXPOPTYPENAME (pctxt);
+   RTXCTXTPOPTYPENAME (pctxt);
    return stat;
 }
 
@@ -56,7 +56,7 @@ EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}} value)
    stat = pe_PrintableString (pctxt, value);
    if (stat != 0) return LOG_RTERR (pctxt, stat);
 
-   RTXCTXPOPEXTNAME (pctxt);
+   RTXCTXTPOPTYPENAME (pctxt);
    return 0;
 }
 
@@ -68,7 +68,7 @@ EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* ppvalue)
    stat = pd_PrintableString (pctxt, ppvalue);
    if (stat != 0) return LOG_RTERR (pctxt, stat);
 
-   RTXCTXPOPEXTNAME (pctxt);
+   RTXCTXTPOPTYPENAME (pctxt);
    return 0;
 }
 

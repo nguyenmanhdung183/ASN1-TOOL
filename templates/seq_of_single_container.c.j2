@@ -34,7 +34,7 @@ int asn1PE_e2ap_{{list_name}} (OSCTXT* pctxt, e2ap_{{list_name}}* pvalue)
       RTXCTXPPOPARRAYELEMNAME (pctxt);
    }
 
-   RTXCTXPOPEXTNAME (pctxt);
+   RTXCTXTPOPTYPENAME (pctxt);
    return 0;
 }
 
@@ -60,9 +60,9 @@ int asn1PD_e2ap_{{list_name}} (OSCTXT* pctxt, e2ap_{{list_name}}* ppvalue)
 
       pdata = rtxMemAllocType (pctxt, e2ap_{{item_ies|replace("-","_")}});
       if (!pdata) return LOG_RTERR (pctxt, RTERR_NOMEM);
-
+{% if not (primitive.isprimitive and item_ies !="BIT STRING") %}
       asn1Init_e2ap_{{item_ies|replace("-","_")}} (pdata);
-
+{% endif %}
       stat = asn1PD_e2ap_{{item_ies|replace("-","_")}} (pctxt, pdata);
       if (stat != 0) {
          rtxMemFreePtr (pctxt, pdata);
@@ -74,7 +74,7 @@ int asn1PD_e2ap_{{list_name}} (OSCTXT* pctxt, e2ap_{{list_name}}* ppvalue)
       RTXCTXPPOPARRAYELEMNAME (pctxt);
    }
 
-   RTXCTXPOPEXTNAME (pctxt);
+   RTXCTXTPOPTYPENAME (pctxt);
    return 0;
 }
 

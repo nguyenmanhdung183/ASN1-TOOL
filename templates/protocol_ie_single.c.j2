@@ -20,7 +20,7 @@ int asn1PE_e2ap_{{item_ies}} (OSCTXT* pctxt, e2ap_{{item_ies}}* pvalue)
    stat = asn1PE_e2ap_{{item_type}} (pctxt, &pvalue->value);
    if (stat != 0) return LOG_RTERR(pctxt, stat);
 
-   RTXCTXPOPEXTNAME(pctxt);
+   RTXCTXTPOPTYPENAME(pctxt);
    return 0;
 }
 
@@ -28,5 +28,7 @@ void asn1Init_e2ap_{{item_ies}} (e2ap_{{item_ies}}* pvalue)
 {
    pvalue->id = ID_{{item_type}};
    pvalue->criticality = CRIT_{{item_type}};
+   {% if not (primitive_info.isprimitive and item_ies !="BIT STRING") %}
    asn1Init_e2ap_{{item_type}} (&pvalue->value);
+   {% endif %}
 }

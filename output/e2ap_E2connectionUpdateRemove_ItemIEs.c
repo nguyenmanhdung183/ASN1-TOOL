@@ -8,17 +8,17 @@
 int asn1PE_e2ap_E2connectionUpdateRemove_ItemIEs (OSCTXT* pctxt, e2ap_E2connectionUpdateRemove_ItemIEs* pvalue)
 {
    int stat = 0;
-   RTXCTXTPUSHTYPENAME (pctxt, "E2connectionUpdateRemove-ItemIEs");
+   //RTXCTXTPUSHTYPENAME (pctxt, "E2connectionUpdateRemove-ItemIEs");
 
    /* encode id */
    RTXCTXTPUSHELEMNAME (pctxt, "id");
-   stat = asn1PE_e2ap_ProtocolIE_ID (pctxt, &pvalue->value.u_E2connectionUpdateRemove_ItemIEs_.id);
+   stat = asn1PE_e2ap_ProtocolIE_ID (pctxt, &pvalue->id);
    if (stat != 0) return LOG_RTERR (pctxt, stat);
    RTXCTXTPOPELEMNAME (pctxt);
 
    /* encode criticality */
    RTXCTXTPUSHELEMNAME (pctxt, "criticality");
-   stat = asn1PE_e2ap_Criticality (pctxt, &pvalue->value.u_E2connectionUpdateRemove_ItemIEs_.criticality);
+   stat = asn1PE_e2ap_Criticality (pctxt, &pvalue->criticality);
    if (stat != 0) return LOG_RTERR (pctxt, stat);
    RTXCTXTPOPELEMNAME (pctxt);
 
@@ -41,16 +41,28 @@ int asn1PE_e2ap_E2connectionUpdateRemove_ItemIEs (OSCTXT* pctxt, e2ap_E2connecti
       if (stat != 0) return LOG_RTERR (pctxt, stat);
 
       switch (pvalue->value.t) {
-         case T_E2AP_PDU_Contents_E2connectionUpdateRemove_ItemIEs_:
-            RTXCTXTPUSHELEMNAME (pctxt, "e2ap-E2nodeComponentConfigAddition-Item");
-            stat = asn1PE_e2ap_ (pctxt, &pvalue->value.u_E2connectionUpdateRemove_ItemIEs_.value);
-            if (stat != 0) return LOG_RTERR (pctxt, stat);
-            RTXCTXTPOPELEMNAME (pctxt);
-            break;
+      case T_E2AP_PDU_Contents_E2connectionUpdateRemove_ItemIEs_E2connectionUpdateRemove_Item:
+         
+         RTXCTXTPUSHELEMNAME (pctxt, "_e2ap_E2connectionUpdateRemove_ItemIEs_id_E2connectionUpdateRemove_Item");
+         stat = asn1PE_e2ap_E2connectionUpdateRemove_Item (pctxt, pvalue->value.u._e2apE2connectionUpdateRemove_ItemIEs_E2connectionUpdateRemove_Item);
+         RTXCTXTPOPELEMNAME (pctxt);
+      
+         break;
 
-         default:
-            encoded = FALSE;
-            stat = RTERR_INVOPT;
+      case T_E2AP_PDU_Contents_e2ap_E2connectionUpdateRemove_ItemIEs_UNDEF_:
+      {
+          if(0!=pvalue->value.u.extElem1){
+              openType.numocts = pvalue->value.u.extElem1->numocts;
+              openType.data = pvalue->value.u.extElem1->data;
+          } else {
+              /* No extension element to encode */
+          }
+          encoded = FALSE;
+          break;
+      }
+      default:
+         encoded = FALSE;
+         stat = RTERR_INVOPT;
       }
 
       if (encoded) {
@@ -67,7 +79,7 @@ int asn1PE_e2ap_E2connectionUpdateRemove_ItemIEs (OSCTXT* pctxt, e2ap_E2connecti
       RTXCTXTPOPELEMNAME (pctxt);
    }
 
-   RTXCTXPOPEXTNAME (pctxt);
+   //RTXCTXTPOPTYPENAME (pctxt);
    return 0;
 }
 

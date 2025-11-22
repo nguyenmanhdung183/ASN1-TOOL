@@ -34,6 +34,12 @@ CONTAINER PAIR
 --->   stat = asn1PE_e2ap_Criticality (pctxt, &pvalue->value.u_E2nodeComponentConfigAddition_ItemIEs_.criticality);
 --->OSBOOL m_tnlPortPresent;
 --->TNLinformation decode – optional bits/Trong encode không viết optional bits, chỉ viết extension bit → decode đang đọc sai bit layout (bị lệch 1 bit).
+
+=---->       stat = asn1PD_ASN1BitStr32 (pctxt, &pvalue->tnlAddress); // typedef asn1PD_ASN1BitStr32 pd_BitString32 
+----> PD IE chưa có
+
+   ---> stat = pe_Length (pctxt, pvalue->count); small length
+
 ==========================================
 chạy 1.py -> xem file .yaml và chỉnh lại nếu bị sai
 chạy 2.py

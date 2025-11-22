@@ -56,7 +56,7 @@ int asn1PE_e2ap_E2connectionUpdate_Item (OSCTXT* pctxt, e2ap_E2connectionUpdate_
       }
    }
 
-   RTXCTXPOPTYPENAME(pctxt);
+   RTXCTXTPOPTYPENAME(pctxt);
    return (stat);
 }
 
@@ -68,7 +68,7 @@ int asn1PD_e2ap_E2connectionUpdate_Item (OSCTXT* pctxt, e2ap_E2connectionUpdate_
    OSUINT32 bitcnt;
    OSUINT32 i_;
    OSBOOL extbit = FALSE;
-   OSBOOL optbits[1];
+   OSBOOL optbits[2];
 
    RTXCTXTPUSHTYPENAME(pctxt, "E2connectionUpdate-Item");
 
@@ -78,7 +78,7 @@ int asn1PD_e2ap_E2connectionUpdate_Item (OSCTXT* pctxt, e2ap_E2connectionUpdate_
    rtxDListInit(&pvalue->extElem1); 
 
    /*optional bits*/
-   for(i_ = 0; i_ < 1; i_++) {
+   for(i_ = 0; i_ < 2; i_++) {
       stat = DEC_BIT(pctxt, &optbits[i_]);
       if (stat != 0) return LOG_RTERR(pctxt, stat);
    }
@@ -127,7 +127,7 @@ int asn1PD_e2ap_E2connectionUpdate_Item (OSCTXT* pctxt, e2ap_E2connectionUpdate_
                if(0!=pOpenType){
                   pOpenType->numocts = openType.numocts;
                   pOpenType->data = openType.data;
-                  rtxListAppend(pctxt, &pvalue->extElem1, pOpenType);
+                  rtxDListAppend(pctxt, &pvalue->extElem1, pOpenType);
                }
                else stat = RTERR_NOMEM;
             }
@@ -137,13 +137,13 @@ int asn1PD_e2ap_E2connectionUpdate_Item (OSCTXT* pctxt, e2ap_E2connectionUpdate_
             }
          }
          else{//unknown element
-            rtxListAppend(pctxt, &pvalue->extElem1, 0);
+            rtxDListAppend(pctxt, &pvalue->extElem1, 0);
          }
       }
       rtxMemFreePtr(pctxt, poptbits);
    }
 
-   RTXCTXPOPTYPENAME(pctxt);
+   RTXCTXTPOPTYPENAME(pctxt);
 
    return (stat);
 
@@ -153,7 +153,6 @@ int asn1Init_e2ap_E2connectionUpdate_Item (e2ap_E2connectionUpdate_Item* pvalue)
 {
    if(0==pvalue) return RTERR_NULLPTR;
    asn1Init_e2ap_TNLinformation (&pvalue->tnlInformation);
-   asn1Init_e2ap_TNLusage (&pvalue->tnlUsage);
    rtxDListFastInit(&pvalue->extElem1);
    return 0;
 }
@@ -162,7 +161,6 @@ void asn1Free_e2ap_E2connectionUpdate_Item (OSCTXT* pctxt, e2ap_E2connectionUpda
 {
    if(0==pvalue) return;
    asn1Free_e2ap_TNLinformation (pctxt, &pvalue->tnlInformation);
-   asn1Free_e2ap_TNLusage (pctxt, &pvalue->tnlUsage);
    rtxMemFreeOpenSeqExt(pctxt, &pvalue->extElem1);
 }
 

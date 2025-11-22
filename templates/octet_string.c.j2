@@ -5,29 +5,29 @@
 
 {% if is_dynamic %}
 /* Dynamic OCTET STRING (no SIZE constraint) */
-EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
+EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}} pvalue)
 {
    int stat = 0;
   
    RTXCTXTPUSHTYPENAME (pctxt, "{{name|replace('_', '-')}}");
    
-   stat = pe_OctetString (pctxt, pvalue->numocts, pvalue->data);
+   stat = pe_OctetString (pctxt, pvalue.numocts, pvalue.data);
  
    if (stat != 0) return LOG_RTERR (pctxt, stat);
-   RTXCTXPOPTYPENAME (pctxt);
+   RTXCTXTPOPTYPENAME (pctxt);
    return stat;
 }
 
-EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}** ppvalue)
+EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* ppvalue)
 {
    int stat = 0;
   
    RTXCTXTPUSHTYPENAME (pctxt, "{{name|replace('_', '-')}}");
  
-   stat = pd_DynOctetString (pctxt, (OSDynOctStr**)ppvalue);
+   stat = pd_DynOctetString (pctxt, (OSDynOctStr*)ppvalue);
    
    if (stat != 0) return LOG_RTERR (pctxt, stat);
-   RTXCTXPOPTYPENAME (pctxt);
+   RTXCTXTPOPTYPENAME (pctxt);
    return stat;
 }
 
@@ -51,7 +51,7 @@ void asn1Free_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
 
 {% else %}
 /* Fixed SIZE OCTET STRING */
-EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
+EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}} *pvalue)
 {
    int stat = 0;
  
@@ -62,7 +62,7 @@ EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
    stat = pe_OctetString (pctxt, pvalue->numocts, pvalue->data);
 
    if (stat != 0) return LOG_RTERR (pctxt, stat);
-   RTXCTXPOPTYPENAME (pctxt);
+   RTXCTXTPOPTYPENAME (pctxt);
    return stat;
 }
 
@@ -77,7 +77,7 @@ EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
    stat = pd_OctetString (pctxt, &pvalue->numocts, pvalue->data, sizeof(pvalue->data));
 
    if (stat != 0) return LOG_RTERR (pctxt, stat);
-   RTXCTXPOPTYPENAME (pctxt);
+   RTXCTXTPOPTYPENAME (pctxt);
    return stat;
 }
 

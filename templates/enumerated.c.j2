@@ -54,7 +54,7 @@ EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}} value)
    }
    stat = pe_ConsUnsigned (pctxt, value, 0, OSUINTCONST({{items|length - 1}}));
    if(stat != 0) return LOG_RTERR (pctxt, stat);
-   RTXCTXPOPTYPENAME (pctxt);
+   RTXCTXTPOPTYPENAME (pctxt);
    return stat;
 }
 
@@ -67,7 +67,7 @@ EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
    stat = pd_ConsUnsigned (pctxt, pvalue, 0, OSUINTCONST({{items|length - 1}}));
    if(stat != 0) return LOG_RTERR (pctxt, stat);
 
-   RTXCTXPOPTYPENAME (pctxt);
+   RTXCTXTPOPTYPENAME (pctxt);
 
    return stat;
 }
