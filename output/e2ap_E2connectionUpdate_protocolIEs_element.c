@@ -149,7 +149,7 @@ EXTERN int  asn1PD_e2ap_E2connectionUpdate_protocolIEs_element (OSCTXT* pctxt, e
             rtxErrAddStrParm(pctxt, "open type with fragment length");
             return LOG_RTERRNEW(pctxt, RTERR_NOTSUPP);
         }
-        bitStartOffset = PU_GETCTXBITOFFSET(pctxt);
+        bitStartOffset = PU_GETCTXTBITOFFSET(pctxt);
         bitLength = openTypeLen * 8;
 
         switch(pvalue->id){//dungnm23 check case lai nhe
@@ -159,11 +159,6 @@ EXTERN int  asn1PD_e2ap_E2connectionUpdate_protocolIEs_element (OSCTXT* pctxt, e
             RTXCTXTPUSHELEMNAME(pctxt, "id-TransactionID");
             //pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_TransactionID 
              pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_TransactionID = rtxMemAllocType(pctxt, e2ap_TransactionID);
-            //asn1Init_e2ap_TransactionID(pvalue->
-              //  value.u._e2ap_E2connectionUpdate_IEs_id_TransactionID);
-
-                 asn1Init_e2ap_TransactionID(pvalue->
-                value.u._e2ap_E2connectionUpdate_IEs_id_TransactionID);
             stat = asn1PD_e2ap_TransactionID (pctxt,
                 (e2ap_TransactionID*)pvalue->value.
                 u._e2ap_E2connectionUpdate_IEs_id_TransactionID);
@@ -177,6 +172,11 @@ EXTERN int  asn1PD_e2ap_E2connectionUpdate_protocolIEs_element (OSCTXT* pctxt, e
             RTXCTXTPUSHELEMNAME(pctxt, "id-E2connectionUpdateAdd");
             //pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdate_List 
              pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateAdd = rtxMemAllocType(pctxt, e2ap_E2connectionUpdate_List);
+            //asn1Init_e2ap_E2connectionUpdate_List(pvalue->
+              //  value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdate_List);
+
+                 asn1Init_e2ap_E2connectionUpdate_List(pvalue->
+                value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateAdd);
             stat = asn1PD_e2ap_E2connectionUpdate_List (pctxt,
                 (e2ap_E2connectionUpdate_List*)pvalue->value.
                 u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateAdd);
@@ -190,6 +190,11 @@ EXTERN int  asn1PD_e2ap_E2connectionUpdate_protocolIEs_element (OSCTXT* pctxt, e
             RTXCTXTPUSHELEMNAME(pctxt, "id-E2connectionUpdateRemove");
             //pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove_List 
              pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove = rtxMemAllocType(pctxt, e2ap_E2connectionUpdateRemove_List);
+            //asn1Init_e2ap_E2connectionUpdateRemove_List(pvalue->
+              //  value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove_List);
+
+                 asn1Init_e2ap_E2connectionUpdateRemove_List(pvalue->
+                value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove);
             stat = asn1PD_e2ap_E2connectionUpdateRemove_List (pctxt,
                 (e2ap_E2connectionUpdateRemove_List*)pvalue->value.
                 u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove);
@@ -203,6 +208,11 @@ EXTERN int  asn1PD_e2ap_E2connectionUpdate_protocolIEs_element (OSCTXT* pctxt, e
             RTXCTXTPUSHELEMNAME(pctxt, "id-E2connectionUpdateModify");
             //pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdate_List 
              pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateModify = rtxMemAllocType(pctxt, e2ap_E2connectionUpdate_List);
+            //asn1Init_e2ap_E2connectionUpdate_List(pvalue->
+              //  value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdate_List);
+
+                 asn1Init_e2ap_E2connectionUpdate_List(pvalue->
+                value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateModify);
             stat = asn1PD_e2ap_E2connectionUpdate_List (pctxt,
                 (e2ap_E2connectionUpdate_List*)pvalue->value.
                 u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateModify);
@@ -236,7 +246,7 @@ EXTERN int  asn1PD_e2ap_E2connectionUpdate_protocolIEs_element (OSCTXT* pctxt, e
             break;
     }
     {
-    size_t bitEndOffset = PU_GETCTXBITOFFSET(pctxt);
+    size_t bitEndOffset = PU_GETCTXTBITOFFSET(pctxt);
     size_t bitsConsumed = bitEndOffset-bitStartOffset;
     if(bitsConsumed<bitLength){
         stat = pd_moveBitCursor(pctxt, (int)(bitLength - bitsConsumed));

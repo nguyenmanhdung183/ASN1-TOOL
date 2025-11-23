@@ -16,7 +16,16 @@ REPLACEMENTS_EXTRA = {
     "asn1PE_ASN1BitStr32": "pe_BitString32",
     "asn1PD_ASN1BitStr32": "pd_BitString32",
     "asn1Init_ASN1BitStr32": "//asn1Init_ASN1BitStr32",
-    "asn1Free_ASN1BitStr32": "//asn1Free_ASN1BitStr32"
+    "asn1Free_ASN1BitStr32": "//asn1Free_ASN1BitStr32",
+    "ASN1V_e2ap_maxofTNLA": "32",
+    "ASN1V_e2ap_maxnoofErrors": "256",
+    "ASN1V_e2ap_maxofE2nodeComponents": "1024",
+    "ASN1V_e2ap_maxofRANfunctionID": "256",
+    "ASN1V_e2ap_maxofRICactionID": "16",
+    "ASN1V_e2ap_maxofTNLA": "32",
+    "ASN1V_e2ap_maxofRICrequestID": "1024",
+    "ASN1V_e2ap_maxofRICsubscriptions": "2147483648",
+    "asn1PrtToStr_ASN1BitStr32":"rtPrintToStringOpenTypeExtBraceText"
 }
 
 TARGET_DIRS = ["merged_output", "output"]

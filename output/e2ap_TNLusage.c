@@ -74,7 +74,7 @@ EXTERN int asn1PrtToStr_e2ap_TNLusage (const char* name, e2ap_TNLusage* pvalue, 
 {
    int stat;
 
-   if(rtPrintToStringIdent(buffer, bufSize) < 0) return -1;
+   if(rtPrintToStringIndent(buffer, bufSize) < 0) return -1;
    if(rtPrintToString(name, buffer, bufSize) < 0) return -1;
 
    switch(*pvalue) {

@@ -6,7 +6,11 @@
 
 typedef struct EXTERN e2ap_{{name}} {
 {% for f in fields %}
+{%if f.field == "protocolIEs" %}
+e2ap_{{name|replace('-', '_')}}_protocolIEs protocolIEs;
+{% else %}
    e2ap_{{f.ie_type|replace("-", "_")}} {{f.field|replace('-', '_')}};
+{% endif %}
    {% if f.presence == "optional" %}     OSBOOL m_{{f.field}}Present;{% endif %}
 {% endfor %}
 

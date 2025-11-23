@@ -21,7 +21,7 @@ int asn1PE_e2ap_E2connectionUpdateRemove_Item (OSCTXT* pctxt, e2ap_E2connectionU
    RTXCTXTPUSHELEMNAME(pctxt, "tnlInformation");
    stat = asn1PE_e2ap_TNLinformation (pctxt, &pvalue->tnlInformation);
    if (stat != 0) return LOG_RTERR(pctxt, stat);
-   RTXPOPELEMNAME(pctxt);
+   RTXCTXTPOPELEMNAME(pctxt);
 
 
 
@@ -43,7 +43,8 @@ int asn1PE_e2ap_E2connectionUpdateRemove_Item (OSCTXT* pctxt, e2ap_E2connectionU
 
       /*encode extension elements*/
       if (pvalue->extElem1.count > 0) {
-         stat = pe_OpenType (pctxt, pvalue->extElem1.numocts, pvalue->extElem1.data);
+         //stat = pe_OpenType (pctxt, pvalue->extElem1.numocts, pvalue->extElem1.data);
+         stat = pe_OpenTypeExt(pctxt, &pvalue->extElem1);
          if (stat != 0) return LOG_RTERR(pctxt, stat);
       }
    }
@@ -78,16 +79,18 @@ int asn1PD_e2ap_E2connectionUpdateRemove_Item (OSCTXT* pctxt, e2ap_E2connectionU
    /*decode root elements*/
    /* decode field tnlInformation */
    RTXCTXTPUSHELEMNAME(pctxt, "tnlInformation");
+
+
       stat = asn1PD_e2ap_TNLinformation (pctxt, &pvalue->tnlInformation);
       if (stat != 0) return LOG_RTERR(pctxt, stat);
-   RTXPOPELEMNAME(pctxt);
+   RTXCTXTPOPELEMNAME(pctxt);
 
 
    /*decode extension elements*/
    if(extbit) {
       OSOCTET *poptbits;
       /*decode optional bits length */
-      stat = pdSmallLength(pctxt, &bitcnt);
+      stat = pd_SmallLength(pctxt, &bitcnt);
       if (stat != 0) return LOG_RTERR(pctxt, stat);
 
       /*decode optional bits*/

@@ -82,18 +82,18 @@ int asn1PE_e2ap_TNLinformation (OSCTXT* pctxt, e2ap_TNLinformation* pvalue)
    /* encode field tnlAddress */  
 
    RTXCTXTPUSHELEMNAME(pctxt, "tnlAddress");
-   stat = pe_BitString32 (pctxt, &pvalue->tnlAddress);
+   stat = rtxEncBits (pctxt, pvalue->tnlAddress.data, pvalue->tnlAddress.numbits);
    if (stat != 0) return LOG_RTERR(pctxt, stat);
-   RTXPOPELEMNAME(pctxt);
+   RTXCTXTPOPELEMNAME(pctxt);
 
 
    /* encode field tnlPort */  
    if (pvalue->m_tnlPortPresent) {
 
    RTXCTXTPUSHELEMNAME(pctxt, "tnlPort");
-   stat = pe_BitString32 (pctxt, &pvalue->tnlPort);
+   stat = rtxEncBits (pctxt, pvalue->tnlPort.data, pvalue->tnlPort.numbits);
    if (stat != 0) return LOG_RTERR(pctxt, stat);
-   RTXPOPELEMNAME(pctxt);
+   RTXCTXTPOPELEMNAME(pctxt);
 
    }
 
@@ -116,7 +116,8 @@ int asn1PE_e2ap_TNLinformation (OSCTXT* pctxt, e2ap_TNLinformation* pvalue)
 
       /*encode extension elements*/
       if (pvalue->extElem1.count > 0) {
-         stat = pe_OpenType (pctxt, pvalue->extElem1.numocts, pvalue->extElem1.data);
+         //stat = pe_OpenType (pctxt, pvalue->extElem1.numocts, pvalue->extElem1.data);
+         stat = pe_OpenTypeExt(pctxt, &pvalue->extElem1);
          if (stat != 0) return LOG_RTERR(pctxt, stat);
       }
    }
@@ -151,27 +152,31 @@ int asn1PD_e2ap_TNLinformation (OSCTXT* pctxt, e2ap_TNLinformation* pvalue)
    /*decode root elements*/
    /* decode field tnlAddress */
    RTXCTXTPUSHELEMNAME(pctxt, "tnlAddress");
-      stat = pd_BitString32 (pctxt, &pvalue->tnlAddress);
+
+      stat = pd_BitString32 (pctxt, &pvalue->tnlAddress, OSUINTCONST(1), OSUINTCONST(160));
+
       if (stat != 0) return LOG_RTERR(pctxt, stat);
-   RTXPOPELEMNAME(pctxt);
+   RTXCTXTPOPELEMNAME(pctxt);
 
    /* decode field tnlPort */
    RTXCTXTPUSHELEMNAME(pctxt, "tnlPort");
    if (optbits[0]) {
       pvalue->m_tnlPortPresent = TRUE;
-      stat = pd_BitString32 (pctxt, &pvalue->tnlPort);
+
+      stat = pd_BitString32 (pctxt, &pvalue->tnlPort, OSUINTCONST(16), OSUINTCONST(16));
+
       if (stat != 0) return LOG_RTERR(pctxt, stat);
    } else {
       pvalue->m_tnlPortPresent = FALSE;
    }
-   RTXPOPELEMNAME(pctxt);
+   RTXCTXTPOPELEMNAME(pctxt);
 
 
    /*decode extension elements*/
    if(extbit) {
       OSOCTET *poptbits;
       /*decode optional bits length */
-      stat = pdSmallLength(pctxt, &bitcnt);
+      stat = pd_SmallLength(pctxt, &bitcnt);
       if (stat != 0) return LOG_RTERR(pctxt, stat);
 
       /*decode optional bits*/
@@ -242,11 +247,11 @@ int asn1PrtToStr_e2ap_TNLinformation (const char* name, e2ap_TNLinformation* pva
    {
       return -1;
    }
-   if(asn1PrtToStr_ASN1BitStr32 ("tnlAddress", &pvalue->tnlAddress, buffer, bufSize) < 0)
+   if(rtPrintToStringOpenTypeExtBraceText ("tnlAddress", &pvalue->tnlAddress, buffer, bufSize) < 0)
    {
       return -1;
    }
-   if(asn1PrtToStr_ASN1BitStr32 ("tnlPort", &pvalue->tnlPort, buffer, bufSize) < 0)
+   if(rtPrintToStringOpenTypeExtBraceText ("tnlPort", &pvalue->tnlPort, buffer, bufSize) < 0)
    {
       return -1;
    }
@@ -338,7 +343,7 @@ EXTERN int asn1PrtToStr_e2ap_TNLusage (const char* name, e2ap_TNLusage* pvalue, 
 {
    int stat;
 
-   if(rtPrintToStringIdent(buffer, bufSize) < 0) return -1;
+   if(rtPrintToStringIndent(buffer, bufSize) < 0) return -1;
    if(rtPrintToString(name, buffer, bufSize) < 0) return -1;
 
    switch(*pvalue) {
@@ -385,7 +390,7 @@ int asn1PE_e2ap_E2connectionUpdate_Item (OSCTXT* pctxt, e2ap_E2connectionUpdate_
    RTXCTXTPUSHELEMNAME(pctxt, "tnlInformation");
    stat = asn1PE_e2ap_TNLinformation (pctxt, &pvalue->tnlInformation);
    if (stat != 0) return LOG_RTERR(pctxt, stat);
-   RTXPOPELEMNAME(pctxt);
+   RTXCTXTPOPELEMNAME(pctxt);
 
 
    /* encode field tnlUsage */  
@@ -393,7 +398,7 @@ int asn1PE_e2ap_E2connectionUpdate_Item (OSCTXT* pctxt, e2ap_E2connectionUpdate_
    RTXCTXTPUSHELEMNAME(pctxt, "tnlUsage");
    stat = asn1PE_e2ap_TNLusage (pctxt, &pvalue->tnlUsage);
    if (stat != 0) return LOG_RTERR(pctxt, stat);
-   RTXPOPELEMNAME(pctxt);
+   RTXCTXTPOPELEMNAME(pctxt);
 
 
 
@@ -415,7 +420,8 @@ int asn1PE_e2ap_E2connectionUpdate_Item (OSCTXT* pctxt, e2ap_E2connectionUpdate_
 
       /*encode extension elements*/
       if (pvalue->extElem1.count > 0) {
-         stat = pe_OpenType (pctxt, pvalue->extElem1.numocts, pvalue->extElem1.data);
+         //stat = pe_OpenType (pctxt, pvalue->extElem1.numocts, pvalue->extElem1.data);
+         stat = pe_OpenTypeExt(pctxt, &pvalue->extElem1);
          if (stat != 0) return LOG_RTERR(pctxt, stat);
       }
    }
@@ -450,22 +456,26 @@ int asn1PD_e2ap_E2connectionUpdate_Item (OSCTXT* pctxt, e2ap_E2connectionUpdate_
    /*decode root elements*/
    /* decode field tnlInformation */
    RTXCTXTPUSHELEMNAME(pctxt, "tnlInformation");
+
+
       stat = asn1PD_e2ap_TNLinformation (pctxt, &pvalue->tnlInformation);
       if (stat != 0) return LOG_RTERR(pctxt, stat);
-   RTXPOPELEMNAME(pctxt);
+   RTXCTXTPOPELEMNAME(pctxt);
 
    /* decode field tnlUsage */
    RTXCTXTPUSHELEMNAME(pctxt, "tnlUsage");
+
+
       stat = asn1PD_e2ap_TNLusage (pctxt, &pvalue->tnlUsage);
       if (stat != 0) return LOG_RTERR(pctxt, stat);
-   RTXPOPELEMNAME(pctxt);
+   RTXCTXTPOPELEMNAME(pctxt);
 
 
    /*decode extension elements*/
    if(extbit) {
       OSOCTET *poptbits;
       /*decode optional bits length */
-      stat = pdSmallLength(pctxt, &bitcnt);
+      stat = pd_SmallLength(pctxt, &bitcnt);
       if (stat != 0) return LOG_RTERR(pctxt, stat);
 
       /*decode optional bits*/
@@ -535,10 +545,6 @@ int asn1PrtToStr_e2ap_E2connectionUpdate_Item (const char* name, e2ap_E2connecti
       return -1;
    }
    if(asn1PrtToStr_e2ap_TNLinformation ("tnlInformation", &pvalue->tnlInformation, buffer, bufSize) < 0)
-   {
-      return -1;
-   }
-   if(asn1PrtToStr_e2ap_TNLusage ("tnlUsage", &pvalue->tnlUsage, buffer, bufSize) < 0)
    {
       return -1;
    }
@@ -622,7 +628,7 @@ int asn1PE_e2ap_E2connectionUpdate_ItemIEs (OSCTXT* pctxt, e2ap_E2connectionUpda
       }
 
       if (encoded) {
-         size_t bitOffset = PU_GETCTXBITSAVED (pctxt);
+         size_t bitOffset = PU_GETCTXTBITOFFSET (pctxt);
          size_t bitsConsumed = bitOffset;
          if (bitsConsumed < bitOffset) {
             stat = pd_moveBitCursor (pctxt, (int)(bitOffset - bitsConsumed));
@@ -651,6 +657,7 @@ void asn1Init_e2ap_E2connectionUpdate_ItemIEs (e2ap_E2connectionUpdate_ItemIEs* 
    OSCRTLMEMSET (pvalue, 0, sizeof(e2ap_E2connectionUpdate_ItemIEs));
 }
 
+#if 0
 void asn1Free_e2ap_E2connectionUpdate_ItemIEs (OSCTXT* pctxt, e2ap_E2connectionUpdate_ItemIEs* pvalue)
 {
    if (!pvalue) return;
@@ -658,6 +665,26 @@ void asn1Free_e2ap_E2connectionUpdate_ItemIEs (OSCTXT* pctxt, e2ap_E2connectionU
       rtxMemFreeArray (pctxt, pvalue->extElem1);
       pvalue->extElem1 = 0;
       pvalue->extElem1_n = 0;
+   }
+}
+#endif
+void asn1Free_e2ap_E2connectionUpdate_ItemIEs (OSCTXT* pctxt, e2ap_E2connectionUpdate_ItemIEs* pvalue)
+{
+   if(0==pvalue) return;
+   switch(pvalue->value.t){
+      case T_E2AP_PDU_Contents_E2connectionUpdate_ItemIEs_E2connectionUpdate_Item:
+         asn1Free_e2ap_E2connectionUpdate_Item (pctxt, pvalue->value.u._e2apE2connectionUpdate_ItemIEs_E2connectionUpdate_Item);
+         rtxMemFreePtr(pctxt, (void*)pvalue->value.u._e2apE2connectionUpdate_ItemIEs_E2connectionUpdate_Item);
+         pvalue->value.u._e2apE2connectionUpdate_ItemIEs_E2connectionUpdate_Item = 0;
+         break;
+      case T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_ItemIEs_UNDEF_:
+         if(0!=pvalue->value.u.extElem1){
+             rtxMemFreePtr(pctxt, pvalue->value.u.extElem1->data);
+             rtxMemFreePtr(pctxt, pvalue->value.u.extElem1);
+             pvalue->value.u.extElem1 =0;
+         }
+         break;
+         default:;
    }
 }
 // --- End of e2ap_E2connectionUpdate_ItemIEs.c ---
@@ -681,7 +708,7 @@ int asn1PE_e2ap_E2connectionUpdate_List (OSCTXT* pctxt, e2ap_E2connectionUpdate_
    RTXCTXTPUSHTYPENAME (pctxt, "E2connectionUpdate-List");
 
    /* encode length determinant */
-   PU_SETSIZECONSTRAINT (pctxt, OSUINTCONST(1), OSUINTCONST(ASN1V_e2ap_maxofTNLA), 0, 0);
+   PU_SETSIZECONSTRAINT (pctxt, OSUINTCONST(1), OSUINTCONST(32), 0, 0);
 
    stat = pe_Length (pctxt, pvalue->count);
    if (stat < 0) return LOG_RTERR (pctxt, stat);
@@ -690,13 +717,13 @@ int asn1PE_e2ap_E2connectionUpdate_List (OSCTXT* pctxt, e2ap_E2connectionUpdate_
    pnode = pvalue->head;
    for (xx1 = 0; pnode != 0 && xx1 < pvalue->count; pnode = pnode->next, xx1++) {
       pdata = (e2ap_E2connectionUpdate_ItemIEs*) pnode->data;
-      RTXCTXPUSHARRAYELEMNAME (pctxt, "SEQUENCE", xx1);
+      RTXCTXTPUSHARRAYELEMNAME (pctxt, "SEQUENCE", xx1);
 
       stat = asn1PE_e2ap_E2connectionUpdate_ItemIEs (pctxt, pdata);
       if (stat != 0) return LOG_RTERR (pctxt, stat);
 
       //xx1++;
-      RTXCTXPPOPARRAYELEMNAME (pctxt);
+      RTXCTXTPOPARRAYELEMNAME (pctxt);
    }
 
    RTXCTXTPOPTYPENAME (pctxt);
@@ -713,7 +740,7 @@ int asn1PD_e2ap_E2connectionUpdate_List (OSCTXT* pctxt, e2ap_E2connectionUpdate_
 
    RTXCTXTPUSHTYPENAME (pctxt, "E2connectionUpdate-List");
 
-   PU_SETSIZECONSTRAINT (pctxt, OSUINTCONST(1), OSUINTCONST(ASN1V_e2ap_maxofTNLA), 0, 0);
+   PU_SETSIZECONSTRAINT (pctxt, OSUINTCONST(1), OSUINTCONST(32), 0, 0);
 
    stat = pd_Length64 (pctxt, &count);
    if (stat != 0) return LOG_RTERR (pctxt, stat);
@@ -721,7 +748,7 @@ int asn1PD_e2ap_E2connectionUpdate_List (OSCTXT* pctxt, e2ap_E2connectionUpdate_
    rtxDListInit (ppvalue);
 
    for (xx1 = 0; xx1 < count; xx1++) {
-      RTXCTXPUSHARRAYELEMNAME (pctxt, "SEQUENCE", xx1);
+      RTXCTXTPUSHARRAYELEMNAME (pctxt, "SEQUENCE", xx1);
 
       pdata = rtxMemAllocType (pctxt, e2ap_E2connectionUpdate_ItemIEs);
       if (!pdata) return LOG_RTERR (pctxt, RTERR_NOMEM);
@@ -734,7 +761,7 @@ int asn1PD_e2ap_E2connectionUpdate_List (OSCTXT* pctxt, e2ap_E2connectionUpdate_
 
       rtxDListAppendNode (ppvalue, pdata);
 
-      RTXCTXPPOPARRAYELEMNAME (pctxt);
+      RTXCTXTPOPARRAYELEMNAME (pctxt);
    }
 
    RTXCTXTPOPTYPENAME (pctxt);
@@ -759,7 +786,7 @@ void asn1Free_e2ap_E2connectionUpdate_List (OSCTXT* pctxt, e2ap_E2connectionUpda
       }
       pnode = pnode->next;
    }
-   rtxDListFreeAll (pvalue);
+      rtxDListFreeAll(pctxt, pvalue);
 }
 
 #if 0
@@ -803,7 +830,7 @@ int asn1PE_e2ap_E2connectionUpdateRemove_Item (OSCTXT* pctxt, e2ap_E2connectionU
    RTXCTXTPUSHELEMNAME(pctxt, "tnlInformation");
    stat = asn1PE_e2ap_TNLinformation (pctxt, &pvalue->tnlInformation);
    if (stat != 0) return LOG_RTERR(pctxt, stat);
-   RTXPOPELEMNAME(pctxt);
+   RTXCTXTPOPELEMNAME(pctxt);
 
 
 
@@ -825,7 +852,8 @@ int asn1PE_e2ap_E2connectionUpdateRemove_Item (OSCTXT* pctxt, e2ap_E2connectionU
 
       /*encode extension elements*/
       if (pvalue->extElem1.count > 0) {
-         stat = pe_OpenType (pctxt, pvalue->extElem1.numocts, pvalue->extElem1.data);
+         //stat = pe_OpenType (pctxt, pvalue->extElem1.numocts, pvalue->extElem1.data);
+         stat = pe_OpenTypeExt(pctxt, &pvalue->extElem1);
          if (stat != 0) return LOG_RTERR(pctxt, stat);
       }
    }
@@ -860,16 +888,18 @@ int asn1PD_e2ap_E2connectionUpdateRemove_Item (OSCTXT* pctxt, e2ap_E2connectionU
    /*decode root elements*/
    /* decode field tnlInformation */
    RTXCTXTPUSHELEMNAME(pctxt, "tnlInformation");
+
+
       stat = asn1PD_e2ap_TNLinformation (pctxt, &pvalue->tnlInformation);
       if (stat != 0) return LOG_RTERR(pctxt, stat);
-   RTXPOPELEMNAME(pctxt);
+   RTXCTXTPOPELEMNAME(pctxt);
 
 
    /*decode extension elements*/
    if(extbit) {
       OSOCTET *poptbits;
       /*decode optional bits length */
-      stat = pdSmallLength(pctxt, &bitcnt);
+      stat = pd_SmallLength(pctxt, &bitcnt);
       if (stat != 0) return LOG_RTERR(pctxt, stat);
 
       /*decode optional bits*/
@@ -1022,7 +1052,7 @@ int asn1PE_e2ap_E2connectionUpdateRemove_ItemIEs (OSCTXT* pctxt, e2ap_E2connecti
       }
 
       if (encoded) {
-         size_t bitOffset = PU_GETCTXBITSAVED (pctxt);
+         size_t bitOffset = PU_GETCTXTBITOFFSET (pctxt);
          size_t bitsConsumed = bitOffset;
          if (bitsConsumed < bitOffset) {
             stat = pd_moveBitCursor (pctxt, (int)(bitOffset - bitsConsumed));
@@ -1051,6 +1081,7 @@ void asn1Init_e2ap_E2connectionUpdateRemove_ItemIEs (e2ap_E2connectionUpdateRemo
    OSCRTLMEMSET (pvalue, 0, sizeof(e2ap_E2connectionUpdateRemove_ItemIEs));
 }
 
+#if 0
 void asn1Free_e2ap_E2connectionUpdateRemove_ItemIEs (OSCTXT* pctxt, e2ap_E2connectionUpdateRemove_ItemIEs* pvalue)
 {
    if (!pvalue) return;
@@ -1058,6 +1089,26 @@ void asn1Free_e2ap_E2connectionUpdateRemove_ItemIEs (OSCTXT* pctxt, e2ap_E2conne
       rtxMemFreeArray (pctxt, pvalue->extElem1);
       pvalue->extElem1 = 0;
       pvalue->extElem1_n = 0;
+   }
+}
+#endif
+void asn1Free_e2ap_E2connectionUpdateRemove_ItemIEs (OSCTXT* pctxt, e2ap_E2connectionUpdateRemove_ItemIEs* pvalue)
+{
+   if(0==pvalue) return;
+   switch(pvalue->value.t){
+      case T_E2AP_PDU_Contents_E2connectionUpdateRemove_ItemIEs_E2connectionUpdateRemove_Item:
+         asn1Free_e2ap_E2connectionUpdateRemove_Item (pctxt, pvalue->value.u._e2apE2connectionUpdateRemove_ItemIEs_E2connectionUpdateRemove_Item);
+         rtxMemFreePtr(pctxt, (void*)pvalue->value.u._e2apE2connectionUpdateRemove_ItemIEs_E2connectionUpdateRemove_Item);
+         pvalue->value.u._e2apE2connectionUpdateRemove_ItemIEs_E2connectionUpdateRemove_Item = 0;
+         break;
+      case T_E2AP_PDU_Contents_e2ap_E2connectionUpdateRemove_ItemIEs_UNDEF_:
+         if(0!=pvalue->value.u.extElem1){
+             rtxMemFreePtr(pctxt, pvalue->value.u.extElem1->data);
+             rtxMemFreePtr(pctxt, pvalue->value.u.extElem1);
+             pvalue->value.u.extElem1 =0;
+         }
+         break;
+         default:;
    }
 }
 // --- End of e2ap_E2connectionUpdateRemove_ItemIEs.c ---
@@ -1081,7 +1132,7 @@ int asn1PE_e2ap_E2connectionUpdateRemove_List (OSCTXT* pctxt, e2ap_E2connectionU
    RTXCTXTPUSHTYPENAME (pctxt, "E2connectionUpdateRemove-List");
 
    /* encode length determinant */
-   PU_SETSIZECONSTRAINT (pctxt, OSUINTCONST(1), OSUINTCONST(ASN1V_e2ap_maxofTNLA), 0, 0);
+   PU_SETSIZECONSTRAINT (pctxt, OSUINTCONST(1), OSUINTCONST(32), 0, 0);
 
    stat = pe_Length (pctxt, pvalue->count);
    if (stat < 0) return LOG_RTERR (pctxt, stat);
@@ -1090,13 +1141,13 @@ int asn1PE_e2ap_E2connectionUpdateRemove_List (OSCTXT* pctxt, e2ap_E2connectionU
    pnode = pvalue->head;
    for (xx1 = 0; pnode != 0 && xx1 < pvalue->count; pnode = pnode->next, xx1++) {
       pdata = (e2ap_E2connectionUpdateRemove_ItemIEs*) pnode->data;
-      RTXCTXPUSHARRAYELEMNAME (pctxt, "SEQUENCE", xx1);
+      RTXCTXTPUSHARRAYELEMNAME (pctxt, "SEQUENCE", xx1);
 
       stat = asn1PE_e2ap_E2connectionUpdateRemove_ItemIEs (pctxt, pdata);
       if (stat != 0) return LOG_RTERR (pctxt, stat);
 
       //xx1++;
-      RTXCTXPPOPARRAYELEMNAME (pctxt);
+      RTXCTXTPOPARRAYELEMNAME (pctxt);
    }
 
    RTXCTXTPOPTYPENAME (pctxt);
@@ -1113,7 +1164,7 @@ int asn1PD_e2ap_E2connectionUpdateRemove_List (OSCTXT* pctxt, e2ap_E2connectionU
 
    RTXCTXTPUSHTYPENAME (pctxt, "E2connectionUpdateRemove-List");
 
-   PU_SETSIZECONSTRAINT (pctxt, OSUINTCONST(1), OSUINTCONST(ASN1V_e2ap_maxofTNLA), 0, 0);
+   PU_SETSIZECONSTRAINT (pctxt, OSUINTCONST(1), OSUINTCONST(32), 0, 0);
 
    stat = pd_Length64 (pctxt, &count);
    if (stat != 0) return LOG_RTERR (pctxt, stat);
@@ -1121,7 +1172,7 @@ int asn1PD_e2ap_E2connectionUpdateRemove_List (OSCTXT* pctxt, e2ap_E2connectionU
    rtxDListInit (ppvalue);
 
    for (xx1 = 0; xx1 < count; xx1++) {
-      RTXCTXPUSHARRAYELEMNAME (pctxt, "SEQUENCE", xx1);
+      RTXCTXTPUSHARRAYELEMNAME (pctxt, "SEQUENCE", xx1);
 
       pdata = rtxMemAllocType (pctxt, e2ap_E2connectionUpdateRemove_ItemIEs);
       if (!pdata) return LOG_RTERR (pctxt, RTERR_NOMEM);
@@ -1134,7 +1185,7 @@ int asn1PD_e2ap_E2connectionUpdateRemove_List (OSCTXT* pctxt, e2ap_E2connectionU
 
       rtxDListAppendNode (ppvalue, pdata);
 
-      RTXCTXPPOPARRAYELEMNAME (pctxt);
+      RTXCTXTPOPARRAYELEMNAME (pctxt);
    }
 
    RTXCTXTPOPTYPENAME (pctxt);
@@ -1159,7 +1210,7 @@ void asn1Free_e2ap_E2connectionUpdateRemove_List (OSCTXT* pctxt, e2ap_E2connecti
       }
       pnode = pnode->next;
    }
-   rtxDListFreeAll (pvalue);
+      rtxDListFreeAll(pctxt, pvalue);
 }
 
 #if 0
@@ -1205,9 +1256,9 @@ int asn1PE_e2ap_E2connectionUpdate (OSCTXT* pctxt, e2ap_E2connectionUpdate* pval
    /* encode field protocolIEs */  
 
    RTXCTXTPUSHELEMNAME(pctxt, "protocolIEs");
-   stat = asn1PE_e2ap_ProtocolIE_Container (pctxt, &pvalue->protocolIEs);
+   stat = asn1PE_e2ap_E2connectionUpdate_protocolIEs (pctxt, &pvalue->protocolIEs);
    if (stat != 0) return LOG_RTERR(pctxt, stat);
-   RTXPOPELEMNAME(pctxt);
+   RTXCTXTPOPELEMNAME(pctxt);
 
 
 
@@ -1229,7 +1280,8 @@ int asn1PE_e2ap_E2connectionUpdate (OSCTXT* pctxt, e2ap_E2connectionUpdate* pval
 
       /*encode extension elements*/
       if (pvalue->extElem1.count > 0) {
-         stat = pe_OpenType (pctxt, pvalue->extElem1.numocts, pvalue->extElem1.data);
+         //stat = pe_OpenType (pctxt, pvalue->extElem1.numocts, pvalue->extElem1.data);
+         stat = pe_OpenTypeExt(pctxt, &pvalue->extElem1);
          if (stat != 0) return LOG_RTERR(pctxt, stat);
       }
    }
@@ -1264,16 +1316,16 @@ int asn1PD_e2ap_E2connectionUpdate (OSCTXT* pctxt, e2ap_E2connectionUpdate* pval
    /*decode root elements*/
    /* decode field protocolIEs */
    RTXCTXTPUSHELEMNAME(pctxt, "protocolIEs");
-      stat = asn1PD_e2ap_ProtocolIE_Container (pctxt, &pvalue->protocolIEs);
+      stat = asn1PD_e2ap_E2connectionUpdate_protocolIEs (pctxt, &pvalue->protocolIEs);
       if (stat != 0) return LOG_RTERR(pctxt, stat);
-   RTXPOPELEMNAME(pctxt);
+   RTXCTXTPOPELEMNAME(pctxt);
 
 
    /*decode extension elements*/
    if(extbit) {
       OSOCTET *poptbits;
       /*decode optional bits length */
-      stat = pdSmallLength(pctxt, &bitcnt);
+      stat = pd_SmallLength(pctxt, &bitcnt);
       if (stat != 0) return LOG_RTERR(pctxt, stat);
 
       /*decode optional bits*/
@@ -1324,7 +1376,7 @@ int asn1PD_e2ap_E2connectionUpdate (OSCTXT* pctxt, e2ap_E2connectionUpdate* pval
 int asn1Init_e2ap_E2connectionUpdate (e2ap_E2connectionUpdate* pvalue)
 {
    if(0==pvalue) return RTERR_NULLPTR;
-   asn1Init_e2ap_ProtocolIE_Container (&pvalue->protocolIEs);
+   asn1Init_e2ap_E2connectionUpdate_protocolIEs (&pvalue->protocolIEs);
    rtxDListFastInit(&pvalue->extElem1);
    return 0;
 }
@@ -1332,7 +1384,7 @@ int asn1Init_e2ap_E2connectionUpdate (e2ap_E2connectionUpdate* pvalue)
 void asn1Free_e2ap_E2connectionUpdate (OSCTXT* pctxt, e2ap_E2connectionUpdate* pvalue)
 {
    if(0==pvalue) return;
-   asn1Free_e2ap_ProtocolIE_Container (pctxt, &pvalue->protocolIEs);
+   asn1Free_e2ap_E2connectionUpdate_protocolIEs (pctxt, &pvalue->protocolIEs);
    rtxMemFreeOpenSeqExt(pctxt, &pvalue->extElem1);
 }
 
@@ -1342,7 +1394,7 @@ int asn1PrtToStr_e2ap_E2connectionUpdate (const char* name, e2ap_E2connectionUpd
    {
       return -1;
    }
-   if(asn1PrtToStr_e2ap_ProtocolIE_Container ("protocolIEs", &pvalue->protocolIEs, buffer, bufSize) < 0)
+   if(asn1PrtToStr_e2ap_E2connectionUpdate_protocolIEs ("protocolIEs", &pvalue->protocolIEs, buffer, bufSize) < 0)
    {
       return -1;
    }
@@ -1356,93 +1408,6 @@ int asn1PrtToStr_e2ap_E2connectionUpdate (const char* name, e2ap_E2connectionUpd
    return 0;
 }
 // --- End of e2ap_E2connectionUpdate.c ---
-
-// --- Begin of e2ap_E2connectionUpdate_protocolIEs.c ---
-/******************************************************/
-/*                                                    */
-/*    E2connectionUpdate_protocolIEs                      */
-/*                                                    */
-/******************************************************/
-//ie big msg
-
-EXTERN int asn1PE_e2ap_E2connectionUpdate_protocolIEs (OSCTXT* pctxt, e2ap_E2connectionUpdate_protocolIEs* pvalue)
-{
-    int stat =0;
-    OSRTDListNode* pnode;
-    OSUINT32 xx1;
-
-    /*encode length determinant */
-    PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST(0), OSUINTCONST(ASN1V_e2ap_maxProtocolIEs), 0, 0);
-    stat = pe_Length(pctxt, pvalue->count);
-    if(stat!=0) return LOG_RTERR(pctxt, stat);
-
-    /*encode each element*/
-    xx1 =0;
-    for(pnode = pvalue->head; pnode != 0 && xx1<pvalue->count; pnode = pnode->next){
-        RTXCTXTPUSHARRAYELEMNAME(pctxt, "SEQUENCE", xx1);
-        stat = asn1PE_e2ap_E2connectionUpdate_protocolIEs_element (pctxt, ((e2ap_E2connectionUpdate_protocolIEs_element*)pnode->data));
-        if(stat!=0) return LOG_RTERR(pctxt, stat);
-        xx1++;
-        RTXCTXTPOPARRAYELEMNAME(pctxt);
-    }
-
-    return (stat);
-}
-
-EXTERN int  asn1PD_e2ap_E2connectionUpdate_protocolIEs(OSCTXT* pctxt, e2ap_E2connectionUpdate_protocolIEs* pvalue)
-{
-     int stat =0;
-     OSRTDListNode* pnode;
-     OSSIZE count =0;
-     OSSIZE xx1=0;
-
-
-     /*decode length determinant */
-    PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST(0), OSUINTCONST(ASN1V_e2ap_maxProtocolIEs), 0, 0);
-    stat = pd_Length64(pctxt, &count); //tai sao lai 64
-    if(stat!=0) return LOG_RTERR(pctxt, stat);
-
-    /*decode each element*/
-    rtxDListInit(pvalue);
-
-    for(xx1=0; xx1 < count; xx1++){
-        e2ap_E2connectionUpdate_protocolIEs_element* pdata;
-        RTXCTXTPUSHARRAYELEMNAME(pctxt, "SEQUENCE",xx1);
-
-        if(pnode == NULL) return LOG_RTERR(pctxt, RTERR_NOMEM);
-
-        asn1Init_e2ap_E2connectionUpdate_protocolIEs_element(pdata);
-        rtxDListAppendNode(pvalue, pnode);
-       // stat = asn1PD_e2ap_E2connectionUpdate_protocolIEs_element (pctxt, pdata);
-        if(stat!=0) return LOG_RTERR(pctxt, stat);
-        RTXCTXTPOPARRAYELEMNAME(pctxt);
-
-    }
-    return (stat);
-}
-
-
-int asn1Init_e2ap_E2connectionUpdate_protocolIEs(e2ap_E2connectionUpdate_protocolIEs* pvalue)
-{
-    if(0==pvalue) return RTERR_NULLPTR;
-    rtxDListFastInit (pvalue);
-    return 0;
-}
-#if 0
-void asn1Free_e2ap_E2connectionUpdate_protocolIEs(OSCTXT* pctxt, e2ap_E2connectionUpdate_protocolIEs* pvalue)
-{
-    if(0==pvalue) return;   
-    e2ap_E2connectionUpdate_protocolIEs_element* pdata;
-    OSRTDListNode* pnode=pvalue->head;
-    while(0!=pnode){
-        pdata = (e2ap_E2connectionUpdate_protocolIEs_element*)pnode->data;
-       // asn1Free_e2ap_E2connectionUpdate_protocolIEs_element(pctxt, pdata);
-        pnode = pnode->next;
-    }
-    rtxDListFreeAll(pctxt, pvalue);
-}
-#endif
-// --- End of e2ap_E2connectionUpdate_protocolIEs.c ---
 
 // --- Begin of e2ap_E2connectionUpdate_protocolIEs_element.c ---
 /*****************************************/
@@ -1596,7 +1561,7 @@ EXTERN int  asn1PD_e2ap_E2connectionUpdate_protocolIEs_element (OSCTXT* pctxt, e
             rtxErrAddStrParm(pctxt, "open type with fragment length");
             return LOG_RTERRNEW(pctxt, RTERR_NOTSUPP);
         }
-        bitStartOffset = PU_GETCTXBITOFFSET(pctxt);
+        bitStartOffset = PU_GETCTXTBITOFFSET(pctxt);
         bitLength = openTypeLen * 8;
 
         switch(pvalue->id){//dungnm23 check case lai nhe
@@ -1606,11 +1571,6 @@ EXTERN int  asn1PD_e2ap_E2connectionUpdate_protocolIEs_element (OSCTXT* pctxt, e
             RTXCTXTPUSHELEMNAME(pctxt, "id-TransactionID");
             //pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_TransactionID 
              pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_TransactionID = rtxMemAllocType(pctxt, e2ap_TransactionID);
-            //asn1Init_e2ap_TransactionID(pvalue->
-              //  value.u._e2ap_E2connectionUpdate_IEs_id_TransactionID);
-
-                 asn1Init_e2ap_TransactionID(pvalue->
-                value.u._e2ap_E2connectionUpdate_IEs_id_TransactionID);
             stat = asn1PD_e2ap_TransactionID (pctxt,
                 (e2ap_TransactionID*)pvalue->value.
                 u._e2ap_E2connectionUpdate_IEs_id_TransactionID);
@@ -1624,6 +1584,11 @@ EXTERN int  asn1PD_e2ap_E2connectionUpdate_protocolIEs_element (OSCTXT* pctxt, e
             RTXCTXTPUSHELEMNAME(pctxt, "id-E2connectionUpdateAdd");
             //pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdate_List 
              pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateAdd = rtxMemAllocType(pctxt, e2ap_E2connectionUpdate_List);
+            //asn1Init_e2ap_E2connectionUpdate_List(pvalue->
+              //  value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdate_List);
+
+                 asn1Init_e2ap_E2connectionUpdate_List(pvalue->
+                value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateAdd);
             stat = asn1PD_e2ap_E2connectionUpdate_List (pctxt,
                 (e2ap_E2connectionUpdate_List*)pvalue->value.
                 u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateAdd);
@@ -1637,6 +1602,11 @@ EXTERN int  asn1PD_e2ap_E2connectionUpdate_protocolIEs_element (OSCTXT* pctxt, e
             RTXCTXTPUSHELEMNAME(pctxt, "id-E2connectionUpdateRemove");
             //pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove_List 
              pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove = rtxMemAllocType(pctxt, e2ap_E2connectionUpdateRemove_List);
+            //asn1Init_e2ap_E2connectionUpdateRemove_List(pvalue->
+              //  value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove_List);
+
+                 asn1Init_e2ap_E2connectionUpdateRemove_List(pvalue->
+                value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove);
             stat = asn1PD_e2ap_E2connectionUpdateRemove_List (pctxt,
                 (e2ap_E2connectionUpdateRemove_List*)pvalue->value.
                 u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove);
@@ -1650,6 +1620,11 @@ EXTERN int  asn1PD_e2ap_E2connectionUpdate_protocolIEs_element (OSCTXT* pctxt, e
             RTXCTXTPUSHELEMNAME(pctxt, "id-E2connectionUpdateModify");
             //pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdate_List 
              pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateModify = rtxMemAllocType(pctxt, e2ap_E2connectionUpdate_List);
+            //asn1Init_e2ap_E2connectionUpdate_List(pvalue->
+              //  value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdate_List);
+
+                 asn1Init_e2ap_E2connectionUpdate_List(pvalue->
+                value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateModify);
             stat = asn1PD_e2ap_E2connectionUpdate_List (pctxt,
                 (e2ap_E2connectionUpdate_List*)pvalue->value.
                 u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateModify);
@@ -1683,7 +1658,7 @@ EXTERN int  asn1PD_e2ap_E2connectionUpdate_protocolIEs_element (OSCTXT* pctxt, e
             break;
     }
     {
-    size_t bitEndOffset = PU_GETCTXBITOFFSET(pctxt);
+    size_t bitEndOffset = PU_GETCTXTBITOFFSET(pctxt);
     size_t bitsConsumed = bitEndOffset-bitStartOffset;
     if(bitsConsumed<bitLength){
         stat = pd_moveBitCursor(pctxt, (int)(bitLength - bitsConsumed));
@@ -1836,4 +1811,112 @@ int asn1PrtToStr_e2ap_E2connectionUpdate_protocolIEs_element(OSCTXT* pctxt, e2ap
 }
 #endif
 // --- End of e2ap_E2connectionUpdate_protocolIEs_element.c ---
+
+// --- Begin of e2ap_E2connectionUpdate_protocolIEs.c ---
+/******************************************************/
+/*                                                    */
+/*    E2connectionUpdate_protocolIEs                      */
+/*                                                    */
+/******************************************************/
+//ie big msg
+
+EXTERN int asn1PE_e2ap_E2connectionUpdate_protocolIEs (OSCTXT* pctxt, e2ap_E2connectionUpdate_protocolIEs* pvalue)
+{
+    int stat =0;
+    OSRTDListNode* pnode;
+    OSUINT32 xx1;
+
+    /*encode length determinant */
+    PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST(0), OSUINTCONST(65535), 0, 0);
+    stat = pe_Length(pctxt, pvalue->count);
+    if(stat!=0) return LOG_RTERR(pctxt, stat);
+
+    /*encode each element*/
+    xx1 =0;
+    for(pnode = pvalue->head; pnode != 0 && xx1<pvalue->count; pnode = pnode->next){
+        RTXCTXTPUSHARRAYELEMNAME(pctxt, "SEQUENCE", xx1);
+        stat = asn1PE_e2ap_E2connectionUpdate_protocolIEs_element (pctxt, ((e2ap_E2connectionUpdate_protocolIEs_element*)pnode->data));
+        if(stat!=0) return LOG_RTERR(pctxt, stat);
+        xx1++;
+        RTXCTXTPOPARRAYELEMNAME(pctxt);
+    }
+
+    return (stat);
+}
+
+EXTERN int  asn1PD_e2ap_E2connectionUpdate_protocolIEs(OSCTXT* pctxt, e2ap_E2connectionUpdate_protocolIEs* pvalue)
+{
+     int stat =0;
+     OSRTDListNode* pnode;
+     OSSIZE count =0;
+     OSSIZE xx1=0;
+
+
+     /*decode length determinant */
+    PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST(0), OSUINTCONST(65535), 0, 0);
+    stat = pd_Length64(pctxt, &count); //tai sao lai 64
+    if(stat!=0) return LOG_RTERR(pctxt, stat);
+
+    /*decode each element*/
+    rtxDListInit(pvalue);
+
+    for(xx1=0; xx1 < count; xx1++){
+        e2ap_E2connectionUpdate_protocolIEs_element* pdata;
+        RTXCTXTPUSHARRAYELEMNAME(pctxt, "SEQUENCE",xx1);
+
+        if(pnode == NULL) return LOG_RTERR(pctxt, RTERR_NOMEM);
+
+        asn1Init_e2ap_E2connectionUpdate_protocolIEs_element(pdata);
+        rtxDListAppendNode(pvalue, pnode);
+       // stat = asn1PD_e2ap_E2connectionUpdate_protocolIEs_element (pctxt, pdata);
+        if(stat!=0) return LOG_RTERR(pctxt, stat);
+        RTXCTXTPOPARRAYELEMNAME(pctxt);
+
+    }
+    return (stat);
+}
+
+
+int asn1Init_e2ap_E2connectionUpdate_protocolIEs(e2ap_E2connectionUpdate_protocolIEs* pvalue)
+{
+    if(0==pvalue) return RTERR_NULLPTR;
+    rtxDListFastInit (pvalue);
+    return 0;
+}
+#if 1 //ao that day
+void asn1Free_e2ap_E2connectionUpdate_protocolIEs(OSCTXT* pctxt, e2ap_E2connectionUpdate_protocolIEs* pvalue)
+{
+    if(0==pvalue) return;   
+    e2ap_E2connectionUpdate_protocolIEs_element* pdata;
+    OSRTDListNode* pnode=pvalue->head;
+    while(0!=pnode){
+        pdata = (e2ap_E2connectionUpdate_protocolIEs_element*)pnode->data;
+       // asn1Free_e2ap_E2connectionUpdate_protocolIEs_element(pctxt, pdata);
+        pnode = pnode->next;
+    }
+    rtxDListFreeAll(pctxt, pvalue);
+}
+#endif
+
+
+EXTERN int asn1PrtToStr_e2ap_E2connectionUpdate_protocolIEs(const char* name, e2ap_E2connectionUpdate_protocolIEs* pvalue, char* buffer, OSSIZE bufSize)
+{
+    e2ap_E2connectionUpdate_protocolIEs_element* pdata0;
+    OSRTDListNode* pnode0;
+    char nameBuf[256];
+    char numBuf[32];
+    OSUINT32 xx1=0;
+    for(pnode0 = pvalue->head;  xx1 < pvalue->count && pnode0 != 0; pnode0 = pnode0->next, xx1++){
+        pdata0 = (e2ap_E2connectionUpdate_protocolIEs_element*)pnode0->data;
+        rtxUIntToCharStr(xx1, numBuf, sizeof(numBuf), 0);
+        rtxStrJoin(nameBuf, sizeof(nameBuf), name, "[", numBuf, "]", 0);
+        #if 0
+        if(asn1PrtToStr_e2ap_E2connectionUpdate_protocolIEs_element(nameBuf, pdata0, buffer, bufSize) <0){
+            return -1;
+        }
+        #endif
+    }
+    return 0;
+}
+// --- End of e2ap_E2connectionUpdate_protocolIEs.c ---
 

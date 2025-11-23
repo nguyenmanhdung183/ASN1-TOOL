@@ -25,13 +25,13 @@ int asn1PE_e2ap_{{list_name}} (OSCTXT* pctxt, e2ap_{{list_name}}* pvalue)
    pnode = pvalue->head;
    for (xx1 = 0; pnode != 0 && xx1 < pvalue->count; pnode = pnode->next, xx1++) {
       pdata = (e2ap_{{item_ies|replace("-","_")}}*) pnode->data;
-      RTXCTXPUSHARRAYELEMNAME (pctxt, "SEQUENCE", xx1);
+      RTXCTXTPUSHARRAYELEMNAME (pctxt, "SEQUENCE", xx1);
 
       stat = asn1PE_e2ap_{{item_ies|replace("-","_")}} (pctxt, pdata);
       if (stat != 0) return LOG_RTERR (pctxt, stat);
 
       //xx1++;
-      RTXCTXPPOPARRAYELEMNAME (pctxt);
+      RTXCTXTPOPARRAYELEMNAME (pctxt);
    }
 
    RTXCTXTPOPTYPENAME (pctxt);
@@ -56,7 +56,7 @@ int asn1PD_e2ap_{{list_name}} (OSCTXT* pctxt, e2ap_{{list_name}}* ppvalue)
    rtxDListInit (ppvalue);
 
    for (xx1 = 0; xx1 < count; xx1++) {
-      RTXCTXPUSHARRAYELEMNAME (pctxt, "SEQUENCE", xx1);
+      RTXCTXTPUSHARRAYELEMNAME (pctxt, "SEQUENCE", xx1);
 
       pdata = rtxMemAllocType (pctxt, e2ap_{{item_ies|replace("-","_")}});
       if (!pdata) return LOG_RTERR (pctxt, RTERR_NOMEM);
@@ -71,7 +71,7 @@ int asn1PD_e2ap_{{list_name}} (OSCTXT* pctxt, e2ap_{{list_name}}* ppvalue)
 
       rtxDListAppendNode (ppvalue, pdata);
 
-      RTXCTXPPOPARRAYELEMNAME (pctxt);
+      RTXCTXTPOPARRAYELEMNAME (pctxt);
    }
 
    RTXCTXTPOPTYPENAME (pctxt);

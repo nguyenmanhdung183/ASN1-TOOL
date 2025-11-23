@@ -19,18 +19,18 @@ int asn1PE_e2ap_TNLinformation (OSCTXT* pctxt, e2ap_TNLinformation* pvalue)
    /* encode field tnlAddress */  
 
    RTXCTXTPUSHELEMNAME(pctxt, "tnlAddress");
-   stat = pe_BitString32 (pctxt, &pvalue->tnlAddress);
+   stat = rtxEncBits (pctxt, pvalue->tnlAddress.data, pvalue->tnlAddress.numbits);
    if (stat != 0) return LOG_RTERR(pctxt, stat);
-   RTXPOPELEMNAME(pctxt);
+   RTXCTXTPOPELEMNAME(pctxt);
 
 
    /* encode field tnlPort */  
    if (pvalue->m_tnlPortPresent) {
 
    RTXCTXTPUSHELEMNAME(pctxt, "tnlPort");
-   stat = pe_BitString32 (pctxt, &pvalue->tnlPort);
+   stat = rtxEncBits (pctxt, pvalue->tnlPort.data, pvalue->tnlPort.numbits);
    if (stat != 0) return LOG_RTERR(pctxt, stat);
-   RTXPOPELEMNAME(pctxt);
+   RTXCTXTPOPELEMNAME(pctxt);
 
    }
 
@@ -53,7 +53,8 @@ int asn1PE_e2ap_TNLinformation (OSCTXT* pctxt, e2ap_TNLinformation* pvalue)
 
       /*encode extension elements*/
       if (pvalue->extElem1.count > 0) {
-         stat = pe_OpenType (pctxt, pvalue->extElem1.numocts, pvalue->extElem1.data);
+         //stat = pe_OpenType (pctxt, pvalue->extElem1.numocts, pvalue->extElem1.data);
+         stat = pe_OpenTypeExt(pctxt, &pvalue->extElem1);
          if (stat != 0) return LOG_RTERR(pctxt, stat);
       }
    }
@@ -88,27 +89,31 @@ int asn1PD_e2ap_TNLinformation (OSCTXT* pctxt, e2ap_TNLinformation* pvalue)
    /*decode root elements*/
    /* decode field tnlAddress */
    RTXCTXTPUSHELEMNAME(pctxt, "tnlAddress");
-      stat = pd_BitString32 (pctxt, &pvalue->tnlAddress);
+
+      stat = pd_BitString32 (pctxt, &pvalue->tnlAddress, OSUINTCONST(1), OSUINTCONST(160));
+
       if (stat != 0) return LOG_RTERR(pctxt, stat);
-   RTXPOPELEMNAME(pctxt);
+   RTXCTXTPOPELEMNAME(pctxt);
 
    /* decode field tnlPort */
    RTXCTXTPUSHELEMNAME(pctxt, "tnlPort");
    if (optbits[0]) {
       pvalue->m_tnlPortPresent = TRUE;
-      stat = pd_BitString32 (pctxt, &pvalue->tnlPort);
+
+      stat = pd_BitString32 (pctxt, &pvalue->tnlPort, OSUINTCONST(16), OSUINTCONST(16));
+
       if (stat != 0) return LOG_RTERR(pctxt, stat);
    } else {
       pvalue->m_tnlPortPresent = FALSE;
    }
-   RTXPOPELEMNAME(pctxt);
+   RTXCTXTPOPELEMNAME(pctxt);
 
 
    /*decode extension elements*/
    if(extbit) {
       OSOCTET *poptbits;
       /*decode optional bits length */
-      stat = pdSmallLength(pctxt, &bitcnt);
+      stat = pd_SmallLength(pctxt, &bitcnt);
       if (stat != 0) return LOG_RTERR(pctxt, stat);
 
       /*decode optional bits*/
@@ -179,11 +184,11 @@ int asn1PrtToStr_e2ap_TNLinformation (const char* name, e2ap_TNLinformation* pva
    {
       return -1;
    }
-   if(asn1PrtToStr_ASN1BitStr32 ("tnlAddress", &pvalue->tnlAddress, buffer, bufSize) < 0)
+   if(rtPrintToStringOpenTypeExtBraceText ("tnlAddress", &pvalue->tnlAddress, buffer, bufSize) < 0)
    {
       return -1;
    }
-   if(asn1PrtToStr_ASN1BitStr32 ("tnlPort", &pvalue->tnlPort, buffer, bufSize) < 0)
+   if(rtPrintToStringOpenTypeExtBraceText ("tnlPort", &pvalue->tnlPort, buffer, bufSize) < 0)
    {
       return -1;
    }

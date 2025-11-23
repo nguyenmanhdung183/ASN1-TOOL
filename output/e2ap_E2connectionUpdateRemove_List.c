@@ -16,7 +16,7 @@ int asn1PE_e2ap_E2connectionUpdateRemove_List (OSCTXT* pctxt, e2ap_E2connectionU
    RTXCTXTPUSHTYPENAME (pctxt, "E2connectionUpdateRemove-List");
 
    /* encode length determinant */
-   PU_SETSIZECONSTRAINT (pctxt, OSUINTCONST(1), OSUINTCONST(ASN1V_e2ap_maxofTNLA), 0, 0);
+   PU_SETSIZECONSTRAINT (pctxt, OSUINTCONST(1), OSUINTCONST(32), 0, 0);
 
    stat = pe_Length (pctxt, pvalue->count);
    if (stat < 0) return LOG_RTERR (pctxt, stat);
@@ -25,13 +25,13 @@ int asn1PE_e2ap_E2connectionUpdateRemove_List (OSCTXT* pctxt, e2ap_E2connectionU
    pnode = pvalue->head;
    for (xx1 = 0; pnode != 0 && xx1 < pvalue->count; pnode = pnode->next, xx1++) {
       pdata = (e2ap_E2connectionUpdateRemove_ItemIEs*) pnode->data;
-      RTXCTXPUSHARRAYELEMNAME (pctxt, "SEQUENCE", xx1);
+      RTXCTXTPUSHARRAYELEMNAME (pctxt, "SEQUENCE", xx1);
 
       stat = asn1PE_e2ap_E2connectionUpdateRemove_ItemIEs (pctxt, pdata);
       if (stat != 0) return LOG_RTERR (pctxt, stat);
 
       //xx1++;
-      RTXCTXPPOPARRAYELEMNAME (pctxt);
+      RTXCTXTPOPARRAYELEMNAME (pctxt);
    }
 
    RTXCTXTPOPTYPENAME (pctxt);
@@ -48,7 +48,7 @@ int asn1PD_e2ap_E2connectionUpdateRemove_List (OSCTXT* pctxt, e2ap_E2connectionU
 
    RTXCTXTPUSHTYPENAME (pctxt, "E2connectionUpdateRemove-List");
 
-   PU_SETSIZECONSTRAINT (pctxt, OSUINTCONST(1), OSUINTCONST(ASN1V_e2ap_maxofTNLA), 0, 0);
+   PU_SETSIZECONSTRAINT (pctxt, OSUINTCONST(1), OSUINTCONST(32), 0, 0);
 
    stat = pd_Length64 (pctxt, &count);
    if (stat != 0) return LOG_RTERR (pctxt, stat);
@@ -56,7 +56,7 @@ int asn1PD_e2ap_E2connectionUpdateRemove_List (OSCTXT* pctxt, e2ap_E2connectionU
    rtxDListInit (ppvalue);
 
    for (xx1 = 0; xx1 < count; xx1++) {
-      RTXCTXPUSHARRAYELEMNAME (pctxt, "SEQUENCE", xx1);
+      RTXCTXTPUSHARRAYELEMNAME (pctxt, "SEQUENCE", xx1);
 
       pdata = rtxMemAllocType (pctxt, e2ap_E2connectionUpdateRemove_ItemIEs);
       if (!pdata) return LOG_RTERR (pctxt, RTERR_NOMEM);
@@ -69,7 +69,7 @@ int asn1PD_e2ap_E2connectionUpdateRemove_List (OSCTXT* pctxt, e2ap_E2connectionU
 
       rtxDListAppendNode (ppvalue, pdata);
 
-      RTXCTXPPOPARRAYELEMNAME (pctxt);
+      RTXCTXTPOPARRAYELEMNAME (pctxt);
    }
 
    RTXCTXTPOPTYPENAME (pctxt);
@@ -94,7 +94,7 @@ void asn1Free_e2ap_E2connectionUpdateRemove_List (OSCTXT* pctxt, e2ap_E2connecti
       }
       pnode = pnode->next;
    }
-   rtxDListFreeAll (pvalue);
+      rtxDListFreeAll(pctxt, pvalue);
 }
 
 #if 0

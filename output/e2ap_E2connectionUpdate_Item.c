@@ -21,7 +21,7 @@ int asn1PE_e2ap_E2connectionUpdate_Item (OSCTXT* pctxt, e2ap_E2connectionUpdate_
    RTXCTXTPUSHELEMNAME(pctxt, "tnlInformation");
    stat = asn1PE_e2ap_TNLinformation (pctxt, &pvalue->tnlInformation);
    if (stat != 0) return LOG_RTERR(pctxt, stat);
-   RTXPOPELEMNAME(pctxt);
+   RTXCTXTPOPELEMNAME(pctxt);
 
 
    /* encode field tnlUsage */  
@@ -29,7 +29,7 @@ int asn1PE_e2ap_E2connectionUpdate_Item (OSCTXT* pctxt, e2ap_E2connectionUpdate_
    RTXCTXTPUSHELEMNAME(pctxt, "tnlUsage");
    stat = asn1PE_e2ap_TNLusage (pctxt, &pvalue->tnlUsage);
    if (stat != 0) return LOG_RTERR(pctxt, stat);
-   RTXPOPELEMNAME(pctxt);
+   RTXCTXTPOPELEMNAME(pctxt);
 
 
 
@@ -51,7 +51,8 @@ int asn1PE_e2ap_E2connectionUpdate_Item (OSCTXT* pctxt, e2ap_E2connectionUpdate_
 
       /*encode extension elements*/
       if (pvalue->extElem1.count > 0) {
-         stat = pe_OpenType (pctxt, pvalue->extElem1.numocts, pvalue->extElem1.data);
+         //stat = pe_OpenType (pctxt, pvalue->extElem1.numocts, pvalue->extElem1.data);
+         stat = pe_OpenTypeExt(pctxt, &pvalue->extElem1);
          if (stat != 0) return LOG_RTERR(pctxt, stat);
       }
    }
@@ -86,22 +87,26 @@ int asn1PD_e2ap_E2connectionUpdate_Item (OSCTXT* pctxt, e2ap_E2connectionUpdate_
    /*decode root elements*/
    /* decode field tnlInformation */
    RTXCTXTPUSHELEMNAME(pctxt, "tnlInformation");
+
+
       stat = asn1PD_e2ap_TNLinformation (pctxt, &pvalue->tnlInformation);
       if (stat != 0) return LOG_RTERR(pctxt, stat);
-   RTXPOPELEMNAME(pctxt);
+   RTXCTXTPOPELEMNAME(pctxt);
 
    /* decode field tnlUsage */
    RTXCTXTPUSHELEMNAME(pctxt, "tnlUsage");
+
+
       stat = asn1PD_e2ap_TNLusage (pctxt, &pvalue->tnlUsage);
       if (stat != 0) return LOG_RTERR(pctxt, stat);
-   RTXPOPELEMNAME(pctxt);
+   RTXCTXTPOPELEMNAME(pctxt);
 
 
    /*decode extension elements*/
    if(extbit) {
       OSOCTET *poptbits;
       /*decode optional bits length */
-      stat = pdSmallLength(pctxt, &bitcnt);
+      stat = pd_SmallLength(pctxt, &bitcnt);
       if (stat != 0) return LOG_RTERR(pctxt, stat);
 
       /*decode optional bits*/
@@ -171,10 +176,6 @@ int asn1PrtToStr_e2ap_E2connectionUpdate_Item (const char* name, e2ap_E2connecti
       return -1;
    }
    if(asn1PrtToStr_e2ap_TNLinformation ("tnlInformation", &pvalue->tnlInformation, buffer, bufSize) < 0)
-   {
-      return -1;
-   }
-   if(asn1PrtToStr_e2ap_TNLusage ("tnlUsage", &pvalue->tnlUsage, buffer, bufSize) < 0)
    {
       return -1;
    }

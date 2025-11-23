@@ -62,7 +62,7 @@ xnap_return_et e2ap_encode_e2setup_req(
 
         asn1Init_e2ap_E2SetupRequest(p_E2SetupRequest); //-----------> đổi
 
-        e2ap_pdu.u.initiatingMessage->value.u._e2Setup = p_E2SetupRequest; //-----------> đổi
+        e2ap_pdu.u.initiatingMessage->value.u.e2Setup = p_E2SetupRequest; //-----------> đổi
 
         // ============================================ ENCODE IE ================================================
 

@@ -356,6 +356,9 @@ for ies_name_raw, group in ie_rows.groupby("Type_Name"):
 # =============================
 # 4. SINH SEQUENCE (cả normal SEQUENCE và ProtocolIE-Container)
 # =============================
+# =============================
+# 4. SINH SEQUENCE (cả normal SEQUENCE và ProtocolIE-Container)
+# =============================
 sequence_names = types_df[types_df["ASN1_Type"].isin(["SEQUENCE", "Container"])]["Type_Name"].unique()
 
 for seq_name_raw in sequence_names:
@@ -379,10 +382,35 @@ for seq_name_raw in sequence_names:
         presence = "optional" if (pd.notna(optional_val) and str(optional_val).strip() != "") else "mandatory"
         primitive_info = check_if_primitive(ie_type)
 
+        # Xử lý BIT STRING và dãy SIZE(a..b)
+        fixsize = minstr = maxstr = None
+        m_bit = re.match(r"BIT\s+STRING(?:\s*\((.*?)\))?", str(ie_type), re.IGNORECASE)
+        if m_bit:
+            ie_type = "BIT STRING"  # Chuẩn hoá tên C-type
+
+            size_part = m_bit.group(1)
+            if size_part:
+                size_part = size_part.replace("SIZE", "").replace("(", "").replace(")", "").strip()
+
+                # TH1: dạng SIZE(n)
+                m_fixed = re.match(r"(\d+)$", size_part)
+                if m_fixed:
+                    fixsize = int(m_fixed.group(1))
+                    minstr = maxstr = fixsize  # Gán minstr và maxstr bằng giá trị kích thước cố định
+
+                # TH2: dạng SIZE(a..b)
+                m_range = re.match(r"(\d+)\s*\.\.\s*(\d+)", size_part)
+                if m_range:
+                    minstr = int(m_range.group(1))
+                    maxstr = int(m_range.group(2))
+
+        # Thêm thông tin vào fields
         fields.append({
             "field": field_name,
             "ie_type": ie_type,
             "presence": presence,
+            "minstr": minstr,
+            "maxstr": maxstr,
             "primitive": primitive_info,
         })
 
@@ -394,29 +422,13 @@ for seq_name_raw in sequence_names:
         if pd.notna(ext_val) and str(ext_val).strip().lower() in ["yes", "true", "1"]:
             extensible = True
 
+    # Nếu không có trường nào và không extensible, bỏ qua
     if not fields and not extensible:
         print(f"Skip empty SEQUENCE: {seq_name}")
         continue
 
-    # Xử lý BIT STRING
-    fixsize = minstr = maxstr = None
-    for f in fields:
-        m_bit = re.match(r"BIT\s+STRING(?:\s*\((.*?)\))?", str(f["ie_type"]), re.IGNORECASE)
-        if m_bit:
-            f["ie_type"] = "BIT STRING"
-            size_part = m_bit.group(1)
-            if size_part:
-                size_part = size_part.replace("SIZE", "").replace("(", "").replace(")", "").strip()
-                m_fixed = re.match(r"(\d+)$", size_part)
-                m_range = re.match(r"(\d+)\s*\.\.\s*(\d+)", size_part)
-                if m_fixed:
-                    fixsize = int(m_fixed.group(1))
-                    minstr = maxstr = fixsize
-                elif m_range:
-                    minstr = int(m_range.group(1))
-                    maxstr = int(m_range.group(2))
-
-    data = {# xem lại minstr và maxstr ở đoạn trên vào fields thì ok hơn
+    # Sinh file
+    data = {
         "name": seq_name,
         "fields": fields,
         "extensible": extensible,
@@ -425,13 +437,14 @@ for seq_name_raw in sequence_names:
         "maxstr": maxstr,
     }
 
-    # Sinh file
+    # Sinh file header và source cho SEQUENCE
     safe_write(f"output/e2ap_{seq_name}.h",
                env.get_template("seq_normal.h.j2").render(data))
     safe_write(f"output/e2ap_{seq_name}.c",
                env.get_template("seq_normal.c.j2").render(data))
 
     print(f"SEQUENCE → e2ap_{seq_name}.h/c  ({len(fields)} fields, extensible={extensible})")
+
 
 # =============================
 # 5. SINH MESSAGE (E2SetupRequest, ...)

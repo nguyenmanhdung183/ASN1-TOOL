@@ -82,7 +82,7 @@ EXTERN void asn1Print_e2ap_TNLusage (const char* name, const e2ap_TNLusage* pval
 EXTERN int asn1PrtToStrm_e2ap_TNLusage (OSCTXT* pctxt, const char* name, const e2ap_TNLusage* pvalue);
 
 /* Convert to string (write into user buffer) */
-EXTERN int asn1PrtToStr_e2ap_TNLusage (const char* name,const e2ap_TNLusage* pvalue, char* buffer,OSSIZE bufSize);
+EXTERN int asn1PrtToStr_e2ap_TNLusage (const char* name,e2ap_TNLusage* pvalue,  char* buffer,OSSIZE bufSize);
 /* Enumeration table */
 EXTERN extern const OSEnumItem e2ap_TNLusage_ENUMTAB[];
 #define e2ap_TNLusage_ENUMTABSIZE 3
@@ -268,7 +268,7 @@ EXTERN void asn1Print_e2ap_E2connectionUpdateRemove_List (const char *name, cons
 
 
 typedef struct EXTERN e2ap_E2connectionUpdate {
-   e2ap_ProtocolIE_Container protocolIEs;
+e2ap_E2connectionUpdate_protocolIEs protocolIEs;
 
    OSRTDList extElem1;  /* Extension elements */
 } e2ap_E2connectionUpdate;
@@ -282,26 +282,6 @@ EXTERN int asn1PrtToStr_e2ap_E2connectionUpdate (const char* name, e2ap_E2connec
 EXTERN int asn1PrtToStrm_e2ap_E2connectionUpdate (OSCTXT* pctxt, const char* name, const e2ap_E2connectionUpdate* pvalue);
 EXTERN int asn1Copy_e2ap_E2connectionUpdate (OSCTXT* pctxt, const e2ap_E2connectionUpdate* pSrcValue, e2ap_E2connectionUpdate* pDstValue);
 // --- End of e2ap_E2connectionUpdate.h ---
-
-// --- Begin of e2ap_E2connectionUpdate_protocolIEs.h ---
-/******************************************************/
-/*                                                    */
-/*    E2connectionUpdate_protocolIEs                      */
-/*                                                    */
-/******************************************************/
-//ie big msg
-
-/*type was extract from E2connectionUpdate*/
-
-typedef OSRTDList e2ap_E2connectionUpdate_protocolIEs;
-
-EXTERN int asn1PE_e2ap_E2connectionUpdate_protocolIEs (OSCTXT* pctxt, e2ap_E2connectionUpdate_protocolIEs* pvalue);
-EXTERN int asn1PD_e2ap_E2connectionUpdate_protocolIEs (OSCTXT* pctxt, e2ap_E2connectionUpdate_protocolIEs* pvalue);
-EXTERN int asn1Init_e2ap_E2connectionUpdate_protocolIEs (e2ap_E2connectionUpdate_protocolIEs* pvalue);
-//EXTERN void asn1Free_e2ap_E2connectionUpdate_protocolIEs (OSCTXT* pctxt, e2ap_E2connectionUpdate_protocolIEs* pvalue);
-EXTERN int asn1PrtToStr_e2ap_E2connectionUpdate_protocolIEs (OSCTXT* pctxt, e2ap_E2connectionUpdate_protocolIEs* pvalue, char*buffer, OSSIZE bufSize);
-EXTERN int asn1PrtToStrm_e2apE2connectionUpdate_protocolIEs (OSCTXT* pctxt, const char * name, const e2ap_E2connectionUpdate_protocolIEs* pvalue);
-// --- End of e2ap_E2connectionUpdate_protocolIEs.h ---
 
 // --- Begin of e2ap_E2connectionUpdate_protocolIEs_element.h ---
 /*****************************************/
@@ -377,5 +357,26 @@ EXTERN int asn1Init_e2ap_E2connectionUpdate_protocolIEs_element (e2ap_E2connecti
 EXTERN void asn1Free_e2ap_E2connectionUpdate_protocolIEs_element (OSCTXT* pctxt, e2ap_E2connectionUpdate_protocolIEs_element* pvalue);
 EXTERN int asn1PrtToStr_e2ap_E2connectionUpdate_protocolIEs_element (OSCTXT* pctxt, e2ap_E2connectionUpdate_protocolIEs_element* pvalue);
 // --- End of e2ap_E2connectionUpdate_protocolIEs_element.h ---
+
+// --- Begin of e2ap_E2connectionUpdate_protocolIEs.h ---
+/******************************************************/
+/*                                                    */
+/*    E2connectionUpdate_protocolIEs                      */
+/*                                                    */
+/******************************************************/
+//ie big msg
+
+/*type was extract from E2connectionUpdate*/
+
+typedef OSRTDList e2ap_E2connectionUpdate_protocolIEs;
+
+EXTERN int asn1PE_e2ap_E2connectionUpdate_protocolIEs (OSCTXT* pctxt, e2ap_E2connectionUpdate_protocolIEs* pvalue);
+EXTERN int asn1PD_e2ap_E2connectionUpdate_protocolIEs (OSCTXT* pctxt, e2ap_E2connectionUpdate_protocolIEs* pvalue);
+EXTERN int asn1Init_e2ap_E2connectionUpdate_protocolIEs (e2ap_E2connectionUpdate_protocolIEs* pvalue);
+//EXTERN void asn1Free_e2ap_E2connectionUpdate_protocolIEs (OSCTXT* pctxt, e2ap_E2connectionUpdate_protocolIEs* pvalue);
+//EXTERN int asn1PrtToStr_e2ap_E2connectionUpdate_protocolIEs (OSCTXT* pctxt, e2ap_E2connectionUpdate_protocolIEs* pvalue, char*buffer, OSSIZE bufSize);
+EXTERN int asn1PrtToStrm_e2apE2connectionUpdate_protocolIEs (OSCTXT* pctxt, const char * name, const e2ap_E2connectionUpdate_protocolIEs* pvalue);
+EXTERN int asn1PrtToStr_e2ap_E2connectionUpdate_protocolIEs (const char* name, e2ap_E2connectionUpdate_protocolIEs* pvalue, char* buffer, OSSIZE bufSize);
+// --- End of e2ap_E2connectionUpdate_protocolIEs.h ---
 
 #endif

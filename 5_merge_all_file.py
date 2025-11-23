@@ -22,8 +22,8 @@ def add_protocol_files_to_main(c_out, h_out):
     """
     # Định nghĩa các đuôi file cần nối
     protocol_file_patterns = [
-        "*protocolIEs.h", "*protocolIEs.c",
-        "*protocolIEs_element.h", "*protocolIEs_element.c"
+        "*protocolIEs_element.h", "*protocolIEs_element.c",
+        "*protocolIEs.h", "*protocolIEs.c"
     ]
     
     # Lấy danh sách tất cả các file khớp với các đuôi trên trong OUTPUT_DIR

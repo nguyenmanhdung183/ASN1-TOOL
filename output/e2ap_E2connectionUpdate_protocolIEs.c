@@ -12,7 +12,7 @@ EXTERN int asn1PE_e2ap_E2connectionUpdate_protocolIEs (OSCTXT* pctxt, e2ap_E2con
     OSUINT32 xx1;
 
     /*encode length determinant */
-    PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST(0), OSUINTCONST(ASN1V_e2ap_maxProtocolIEs), 0, 0);
+    PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST(0), OSUINTCONST(65535), 0, 0);
     stat = pe_Length(pctxt, pvalue->count);
     if(stat!=0) return LOG_RTERR(pctxt, stat);
 
@@ -38,7 +38,7 @@ EXTERN int  asn1PD_e2ap_E2connectionUpdate_protocolIEs(OSCTXT* pctxt, e2ap_E2con
 
 
      /*decode length determinant */
-    PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST(0), OSUINTCONST(ASN1V_e2ap_maxProtocolIEs), 0, 0);
+    PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST(0), OSUINTCONST(65535), 0, 0);
     stat = pd_Length64(pctxt, &count); //tai sao lai 64
     if(stat!=0) return LOG_RTERR(pctxt, stat);
 
@@ -68,7 +68,7 @@ int asn1Init_e2ap_E2connectionUpdate_protocolIEs(e2ap_E2connectionUpdate_protoco
     rtxDListFastInit (pvalue);
     return 0;
 }
-#if 0
+#if 1 //ao that day
 void asn1Free_e2ap_E2connectionUpdate_protocolIEs(OSCTXT* pctxt, e2ap_E2connectionUpdate_protocolIEs* pvalue)
 {
     if(0==pvalue) return;   
@@ -82,3 +82,24 @@ void asn1Free_e2ap_E2connectionUpdate_protocolIEs(OSCTXT* pctxt, e2ap_E2connecti
     rtxDListFreeAll(pctxt, pvalue);
 }
 #endif
+
+
+EXTERN int asn1PrtToStr_e2ap_E2connectionUpdate_protocolIEs(const char* name, e2ap_E2connectionUpdate_protocolIEs* pvalue, char* buffer, OSSIZE bufSize)
+{
+    e2ap_E2connectionUpdate_protocolIEs_element* pdata0;
+    OSRTDListNode* pnode0;
+    char nameBuf[256];
+    char numBuf[32];
+    OSUINT32 xx1=0;
+    for(pnode0 = pvalue->head;  xx1 < pvalue->count && pnode0 != 0; pnode0 = pnode0->next, xx1++){
+        pdata0 = (e2ap_E2connectionUpdate_protocolIEs_element*)pnode0->data;
+        rtxUIntToCharStr(xx1, numBuf, sizeof(numBuf), 0);
+        rtxStrJoin(nameBuf, sizeof(nameBuf), name, "[", numBuf, "]", 0);
+        #if 0
+        if(asn1PrtToStr_e2ap_E2connectionUpdate_protocolIEs_element(nameBuf, pdata0, buffer, bufSize) <0){
+            return -1;
+        }
+        #endif
+    }
+    return 0;
+}

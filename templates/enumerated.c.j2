@@ -72,11 +72,11 @@ EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
    return stat;
 }
 
-EXTERN int asn1PrtToStr_e2ap_{{name}} (const char* name, e2ap_{{name}}* pvalue, const char* buffer, OSSIZE bufSize)
+EXTERN int asn1PrtToStr_e2ap_{{name}} (const char* name, e2ap_{{name}}* pvalue, char* buffer, OSSIZE bufSize)
 {
    int stat;
 
-   if(rtPrintToStringIdent(buffer, bufSize) < 0) return -1;
+   if(rtPrintToStringIndent(buffer, bufSize) < 0) return -1;
    if(rtPrintToString(name, buffer, bufSize) < 0) return -1;
 
    switch(*pvalue) {

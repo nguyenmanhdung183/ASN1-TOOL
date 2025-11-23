@@ -66,7 +66,7 @@ int asn1PE_e2ap_E2connectionUpdateRemove_ItemIEs (OSCTXT* pctxt, e2ap_E2connecti
       }
 
       if (encoded) {
-         size_t bitOffset = PU_GETCTXBITSAVED (pctxt);
+         size_t bitOffset = PU_GETCTXTBITOFFSET (pctxt);
          size_t bitsConsumed = bitOffset;
          if (bitsConsumed < bitOffset) {
             stat = pd_moveBitCursor (pctxt, (int)(bitOffset - bitsConsumed));
@@ -95,6 +95,7 @@ void asn1Init_e2ap_E2connectionUpdateRemove_ItemIEs (e2ap_E2connectionUpdateRemo
    OSCRTLMEMSET (pvalue, 0, sizeof(e2ap_E2connectionUpdateRemove_ItemIEs));
 }
 
+#if 0
 void asn1Free_e2ap_E2connectionUpdateRemove_ItemIEs (OSCTXT* pctxt, e2ap_E2connectionUpdateRemove_ItemIEs* pvalue)
 {
    if (!pvalue) return;
@@ -102,5 +103,25 @@ void asn1Free_e2ap_E2connectionUpdateRemove_ItemIEs (OSCTXT* pctxt, e2ap_E2conne
       rtxMemFreeArray (pctxt, pvalue->extElem1);
       pvalue->extElem1 = 0;
       pvalue->extElem1_n = 0;
+   }
+}
+#endif
+void asn1Free_e2ap_E2connectionUpdateRemove_ItemIEs (OSCTXT* pctxt, e2ap_E2connectionUpdateRemove_ItemIEs* pvalue)
+{
+   if(0==pvalue) return;
+   switch(pvalue->value.t){
+      case T_E2AP_PDU_Contents_E2connectionUpdateRemove_ItemIEs_E2connectionUpdateRemove_Item:
+         asn1Free_e2ap_E2connectionUpdateRemove_Item (pctxt, pvalue->value.u._e2apE2connectionUpdateRemove_ItemIEs_E2connectionUpdateRemove_Item);
+         rtxMemFreePtr(pctxt, (void*)pvalue->value.u._e2apE2connectionUpdateRemove_ItemIEs_E2connectionUpdateRemove_Item);
+         pvalue->value.u._e2apE2connectionUpdateRemove_ItemIEs_E2connectionUpdateRemove_Item = 0;
+         break;
+      case T_E2AP_PDU_Contents_e2ap_E2connectionUpdateRemove_ItemIEs_UNDEF_:
+         if(0!=pvalue->value.u.extElem1){
+             rtxMemFreePtr(pctxt, pvalue->value.u.extElem1->data);
+             rtxMemFreePtr(pctxt, pvalue->value.u.extElem1);
+             pvalue->value.u.extElem1 =0;
+         }
+         break;
+         default:;
    }
 }

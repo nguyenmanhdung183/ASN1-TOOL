@@ -121,7 +121,7 @@ EXTERN int  asn1PD_e2ap_{{message_name}}_protocolIEs_element (OSCTXT* pctxt, e2a
             rtxErrAddStrParm(pctxt, "open type with fragment length");
             return LOG_RTERRNEW(pctxt, RTERR_NOTSUPP);
         }
-        bitStartOffset = PU_GETCTXBITOFFSET(pctxt);
+        bitStartOffset = PU_GETCTXTBITOFFSET(pctxt);
         bitLength = openTypeLen * 8;
 
         switch(pvalue->id){//dungnm23 check case lai nhe
@@ -131,7 +131,7 @@ EXTERN int  asn1PD_e2ap_{{message_name}}_protocolIEs_element (OSCTXT* pctxt, e2a
             RTXCTXTPUSHELEMNAME(pctxt, "{{ie.field|replace('_', '-')}}");
             //pvalue->value.u._e2ap_{{ie.origin_name|replace('-', '_')}}_id_{{ ie.ie_type|replace('-', '_') }} 
              pvalue->value.u._e2ap_{{ies[0].origin_name|replace('-', '_') }}_{{ ie.field|replace('-', '_') }} = rtxMemAllocType(pctxt, e2ap_{{ie.ie_type|replace('-', '_')}});
-{% if ie.primitive.isprimitive and ie.ie_type !="BIT STRING"%}
+{% if not (ie.primitive.isprimitive or ie.ie_type =="BIT STRING") %}
             //asn1Init_e2ap_{{ie.ie_type|replace('-', '_')}}(pvalue->
               //  value.u._e2ap_{{ie.origin_name|replace('-', '_')}}_id_{{ ie.ie_type|replace('-', '_') }});
 
@@ -172,7 +172,7 @@ EXTERN int  asn1PD_e2ap_{{message_name}}_protocolIEs_element (OSCTXT* pctxt, e2a
             break;
     }
     {
-    size_t bitEndOffset = PU_GETCTXBITOFFSET(pctxt);
+    size_t bitEndOffset = PU_GETCTXTBITOFFSET(pctxt);
     size_t bitsConsumed = bitEndOffset-bitStartOffset;
     if(bitsConsumed<bitLength){
         stat = pd_moveBitCursor(pctxt, (int)(bitLength - bitsConsumed));

@@ -68,7 +68,7 @@ int asn1PE_e2ap_{{ies_name}} (OSCTXT* pctxt, e2ap_{{ies_name}}* pvalue)
       }
 
       if (encoded) {
-         size_t bitOffset = PU_GETCTXBITSAVED (pctxt);
+         size_t bitOffset = PU_GETCTXTBITOFFSET (pctxt);
          size_t bitsConsumed = bitOffset;
          if (bitsConsumed < bitOffset) {
             stat = pd_moveBitCursor (pctxt, (int)(bitOffset - bitsConsumed));
@@ -97,6 +97,7 @@ void asn1Init_e2ap_{{ies_name}} (e2ap_{{ies_name}}* pvalue)
    OSCRTLMEMSET (pvalue, 0, sizeof(e2ap_{{ies_name}}));
 }
 
+#if 0
 void asn1Free_e2ap_{{ies_name}} (OSCTXT* pctxt, e2ap_{{ies_name}}* pvalue)
 {
    if (!pvalue) return;
@@ -104,5 +105,27 @@ void asn1Free_e2ap_{{ies_name}} (OSCTXT* pctxt, e2ap_{{ies_name}}* pvalue)
       rtxMemFreeArray (pctxt, pvalue->extElem1);
       pvalue->extElem1 = 0;
       pvalue->extElem1_n = 0;
+   }
+}
+#endif
+void asn1Free_e2ap_{{ies_name}} (OSCTXT* pctxt, e2ap_{{ies_name}}* pvalue)
+{
+   if(0==pvalue) return;
+   switch(pvalue->value.t){
+   {% for d in choices %}
+      case T_E2AP_PDU_Contents_{{ ies_name }}_{{ d.item_type | replace('-', '_') }}:
+         asn1Free_e2ap_{{ d.item_type | replace('-', '_') }} (pctxt, pvalue->value.u._e2ap{{ ies_name }}_{{ d.item_type | replace('-', '_')}});
+         rtxMemFreePtr(pctxt, (void*)pvalue->value.u._e2ap{{ ies_name }}_{{ d.item_type | replace('-', '_')}});
+         pvalue->value.u._e2ap{{ ies_name }}_{{ d.item_type | replace('-', '_')}} = 0;
+         break;
+   {% endfor %}
+      case T_E2AP_PDU_Contents_e2ap_{{ ies_name }}_UNDEF_:
+         if(0!=pvalue->value.u.extElem1){
+             rtxMemFreePtr(pctxt, pvalue->value.u.extElem1->data);
+             rtxMemFreePtr(pctxt, pvalue->value.u.extElem1);
+             pvalue->value.u.extElem1 =0;
+         }
+         break;
+         default:;
    }
 }

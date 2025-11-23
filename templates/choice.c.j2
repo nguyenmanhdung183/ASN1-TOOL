@@ -158,7 +158,7 @@ int asn1PrtToStr_e2ap_{{name}} (const char* name, e2ap_{{name}}* pvalue, char* b
          break;
 {% endfor %}
       case T_e2ap_{{name}}_extElem1:
-         if(rtPrintToStringIdent(buffer, bufSize) < 0) return -1;
+         if(rtPrintToStringIndent(buffer, bufSize) < 0) return -1;
          if(rtPrintToStringHexStr("extElem1", pvalue->u.extElem1->numocts, pvalue->u.extElem1->data, buffer, bufSize) < 0) return -1;
          break;
       default:;
