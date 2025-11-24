@@ -1,0 +1,159 @@
+E2nodeConfigurationUpdateAcknowledge:
+  E2nodeConfigurationUpdateAcknowledge-IEs:
+    TransactionID: {}
+    E2nodeComponentConfigAdditionAck-List:
+      E2nodeComponentConfigAdditionAck-ItemIEs:
+        E2nodeComponentConfigAdditionAck-Item:
+          E2nodeComponentInterfaceType: {}
+          E2nodeComponentID:
+            E2nodeComponentInterfaceNG:
+              AMFName:
+                PrintableString: {}
+            E2nodeComponentInterfaceXn:
+              GlobalNG-RANNode-ID:
+                GlobalgNB-ID:
+                  PLMN-Identity: {}
+                  GNB-ID-Choice:
+                    gnb-ID: {}
+                GlobalngeNB-ID:
+                  PLMN-Identity: {}
+                  ENB-ID-Choice:
+                    enb-ID-macro: {}
+                    enb-ID-shortmacro: {}
+                    enb-ID-longmacro: {}
+            E2nodeComponentInterfaceE1:
+              GNB-CU-UP-ID: {}
+            E2nodeComponentInterfaceF1:
+              GNB-DU-ID: {}
+            E2nodeComponentInterfaceW1:
+              NGENB-DU-ID: {}
+            E2nodeComponentInterfaceS1:
+              MMEname:
+                PrintableString: {}
+            E2nodeComponentInterfaceX2:
+              GlobalENB-ID:
+                PLMN-Identity: {}
+                ENB-ID:
+                  macro-eNB-ID: {}
+                  home-eNB-ID: {}
+                  short-Macro-eNB-ID: {}
+                  long-Macro-eNB-ID: {}
+              GlobalenGNB-ID:
+                PLMN-Identity: {}
+                ENGNB-ID:
+                  gNB-ID: {}
+          E2nodeComponentConfigurationAck:
+            updateOutcome: {}
+            Cause:
+              CauseRICrequest: {}
+              CauseRICservice: {}
+              CauseE2node: {}
+              CauseTransport: {}
+              CauseProtocol: {}
+              CauseMisc: {}
+              CauseServiceLayer:
+                ServiceLayerCause: {}
+    E2nodeComponentConfigUpdateAck-List:
+      E2nodeComponentConfigUpdateAck-ItemIEs:
+        E2nodeComponentConfigUpdateAck-Item:
+          E2nodeComponentInterfaceType: {}
+          E2nodeComponentID:
+            E2nodeComponentInterfaceNG:
+              AMFName:
+                PrintableString: {}
+            E2nodeComponentInterfaceXn:
+              GlobalNG-RANNode-ID:
+                GlobalgNB-ID:
+                  PLMN-Identity: {}
+                  GNB-ID-Choice:
+                    gnb-ID: {}
+                GlobalngeNB-ID:
+                  PLMN-Identity: {}
+                  ENB-ID-Choice:
+                    enb-ID-macro: {}
+                    enb-ID-shortmacro: {}
+                    enb-ID-longmacro: {}
+            E2nodeComponentInterfaceE1:
+              GNB-CU-UP-ID: {}
+            E2nodeComponentInterfaceF1:
+              GNB-DU-ID: {}
+            E2nodeComponentInterfaceW1:
+              NGENB-DU-ID: {}
+            E2nodeComponentInterfaceS1:
+              MMEname:
+                PrintableString: {}
+            E2nodeComponentInterfaceX2:
+              GlobalENB-ID:
+                PLMN-Identity: {}
+                ENB-ID:
+                  macro-eNB-ID: {}
+                  home-eNB-ID: {}
+                  short-Macro-eNB-ID: {}
+                  long-Macro-eNB-ID: {}
+              GlobalenGNB-ID:
+                PLMN-Identity: {}
+                ENGNB-ID:
+                  gNB-ID: {}
+          E2nodeComponentConfigurationAck:
+            updateOutcome: {}
+            Cause:
+              CauseRICrequest: {}
+              CauseRICservice: {}
+              CauseE2node: {}
+              CauseTransport: {}
+              CauseProtocol: {}
+              CauseMisc: {}
+              CauseServiceLayer:
+                ServiceLayerCause: {}
+    E2nodeComponentConfigRemovalAck-List:
+      E2nodeComponentConfigRemovalAck-ItemIEs:
+        E2nodeComponentConfigRemovalAck-Item:
+          E2nodeComponentInterfaceType: {}
+          E2nodeComponentID:
+            E2nodeComponentInterfaceNG:
+              AMFName:
+                PrintableString: {}
+            E2nodeComponentInterfaceXn:
+              GlobalNG-RANNode-ID:
+                GlobalgNB-ID:
+                  PLMN-Identity: {}
+                  GNB-ID-Choice:
+                    gnb-ID: {}
+                GlobalngeNB-ID:
+                  PLMN-Identity: {}
+                  ENB-ID-Choice:
+                    enb-ID-macro: {}
+                    enb-ID-shortmacro: {}
+                    enb-ID-longmacro: {}
+            E2nodeComponentInterfaceE1:
+              GNB-CU-UP-ID: {}
+            E2nodeComponentInterfaceF1:
+              GNB-DU-ID: {}
+            E2nodeComponentInterfaceW1:
+              NGENB-DU-ID: {}
+            E2nodeComponentInterfaceS1:
+              MMEname:
+                PrintableString: {}
+            E2nodeComponentInterfaceX2:
+              GlobalENB-ID:
+                PLMN-Identity: {}
+                ENB-ID:
+                  macro-eNB-ID: {}
+                  home-eNB-ID: {}
+                  short-Macro-eNB-ID: {}
+                  long-Macro-eNB-ID: {}
+              GlobalenGNB-ID:
+                PLMN-Identity: {}
+                ENGNB-ID:
+                  gNB-ID: {}
+          E2nodeComponentConfigurationAck:
+            updateOutcome: {}
+            Cause:
+              CauseRICrequest: {}
+              CauseRICservice: {}
+              CauseE2node: {}
+              CauseTransport: {}
+              CauseProtocol: {}
+              CauseMisc: {}
+              CauseServiceLayer:
+                ServiceLayerCause: {}

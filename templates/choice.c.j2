@@ -5,7 +5,18 @@
 /*****************************************/
 // choice
 
-{%if not extensible%}
+
+// Các nội dung cần thiết từ template choice.c.j2
+
+{% for primitive in primitive_files_data %}
+    // Nội dung của file .c cho primitive {{ primitive.name }}
+    {{ primitive.c_file_content }}
+{% endfor %}
+
+// Các phần còn lại của template choice.c.j2
+
+
+{% if not extensible %}
 // choice with extension typefef từ 1 -> mẫu từ PDU
 EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
 {
@@ -29,7 +40,12 @@ EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
 {% for choice in choices %}
       case {{(choice.tag+1)|int}}:
          RTXCTXTPUSHELEMNAME (pctxt, "{{choice.name|replace('_', '-')}}");
-         stat = asn1PE_e2ap_{{choice.type}} (pctxt, pvalue->u.{{choice.field|replace("-","_")}});
+         {% if choice.primitive.isprimitive == False %}
+         stat = asn1PE_e2ap_{{choice.type}} (pctxt, pvalue->u.{{choice.field|replace("-","_")}}); //not primitive
+         {% else %}
+         //primitive {{choice.primitive_meta.type}}
+         stat = asn1PE_e2ap_{{name}}_{{choice.field|replace("-","_")}} (pctxt, pvalue->u.{{choice.field|replace("-","_")}}); //primitive
+         {% endif %}
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXTPOPELEMNAME (pctxt);
          break;
@@ -75,10 +91,14 @@ EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
          pvalue->u.{{choice.field|replace("-","_")}} = rtxMemAllocType (pctxt, e2ap_{{choice.type}});
 
          if (pvalue->u.{{choice.field|replace("-","_")}} == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
-         {%if choice.type != "BIT STRING" and choice.primitive.isprimitive == False %}
+   {% if choice.primitive_meta.is ==False %}
          asn1Init_e2ap_{{choice.type}}(pvalue->u.{{choice.field|replace("-","_")}});
-         {% endif %}
          //stat = asn1PD_e2ap_{{choice.type}} (pctxt, pvalue->u.{{choice.field|replace("-","_")}});
+   {% else %}
+         //primitive {{choice.primitive_meta.type}}
+         asn1Init_e2ap_{{name}}_{{choice.field|replace("-","_")}}(pvalue->u.{{choice.field|replace("-","_")}});
+         //stat = asn1PD_e2ap_{{name}}_{{choice.field|replace("-","_")}} (pctxt, pvalue->u.{{choice.field|replace("-","_")}});
+   {% endif %}
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXTPOPELEMNAME (pctxt);
          break;
@@ -125,8 +145,11 @@ void asn1Free_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
 {% for choice in choices %}
       case {{(choice.tag+1)|int}}:
          if (pvalue->u.{{choice.field|replace("-","_")}}) {
-            {%if choice.type != "BIT STRING" and choice.primitive.isprimitive == False %}
+            {% if choice.primitive_meta.is == False %}
             asn1Free_e2ap_{{choice.type}} (pctxt, pvalue->u.{{choice.field|replace("-","_")}});
+            {% else %}
+            //primitive {{choice.primitive_meta.type}}
+            asn1Free_e2ap_{{name}}_{{choice.field|replace("-","_")}} (pctxt, pvalue->u.{{choice.field|replace("-","_")}});
             {% endif %}
             rtxMemFreePtr (pctxt, (void*)pvalue->u.{{choice.field|replace("-","_")}});
             pvalue->u.{{choice.field|replace("-","_")}} = 0;
@@ -154,7 +177,12 @@ int asn1PrtToStr_e2ap_{{name}} (const char* name, e2ap_{{name}}* pvalue, char* b
    switch (pvalue->t) {
 {% for choice in choices %}
       case T_e2ap_{{name}}_{{choice.name|replace('-','')}}:
+         {% if choice.primitive_meta.is == False %}
          if (asn1PrtToStr_e2ap_{{choice.type}} ( "{{choice.name}}", pvalue->u.{{choice.field|replace('-','_')}}, buffer, bufSize) < 0) return -1;
+         {% else %}
+         //primitive {{choice.primitive_meta.type}}
+         asn1PrtToStr_e2ap_{{name}}_{{choice.field|replace("-","_")}} (pctxt, pvalue->u.{{choice.field|replace("-","_")}});
+         {% endif %}
          break;
 {% endfor %}
       case T_e2ap_{{name}}_extElem1:
@@ -187,12 +215,14 @@ EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
       case {{(choice.tag+1)|int}}:
          RTXCTXTPUSHELEMNAME (pctxt, "{{choice.name|replace('_', '-')}}");
 
-         {% if choice.type == "BIT STRING" %}
+         {% if choice.primitive_meta.is ==False %}
          PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST({{choice.minstr}}), OSUINTCONST({{choice.maxstr}}), 0, 0);
-         stat = pe_BitString32 (pctxt, pvalue->u.{{choice.field|replace('-','_')}}, OSUINTCONST({{choice.minstr}}), OSUINTCONST({{choice.maxstr}}));
-         {%else%}
-         stat = asn1PE_e2ap_{{choice.type|replace("-","_")}} (pctxt, pvalue->u.{{choice.field|replace('-','_')}});
-         {%endif%}
+         stat = pe_BitString32 (pctxt, pvalue->u.{{choice.field|replace('-','_')}}, OSUINTCONST({{choice.minstr}}), OSUINTCONST({{choice.maxstr}}));//not primitive
+         {% else %}
+         //primitive {{choice.primitive_meta.type}}
+
+         stat = asn1PE_e2ap_{{name}}_{{choice.field|replace("-","_")}} (pctxt, pvalue->u.{{choice.field|replace('-','_')}});// primitive
+         {% endif %}
 
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXTPOPELEMNAME (pctxt);
@@ -227,10 +257,13 @@ int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
 
          if (pvalue->u.{{choice.field|replace('-','_')}} == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
 
-         {% if choice.type == "BIT STRING" %}
+         {% if choice.primitive_meta.is ==True %}
          PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST({{choice.minstr}}), OSUINTCONST({{choice.maxstr}}), 0, 0);
-         stat = pd_BitString32 (pctxt, pvalue->u.{{choice.field|replace('-','_')}}, OSUINTCONST({{choice.minstr}}), OSUINTCONST({{choice.maxstr}}));
+         //primitive {{choice.primitive_meta.type}}
+         //stat = pd_BitString32 (pctxt, pvalue->u.{{choice.field|replace('-','_')}}, OSUINTCONST({{choice.minstr}}), OSUINTCONST({{choice.maxstr}}));
+         stat = asn1PD_e2ap_{{name}}_{{choice.field |replace("-", "_")}}(pctxt, pvalue->u.{{choice.field|replace('-','_')}}, OSUINTCONST({{choice.minstr}}), OSUINTCONST({{choice.maxstr}}));
          {% else %}
+         //not primitive
          stat = asn1PD_e2ap_{{choice.type}} (pctxt, pvalue->u.{{choice.field|replace('-','_')}});
          {% endif %}
          if (stat != 0) return LOG_RTERR (pctxt, stat);
@@ -253,7 +286,13 @@ int asn1PrtToStr_e2ap_{{name}} (const char* name, e2ap_{{name}}* pvalue, char* b
    switch (pvalue->t) {
 {% for choice in choices %}
       case T_e2ap_{{name}}_{{choice.name|replace('-','')}}:
+      {% if choice.primitive_meta.is ==True %}
+         //primitive {{choice.primitive_meta.type}}
+         if (asn1PrtToStr_e2ap_{{name}}_{{choice.field|replace('-','_')}} ( "{{choice.name}}", pvalue->u.{{choice.field|replace('-','_')}}, buffer, bufSize) < 0) return -1;
+         {% else %}
+         //not primitive
          if (asn1PrtToStr_e2ap_{{choice.type}} ( "{{choice.name}}", pvalue->u.{{choice.field|replace('-','_')}}, buffer, bufSize) < 0) return -1;
+         {% endif %}
          break;
 {% endfor %}
       default:
@@ -282,7 +321,13 @@ void asn1Free_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
 {% for choice in choices %}
       case {{(choice.tag+1)|int}}:
          if (pvalue->u.{{choice.field|replace('-','_')}}) {
+            {% if choice.primitive_meta.is == False %}
+            //not primitive
             asn1Free_e2ap_{{choice.type}} (pctxt, pvalue->u.{{choice.field|replace('-','_')}});
+            {% else %}
+            //primitive {{choice.primitive_meta.type}}
+            asn1Free_e2ap_{{name}}_{{choice.field|replace("-","_")}} (pctxt, pvalue->u.{{choice.field|replace('-','_')}});
+            {% endif %}
             rtxMemFreePtr (pctxt, (void*)pvalue->u.{{choice.field|replace('-','_')}});
             pvalue->u.{{choice.field|replace('-','_')}} = 0;
          }

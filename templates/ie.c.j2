@@ -42,7 +42,7 @@ int asn1PE_e2ap_{{ies_name}} (OSCTXT* pctxt, e2ap_{{ies_name}}* pvalue)
 
       switch (pvalue->value.t) {
       {% for d in choices %}
-      case T_E2AP_PDU_Contents_{{ ies_name }}_{{ d.item_type | replace('-', '_') }}:
+      case T_E2AP_PDU_Contents_e2ap_{{ ies_name }}_{{ d.item_type | replace('-', '_') }}:
          
          RTXCTXTPUSHELEMNAME (pctxt, "_e2ap_{{ ies_name }}_id_{{ d.item_type | replace('-', '_') }}");
          stat = asn1PE_e2ap_{{ d.item_type | replace('-', '_') }} (pctxt, pvalue->value.u._e2ap{{ ies_name }}_{{ d.item_type | replace('-', '_')}});
@@ -113,7 +113,7 @@ void asn1Free_e2ap_{{ies_name}} (OSCTXT* pctxt, e2ap_{{ies_name}}* pvalue)
    if(0==pvalue) return;
    switch(pvalue->value.t){
    {% for d in choices %}
-      case T_E2AP_PDU_Contents_{{ ies_name }}_{{ d.item_type | replace('-', '_') }}:
+      case T_E2AP_PDU_Contents_e2ap_{{ ies_name }}_{{ d.item_type | replace('-', '_') }}:
          asn1Free_e2ap_{{ d.item_type | replace('-', '_') }} (pctxt, pvalue->value.u._e2ap{{ ies_name }}_{{ d.item_type | replace('-', '_')}});
          rtxMemFreePtr(pctxt, (void*)pvalue->value.u._e2ap{{ ies_name }}_{{ d.item_type | replace('-', '_')}});
          pvalue->value.u._e2ap{{ ies_name }}_{{ d.item_type | replace('-', '_')}} = 0;

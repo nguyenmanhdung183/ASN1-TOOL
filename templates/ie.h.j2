@@ -10,7 +10,7 @@ typedef enum {
    T_E2AP_PDU_Contents_e2ap_{{ies_name}}_UNDEF_,
 
    {% for d in choices %}
-   T_E2AP_PDU_Contents_{{ ies_name }}_{{ d.item_type | replace('-', '_') }}{% if not loop.last %},{% endif %}
+   T_E2AP_PDU_Contents_e2ap_{{ ies_name }}_{{ d.item_type | replace('-', '_') }}{% if not loop.last %},{% endif %}
    
    
    {%endfor%}

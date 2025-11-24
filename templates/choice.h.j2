@@ -5,9 +5,23 @@
 /*****************************************/
 // choice
 
+
+
+
+// Các nội dung cần thiết từ template choice.h.j2
+
+{% for primitive in primitive_files_data %}
+    // Nội dung của file .h cho primitive {{ primitive.name }}
+    {{ primitive.h_file_content }}
+{% endfor %}
+
+// Các phần còn lại của template choice.h.j2
+
+
+
 {% for choice in choices %}
 #define T_e2ap_{{name}}_{{choice.field |replace('-', '_')}}  {{ loop.index}}
-{%endfor%}
+{% endfor %}
 #define T_e2ap_{{name}}_extElem1 {{choices|length + 1}}
 
 typedef struct e2ap_{{name}} {
@@ -15,7 +29,11 @@ typedef struct e2ap_{{name}} {
    union {
 {% for choice in choices %}
       /* t =  {{ loop.index}} */
+      {% if choice.primitive_meta.is == False %}
       e2ap_{{choice.type}} *{{choice.field |replace('-', '_')}};
+      {% else %}
+      e2ap_{{name}}_{{choice.field |replace('-', '_')}} *{{choice.field |replace('-', '_')}};
+      {% endif %}
 {% endfor %}
 {% if extensible %}
       /* t = {{choices|length + 1}}*/

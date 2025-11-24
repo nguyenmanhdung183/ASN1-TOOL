@@ -1,0 +1,30 @@
+/*****************************************/
+/*           {{name}}                */
+/*****************************************/
+
+//{{metadata.primitive_id}} mau octet string
+
+{% if metadata.primitive_id == 6 %}
+
+// mau integer size(a...b) mau la procedurecode
+typedef OSUINT{{metadata.max | stdbit}} e2ap_{{name|replace("-","_")}};
+EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}} value);
+EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue);
+EXTERN int asn1Print_e2ap_{{name}} (const char* name, const e2ap_{{name}}* pvalue);
+EXTERN int asn1PrtToStr_e2ap_{{name}} (const char* name, e2ap_{{name}}* pvalue, char* buffer, OSSIZE bufSize);
+EXTERN int asn1PrtToStrm_e2ap_{{name}} (OSCTXT* pctxt, const char* name, const e2ap_{{name}}* pvalue);
+
+{% endif %}
+
+{% if metadata.primitive_id == 5 %}
+
+//mau 5 integer size(a .. b..) mau la nrfreqencyband
+typedef OSUINT{{metadata.max | stdbit}} e2ap_{{name|replace("-","_")}};
+EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}} value);
+EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue);
+EXTERN int asn1Print_e2ap_{{name}} (const char* name, const e2ap_{{name}}* pvalue);
+EXTERN int asn1PrtToStr_e2ap_{{name}} (const char* name, e2ap_{{name}}* pvalue, char* buffer, OSSIZE bufSize);
+EXTERN int asn1PrtToStrm_e2ap_{{name}} (OSCTXT* pctxt, const char* name, const e2ap_{{name}}* pvalue);
+
+{% endif %}
+

@@ -419,17 +419,18 @@ xnap_return_et e2ap_encode_e2connection_update(
         if (0 != asn1PE_e2ap_E2AP_PDU(&asn1_ctx, &e2ap_pdu))
         {
             *p_asn_msg_len = (UInt16)pe_GetMsgLen(&asn1_ctx);
-
+            rrc_asn1PrtToStr_E2AP_PDU(XNAP_ASN, "E2AP_PDU", &e2ap_pdu);
             SInt8 buff[500];
             rtxErrGetTextBuf(&asn1_ctx, buff, 500);
             XNAP_TRACE(XNAP_INFO, "dungnm23 [ENC] ASN1 encoding FAILED. msgLen=%u. ASN1 error: %s",
                        *p_asn_msg_len, (char*)buff);
-
+            ASN_ERROR_PRINT(&asn1_ctx);
             break;
         }
 
         *p_asn_msg_len = (UInt16)pe_GetMsgLen(&asn1_ctx);
         XNAP_TRACE(XNAP_INFO, "dungnm23 [ENC] ASN1 encoding SUCCESS. msgLen=%u bytes", *p_asn_msg_len);
+        rrc_asn1PrtToStr_E2AP_PDU(XNAP_ASN, "E2AP_PDU", &e2ap_pdu);
         retVal = XNAP_SUCCESS;
 
     } while (0);

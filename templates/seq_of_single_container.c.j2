@@ -16,7 +16,7 @@ int asn1PE_e2ap_{{list_name}} (OSCTXT* pctxt, e2ap_{{list_name}}* pvalue)
    RTXCTXTPUSHTYPENAME (pctxt, "{{list_name|replace('_', '-')}}");
 
    /* encode length determinant */
-   PU_SETSIZECONSTRAINT (pctxt, OSUINTCONST({{min_value|int}}), OSUINTCONST(ASN1V_e2ap_{{max_value}}), 0, 0);
+   PU_SETSIZECONSTRAINT (pctxt, OSUINTCONST({{min_size|int}}), OSUINTCONST({{max_size|int}}), 0, 0);
 
    stat = pe_Length (pctxt, pvalue->count);
    if (stat < 0) return LOG_RTERR (pctxt, stat);
@@ -48,7 +48,7 @@ int asn1PD_e2ap_{{list_name}} (OSCTXT* pctxt, e2ap_{{list_name}}* ppvalue)
 
    RTXCTXTPUSHTYPENAME (pctxt, "{{list_name|replace('_', '-')}}");
 
-   PU_SETSIZECONSTRAINT (pctxt, OSUINTCONST({{min_value|int}}), OSUINTCONST(ASN1V_e2ap_{{max_value}}), 0, 0);
+   PU_SETSIZECONSTRAINT (pctxt, OSUINTCONST({{min_size|int}}), OSUINTCONST(ASN1V_e2ap_{{max_size|int}}), 0, 0);
 
    stat = pd_Length64 (pctxt, &count);
    if (stat != 0) return LOG_RTERR (pctxt, stat);

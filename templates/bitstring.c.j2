@@ -1,0 +1,113 @@
+/*****************************************/
+/*           {{name}}                */
+/*****************************************/
+
+//bitstring (n) mau tu NID xn
+{% if metadata.primitive_id == 3 %}
+
+EXTERN int asn1PE_e2ap_{{name}}(OSCTXT* pctxt, e2ap_{{name}}* pvalue){
+    int stat = 0;
+    RTXCTCXTPUSHTYPENAME (pctxt, "{{name|replace('_','-')}}");
+    PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST({{metadata.fix_size}}), OSUINTCONST({{metadata.fix_size}}), 0, 0);
+    stat = pe_BitString(pctxt, OS_MIN(pvalue->numbits, metadata.fix_size), pvalue->data);
+    if (stat != 0) return LOG_RTERR (pctxt, stat);
+    RTXCTXTPOPTYPENAME (pctxt);
+    return stat;
+}
+
+EXTERN int asn1PD_e2ap_{{name}}(OSCTXT* pctxt, e2ap_{{name}}* pvalue){
+    int stat = 0;
+    RTXCTCXTPUSHTYPENAME (pctxt, "{{name|replace('_','-')}}");
+    PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST({{metadata.fix_size}}), OSUINTCONST({{metadata.fix_size}}), 0, 0);
+    stat = pd_BitString(pctxt, &pvalue->numbits, pvalue->data, sizeof(pvalue->data));
+    if (stat != 0) return LOG_RTERR (pctxt, stat);
+    RTXCTXTPOPTYPENAME (pctxt);
+    return stat;
+}
+
+int asn1Init_e2ap_{{name}}(e2ap_{{name}}* pvalue){
+    if (pvalue == 0) return RTERR_NULLPTR;
+    pvalue->numbits = 0;
+    return 0;
+}
+{% endif %}
+
+
+{% if metadata.primitive == 2 %}
+//mau Transportlayeraddress xn bitstring (a..b,..)
+
+
+EXTERN int asn1PE_e2ap_{{name}}(OSCTXT* pctxt, e2ap_{{name}} value){
+    int stat = 0;
+    RTXCTCXTPUSHTYPENAME (pctxt, "{{name|replace('_','-')}}");
+    PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST({{metadata.min}}), OSUINTCONST({{metadata.max}}), OSUINTCONST(0), OSUINT32_MAX);
+
+    stat = pe_BitString(pctxt, OS_MIN(value.numbits, {{metadata.max}}), value.data);
+    if (stat != 0) return LOG_RTERR (pctxt, stat);
+    RTXCTXTPOPTYPENAME (pctxt);
+    return stat;
+
+}
+
+
+EXTERN int asn1PD_e2ap_{{name}}(OSCTXT* pctxt, e2ap_{{name}}* pvalue){
+    int stat = 0;
+    RTXCTCXTPUSHTYPENAME (pctxt, "{{name|replace('_','-')}}");
+    PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST({{metadata.min}}), OSUINTCONST({{metadata.max}}), OSUINTCONST(0), OSUINT32_MAX);
+
+    stat = pd_DynBitString(pctxt, pvalue);
+    //if (stat != 0) return LOG_RTERR (pctxt, stat);
+    RTXCTXTPOPTYPENAME (pctxt);
+    return stat;
+}
+
+//EXTERN int asn1PrtToStr_e2ap_{{name}} (const char* name, e2ap_{{name}} *pvalue, char* buffer, OSSIZE bufSize);
+//EXTERN int asn1PrtToStrm_e2ap_{{name}} (OSCTXT* pctxt, const char* name, const e2ap_{{name}}* pvalue);
+//EXTERN int asn1Copy_e2ap_{{name}}(OSCTXT* pctxt,const e2ap_{{name}}* pSrcValue,  e2ap_{{name}}* pDstValue);
+
+EXTERN int asn1Init_e2ap_{{name}}(e2ap_{{name}}* pvalue){
+    if (pvalue == 0) return RTERR_NULLPTR;
+    pvalue->numbits = 0;
+    pvalue->data = 0;
+    return 0;
+}
+EXTERN void asn1Free_e2ap_{{name}}(OSCTXT* pctxt, e2ap_{{name}}* pvalue){
+    if (pvalue == 0) return;
+    if(pvalue->numbits>0){
+        rtxMemFreePtr(pctxt, (void*)pvalue->data);
+        pvalue->data = 0;
+        pvalue->numbits = 0;
+    }
+}
+
+{% endif %}
+
+
+EXTERN int asn1PE_e2ap_{{name}}(OSCTXT* pctxt, e2ap_{{name}}* pvalue){
+    int stat = 0;
+    RTXCTCXTPUSHTYPENAME (pctxt, "{{name|replace('_','-')}}");
+    PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST({{metadata.min}}), OSUINTCONST({{metadata.max}}), 0, 0);
+    stat = pe_BitString(pctxt, OS_MIN(pvalue->numbits, {{metadata.max}}), pvalue->data);
+    if (stat != 0) return LOG_RTERR (pctxt, stat);
+    RTXCTXTPOPTYPENAME (pctxt);
+    return stat;
+}
+EXTERN int asn1PD_e2ap_{{name}}(OSCTXT* pctxt, e2ap_{{name}}* pvalue){
+    int stat = 0;
+    RTXCTCXTPUSHTYPENAME (pctxt, "{{name|replace('_','-')}}");
+    PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST({{metadata.min}}), OSUINTCONST({{metadata.max}}), 0, 0);
+    stat = pd_BitString(pctxt, &pvalue->numbits, pvalue->data, sizeof(pvalue->data));
+    if (stat != 0) return LOG_RTERR (pctxt, stat);
+    RTXCTXTPOPTYPENAME (pctxt);
+    return stat;
+}
+//EXTERN int asn1PrtToStr_e2ap_{{name}} (const char* name, e2ap_{{name}}* pvalue, char* buffer, OSSIZE bufSize);
+//EXTERN int asn1PrtToStrm_e2ap_{{name}} (OSCTXT* pctxt, const char* name, const e2ap_{{name}}* pvalue);
+//EXTERN int asn1Copy_e2ap_{{name}}(OSCTXT* pctxt,const e2ap_{{name}}* pSrcValue,  e2ap_{{name}}* pDstValue);
+EXTERN int asn1Init_e2ap_{{name}}(e2ap_{{name}}* pvalue){
+    if (pvalue == 0) return RTERR_NULLPTR;
+    pvalue->numbits = 0;
+    return 0;
+    }
+
+{% endif %}

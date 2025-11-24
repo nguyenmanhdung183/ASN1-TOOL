@@ -1,0 +1,82 @@
+/*****************************************/
+/*           {{name}}                */
+/*****************************************/
+
+//{{metadata.primitive_id}} mau octet string
+
+
+{% if metadata.primitive_id == 6 %}
+
+// mau integer size(a...b) mau la procedurecode
+EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}} value){
+    int stat = 0;
+    RTXCTCXTPUSHTYPENAME (pctxt, "{{name|replace('_','-')}}");
+    stat = pe_ConsUnsigned (pctxt, value, {{metadata.min}}, {{metadata.max}});
+    if (stat != 0) return LOG_RTERR (pctxt, stat);
+    RTXCTXTPOPTYPENAME (pctxt);
+    return stat;
+}
+EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue){
+    int stat = 0;
+    RTXCTCXTPUSHTYPENAME (pctxt, "{{name|replace('_','-')}}");
+    if(pctxt->buffer.aligned){
+        int stat2 = PD_BYTE_ALIGN(pctxt);
+        if(stat2 != 0) return LOG_RTERR (pctxt, stat2);
+    }
+    stat = rtxDecBitsToByte(pctxt, pvalue, 0);
+    if (stat != 0) return LOG_RTERR (pctxt, stat);
+    RTXCTXTPOPTYPENAME (pctxt);
+    return stat;
+}
+//EXTERN int asn1Print_e2ap_{{name}} (const char* name, const e2ap_{{name}}* pvalue);
+//EXTERN int asn1PrtToStr_e2ap_{{name}} (const char* name, e2ap_{{name}}* pvalue, char* buffer, OSSIZE bufSize);
+//EXTERN int asn1PrtToStrm_e2ap_{{name}} (OSCTXT* pctxt, const char* name, const e2ap_{{name}}* pvalue);
+
+{% endif %}
+
+
+{% if metadata.primitive_id == 5 %}
+//mau 5 integer size(a .. b..) mau la nrfreqencyband
+EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}} value){
+    int stat =0;
+    OSBOOL extbit = FALSE;
+    RTXCTCXTPUSHTYPENAME (pctxt, "{{name|replace('_','-')}}");
+    if(value>{{metadata.min}} && value<={{metadata.max}}){
+        extbit = 0;
+    }
+    else extbit =1;
+    stat = rtxEncBit (pctxt, extbit);
+    if (stat != 0) return LOG_RTERR (pctxt, stat);
+    if(extbit){
+        stat = pe_UnconsUnsigned (pctxt, value);
+        if(stat != 0) return LOG_RTERR (pctxt, stat);
+    }
+    else{
+        stat = pe_ConsUnsigned (pctxt, value, {{metadata.min}}, {{metadata.max}});
+        if (stat != 0) return LOG_RTERR (pctxt, stat);
+    }
+    RTXCTXTPOPTYPENAME (pctxt);
+    return stat;
+}
+EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue){
+    int stat =0;
+    OSBOOL extbit = FALSE;
+    RTXCTCXTPUSHTYPENAME (pctxt, "{{name|replace('_','-')}}");
+    /*extensiobit*/
+    stat = DECBIT (pctxt, &extbit);
+    if (stat != 0) return LOG_RTERR (pctxt, stat);
+    if(extbit==0){
+        stat = pd_ConsUnsigned (pctxt, pvalue, {{metadata.min}}, {{metadata.max}});
+        if (stat != 0) return LOG_RTERR (pctxt, stat);
+    }else{
+        stat = pd_UnconsUnsigned (pctxt, pvalue);
+        if (stat != 0) return LOG_RTERR (pctxt, stat);
+    }
+    RTXCTXTPOPTYPENAME (pctxt);
+    return stat;
+}
+//EXTERN int asn1Print_e2ap_{{name}} (const char* name, const e2ap_{{name}}* pvalue);
+//EXTERN int asn1PrtToStr_e2ap_{{name}} (const char* name, e2ap_{{name}}* pvalue, char* buffer, OSSIZE bufSize);
+//EXTERN int asn1PrtToStrm_e2ap_{{name}} (OSCTXT* pctxt, const char* name, const e2ap_{{name}}* pvalue);
+
+{% endif %}

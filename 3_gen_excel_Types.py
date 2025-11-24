@@ -20,19 +20,49 @@ BOTTOMUP_DIR = Path("Tool_read_pdf")
 OUTPUT_DIR = Path("data_xlsx")
 OUTPUT_DIR.mkdir(exist_ok=True)
 OUTPUT_XLSX = OUTPUT_DIR / "data_excel.xlsx"
-
+# -------------------------------
+# REPLACE VALUES IN ALL SHEETS
+# -------------------------------
+replace_map = {
+    "maxnoofErrors": "256",
+    "maxofE2nodeComponents": "1024",
+    "maxofRANfunctionID": "256",
+    "maxofRICactionID": "16",
+    "maxofTNLA": "32",
+    "maxofRICrequestID": "1024",
+    "maxofRICsubscriptions": "2147483648",
+    "maxProtocolIEs": "65536",
+}
 
 with open('./msg.config', 'r') as file:
-    line1 = file.readline().strip()  # đọc dòng 1
-    line2 = file.readline().strip()  # đọc dòng 2 
+    line1 = file.readline().strip()
+    line2 = file.readline().strip()
     PDF_FILE = "./" + line2
     
 
+def replace_values_in_workbook(wb, replace_map):
+    """
+    replace_map: dict { "giá trị cũ": "giá trị mới" }
+    Quét toàn bộ sheet, toàn bộ ô, nếu ô chứa đúng giá trị cũ thì thay bằng giá trị mới.
+    """
+
+    for sheet_name in wb.sheetnames:
+        ws = wb[sheet_name]
+
+        for row in ws.iter_rows():
+            for cell in row:
+                val = cell.value
+                if isinstance(val, str):
+                    if val in replace_map:
+                        cell.value = replace_map[val]
 
 # ---------- Regex helpers ----------
+# Capture primitive name plus optional parenthesized constraint (e.g. SIZE(...))
 PRIMITIVE_RE = re.compile(
-    r"\b(OCTET\s+STRING|INTEGER|ENUMERATED|PrintableString|VisibleString|UTF8String|IA5String|BOOLEAN)\b",
+    r"\b(BIT\s+STRING|OCTET\s+STRING|INTEGER|ENUMERATED|PrintableString|VisibleString|UTF8String|IA5String|BOOLEAN)"
+    r"(?:\s*\([^\)]*\))?",
     re.IGNORECASE)
+
 BITSTRING_RE = re.compile(r"\bBIT\s+STRING\b", re.IGNORECASE)
 
 FOOTER_PATTERNS = [
@@ -65,7 +95,7 @@ def load_pdf_text(path: Path) -> str:
 
     return "\n".join(lines)
 
-# load TXT
+
 def load_txt_text(path: Path) -> str:
     with open(path, "r", encoding="utf-8") as f:
         txt = f.read()
@@ -109,7 +139,6 @@ def detect_sequence_of_singlecontainer_by_lines(text: str):
             m_inner = re.search(r"\{\s*\{\s*([A-Za-z0-9\-\_]+)\s*\}\s*\}", w)
             inner = m_inner.group(1).strip() if m_inner else ""
 
-            # SIZE
             minv = ""
             maxv = ""
             msize = re.search(r"SIZE\s*\(\s*([0-9]+)(?:\s*\.\.\s*([A-Za-z0-9\-\_]+))?", w)
@@ -119,9 +148,9 @@ def detect_sequence_of_singlecontainer_by_lines(text: str):
                     maxv = msize.group(2)
 
             blocks[name] = {"kind": "SingleContainer", "inner": inner, "min": minv, "max": maxv}
-            continue
 
     return blocks
+
 
 def detect_container_by_lines(text: str):
     blocks = {}
@@ -158,7 +187,6 @@ def find_type_block(name: str, text: str) -> str:
                 return text[m_ie.start(): end_idx+1]
         return text[m_ie.start(): text.find("\n", m_ie.start())]
 
-    # struct / sequence / choice
     p_struct = re.compile(
         rf"(^|\n)\s*{re.escape(name)}\s*::=\s*"
         r"((SEQUENCE\s*(\([^\)]*\))?\s*OF)|SEQUENCE|CHOICE|SET|ProtocolIE[-\s]*SingleContainer|SingleContainer|Container|PairContainer)\b",
@@ -196,6 +224,36 @@ def split_logical_items(inner: str) -> list:
                 items.append(p2)
     return items
 
+
+#======ENUM inline======
+def parse_inline_enum_items(type_str):
+    """
+    Trả về list dạng:
+    [(0,"success","success"), (1,"failure","failure"), ...]
+    hoặc None nếu không phải ENUM.
+    """
+    if not isinstance(type_str, str):
+        return None
+
+    m = re.search(r"ENUMERATED\s*\{([^}]*)\}", type_str, flags=re.DOTALL | re.IGNORECASE)
+    if not m:
+        return None
+
+    body = m.group(1)
+
+    raw_items = [
+        x.strip().rstrip(",")
+        for x in body.split(",")
+        if x.strip() not in ("", "...") and not x.strip().startswith("--")
+    ]
+
+    out = []
+    for idx, it in enumerate(raw_items):
+        clean = it.replace("-", "_")
+        out.append((idx, clean, clean))
+
+    return out
+
 # ---------- Parse block ----------
 def parse_struct_block(name: str, block: str, detected_single_containers, detected_containers):
     rows = []
@@ -204,91 +262,48 @@ def parse_struct_block(name: str, block: str, detected_single_containers, detect
     blk = block
     has_ext = 1 if "..." in blk else 0
 
-    # IE
-    # if "E2AP-PROTOCOL-IES" in blk:
-    #     inner = blk[blk.find("{")+1: blk.rfind("}")]
-    #     parts = re.split(r"\}\s*,", inner)
-
-    #     for ent in parts:
-    #         ent = ent.strip().strip(",")
-    #         if not ent:
-    #             continue
-
-    #         # Tìm tất cả các TYPE trong ent
-    #         ie_types = [mtype.group(1) for mtype in re.finditer(r"\bTYPE\s+([A-Za-z0-9\-\_]+)", ent)]
-            
-    #         # Nếu có nhiều TYPE, xuất tất cả
-    #         for ie_type in ie_types:
-    #             mcrit = re.search(r"\bCRITICALITY\s+([A-Za-z0-9\-\_]+)", ent)
-    #             crit = mcrit.group(1) if mcrit else ""
-
-    #             mpres = re.search(r"\bPRESENCE\s+([A-Za-z0-9\-\_]+)", ent)
-    #             pres = mpres.group(1) if mpres else ""
-    #             optional = "OPTIONAL" if pres and not pres.lower().startswith("mand") else ""
-
-    #             # Lấy tên field từ IE nếu có, hoặc đặt mặc định
-    #             mfield = re.search(r"\bID\s+([A-Za-z0-9\-\_]+)", ent)
-    #             field_name = mfield.group(1) if mfield else ""  # hoặc "IE_Field"
-
-    #             rows.append({
-    #                 "Type_Name": name,
-    #                 "ASN1_Type": "IE",
-    #                 "Parent_Type": name,
-    #                 "Tag/ID": "",
-    #                 "Field_Name": field_name,  # Sử dụng biến này
-    #                 "IE_Type": ie_type,
-    #                 "Criticality": crit,
-    #                 "Optional": optional,
-    #                 "Extensible": str(has_ext),
-    #                 "Min_Value": "",
-    #                 "Max_Value": ""
-    #             })
-
-
-    #     return rows
-    # IE
+    # IE parsing
     if "E2AP-PROTOCOL-IES" in blk:
         inner = blk[blk.find("{")+1: blk.rfind("}")]
-
-        # bắt từng IE-block chính xác
         parts = re.findall(r"\{([^{}]+)\}", inner)
 
         for ent in parts:
             ent = ent.strip()
 
-            # Lấy ID IE (field_name)
             mfield = re.search(r"\bID\s+([A-Za-z0-9\-_]+)", ent)
             field_name = mfield.group(1) if mfield else ""
 
-            # Lấy TYPE
             m_ie = re.search(r"\bTYPE\s+([A-Za-z0-9\-\_]+)", ent)
             ie_type = m_ie.group(1) if m_ie else ""
 
-            # Criticality
             mcrit = re.search(r"\bCRITICALITY\s+([A-Za-z0-9\-\_]+)", ent)
             crit = mcrit.group(1) if mcrit else ""
 
-            # Presence
             mpres = re.search(r"\bPRESENCE\s+([A-Za-z0-9\-\_]+)", ent)
             pres = mpres.group(1) if mpres else ""
             optional = "OPTIONAL" if pres.lower().startswith("opt") else ""
+
+            # try parse inline enum if present in the ent text
+            enum_items = None
+            ein = re.search(r"ENUMERATED\s*\{([^}]*)\}", ent, flags=re.IGNORECASE | re.DOTALL)
+            if ein:
+                enum_items = parse_inline_enum_items(ein.group(0))
 
             rows.append({
                 "Type_Name": name,
                 "ASN1_Type": "IE",
                 "Parent_Type": name,
-                #"Tag/ID": field_name,
                 "Field_Name": field_name,
                 "IE_Type": ie_type,
                 "Criticality": crit,
                 "Optional": optional,
                 "Extensible": str(has_ext),
                 "Min_Value": "",
-                "Max_Value": ""
+                "Max_Value": "",
+                "Enum_Item": str(enum_items) if enum_items else ""
             })
 
         return rows
-
 
     # SingleContainer
     if name in detected_single_containers:
@@ -304,7 +319,8 @@ def parse_struct_block(name: str, block: str, detected_single_containers, detect
             "Optional": "",
             "Extensible": str(has_ext),
             "Min_Value": ent["min"],
-            "Max_Value": ent["max"]
+            "Max_Value": ent["max"],
+            "Enum_Item": ""
         })
         return rows
 
@@ -322,11 +338,12 @@ def parse_struct_block(name: str, block: str, detected_single_containers, detect
             "Optional": "",
             "Extensible": str(has_ext),
             "Min_Value": "",
-            "Max_Value": ""
+            "Max_Value": "",
+            "Enum_Item": ""
         })
         return rows
 
-    # Generic SEQUENCE OF
+    # SEQUENCE OF generic
     m_seqof = re.search(r"SEQUENCE\s*(\([^\)]*\))?\s*OF\s+([A-Za-z0-9\-\_]+)", blk)
     if m_seqof:
         inner_t = m_seqof.group(2)
@@ -352,11 +369,12 @@ def parse_struct_block(name: str, block: str, detected_single_containers, detect
             "Optional": "",
             "Extensible": str(has_ext),
             "Min_Value": minv,
-            "Max_Value": maxv
+            "Max_Value": maxv,
+            "Enum_Item": ""
         })
         return rows
 
-    # STRUCT / CHOICE
+    # STRUCT / CHOICE / SET
     m_top = re.search(r"::=\s*(SEQUENCE|CHOICE|SET)\b", blk)
     if m_top:
         asn1_type = m_top.group(1).upper()
@@ -370,24 +388,27 @@ def parse_struct_block(name: str, block: str, detected_single_containers, detect
         for it in items:
             it = it.strip().rstrip(",")
 
-            # tag defined
+            # TAG form
             m1 = re.match(r"^(\d+)\s+([A-Za-z0-9\-\_]+)\s*(.*)$", it)
             if m1:
                 tag = m1.group(1)
                 field = m1.group(2)
                 rest = m1.group(3).strip()
 
-                # if BITSTRING_RE.search(rest):
-                #     ie_type = "BIT STRING"
-                m_bit = re.search(r"BIT\s+STRING(\s*\([^\)]*\))?", rest, re.IGNORECASE)
-                if m_bit:
-                    ie_type = m_bit.group(0).strip()
-                    
-                elif PRIMITIVE_RE.search(rest):
-                    ie_type = field
+                # detect inline ENUMERATED { ... } first (this captures braces)
+                enum_items = None
+                m_inline_enum = re.search(r"(ENUMERATED\s*\{[^}]*\})", rest, flags=re.IGNORECASE | re.DOTALL)
+                if m_inline_enum:
+                    ie_type = "ENUMERATED"
+                    enum_items = parse_inline_enum_items(m_inline_enum.group(1))
                 else:
-                    mtoken = re.search(r"([A-Za-z0-9\-\_]+)", rest)
-                    ie_type = mtoken.group(1) if mtoken else field
+                    # sửa: ưu tiên primitive (kể cả BIT STRING) và lấy full match (kèm SIZE nếu có)
+                    m_prim = PRIMITIVE_RE.search(rest)
+                    if m_prim:
+                        ie_type = m_prim.group(0).strip()
+                    else:
+                        mtoken = re.search(r"([A-Za-z0-9\-\_]+)", rest)
+                        ie_type = mtoken.group(1) if mtoken else field
 
                 optional = "OPTIONAL" if "OPTIONAL" in rest.upper() else ""
 
@@ -402,26 +423,29 @@ def parse_struct_block(name: str, block: str, detected_single_containers, detect
                     "Optional": optional,
                     "Extensible": "0",
                     "Min_Value": "",
-                    "Max_Value": ""
+                    "Max_Value": "",
+                    "Enum_Item": str(enum_items) if enum_items else ""
                 })
                 continue
 
-            # simple
+            # simple form
             m2 = re.match(r"^([A-Za-z0-9\-\_]+)\s*(.*)$", it)
             if m2:
                 field = m2.group(1)
                 rest = m2.group(2).strip()
 
-                # if BITSTRING_RE.search(rest):
-                #     ie_type = "BIT STRING"
-                m_bit = re.search(r"BIT\s+STRING(\s*\([^\)]*\))?", rest, re.IGNORECASE)
-                if m_bit:
-                    ie_type = m_bit.group(0).strip()                
-                elif PRIMITIVE_RE.search(rest):
-                    ie_type = field
+                enum_items = None
+                m_inline_enum = re.search(r"(ENUMERATED\s*\{[^}]*\})", rest, flags=re.IGNORECASE | re.DOTALL)
+                if m_inline_enum:
+                    ie_type = "ENUMERATED"
+                    enum_items = parse_inline_enum_items(m_inline_enum.group(1))
                 else:
-                    mtoken = re.search(r"([A-Za-z0-9\-\_]+)", rest)
-                    ie_type = mtoken.group(1) if mtoken else field
+                    m_prim = PRIMITIVE_RE.search(rest)
+                    if m_prim:
+                        ie_type = m_prim.group(0).strip()
+                    else:
+                        mtoken = re.search(r"([A-Za-z0-9\-\_]+)", rest)
+                        ie_type = mtoken.group(1) if mtoken else field
 
                 optional = "OPTIONAL" if "OPTIONAL" in rest.upper() else ""
 
@@ -436,7 +460,8 @@ def parse_struct_block(name: str, block: str, detected_single_containers, detect
                     "Optional": optional,
                     "Extensible": "0",
                     "Min_Value": "",
-                    "Max_Value": ""
+                    "Max_Value": "",
+                    "Enum_Item": str(enum_items) if enum_items else ""
                 })
                 continue
 
@@ -457,13 +482,11 @@ def parse_struct_block(name: str, block: str, detected_single_containers, detect
 def main():
 
     print("Loading & cleaning PDF...")
-    #pdf_text = load_pdf_text(PDF_FILE)
     pdf_text = load_txt_text(PDF_FILE)
 
     detected_single = detect_sequence_of_singlecontainer_by_lines(pdf_text)
     detected_cont = detect_container_by_lines(pdf_text)
 
-    # Read bottom-up
     leaves = set()
     if not BOTTOMUP_DIR.exists():
         raise FileNotFoundError(f"Bottomup dir missing: {BOTTOMUP_DIR}")
@@ -481,15 +504,13 @@ def main():
                 if leaf:
                     leaves.add(leaf)
 
-    # Load workbook safely
     if OUTPUT_XLSX.exists():
         wb = load_workbook(OUTPUT_XLSX)
     else:
         wb = Workbook()
 
-    # Prepare TYPES sheet safely
     headers = ["Type_Name", "ASN1_Type", "Parent_Type", "Tag/ID", "Field_Name",
-               "IE_Type", "Criticality", "Optional", "Extensible", "Min_Value", "Max_Value"]
+               "IE_Type", "Criticality", "Optional", "Extensible", "Min_Value", "Max_Value","Enum_Item"]
 
     if "Types" in wb.sheetnames:
         ws = wb["Types"]
@@ -518,11 +539,17 @@ def main():
             continue
 
         for r in rows:
-            # nếu row về IE ko có trường IE_Type thì bỏ qua
             if r.get("ASN1_Type") == "IE" and not r.get("IE_Type"):
                 continue
             
             fn = r.get("Field_Name", "").replace("...", "").strip()
+            # if IE_Type contains inline ENUM, parse_inline_enum_items already filled Enum_Item in row
+            # but also try again from IE_Type string (in case parsing missed earlier)
+            enum_items_from_type = parse_inline_enum_items(r.get("IE_Type", "")) 
+            enum_cell = r.get("Enum_Item", "")
+            if not enum_cell and enum_items_from_type:
+                enum_cell = str(enum_items_from_type)
+
             ws.append([
                 r.get("Type_Name", ""),
                 r.get("ASN1_Type", ""),
@@ -534,10 +561,10 @@ def main():
                 r.get("Optional", ""),
                 r.get("Extensible", "0"),
                 r.get("Min_Value", ""),
-                r.get("Max_Value", "")
+                r.get("Max_Value", ""),
+                enum_cell
             ])
 
-    # Format TYPES
     for col_idx in (5, 6):
         for cell in ws[get_column_letter(col_idx)]:
             cell.alignment = Alignment(wrap_text=True, vertical="top")
@@ -545,6 +572,11 @@ def main():
     for i, col in enumerate(ws.columns, 1):
         max_len = max(len(str(c.value or "")) for c in col)
         ws.column_dimensions[get_column_letter(i)].width = min(max_len + 2, 80)
+        
+
+
+    replace_values_in_workbook(wb, replace_map)
+
 
     wb.save(OUTPUT_XLSX)
     print("Saved Types sheet:", OUTPUT_XLSX)
@@ -561,44 +593,34 @@ def main():
     ws_types = wb["Types"]
     message_rows = []
 
-    # Build messages-> nếu tìm trong type có trường là msg base và kết thúc với IEs hoặc -IEs và có asn1 type = IE thì lấy
-    # Lấy danh sách tất cả rows từ Types
     types_data = list(ws_types.iter_rows(min_row=2, values_only=True))
 
-    # Duyệt từng row tìm Message Base
     for row in types_data:
         type_name, asn1_type, parent_type, tag_id, field_name, ie_type,critical,presence, *_ = row
 
-        # Bỏ qua nếu field_name có đuôi là "ItemIEs"
-        # if type_name.endswith("-ItemIEs"):
-        #     continue
-        # Chỉ quan tâm SEQUENCE có field_name là protocolIEs
         if asn1_type == "SEQUENCE" and field_name == "protocolIEs":
             msg_base = type_name
-            # Tìm tất cả Type trong sheet Types bắt đầu bằng msg_base và kết thúc bằng "IEs" hoặc "-IEs"
+
             for t_row in types_data:
                 t_type_name, t_asn1_type, *_ = t_row[:3]
                 if (t_asn1_type == "IE" and
                     (t_type_name.startswith(msg_base) and 
                     (t_type_name.endswith("IEs") or t_type_name.endswith("-IEs"))
                     and not t_type_name.endswith("ItemIEs"))):
-                    ie_type = t_row[5]  # IE_Type
-                    critical = t_row[6]  # Critical
-                    presence = t_row[7]  # Present
+
+                    ie_type = t_row[5]
+                    critical = t_row[6]
+                    presence = t_row[7]
                     ie_id_const = f"ID_id_{ie_type}"
-                    #field_camel = to_camel(ie_type)
-                    #message_rows.append([msg_base, ie_id_const, ie_type, field_camel])
-                    field_camel = t_row[4]  # Field_Name từ sheet Types
+
+                    field_camel = t_row[4]
 
                     if presence != "OPTIONAL":
                         presence = "MANDATORY"
                     
                     message_rows.append([msg_base, ie_id_const, ie_type, field_camel, t_type_name, critical, presence])
             
-    # Prepare sheet Messages
-    #msg_headers = ["Message_Name", "IE_ID_Constant", "IE_Type", "Field_Name"]
     msg_headers = ["Message_Name", "IE_ID_Constant", "IE_Type", "Field_Name", "Original_IE_Name", "Critical", "Presence"]
-
 
     if "Messages" in wb.sheetnames:
         ws_msg = wb["Messages"]
@@ -616,11 +638,9 @@ def main():
         ws_msg = wb.create_sheet("Messages")
         ws_msg.append(msg_headers)
 
-    # Write rows
     for r in message_rows:
         ws_msg.append(r)
 
-    # Autofit Messages
     for i, col in enumerate(ws_msg.columns, 1):
         max_len = max(len(str(c.value or "")) for c in col)
         ws_msg.column_dimensions[get_column_letter(i)].width = min(max_len + 2, 60)
@@ -631,3 +651,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+

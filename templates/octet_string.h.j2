@@ -1,23 +1,36 @@
 /*****************************************/
 /*           {{name}}                */
 /*****************************************/
-//octet string
 
 
-{% if is_dynamic %}
-typedef OSDynOctStr e2ap_{{name}};
-{% else %}
-typedef struct e2ap_{{name}} {
-   OSUINT32 numocts;
-   OSOCTET data[{{size}}];
-} e2ap_{{name}};
-{% endif %}
+{% if metadata.primitive_id == 8 %}
+//type 8  mau la octet string size(n) mau la plmn_identity
 
-EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}{% if is_dynamic %}{% else %}*{% endif %} pvalue);
-EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* ppvalue);
-EXTERN void asn1Print_e2ap_{{name}} (const char* name, const e2ap_{{name}}* pvalue);
+typedef struct EXTERN e2ap_{{name|replace("-","_")}} {
+    OSUINT32 numocts;
+    OSOCTET data[( {{metadata.size}} )];
+} e2ap_{{name|replace("-","_")}};
+
+EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue);
+EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue);
 EXTERN int asn1PrtToStr_e2ap_{{name}} (const char* name, e2ap_{{name}}* pvalue, char* buffer, OSSIZE bufSize);
 EXTERN int asn1PrtToStrm_e2ap_{{name}} (OSCTXT* pctxt, const char* name, const e2ap_{{name}}* pvalue);
 EXTERN int asn1Copy_e2ap_{{name}} (OSCTXT* pctxt, const e2ap_{{name}}* pSrcValue, e2ap_{{name}}* pDstValue);
 EXTERN int asn1Init_e2ap_{{name}} (e2ap_{{name}}* pvalue);
+
+{% endif %}
+
+
+{% if metadata.primitive_id == 9 %}
+//type 9  mau la octet string mau la pdusessioncommonnetworkinstance
+
+typedef OSDynOctStr e2ap_{{name|replace("-","_")}};
+EXTERN int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}} value);
+EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue);
+EXTERN int asn1PrtToStr_e2ap_{{name}} (const char* name, e2ap_{{name}} *pvalue, char* buffer, OSSIZE bufSize);
+EXTERN int asn1PrtToStrm_e2ap_{{name}} (OSCTXT* pctxt, const char* name, const e2ap_{{name}}* pvalue);
+EXTERN int asn1Copy_e2ap_{{name}} (OSCTXT* pctxt, const e2ap_{{name}}* pSrcValue, e2ap_{{name}}* pDstValue);
+EXTERN int asn1Init_e2ap_{{name}} (e2ap_{{name}}* pvalue);
 EXTERN void asn1Free_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue);
+
+{% endif %}
