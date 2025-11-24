@@ -61,11 +61,11 @@ int asn1PD_e2ap_GNB_ID_Choice (OSCTXT* pctxt, e2ap_GNB_ID_Choice* pvalue)
       case 0:
          RTXCTXTPUSHELEMNAME (pctxt, "gnb-ID");
 
-         pvalue->u.gnb_ID = rtxMemAllocType (pctxt, e2ap_BIT STRING (SIZE(22..32));
 
+
+         pvalue->u.gnb_ID = rtxMemAllocType (pctxt, e2ap_GNB_ID_Choice_gnb_ID);
          if (pvalue->u.gnb_ID == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
-
-         PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST(), OSUINTCONST(), 0, 0);
+         //PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST(), OSUINTCONST(), 0, 0);
          //primitive BIT STRING
          //stat = pd_BitString32 (pctxt, pvalue->u.gnb_ID, OSUINTCONST(), OSUINTCONST());
          stat = asn1PD_e2ap_GNB_ID_Choice_gnb_ID(pctxt, pvalue->u.gnb_ID, OSUINTCONST(), OSUINTCONST());

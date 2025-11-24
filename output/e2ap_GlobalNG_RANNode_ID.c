@@ -67,11 +67,12 @@ int asn1PD_e2ap_GlobalNG_RANNode_ID (OSCTXT* pctxt, e2ap_GlobalNG_RANNode_ID* pv
       case 0:
          RTXCTXTPUSHELEMNAME (pctxt, "gNB");
 
+
+
+         //not primitive
          pvalue->u.gNB = rtxMemAllocType (pctxt, e2ap_GlobalgNB_ID);
 
          if (pvalue->u.gNB == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
-
-         //not primitive
          stat = asn1PD_e2ap_GlobalgNB_ID (pctxt, pvalue->u.gNB);
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXTPOPELEMNAME (pctxt);
@@ -79,11 +80,12 @@ int asn1PD_e2ap_GlobalNG_RANNode_ID (OSCTXT* pctxt, e2ap_GlobalNG_RANNode_ID* pv
       case 1:
          RTXCTXTPUSHELEMNAME (pctxt, "ng-eNB");
 
+
+
+         //not primitive
          pvalue->u.ng_eNB = rtxMemAllocType (pctxt, e2ap_GlobalngeNB_ID);
 
          if (pvalue->u.ng_eNB == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
-
-         //not primitive
          stat = asn1PD_e2ap_GlobalngeNB_ID (pctxt, pvalue->u.ng_eNB);
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXTPOPELEMNAME (pctxt);

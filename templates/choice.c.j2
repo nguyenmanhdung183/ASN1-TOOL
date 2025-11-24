@@ -88,13 +88,15 @@ EXTERN int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
       case {{choice.tag|int}}:
          RTXCTXTPUSHELEMNAME (pctxt, "{{choice.name|replace('_', '-')}}");
 
-         pvalue->u.{{choice.field|replace("-","_")}} = rtxMemAllocType (pctxt, e2ap_{{choice.type}});
 
-         if (pvalue->u.{{choice.field|replace("-","_")}} == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
    {% if choice.primitive_meta.is ==False %}
+         pvalue->u.{{choice.field|replace("-","_")}} = rtxMemAllocType (pctxt, e2ap_{{choice.type}});
+         if (pvalue->u.{{choice.field|replace("-","_")}} == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
          asn1Init_e2ap_{{choice.type}}(pvalue->u.{{choice.field|replace("-","_")}});
          //stat = asn1PD_e2ap_{{choice.type}} (pctxt, pvalue->u.{{choice.field|replace("-","_")}});
    {% else %}
+         pvalue->u.{{choice.field|replace("-","_")}} = rtxMemAllocType (pctxt, e2ap_{{name}}_{{choice.field|replace("-","_")}});
+         if (pvalue->u.{{choice.field|replace("-","_")}} == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
          //primitive {{choice.primitive_meta.type}}
          asn1Init_e2ap_{{name}}_{{choice.field|replace("-","_")}}(pvalue->u.{{choice.field|replace("-","_")}});
          //stat = asn1PD_e2ap_{{name}}_{{choice.field|replace("-","_")}} (pctxt, pvalue->u.{{choice.field|replace("-","_")}});
@@ -253,17 +255,20 @@ int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
       case {{choice.tag|int}}:
          RTXCTXTPUSHELEMNAME (pctxt, "{{choice.name|replace('_', '-')}}");
 
-         pvalue->u.{{choice.field|replace('-','_')}} = rtxMemAllocType (pctxt, e2ap_{{choice.type}});
 
-         if (pvalue->u.{{choice.field|replace('-','_')}} == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
 
          {% if choice.primitive_meta.is ==True %}
-         PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST({{choice.minstr}}), OSUINTCONST({{choice.maxstr}}), 0, 0);
+         pvalue->u.{{choice.field|replace('-','_')}} = rtxMemAllocType (pctxt, e2ap_{{name}}_{{choice.field|replace("-","_")}});
+         if (pvalue->u.{{choice.field|replace('-','_')}} == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
+         //PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST({{choice.minstr}}), OSUINTCONST({{choice.maxstr}}), 0, 0);
          //primitive {{choice.primitive_meta.type}}
          //stat = pd_BitString32 (pctxt, pvalue->u.{{choice.field|replace('-','_')}}, OSUINTCONST({{choice.minstr}}), OSUINTCONST({{choice.maxstr}}));
          stat = asn1PD_e2ap_{{name}}_{{choice.field |replace("-", "_")}}(pctxt, pvalue->u.{{choice.field|replace('-','_')}}, OSUINTCONST({{choice.minstr}}), OSUINTCONST({{choice.maxstr}}));
          {% else %}
          //not primitive
+         pvalue->u.{{choice.field|replace('-','_')}} = rtxMemAllocType (pctxt, e2ap_{{choice.type}});
+
+         if (pvalue->u.{{choice.field|replace('-','_')}} == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
          stat = asn1PD_e2ap_{{choice.type}} (pctxt, pvalue->u.{{choice.field|replace('-','_')}});
          {% endif %}
          if (stat != 0) return LOG_RTERR (pctxt, stat);

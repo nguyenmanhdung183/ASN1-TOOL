@@ -97,11 +97,11 @@ int asn1PD_e2ap_ENB_ID (OSCTXT* pctxt, e2ap_ENB_ID* pvalue)
       case 0:
          RTXCTXTPUSHELEMNAME (pctxt, "macro-eNB-ID");
 
-         pvalue->u.macro_eNB_ID = rtxMemAllocType (pctxt, e2ap_BIT STRING (SIZE (20));
 
+
+         pvalue->u.macro_eNB_ID = rtxMemAllocType (pctxt, e2ap_ENB_ID_macro_eNB_ID);
          if (pvalue->u.macro_eNB_ID == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
-
-         PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST(), OSUINTCONST(), 0, 0);
+         //PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST(), OSUINTCONST(), 0, 0);
          //primitive BIT STRING
          //stat = pd_BitString32 (pctxt, pvalue->u.macro_eNB_ID, OSUINTCONST(), OSUINTCONST());
          stat = asn1PD_e2ap_ENB_ID_macro_eNB_ID(pctxt, pvalue->u.macro_eNB_ID, OSUINTCONST(), OSUINTCONST());
@@ -111,11 +111,11 @@ int asn1PD_e2ap_ENB_ID (OSCTXT* pctxt, e2ap_ENB_ID* pvalue)
       case 1:
          RTXCTXTPUSHELEMNAME (pctxt, "home-eNB-ID");
 
-         pvalue->u.home_eNB_ID = rtxMemAllocType (pctxt, e2ap_BIT STRING (SIZE (28));
 
+
+         pvalue->u.home_eNB_ID = rtxMemAllocType (pctxt, e2ap_ENB_ID_home_eNB_ID);
          if (pvalue->u.home_eNB_ID == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
-
-         PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST(), OSUINTCONST(), 0, 0);
+         //PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST(), OSUINTCONST(), 0, 0);
          //primitive BIT STRING
          //stat = pd_BitString32 (pctxt, pvalue->u.home_eNB_ID, OSUINTCONST(), OSUINTCONST());
          stat = asn1PD_e2ap_ENB_ID_home_eNB_ID(pctxt, pvalue->u.home_eNB_ID, OSUINTCONST(), OSUINTCONST());
@@ -125,11 +125,11 @@ int asn1PD_e2ap_ENB_ID (OSCTXT* pctxt, e2ap_ENB_ID* pvalue)
       case 2:
          RTXCTXTPUSHELEMNAME (pctxt, "short-Macro-eNB-ID");
 
-         pvalue->u.short_Macro_eNB_ID = rtxMemAllocType (pctxt, e2ap_BIT STRING (SIZE(18));
 
+
+         pvalue->u.short_Macro_eNB_ID = rtxMemAllocType (pctxt, e2ap_ENB_ID_short_Macro_eNB_ID);
          if (pvalue->u.short_Macro_eNB_ID == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
-
-         PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST(), OSUINTCONST(), 0, 0);
+         //PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST(), OSUINTCONST(), 0, 0);
          //primitive BIT STRING
          //stat = pd_BitString32 (pctxt, pvalue->u.short_Macro_eNB_ID, OSUINTCONST(), OSUINTCONST());
          stat = asn1PD_e2ap_ENB_ID_short_Macro_eNB_ID(pctxt, pvalue->u.short_Macro_eNB_ID, OSUINTCONST(), OSUINTCONST());
@@ -139,11 +139,11 @@ int asn1PD_e2ap_ENB_ID (OSCTXT* pctxt, e2ap_ENB_ID* pvalue)
       case 3:
          RTXCTXTPUSHELEMNAME (pctxt, "long-Macro-eNB-ID");
 
-         pvalue->u.long_Macro_eNB_ID = rtxMemAllocType (pctxt, e2ap_BIT STRING (SIZE(21));
 
+
+         pvalue->u.long_Macro_eNB_ID = rtxMemAllocType (pctxt, e2ap_ENB_ID_long_Macro_eNB_ID);
          if (pvalue->u.long_Macro_eNB_ID == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
-
-         PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST(), OSUINTCONST(), 0, 0);
+         //PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST(), OSUINTCONST(), 0, 0);
          //primitive BIT STRING
          //stat = pd_BitString32 (pctxt, pvalue->u.long_Macro_eNB_ID, OSUINTCONST(), OSUINTCONST());
          stat = asn1PD_e2ap_ENB_ID_long_Macro_eNB_ID(pctxt, pvalue->u.long_Macro_eNB_ID, OSUINTCONST(), OSUINTCONST());

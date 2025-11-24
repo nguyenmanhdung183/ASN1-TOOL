@@ -112,11 +112,12 @@ int asn1PD_e2ap_Cause (OSCTXT* pctxt, e2ap_Cause* pvalue)
       case 0:
          RTXCTXTPUSHELEMNAME (pctxt, "ricRequest");
 
+
+
+         //not primitive
          pvalue->u.ricRequest = rtxMemAllocType (pctxt, e2ap_CauseRICrequest);
 
          if (pvalue->u.ricRequest == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
-
-         //not primitive
          stat = asn1PD_e2ap_CauseRICrequest (pctxt, pvalue->u.ricRequest);
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXTPOPELEMNAME (pctxt);
@@ -124,11 +125,12 @@ int asn1PD_e2ap_Cause (OSCTXT* pctxt, e2ap_Cause* pvalue)
       case 1:
          RTXCTXTPUSHELEMNAME (pctxt, "ricService");
 
+
+
+         //not primitive
          pvalue->u.ricService = rtxMemAllocType (pctxt, e2ap_CauseRICservice);
 
          if (pvalue->u.ricService == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
-
-         //not primitive
          stat = asn1PD_e2ap_CauseRICservice (pctxt, pvalue->u.ricService);
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXTPOPELEMNAME (pctxt);
@@ -136,11 +138,12 @@ int asn1PD_e2ap_Cause (OSCTXT* pctxt, e2ap_Cause* pvalue)
       case 2:
          RTXCTXTPUSHELEMNAME (pctxt, "e2Node");
 
+
+
+         //not primitive
          pvalue->u.e2Node = rtxMemAllocType (pctxt, e2ap_CauseE2node);
 
          if (pvalue->u.e2Node == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
-
-         //not primitive
          stat = asn1PD_e2ap_CauseE2node (pctxt, pvalue->u.e2Node);
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXTPOPELEMNAME (pctxt);
@@ -148,11 +151,12 @@ int asn1PD_e2ap_Cause (OSCTXT* pctxt, e2ap_Cause* pvalue)
       case 3:
          RTXCTXTPUSHELEMNAME (pctxt, "transport");
 
+
+
+         //not primitive
          pvalue->u.transport = rtxMemAllocType (pctxt, e2ap_CauseTransport);
 
          if (pvalue->u.transport == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
-
-         //not primitive
          stat = asn1PD_e2ap_CauseTransport (pctxt, pvalue->u.transport);
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXTPOPELEMNAME (pctxt);
@@ -160,11 +164,12 @@ int asn1PD_e2ap_Cause (OSCTXT* pctxt, e2ap_Cause* pvalue)
       case 4:
          RTXCTXTPUSHELEMNAME (pctxt, "protocol");
 
+
+
+         //not primitive
          pvalue->u.protocol = rtxMemAllocType (pctxt, e2ap_CauseProtocol);
 
          if (pvalue->u.protocol == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
-
-         //not primitive
          stat = asn1PD_e2ap_CauseProtocol (pctxt, pvalue->u.protocol);
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXTPOPELEMNAME (pctxt);
@@ -172,11 +177,12 @@ int asn1PD_e2ap_Cause (OSCTXT* pctxt, e2ap_Cause* pvalue)
       case 5:
          RTXCTXTPUSHELEMNAME (pctxt, "misc");
 
+
+
+         //not primitive
          pvalue->u.misc = rtxMemAllocType (pctxt, e2ap_CauseMisc);
 
          if (pvalue->u.misc == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
-
-         //not primitive
          stat = asn1PD_e2ap_CauseMisc (pctxt, pvalue->u.misc);
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXTPOPELEMNAME (pctxt);
@@ -184,11 +190,12 @@ int asn1PD_e2ap_Cause (OSCTXT* pctxt, e2ap_Cause* pvalue)
       case 6:
          RTXCTXTPUSHELEMNAME (pctxt, "serviceLayer");
 
+
+
+         //not primitive
          pvalue->u.serviceLayer = rtxMemAllocType (pctxt, e2ap_CauseServiceLayer);
 
          if (pvalue->u.serviceLayer == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
-
-         //not primitive
          stat = asn1PD_e2ap_CauseServiceLayer (pctxt, pvalue->u.serviceLayer);
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXTPOPELEMNAME (pctxt);

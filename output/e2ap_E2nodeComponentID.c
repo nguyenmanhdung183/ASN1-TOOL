@@ -112,11 +112,12 @@ int asn1PD_e2ap_E2nodeComponentID (OSCTXT* pctxt, e2ap_E2nodeComponentID* pvalue
       case 0:
          RTXCTXTPUSHELEMNAME (pctxt, "e2nodeComponentInterfaceTypeNG");
 
+
+
+         //not primitive
          pvalue->u.e2nodeComponentInterfaceTypeNG = rtxMemAllocType (pctxt, e2ap_E2nodeComponentInterfaceNG);
 
          if (pvalue->u.e2nodeComponentInterfaceTypeNG == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
-
-         //not primitive
          stat = asn1PD_e2ap_E2nodeComponentInterfaceNG (pctxt, pvalue->u.e2nodeComponentInterfaceTypeNG);
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXTPOPELEMNAME (pctxt);
@@ -124,11 +125,12 @@ int asn1PD_e2ap_E2nodeComponentID (OSCTXT* pctxt, e2ap_E2nodeComponentID* pvalue
       case 1:
          RTXCTXTPUSHELEMNAME (pctxt, "e2nodeComponentInterfaceTypeXn");
 
+
+
+         //not primitive
          pvalue->u.e2nodeComponentInterfaceTypeXn = rtxMemAllocType (pctxt, e2ap_E2nodeComponentInterfaceXn);
 
          if (pvalue->u.e2nodeComponentInterfaceTypeXn == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
-
-         //not primitive
          stat = asn1PD_e2ap_E2nodeComponentInterfaceXn (pctxt, pvalue->u.e2nodeComponentInterfaceTypeXn);
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXTPOPELEMNAME (pctxt);
@@ -136,11 +138,12 @@ int asn1PD_e2ap_E2nodeComponentID (OSCTXT* pctxt, e2ap_E2nodeComponentID* pvalue
       case 2:
          RTXCTXTPUSHELEMNAME (pctxt, "e2nodeComponentInterfaceTypeE1");
 
+
+
+         //not primitive
          pvalue->u.e2nodeComponentInterfaceTypeE1 = rtxMemAllocType (pctxt, e2ap_E2nodeComponentInterfaceE1);
 
          if (pvalue->u.e2nodeComponentInterfaceTypeE1 == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
-
-         //not primitive
          stat = asn1PD_e2ap_E2nodeComponentInterfaceE1 (pctxt, pvalue->u.e2nodeComponentInterfaceTypeE1);
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXTPOPELEMNAME (pctxt);
@@ -148,11 +151,12 @@ int asn1PD_e2ap_E2nodeComponentID (OSCTXT* pctxt, e2ap_E2nodeComponentID* pvalue
       case 3:
          RTXCTXTPUSHELEMNAME (pctxt, "e2nodeComponentInterfaceTypeF1");
 
+
+
+         //not primitive
          pvalue->u.e2nodeComponentInterfaceTypeF1 = rtxMemAllocType (pctxt, e2ap_E2nodeComponentInterfaceF1);
 
          if (pvalue->u.e2nodeComponentInterfaceTypeF1 == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
-
-         //not primitive
          stat = asn1PD_e2ap_E2nodeComponentInterfaceF1 (pctxt, pvalue->u.e2nodeComponentInterfaceTypeF1);
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXTPOPELEMNAME (pctxt);
@@ -160,11 +164,12 @@ int asn1PD_e2ap_E2nodeComponentID (OSCTXT* pctxt, e2ap_E2nodeComponentID* pvalue
       case 4:
          RTXCTXTPUSHELEMNAME (pctxt, "e2nodeComponentInterfaceTypeW1");
 
+
+
+         //not primitive
          pvalue->u.e2nodeComponentInterfaceTypeW1 = rtxMemAllocType (pctxt, e2ap_E2nodeComponentInterfaceW1);
 
          if (pvalue->u.e2nodeComponentInterfaceTypeW1 == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
-
-         //not primitive
          stat = asn1PD_e2ap_E2nodeComponentInterfaceW1 (pctxt, pvalue->u.e2nodeComponentInterfaceTypeW1);
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXTPOPELEMNAME (pctxt);
@@ -172,11 +177,12 @@ int asn1PD_e2ap_E2nodeComponentID (OSCTXT* pctxt, e2ap_E2nodeComponentID* pvalue
       case 5:
          RTXCTXTPUSHELEMNAME (pctxt, "e2nodeComponentInterfaceTypeS1");
 
+
+
+         //not primitive
          pvalue->u.e2nodeComponentInterfaceTypeS1 = rtxMemAllocType (pctxt, e2ap_E2nodeComponentInterfaceS1);
 
          if (pvalue->u.e2nodeComponentInterfaceTypeS1 == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
-
-         //not primitive
          stat = asn1PD_e2ap_E2nodeComponentInterfaceS1 (pctxt, pvalue->u.e2nodeComponentInterfaceTypeS1);
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXTPOPELEMNAME (pctxt);
@@ -184,11 +190,12 @@ int asn1PD_e2ap_E2nodeComponentID (OSCTXT* pctxt, e2ap_E2nodeComponentID* pvalue
       case 6:
          RTXCTXTPUSHELEMNAME (pctxt, "e2nodeComponentInterfaceTypeX2");
 
+
+
+         //not primitive
          pvalue->u.e2nodeComponentInterfaceTypeX2 = rtxMemAllocType (pctxt, e2ap_E2nodeComponentInterfaceX2);
 
          if (pvalue->u.e2nodeComponentInterfaceTypeX2 == NULL) return LOG_RTERR (pctxt, RTERR_NOMEM);
-
-         //not primitive
          stat = asn1PD_e2ap_E2nodeComponentInterfaceX2 (pctxt, pvalue->u.e2nodeComponentInterfaceTypeX2);
          if (stat != 0) return LOG_RTERR (pctxt, stat);
          RTXCTXTPOPELEMNAME (pctxt);
