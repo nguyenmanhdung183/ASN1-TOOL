@@ -14,7 +14,7 @@ EXTERN int asn1PE_e2ap_{{ies_name}}_protocolIEs (OSCTXT* pctxt, e2ap_{{ies_name}
     /*encode length determinant */
     PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST(0), OSUINTCONST(65535), 0, 0);
     stat = pe_Length(pctxt, pvalue->count);
-    if(stat!=0) return LOG_RTERR(pctxt, stat);
+    if(stat<0) return LOG_RTERR(pctxt, stat);
 
     /*encode each element*/
     xx1 =0;

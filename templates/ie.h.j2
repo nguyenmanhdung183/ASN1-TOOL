@@ -26,7 +26,6 @@ typedef struct EXTERN e2ap_{{ies_name}} {
       union {
       {% for d in choices %}
          e2ap_{{d.item_type|replace('-', '_')}} * _e2ap{{ ies_name }}_{{ d.item_type | replace('-', '_') }};
-
       {%endfor%}
 
          ASN1OpenType* extElem1;  /* extension */
@@ -38,4 +37,4 @@ EXTERN int  asn1PE_e2ap_{{ies_name}} (OSCTXT* pctxt, e2ap_{{ies_name}}* pvalue);
 EXTERN int  asn1PD_e2ap_{{ies_name}} (OSCTXT* pctxt, e2ap_{{ies_name}}* pvalue);
 EXTERN void asn1Init_e2ap_{{ies_name}} (e2ap_{{ies_name}}* pvalue);
 EXTERN void asn1Free_e2ap_{{ies_name}} (OSCTXT* pctxt, e2ap_{{ies_name}}* pvalue);
-
+EXTERN int  asn1PrtToStr_e2ap_{{ies_name}} (const char * name, e2ap_{{ies_name}}* pvalue, char * buffer, OSSIZE bufSize);

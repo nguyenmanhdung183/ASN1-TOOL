@@ -79,7 +79,7 @@ EXTERN int asn1PE_e2ap_{{message_name}}_protocolIEs_element (OSCTXT* pctxt, e2ap
         if(stat == 0) {
             stat = pe_OpenType (pctxt, openType.numocts, openType.data);
         }
-    #if 0
+    #if 1
         if(encoded){//dungnm23 check lai nhe
             rtxMemFreePtr(pctxt, pDynamicEncodeBuffer);
         }
@@ -268,3 +268,55 @@ int asn1PrtToStr_e2ap_{{message_name}}_protocolIEs_element(OSCTXT* pctxt, e2ap_{
     return (stat);
 }
 #endif
+
+
+int asn1PrtToStr_e2ap_{{message_name}}_protocolIEs_element (const char * name,
+ e2ap_{{message_name}}_protocolIEs_element* pvalue, 
+ char * buffer, OSSIZE bufSize){
+    if(rtPrintToStringOpenBrace(name, buffer, bufSize)<0)
+        return -1;
+    if(asn1PrtToStr_e2ap_ProtocolIE_ID("id", &pvalue->id, buffer, bufSize)<0)
+        return -1;
+    if(asn1PrtToStr_e2ap_Criticality("criticality", &pvalue->criticality, buffer, bufSize)<0)
+        return -1;
+    if(rtPrintToStringOpenBrace("value", buffer, bufSize)<0)
+        return -1;
+
+    switch(pvalue->value.t){
+{% for ie in ies %}
+        case T_E2AP_PDU_Contents_e2ap_{{ie.origin_name|replace('-', '_')}}_{{ ie.field|replace('-', '_') }}:
+            if(asn1PrtToStr_e2ap_{{ie.ie_type|replace('-', '_')}}("{{ie.ie_type|replace('_', '-')}}", 
+            pvalue->value.u._e2ap_{{ie.origin_name|replace('-', '_')}}_{{ ie.field|replace('-', '_') }}, buffer, bufSize)<0)
+                return -1;
+            break;    
+{% endfor %}
+        default:
+        if(0!=pvalue -> value.u.extElem1){
+            rtPrintToStringIndent(buffer, bufSize);
+            rtPrintToStringHexStr("extElem1", pvalue->value.u.extElem1->numocts, pvalue->value.u.extElem1->data, buffer, bufSize);
+
+        }
+        }
+    if(rtPrintToStringCloseBrace( buffer, bufSize)<0) return -1;
+    return 0;
+
+ }
+
+ void asn1Free_e2ap_{{message_name}}_protocolIEs_element(OSCTXT* pctxt, e2ap_{{message_name}}_protocolIEs_element* pvalue){
+    if(NULL==pvalue) return;
+    switch(pvalue->value.t){
+{% for ie in ies %}
+        case T_E2AP_PDU_Contents_e2ap_{{ie.origin_name|replace('-', '_')}}_{{ ie.field|replace('-', '_') }}:
+            if(pvalue->value.u._e2ap_{{ie.origin_name|replace('-', '_')}}_{{ ie.field|replace('-', '_') }}!=NULL){
+            asn1Free_e2ap_{{ie.ie_type|replace('-', '_')}}(pctxt, pvalue->value.u._e2ap_{{ie.origin_name|replace('-', '_')}}_{{ ie.field|replace('-', '_') }});
+            rtxMemFreePtr(pctxt, (void*)pvalue->value.u._e2ap_{{ie.origin_name|replace('-', '_')}}_{{ ie.field|replace('-', '_') }});
+            pvalue->value.u._e2ap_{{ie.origin_name|replace('-', '_')}}_{{ ie.field|replace('-', '_') }} = NULL;
+            }
+            break;
+{% endfor %}
+        default:
+            break;
+
+
+    }
+ }

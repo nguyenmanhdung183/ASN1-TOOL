@@ -12,6 +12,7 @@
 
 
 typedef struct EXTERN e2ap_E2connectionUpdate {
+ //special field protocolIEs
 e2ap_E2connectionUpdate_protocolIEs protocolIEs;
 
    OSRTDList extElem1;  /* Extension elements */

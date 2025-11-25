@@ -6,7 +6,7 @@
 //mau NID ben xn  bitstring (n)
 typedef struct e2ap_{{name|replace("-","_")}} {
     OSUINT{{metadata.max|stdbit}} numbits;// co the la 64, check sau nhe
-    OSOCTET* data[{{(metadata.max+7)//8}}];
+    OSOCTET data[{{(metadata.max+7)//8}}];
 } e2ap_{{name|replace("-","_")}};
 
 EXTERN int asn1PE_e2ap_{{name}}(OSCTXT* pctxt, e2ap_{{name}}* pvalue);
@@ -20,7 +20,7 @@ EXTERN int asn1Init_e2ap_{{name}}(e2ap_{{name}}* pvalue);
 {% if metadata.primitive_id == 2 %}
 //mau Transportlayeraddress xn bitstring (a..b,..)
 
-typedef ASN1DynamicBitStr e2ap_{{name|replace("-","_")}};
+typedef ASN1DynBitStr e2ap_{{name|replace("-","_")}};
 
 EXTERN int asn1PE_e2ap_{{name}}(OSCTXT* pctxt, e2ap_{{name}} value);
 EXTERN int asn1PD_e2ap_{{name}}(OSCTXT* pctxt, e2ap_{{name}}* pvalue);
@@ -38,7 +38,7 @@ EXTERN void asn1Free_e2ap_{{name}}(OSCTXT* pctxt, e2ap_{{name}}* pvalue);
 
 typedef struct e2ap_{{name|replace("-","_")}} {
     OSUINT{{metadata.max|stdbit}} numbits;
-    OSOCTET* data[{{(metadata.max+7)//8}}];
+    OSOCTET data[{{(metadata.max+7)//8}}];
 } e2ap_{{name|replace("-","_")}};
 
 

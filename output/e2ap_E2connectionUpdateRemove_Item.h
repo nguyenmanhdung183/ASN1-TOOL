@@ -12,7 +12,8 @@
 
 
 typedef struct EXTERN e2ap_E2connectionUpdateRemove_Item {
-   e2ap_ *tnlInformation;
+      //not primitive
+   e2ap_TNLinformation tnlInformation;
 
    OSRTDList extElem1;  /* Extension elements */
 } e2ap_E2connectionUpdateRemove_Item;

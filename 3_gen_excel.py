@@ -47,7 +47,7 @@ for m in re.finditer(r"([A-Za-z0-9\-]+)\s*::=\s*INTEGER\s*\(([^)]+)\)", full_tex
         before, after = content.split("..", 1)
         min_val = before
         max_val = after.split(",", 1)[0] if "," in after else after
-        extra = ", ..." if ",..." in m.group(2) else ""
+        extra = ",..." if ",..." in m.group(2) else ""
         typ = f"INTEGER ({min_val}..{max_val}{extra})"
         primitive_db[name] = {"type": typ, "min": min_val, "max": max_val, "ext": extra != ""}
     else:

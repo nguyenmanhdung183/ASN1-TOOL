@@ -129,7 +129,7 @@ def parse_ie_type_primitive(type_str):
     # INTEGER(a..b..) -> INTEGER(a..b,...)
     #m = re.match(r"INTEGER\s*\(\s*([+-]?\d+)\s*\.\.\s*([+-]?\d+)\s*\.\.\s*\d+\s*\)", s, re.IGNORECASE)
     #m = re.match(r"INTEGER\s*\(\s*([+-]?\d+)\s*\.\.\s*([+-]?\d+)\s*(?:\.\.\.\s*\d+)*\s*\)", s, re.IGNORECASE)
-    m = re.match(r"INTEGER\s*\(\s*(\d+)\s*\.\.\s*(\d+)\s*(?:,\s*\.\.\s*)?\s*\)", s, re.IGNORECASE)
+    m = re.match(r"INTEGER\s*\(\s*(\d+)\s*\.\.\s*(\d+)\s*(?:,\s*\.\.\.\s*)?\s*\)", s, re.IGNORECASE)
 
     if m:
         out.update({"is": True, "type": "INTEGER",
@@ -629,7 +629,7 @@ def gen_ie_outputs():
         elif isinstance(ies_name_cleaned, str) and ies_name_cleaned.endswith("IEs"):
             ies_name_cleaned = ies_name_cleaned[:-3]
 
-        data = {"ies_name": ies_name_cleaned, "choices": choices, "ie_id": ie_id, "criticality": f"e2ap_Criticality_{criticality}"}
+        data = {"ies_name": ies_name_cleaned.replace("-", "_"), "choices": choices, "ie_id": ie_id, "criticality": f"e2ap_Criticality_{criticality}"}
 
         try:
             if str(ies_name_raw).endswith("IEs") and str(ies_name_raw) in original_ies:
@@ -637,6 +637,8 @@ def gen_ie_outputs():
                 safe_write(os.path.join(OUTPUT_DIR, f"e2ap_{ies_name_cleaned.replace('-', '_')}_protocolIEs.c"), env.get_template("ie_big_msg.c.j2").render(data))
                 print(f"IE (BIG) → {ies_name_cleaned} dùng ie_big_msg.h/c")
             else:
+                data = {"ies_name": ies_name_raw.replace("-", "_"), "choices": choices, "ie_id": ie_id, "criticality": f"e2ap_Criticality_{criticality}"}
+
                 safe_write(os.path.join(OUTPUT_DIR, f"e2ap_{ies_name}.h"), env.get_template("ie.h.j2").render(data))
                 safe_write(os.path.join(OUTPUT_DIR, f"e2ap_{ies_name}.c"), env.get_template("ie.c.j2").render(data))
                 print(f"IE → {ies_name} dùng ie.h/c")
@@ -681,7 +683,7 @@ def gen_sequence_outputs():
                 "field": field_name,
                 "ie_type": ie_type_str.replace("-", "_"),
                 "presence": presence,
-            
+
                 "primitive": primitive_sheet,
                 "primitive_meta": {
                     "is": parsed["is"],

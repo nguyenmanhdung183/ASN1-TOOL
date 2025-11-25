@@ -17,13 +17,15 @@
 
 typedef struct EXTERN e2ap_{{name}} {
 {% for f in fields %}
-{%if f.field == "protocolIEs" %}
+{%if f.field == "protocolIEs" %} //special field protocolIEs
 e2ap_{{name|replace('-', '_')}}_protocolIEs protocolIEs;
 {% else %}
       {% if f.primitive_meta.is == False %}
-   e2ap_{{f.type}} *{{f.field |replace('-', '_')}};
+      //not primitive
+   e2ap_{{f.ie_type}} {{f.field |replace('-', '_')}};
       {% else %}
-   e2ap_{{name}}_{{f.field |replace('-', '_')}} *{{f.field |replace('-', '_')}};
+      //primitive
+   e2ap_{{name}}_{{f.field |replace('-', '_')}} {{f.field |replace('-', '_')}};
       {% endif %}
 {% endif %}
    {% if f.presence == "optional" %}   OSBOOL m_{{f.field}}Present;{% endif %}

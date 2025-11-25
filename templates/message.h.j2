@@ -43,4 +43,5 @@ EXTERN int asn1PE_e2ap_{{message_name}}_protocolIEs_element (OSCTXT* pctxt, e2ap
 EXTERN int asn1PD_e2ap_{{message_name}}_protocolIEs_element (OSCTXT* pctxt, e2ap_{{message_name}}_protocolIEs_element* pvalue);
 EXTERN int asn1Init_e2ap_{{message_name}}_protocolIEs_element (e2ap_{{message_name}}_protocolIEs_element* pvalue);
 EXTERN void asn1Free_e2ap_{{message_name}}_protocolIEs_element (OSCTXT* pctxt, e2ap_{{message_name}}_protocolIEs_element* pvalue);
-EXTERN int asn1PrtToStr_e2ap_{{message_name}}_protocolIEs_element (OSCTXT* pctxt, e2ap_{{message_name}}_protocolIEs_element* pvalue);
+//EXTERN int asn1PrtToStr_e2ap_{{message_name}}_protocolIEs_element (OSCTXT* pctxt, e2ap_{{message_name}}_protocolIEs_element* pvalue);
+EXTERN int asn1PrtToStr_e2ap_{{message_name}}_protocolIEs_element (const char * name, e2ap_{{message_name}}_protocolIEs_element* pvalue, char * buffer, OSSIZE bufSize);

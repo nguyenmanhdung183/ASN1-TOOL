@@ -57,7 +57,7 @@ EXTERN int asn1Init_e2ap_{{parent_name}}_{{metadata.field_name}}(e2ap_{{parent_n
 EXTERN void asn1Free_e2ap_{{parent_name}}_{{metadata.field_name}}(OSCTXT* pctxt, e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue){
     if(0==pvalue) return;   
     if(pvalue->numbits >0){
-        rtFreeBitStr(pctxt, (void*)pvalue->data);
+        rtxMemFreePtr(pctxt, (void*)pvalue->data);
         pvalue->data =0;
         pvalue->numbits=0;
     }

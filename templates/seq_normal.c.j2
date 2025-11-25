@@ -35,11 +35,16 @@ int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
 
    RTXCTXTPUSHELEMNAME(pctxt, "{{f.field |replace('_', '-')}}");
    {%if f.field == "protocolIEs"%}
-   stat = asn1PE_e2ap_{{name|replace('-', '_')}}_protocolIEs (pctxt, &pvalue->protocolIEs);
+   stat = asn1PE_e2ap_{{name|replace('-', '_')}}_protocolIEs (pctxt, pvalue->protocolIEs);
    {% elif f.primitive_meta.is == True %}
-   stat = asn1PE_e2ap_{{name}}_{{f.field}}(pctxt, pvalue->u.{{f.field|replace("-","_")}}); //primitive
+      {% if f.primitive_meta.primitive_id == 2%}
+   stat = asn1PE_e2ap_{{name}}_{{f.field}}(pctxt, pvalue->{{f.field|replace("-","_")}}); //primitive
+      {% endif %}
+      {% if f.primitive_meta.primitive_id == 3 or f.primitive_meta.primitive_id == 4 %}
+   stat = asn1PE_e2ap_{{name}}_{{f.field}}(pctxt, &pvalue->{{f.field|replace("-","_")}}); //primitive
+      {% endif %}
    {% else %}
-   stat = asn1PE_e2ap_{{f.ie_type|replace('-', '_')}} (pctxt, &pvalue->{{f.field|replace('-', '_') }});
+   stat = asn1PE_e2ap_{{f.ie_type|replace('-', '_')}} (pctxt, pvalue->{{f.field|replace('-', '_') }});
    {% endif %}
    if (stat != 0) return LOG_RTERR(pctxt, stat);
    RTXCTXTPOPELEMNAME(pctxt);
@@ -114,7 +119,7 @@ int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
       {%if f.field == "protocolIEs"%}
       stat = asn1PD_e2ap_{{name|replace('-', '_')}}_protocolIEs (pctxt, &pvalue->protocolIEs);
       {% elif f.primitive_meta.is == True %}
-      stat = asn1PD_e2ap_{{name}}_{{f.field}} (pctxt, pvalue->u.{{f.field|replace('-','_')}}); //primitive
+      stat = asn1PD_e2ap_{{name}}_{{f.field}} (pctxt, &pvalue->{{f.field|replace('-','_')}}); //primitive
       {% else %}
       stat = asn1PD_e2ap_{{f.ie_type|replace('-', '_')}} (pctxt, &pvalue->{{f.field|replace('-', '_')}});
       {% endif %}
@@ -191,7 +196,7 @@ int asn1Init_e2ap_{{name}} (e2ap_{{name}}* pvalue)
    asn1Init_e2ap_{{f.ie_type|replace('-', '_')}} (&pvalue->{{f.field|replace('-', '_')}});
        {% endif %}
    {% else %}
-   asn1Init_e2ap_{{name}}_{{f.field}} (pvalue->u.{{f.field|replace('-','_')}}); //primitive
+   asn1Init_e2ap_{{name}}_{{f.field}} (&pvalue->{{f.field|replace('-','_')}}); //primitive delete &
    {% endif %}
    {% endfor %}
    rtxDListFastInit(&pvalue->extElem1);
@@ -209,7 +214,7 @@ void asn1Free_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
    asn1Free_e2ap_{{f.ie_type|replace("-","_")}} (pctxt, &pvalue->{{f.field|replace("-","_")}});
       {% endif %}
    {% elif f.primitive_meta.primitive_id ==2 %}
-   asn1Free_e2ap_{{name}}_{{f.field}} (pctxt, pvalue->u.{{f.field|replace('-','_')}}); //primitive
+   asn1Free_e2ap_{{name}}_{{f.field}} (pctxt, &pvalue->{{f.field|replace('-','_')}}); //primitive delete &
    {% endif %}
 {% endfor %}
    rtxMemFreeOpenSeqExt(pctxt, &pvalue->extElem1);

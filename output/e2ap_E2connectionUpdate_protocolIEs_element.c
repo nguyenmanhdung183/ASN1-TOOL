@@ -107,7 +107,7 @@ EXTERN int asn1PE_e2ap_E2connectionUpdate_protocolIEs_element (OSCTXT* pctxt, e2
         if(stat == 0) {
             stat = pe_OpenType (pctxt, openType.numocts, openType.data);
         }
-    #if 0
+    #if 1
         if(encoded){//dungnm23 check lai nhe
             rtxMemFreePtr(pctxt, pDynamicEncodeBuffer);
         }
@@ -403,3 +403,87 @@ int asn1PrtToStr_e2ap_E2connectionUpdate_protocolIEs_element(OSCTXT* pctxt, e2ap
     return (stat);
 }
 #endif
+
+
+int asn1PrtToStr_e2ap_E2connectionUpdate_protocolIEs_element (const char * name,
+ e2ap_E2connectionUpdate_protocolIEs_element* pvalue, 
+ char * buffer, OSSIZE bufSize){
+    if(rtPrintToStringOpenBrace(name, buffer, bufSize)<0)
+        return -1;
+    if(asn1PrtToStr_e2ap_ProtocolIE_ID("id", &pvalue->id, buffer, bufSize)<0)
+        return -1;
+    if(asn1PrtToStr_e2ap_Criticality("criticality", &pvalue->criticality, buffer, bufSize)<0)
+        return -1;
+    if(rtPrintToStringOpenBrace("value", buffer, bufSize)<0)
+        return -1;
+
+    switch(pvalue->value.t){
+        case T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_id_TransactionID:
+            if(asn1PrtToStr_e2ap_TransactionID("TransactionID", 
+            pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_TransactionID, buffer, bufSize)<0)
+                return -1;
+            break;    
+        case T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateAdd:
+            if(asn1PrtToStr_e2ap_E2connectionUpdate_List("E2connectionUpdate-List", 
+            pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateAdd, buffer, bufSize)<0)
+                return -1;
+            break;    
+        case T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove:
+            if(asn1PrtToStr_e2ap_E2connectionUpdateRemove_List("E2connectionUpdateRemove-List", 
+            pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove, buffer, bufSize)<0)
+                return -1;
+            break;    
+        case T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateModify:
+            if(asn1PrtToStr_e2ap_E2connectionUpdate_List("E2connectionUpdate-List", 
+            pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateModify, buffer, bufSize)<0)
+                return -1;
+            break;    
+        default:
+        if(0!=pvalue -> value.u.extElem1){
+            rtPrintToStringIndent(buffer, bufSize);
+            rtPrintToStringHexStr("extElem1", pvalue->value.u.extElem1->numocts, pvalue->value.u.extElem1->data, buffer, bufSize);
+
+        }
+        }
+    if(rtPrintToStringCloseBrace( buffer, bufSize)<0) return -1;
+    return 0;
+
+ }
+
+ void asn1Free_e2ap_E2connectionUpdate_protocolIEs_element(OSCTXT* pctxt, e2ap_E2connectionUpdate_protocolIEs_element* pvalue){
+    if(NULL==pvalue) return;
+    switch(pvalue->value.t){
+        case T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_id_TransactionID:
+            if(pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_TransactionID!=NULL){
+            asn1Free_e2ap_TransactionID(pctxt, pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_TransactionID);
+            rtxMemFreePtr(pctxt, (void*)pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_TransactionID);
+            pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_TransactionID = NULL;
+            }
+            break;
+        case T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateAdd:
+            if(pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateAdd!=NULL){
+            asn1Free_e2ap_E2connectionUpdate_List(pctxt, pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateAdd);
+            rtxMemFreePtr(pctxt, (void*)pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateAdd);
+            pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateAdd = NULL;
+            }
+            break;
+        case T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove:
+            if(pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove!=NULL){
+            asn1Free_e2ap_E2connectionUpdateRemove_List(pctxt, pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove);
+            rtxMemFreePtr(pctxt, (void*)pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove);
+            pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateRemove = NULL;
+            }
+            break;
+        case T_E2AP_PDU_Contents_e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateModify:
+            if(pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateModify!=NULL){
+            asn1Free_e2ap_E2connectionUpdate_List(pctxt, pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateModify);
+            rtxMemFreePtr(pctxt, (void*)pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateModify);
+            pvalue->value.u._e2ap_E2connectionUpdate_IEs_id_E2connectionUpdateModify = NULL;
+            }
+            break;
+        default:
+            break;
+
+
+    }
+ }

@@ -48,7 +48,7 @@ int asn1PD_e2ap_E2connectionUpdate_List (OSCTXT* pctxt, e2ap_E2connectionUpdate_
 
    RTXCTXTPUSHTYPENAME (pctxt, "E2connectionUpdate-List");
 
-   PU_SETSIZECONSTRAINT (pctxt, OSUINTCONST(1), OSUINTCONST(ASN1V_e2ap_32), 0, 0);
+   PU_SETSIZECONSTRAINT (pctxt, OSUINTCONST(1), OSUINTCONST(32), 0, 0);
 
    stat = pd_Length64 (pctxt, &count);
    if (stat != 0) return LOG_RTERR (pctxt, stat);
@@ -112,3 +112,24 @@ void asn1Free_e2ap_E2connectionUpdate_List (OSCTXT* pctxt, e2ap_E2connectionUpda
    }
 }
 #endif
+
+
+int asn1PrtToStr_e2ap_E2connectionUpdate_List(const char* name, e2ap_E2connectionUpdate_List* pvalue, char* buffer, OSSIZE bufSize)
+{
+    e2ap_E2connectionUpdate_ItemIEs* pdata;
+    OSRTDListNode* pnode;
+    char nameBuf[256];
+    char numBuf[32];
+    OSUINT32 xx1=0;
+    for(pnode = pvalue->head;  xx1 < pvalue->count && pnode != 0; pnode = pnode->next, xx1++){
+        pdata = (e2ap_E2connectionUpdate_ItemIEs*)pnode->data;
+        rtxUIntToCharStr(xx1, numBuf, sizeof(numBuf), 0);
+        rtxStrJoin(nameBuf, sizeof(nameBuf), name, "[", numBuf, "]", 0);
+        #if 1
+        if(asn1PrtToStr_e2ap_E2connectionUpdate_ItemIEs(nameBuf, pdata, buffer, bufSize) <0){
+            return -1;
+        }
+        #endif
+    }
+    return 0;
+}

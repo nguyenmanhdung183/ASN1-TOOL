@@ -5,7 +5,7 @@
 //mau NID ben xn  bitstring (n)
 typedef struct e2ap_{{parent_name}}_{{metadata.field_name|replace("-","_")}} {
     OSUINT{{metadata.parsed.max|stdbit}} numbits;
-    OSOCTET* data[{{(metadata.parsed.max+7)//8}}];
+    OSOCTET data[{{(metadata.parsed.max+7)//8}}];
 } e2ap_{{parent_name}}_{{metadata.field_name}};
 
 EXTERN int asn1PE_e2ap_{{parent_name}}_{{metadata.field_name}}(OSCTXT* pctxt, e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue);
@@ -19,7 +19,7 @@ EXTERN int asn1Init_e2ap_{{parent_name}}_{{metadata.field_name}}(e2ap_{{parent_n
 {% if metadata.parsed.primitive_id == 2 %}
 //mau Transportlayeraddress xn bitstring (a..b,..)
 
-typedef ASN1DynamicBitStr e2ap_{{parent_name}}_{{metadata.field_name}};
+typedef ASN1DynBitStr e2ap_{{parent_name}}_{{metadata.field_name}};
 
 EXTERN int asn1PE_e2ap_{{parent_name}}_{{metadata.field_name}}(OSCTXT* pctxt, e2ap_{{parent_name}}_{{metadata.field_name}} value);
 EXTERN int asn1PD_e2ap_{{parent_name}}_{{metadata.field_name}}(OSCTXT* pctxt, e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue);
@@ -35,7 +35,7 @@ EXTERN void asn1Free_e2ap_{{parent_name}}_{{metadata.field_name}}(OSCTXT* pctxt,
 
 typedef struct e2ap_{{parent_name}}_{{metadata.field_name}} {
      OSUINT{{metadata.parsed.max|stdbit}}  numbits;
-    OSOCTET* data[{{(metadata.parsed.max+7)//8}}];
+    OSOCTET data[{{(metadata.parsed.max+7)//8}}];
 } e2ap_{{parent_name}}_{{metadata.field_name}};
 EXTERN int asn1PE_e2ap_{{parent_name}}_{{metadata.field_name}}(OSCTXT* pctxt, e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue);
 EXTERN int asn1PD_e2ap_{{parent_name}}_{{metadata.field_name}}(OSCTXT* pctxt, e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue);

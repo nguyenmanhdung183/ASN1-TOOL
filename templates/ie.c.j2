@@ -68,27 +68,103 @@ int asn1PE_e2ap_{{ies_name}} (OSCTXT* pctxt, e2ap_{{ies_name}}* pvalue)
       }
 
       if (encoded) {
-         size_t bitOffset = PU_GETCTXTBITOFFSET (pctxt);
-         size_t bitsConsumed = bitOffset;
-         if (bitsConsumed < bitOffset) {
-            stat = pd_moveBitCursor (pctxt, (int)(bitOffset - bitsConsumed));
-         } else {
-            stat = (bitsConsumed > bitOffset) ? ASN_E_INVLEN : 0;
-         }
-         if (stat != 0) return LOG_RTERR (pctxt, stat);
+         openType.numocts = (OSUINT32) pe_GetMsgLen (pctxt);
+         openType.data = pDynamicEncodeBuffer = pctxt->buffer.data;
       }
-
-      RTXCTXTPOPELEMNAME (pctxt);
+      rtxCopyContext (pctxt, &ictxt);
+      if(stat ==0) stat = pe_OpenType(pctxt, openType.numocts, openType.data);
+      /*free dynamic encode buffer*/
+      if(encoded){
+          rtxMemFreePtr(pctxt, pDynamicEncodeBuffer);
+      }
    }
-
+   if (stat != 0) return LOG_RTERR (pctxt, stat);
+   RTXCTXTPOPELEMNAME (pctxt);
    //RTXCTXTPOPTYPENAME (pctxt);
    return 0;
 }
 
 int asn1PD_e2ap_{{ies_name}} (OSCTXT* pctxt, e2ap_{{ies_name}}* pvalue)
 {
-   /* decode logic tương tự, có switch + openType */
-   return 0;
+   int stat =0;
+   /*deode root element id*/
+   RTXCTXTPUSHELEMNAME(pctxt, "id");
+   stat = asn1PD_e2ap_ProtocolIE_ID (pctxt, &pvalue->id);
+   if(stat!=0) return LOG_RTERR(pctxt, stat);
+   RTXCTXTPOPELEMNAME(pctxt);
+
+   /*decode root element criticality*/
+   RTXCTXTPUSHELEMNAME(pctxt, "criticality");
+   stat = asn1PD_e2ap_Criticality (pctxt, &pvalue->criticality);
+   if(stat!=0) return LOG_RTERR(pctxt, stat);
+   RTXCTXTPOPELEMNAME(pctxt);
+   /*decode root element value*/
+   RTXCTXTPUSHELEMNAME(pctxt, "value");
+   {
+      OSUINT32 openTypeLen;
+      size_t bitStartOffset, bitLength;
+      stat = pd_UnconsLength(pctxt, &openTypeLen);
+      if(stat <0) return LOG_RTERR(pctxt, stat);
+      else if(stat == RT_OK_FRAG){
+         rtxErrAddStrParm(pctxt, "open type with fragmented length use - perindef");
+         return LOG_RTERRNEW(pctxt, RTERR_NOTSUPP);
+      }
+      bitStartOffset = PU_GETCTXTBITOFFSET(pctxt);
+      bitLength = openTypeLen * 8;
+      switch (pvalue->id){
+      {% for d in choices %}
+         case T_E2AP_PDU_Contents_e2ap_{{ ies_name }}_{{ d.item_type | replace('-', '_') }}:
+            pvalue->value.t = T_E2AP_PDU_Contents_e2ap_{{ ies_name }}_{{ d.item_type | replace('-', '_') }};
+            RTXCTXTPUSHELEMNAME(pctxt, "id-{{ d.item_type | replace('_', '-') }}");
+            //pvalue->value.u._e2ap_{{ ies_name }}_id_{{ d.item_type | replace('-', '_') }} 
+             pvalue->value.u._e2ap{{ ies_name }}_{{ d.item_type | replace('-', '_') }} = rtxMemAllocType(pctxt, e2ap_{{ d.item_type | replace('-', '_') }});
+            //asn1Init_e2ap_{{ d.item_type | replace('-', '_') }}(pvalue->value.u._e2ap_{{ ies_name }}_id_{{ d.item_type | replace('-', '_') }});
+                 asn1Init_e2ap_{{ d.item_type | replace('-', '_') }}(pvalue->value.u._e2ap{{ ies_name }}_{{ d.item_type | replace('-', '_') }});
+            stat = asn1PD_e2ap_{{ d.item_type | replace('-', '_') }} (pctxt,
+                (e2ap_{{ d.item_type | replace('-', '_') }}*)pvalue->value.
+                u._e2ap{{ ies_name }}_{{ d.item_type | replace('-', '_') }});
+            if(stat!=0) return LOG_RTERR(pctxt, stat);
+            RTXCTXTPOPELEMNAME(pctxt);
+            break;
+
+      {% endfor %}
+        default:
+            pvalue->value.t = T_E2AP_PDU_Contents_e2ap_{{ ies_name }}_UNDEF_;
+            pvalue->value.u.extElem1 = rtxMemAllocType(pctxt, ASN1OpenType);
+            if(0==pvalue->value.u.extElem1){
+                return LOG_RTERR(pctxt, RTERR_NOMEM);
+            }
+
+            {
+                OSOCTET *pdata =(OSOCTET*) rtxMemAlloc(pctxt, openTypeLen);
+                if(0==pdata){
+                    return LOG_RTERR(pctxt, RTERR_NOMEM);
+                }
+                stat = rtxDecBitsToByteArray(pctxt, pdata, openTypeLen, openTypeLen*8);
+                if(stat!=0){
+                    rtxMemFreePtr(pctxt, pdata);
+                    rtxMemFreePtr(pctxt, pvalue->value.u.extElem1);
+                    return LOG_RTERR(pctxt, stat);
+                }
+
+                pvalue->value.u.extElem1->numocts = openTypeLen;
+                pvalue->value.u.extElem1->data = pdata;
+            }
+            break;
+      }
+      {
+      size_t bitEndOffset = PU_GETCTXTBITOFFSET(pctxt);
+      size_t bitsConsumed = bitEndOffset - bitStartOffset;
+      if(bitsConsumed < bitLength){
+         stat = pd_moveBitCursor(pctxt, (int)(bitLength - bitsConsumed));
+      } else {
+         stat = (bitsConsumed > bitLength) ? ASN_E_INVLEN : 0;
+      }
+      }
+   }
+   if(stat!=0) return LOG_RTERR(pctxt, stat);
+   RTXCTXTPOPELEMNAME(pctxt);
+   return stat;
 }
 
 void asn1Init_e2ap_{{ies_name}} (e2ap_{{ies_name}}* pvalue)
@@ -128,4 +204,35 @@ void asn1Free_e2ap_{{ies_name}} (OSCTXT* pctxt, e2ap_{{ies_name}}* pvalue)
          break;
          default:;
    }
+}
+
+int  asn1PrtToStr_e2ap_{{ies_name}} (const char * name, e2ap_{{ies_name}}* pvalue, char * buffer, OSSIZE bufSize){
+   if(rtPrintToStringOpenBrace(name, buffer, bufSize)<0)
+       return -1;
+
+      if(asn1PrtToStr_e2ap_ProtocolIE_ID("id", &pvalue->id, buffer, bufSize)<0)
+         return -1;
+
+      if(asn1PrtToStr_e2ap_Criticality("criticality", &pvalue->criticality, buffer, bufSize)<0)
+         return -1;
+      if(rtPrintToStringOpenBrace("value", buffer, bufSize)<0)
+         return -1;
+      switch (pvalue->value.t) {
+      {% for d in choices %}
+      case T_E2AP_PDU_Contents_e2ap_{{ ies_name }}_{{ d.item_type | replace('-', '_') }}:
+         if(asn1PrtToStr_e2ap_{{ d.item_type | replace('-', '_') }}("{{ d.item_type | replace('_', '-') }}",
+            pvalue->value.u._e2ap{{ ies_name }}_{{ d.item_type | replace('-', '_')}}, buffer, bufSize)<0)
+            return -1;
+         break;
+      {% endfor %}
+      default:
+         if(0!=pvalue -> value.u.extElem1){
+             rtPrintToStringIndent(buffer, bufSize);
+             rtPrintToStringHexStr("extElem1", pvalue->value.u.extElem1->numocts, pvalue->value.u.extElem1->data, buffer, bufSize);
+
+         }
+      }
+      if(rtPrintToStringCloseBrace( buffer, bufSize)<0) return -1;
+      return 0;
+
 }

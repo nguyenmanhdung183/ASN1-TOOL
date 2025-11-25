@@ -39,7 +39,7 @@ CONTAINER PAIR
 ----> PD IE chưa có
 
    ---> stat = pe_Length (pctxt, pvalue->count); small length
-
+--> init cái gì đó trước PD
 ==========================================
 chạy 1.py -> xem file .yaml và chỉnh lại nếu bị sai
 chạy 2.py

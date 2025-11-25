@@ -26,7 +26,7 @@ int asn1PE_e2ap_E2connectionUpdate (OSCTXT* pctxt, e2ap_E2connectionUpdate* pval
    /* encode field protocolIEs */  
 
    RTXCTXTPUSHELEMNAME(pctxt, "protocolIEs");
-   stat = asn1PE_e2ap_E2connectionUpdate_protocolIEs (pctxt, &pvalue->protocolIEs);
+   stat = asn1PE_e2ap_E2connectionUpdate_protocolIEs (pctxt, pvalue->protocolIEs);
    if (stat != 0) return LOG_RTERR(pctxt, stat);
    RTXCTXTPOPELEMNAME(pctxt);
 

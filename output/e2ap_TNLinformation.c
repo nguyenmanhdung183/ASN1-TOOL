@@ -40,7 +40,7 @@ EXTERN int asn1Init_e2ap_TNLinformation_tnlAddress(e2ap_TNLinformation_tnlAddres
 EXTERN void asn1Free_e2ap_TNLinformation_tnlAddress(OSCTXT* pctxt, e2ap_TNLinformation_tnlAddress* pvalue){
     if(0==pvalue) return;   
     if(pvalue->numbits >0){
-        rtFreeBitStr(pctxt, (void*)pvalue->data);
+        rtxMemFreePtr(pctxt, (void*)pvalue->data);
         pvalue->data =0;
         pvalue->numbits=0;
     }
@@ -97,7 +97,7 @@ int asn1PE_e2ap_TNLinformation (OSCTXT* pctxt, e2ap_TNLinformation* pvalue)
    /* encode field tnlAddress */  
 
    RTXCTXTPUSHELEMNAME(pctxt, "tnlAddress");
-   stat = asn1PE_e2ap_TNLinformation_tnlAddress(pctxt, pvalue->u.tnlAddress); //primitive
+   stat = asn1PE_e2ap_TNLinformation_tnlAddress(pctxt, pvalue->tnlAddress); //primitive
    if (stat != 0) return LOG_RTERR(pctxt, stat);
    RTXCTXTPOPELEMNAME(pctxt);
 
@@ -106,7 +106,7 @@ int asn1PE_e2ap_TNLinformation (OSCTXT* pctxt, e2ap_TNLinformation* pvalue)
    if (pvalue->m_tnlPortPresent) {
 
    RTXCTXTPUSHELEMNAME(pctxt, "tnlPort");
-   stat = asn1PE_e2ap_TNLinformation_tnlPort(pctxt, pvalue->u.tnlPort); //primitive
+   stat = asn1PE_e2ap_TNLinformation_tnlPort(pctxt, &pvalue->tnlPort); //primitive
    if (stat != 0) return LOG_RTERR(pctxt, stat);
    RTXCTXTPOPELEMNAME(pctxt);
 
@@ -167,7 +167,7 @@ int asn1PD_e2ap_TNLinformation (OSCTXT* pctxt, e2ap_TNLinformation* pvalue)
    /*decode root elements*/
    /* decode field tnlAddress */
    RTXCTXTPUSHELEMNAME(pctxt, "tnlAddress");
-      stat = asn1PD_e2ap_TNLinformation_tnlAddress (pctxt, pvalue->u.tnlAddress); //primitive
+      stat = asn1PD_e2ap_TNLinformation_tnlAddress (pctxt, &pvalue->tnlAddress); //primitive
       if (stat != 0) return LOG_RTERR(pctxt, stat);
    RTXCTXTPOPELEMNAME(pctxt);
 
@@ -175,7 +175,7 @@ int asn1PD_e2ap_TNLinformation (OSCTXT* pctxt, e2ap_TNLinformation* pvalue)
    RTXCTXTPUSHELEMNAME(pctxt, "tnlPort");
    if (optbits[0]) {
       pvalue->m_tnlPortPresent = TRUE;
-      stat = asn1PD_e2ap_TNLinformation_tnlPort (pctxt, pvalue->u.tnlPort); //primitive
+      stat = asn1PD_e2ap_TNLinformation_tnlPort (pctxt, &pvalue->tnlPort); //primitive
       if (stat != 0) return LOG_RTERR(pctxt, stat);
    } else {
       pvalue->m_tnlPortPresent = FALSE;
@@ -238,8 +238,8 @@ int asn1PD_e2ap_TNLinformation (OSCTXT* pctxt, e2ap_TNLinformation* pvalue)
 int asn1Init_e2ap_TNLinformation (e2ap_TNLinformation* pvalue)
 {
    if(0==pvalue) return RTERR_NULLPTR;
-   asn1Init_e2ap_TNLinformation_tnlAddress (pvalue->u.tnlAddress); //primitive
-   asn1Init_e2ap_TNLinformation_tnlPort (pvalue->u.tnlPort); //primitive
+   asn1Init_e2ap_TNLinformation_tnlAddress (&pvalue->tnlAddress); //primitive delete &
+   asn1Init_e2ap_TNLinformation_tnlPort (&pvalue->tnlPort); //primitive delete &
    rtxDListFastInit(&pvalue->extElem1);
    return 0;
 }
@@ -247,7 +247,7 @@ int asn1Init_e2ap_TNLinformation (e2ap_TNLinformation* pvalue)
 void asn1Free_e2ap_TNLinformation (OSCTXT* pctxt, e2ap_TNLinformation* pvalue)
 {
    if(0==pvalue) return;
-   asn1Free_e2ap_TNLinformation_tnlAddress (pctxt, pvalue->u.tnlAddress); //primitive
+   asn1Free_e2ap_TNLinformation_tnlAddress (pctxt, &pvalue->tnlAddress); //primitive delete &
    rtxMemFreeOpenSeqExt(pctxt, &pvalue->extElem1);
 }
 
