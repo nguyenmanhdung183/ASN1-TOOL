@@ -1,63 +1,51 @@
 
 /*****************************************/
-/*           {{name|replace('_', '-')}}                */
+/*           E2connectionUpdate-Item                */
 /*****************************************/
 //sequence normal
 
 
 // Các nội dung cần thiết từ template seq_normal.c.j2
 
-{% for primitive in primitive_files_data %}
-    // Nội dung của file .c cho primitive {{ primitive.name }}
-    {{ primitive.c_file_content }}
-{% endfor %}
 
 // Các phần còn lại của template seq_normal.c.j2
 
 
 //contain extensition bit -> theo mau cu GlobalgNB-ID
-int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
+int asn1PE_e2ap_E2connectionUpdate_Item (OSCTXT* pctxt, e2ap_E2connectionUpdate_Item* pvalue)
 {
    int stat = 0;
    OSBOOL extbit = FALSE;
-   RTXCTXTPUSHTYPENAME(pctxt, "{{name|replace('_', '-')}}");
+   RTXCTXTPUSHTYPENAME(pctxt, "E2connectionUpdate-Item");
 
    /*extension bit*/
    extbit = (OSBOOL)(pvalue->extElem1.count > 0);
    stat = rtxEncBit (pctxt, extbit);
    if (stat != 0) return LOG_RTERR(pctxt, stat);
 
-{% for f in fields %}
-   /* encode field {{f.field}} */  
-{% if f.presence == "optional" %}
-   if (pvalue->m_{{f.field}}Present) {
-{% endif %}
+   /* encode field tnlInformation */  
 
-   RTXCTXTPUSHELEMNAME(pctxt, "{{f.field |replace('_', '-')}}");
-   {%if f.field == "protocolIEs"%}
-   stat = asn1PE_e2ap_{{name|replace('-', '_')}}_protocolIEs (pctxt, &pvalue->protocolIEs);
-   {% elif f.primitive_meta.is == True %}
-   stat = asn1PE_e2ap_{{name}}_{{f.field}}(pctxt, pvalue->u.{{f.field|replace("-","_")}}); //primitive
-   {% else %}
-   stat = asn1PE_e2ap_{{f.ie_type|replace('-', '_')}} (pctxt, &pvalue->{{f.field|replace('-', '_') }});
-   {% endif %}
+   RTXCTXTPUSHELEMNAME(pctxt, "tnlInformation");
+   stat = asn1PE_e2ap_TNLinformation (pctxt, &pvalue->tnlInformation);
    if (stat != 0) return LOG_RTERR(pctxt, stat);
    RTXCTXTPOPELEMNAME(pctxt);
 
-{% if f.presence == "optional" %}
-   }
-{% endif %}
 
-{% endfor %}
+   /* encode field tnlUsage */  
 
-   {% if extensible %}
+   RTXCTXTPUSHELEMNAME(pctxt, "tnlUsage");
+   stat = asn1PE_e2ap_TNLusage (pctxt, &pvalue->tnlUsage);
+   if (stat != 0) return LOG_RTERR(pctxt, stat);
+   RTXCTXTPOPELEMNAME(pctxt);
+
+
+
    /*
    if (pvalue->extElem1Present) {
       stat = pe_OpenType (pctxt, pvalue->extElem1.numocts, pvalue->extElem1.data);
       if (stat != 0) return LOG_RTERR(pctxt, stat);
    }
    */
-   {% endif %}
 
    if(extbit) {
       /*encode extension optional bits length */
@@ -80,7 +68,7 @@ int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
    return (stat);
 }
 
-int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
+int asn1PD_e2ap_E2connectionUpdate_Item (OSCTXT* pctxt, e2ap_E2connectionUpdate_Item* pvalue)
 {
    int stat =0;
    ASN1OpenType openType;
@@ -88,9 +76,9 @@ int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
    OSUINT32 bitcnt;
    OSUINT32 i_;
    OSBOOL extbit = FALSE;
-   OSBOOL optbits[{{fields|length}}];
+   OSBOOL optbits[2];
 
-   RTXCTXTPUSHTYPENAME(pctxt, "{{name|replace('_', '-')}}");
+   RTXCTXTPUSHTYPENAME(pctxt, "E2connectionUpdate-Item");
 
    /*extension bit*/
    stat = DEC_BIT(pctxt, &extbit);
@@ -98,35 +86,24 @@ int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
    rtxDListInit(&pvalue->extElem1); 
 
    /*optional bits*/
-   for(i_ = 0; i_ < {{fields|length}}; i_++) {
+   for(i_ = 0; i_ < 2; i_++) {
       stat = DEC_BIT(pctxt, &optbits[i_]);
       if (stat != 0) return LOG_RTERR(pctxt, stat);
    }
 
    /*decode root elements*/
-{% for f in fields %}
-   /* decode field {{f.field}} */
-   RTXCTXTPUSHELEMNAME(pctxt, "{{f.field |replace('_', '-')}}");
-{% if f.presence == "optional" %}
-   if (optbits[0]) {
-      pvalue->m_{{f.field}}Present = TRUE;
-{% endif %}
-      {%if f.field == "protocolIEs"%}
-      stat = asn1PD_e2ap_{{name|replace('-', '_')}}_protocolIEs (pctxt, &pvalue->protocolIEs);
-      {% elif f.primitive_meta.is == True %}
-      stat = asn1PD_e2ap_{{name}}_{{f.field}} (pctxt, pvalue->u.{{f.field|replace('-','_')}}); //primitive
-      {% else %}
-      stat = asn1PD_e2ap_{{f.ie_type|replace('-', '_')}} (pctxt, &pvalue->{{f.field|replace('-', '_')}});
-      {% endif %}
+   /* decode field tnlInformation */
+   RTXCTXTPUSHELEMNAME(pctxt, "tnlInformation");
+      stat = asn1PD_e2ap_TNLinformation (pctxt, &pvalue->tnlInformation);
       if (stat != 0) return LOG_RTERR(pctxt, stat);
-{% if f.presence == "optional" %}
-   } else {
-      pvalue->m_{{f.field}}Present = FALSE;
-   }
-{% endif %}
    RTXCTXTPOPELEMNAME(pctxt);
 
-{% endfor %}
+   /* decode field tnlUsage */
+   RTXCTXTPUSHELEMNAME(pctxt, "tnlUsage");
+      stat = asn1PD_e2ap_TNLusage (pctxt, &pvalue->tnlUsage);
+      if (stat != 0) return LOG_RTERR(pctxt, stat);
+   RTXCTXTPOPELEMNAME(pctxt);
+
 
    /*decode extension elements*/
    if(extbit) {
@@ -180,62 +157,37 @@ int asn1PD_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
 
 }
 
-int asn1Init_e2ap_{{name}} (e2ap_{{name}}* pvalue)
+int asn1Init_e2ap_E2connectionUpdate_Item (e2ap_E2connectionUpdate_Item* pvalue)
 {
    if(0==pvalue) return RTERR_NULLPTR;
-   {% for f in fields %}
-   {% if not f.primitive_meta.is %}
-       {%if f.field == "protocolIEs"%}
-   asn1Init_e2ap_{{name|replace('-', '_')}}_protocolIEs (&pvalue->protocolIEs);
-      {% else %}
-   asn1Init_e2ap_{{f.ie_type|replace('-', '_')}} (&pvalue->{{f.field|replace('-', '_')}});
-       {% endif %}
-   {% else %}
-   asn1Init_e2ap_{{name}}_{{f.field}} (pvalue->u.{{f.field|replace('-','_')}}); //primitive
-   {% endif %}
-   {% endfor %}
+   asn1Init_e2ap_TNLinformation (&pvalue->tnlInformation);
+   asn1Init_e2ap_TNLusage (&pvalue->tnlUsage);
    rtxDListFastInit(&pvalue->extElem1);
    return 0;
 }
 
-void asn1Free_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
+void asn1Free_e2ap_E2connectionUpdate_Item (OSCTXT* pctxt, e2ap_E2connectionUpdate_Item* pvalue)
 {
    if(0==pvalue) return;
-{% for f in fields %}
-   {% if not f.primitive_meta.is %}
-      {%if f.field == "protocolIEs"%}
-   asn1Free_e2ap_{{name|replace('-', '_')}}_protocolIEs (pctxt, &pvalue->protocolIEs);
-      {% else %}
-   asn1Free_e2ap_{{f.ie_type|replace("-","_")}} (pctxt, &pvalue->{{f.field|replace("-","_")}});
-      {% endif %}
-   {% elif f.primitive_meta.primitive_id ==2 %}
-   asn1Free_e2ap_{{name}}_{{f.field}} (pctxt, pvalue->u.{{f.field|replace('-','_')}}); //primitive
-   {% endif %}
-{% endfor %}
+   asn1Free_e2ap_TNLinformation (pctxt, &pvalue->tnlInformation);
+   asn1Free_e2ap_TNLusage (pctxt, &pvalue->tnlUsage);
    rtxMemFreeOpenSeqExt(pctxt, &pvalue->extElem1);
 }
 
-int asn1PrtToStr_e2ap_{{name}} (const char* name, e2ap_{{name}}* pvalue, char* buffer, OSSIZE bufSize)
+int asn1PrtToStr_e2ap_E2connectionUpdate_Item (const char* name, e2ap_E2connectionUpdate_Item* pvalue, char* buffer, OSSIZE bufSize)
 {
    if(rtPrintToStringOpenBrace(name, buffer, bufSize) < 0) 
    {
       return -1;
    }
-{% for f in fields%}
-{% if not (f.primitive.isprimitive and f.ie_type !="BIT STRING") %}
-{%if f.field == "protocolIEs"%}
-   if(asn1PrtToStr_e2ap_{{name|replace('-', '_')}}_protocolIEs ("protocolIEs", &pvalue->protocolIEs, buffer, bufSize) < 0)
+   if(asn1PrtToStr_e2ap_TNLinformation ("tnlInformation", &pvalue->tnlInformation, buffer, bufSize) < 0)
    {
       return -1;
    }
-{% else %}
-   if(asn1PrtToStr_e2ap_{{f.ie_type|replace('-', '_')}} ("{{f.field |replace('-', '_')}}", &pvalue->{{f.field|replace("-","_")}}, buffer, bufSize) < 0)
+   if(asn1PrtToStr_e2ap_TNLusage ("tnlUsage", &pvalue->tnlUsage, buffer, bufSize) < 0)
    {
       return -1;
    }
-   {% endif %}
-{% endif %}
-{% endfor %}
 
    /*assum there is an extension*/
    if(rtPrintToStringOpenTypeExtBraceText("extElem1", &pvalue->extElem1, buffer, bufSize) < 0)

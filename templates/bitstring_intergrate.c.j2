@@ -1,1 +1,93 @@
 /* bitstring intergrate header file */
+//metadata.parsed.primitive_id == {{metadata.parsed.primitive_id}}
+
+{% if metadata.parsed.primitive_id == 3 %}
+//mau rnti_full ben xn  bitstring (n)
+
+EXTERN int asn1PE_e2ap_{{parent_name}}_{{metadata.field_name}}(OSCTXT* pctxt, e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue){
+    int stat =0;
+    PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST({{metadata.parsed.fix_size}}), OSUINTCONST({{metadata.parsed.fix_size}}), 0, 0);
+    stat = pe_BitString (pctxt, OS_MIN(pvalue->numbits, {{metadata.parsed.fix_size}}), pvalue->data);
+    if(stat != 0) return LOG_RTERR (pctxt, stat);
+    return stat;
+}
+EXTERN int asn1PD_e2ap_{{parent_name}}_{{metadata.field_name}}(OSCTXT* pctxt, e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue){
+    int stat =0;
+    PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST({{metadata.parsed.fix_size}}), OSUINTCONST({{metadata.parsed.fix_size}}), 0, 0);
+    stat = pd_BitString (pctxt, &pvalue->numbits, pvalue->data, sizeof(pvalue->data));
+    if(stat != 0) return LOG_RTERR (pctxt, stat);
+    return stat;
+}
+//EXTERN int asn1PrtToStr_e2ap_{{parent_name}}_{{metadata.field_name}} (const char* name, e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue, char* buffer, OSSIZE bufSize);
+//EXTERN int asn1PrtToStrm_e2ap_{{parent_name}}_{{metadata.field_name}} (OSCTXT* pctxt, const char* name, const e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue);
+//EXTERN int asn1Copy_e2ap_{{parent_name}}_{{metadata.field_name}}(OSCTXT* pctxt,const e2ap_{{parent_name}}_{{metadata.field_name}}* pSrcValue,  e2ap_{{parent_name}}_{{metadata.field_name}}* pDstValue);
+EXTERN int asn1Init_e2ap_{{parent_name}}_{{metadata.field_name}}(e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue){
+    if(0==pvalue) return RTERR_NULLPTR;
+    pvalue->numbits=0;
+    return 0;
+}
+{% endif %}
+
+{% if metadata.parsed.primitive_id == 2 %}
+//mau Transportlayeraddress xn bitstring (a..b,..)
+
+EXTERN int asn1PE_e2ap_{{parent_name}}_{{metadata.field_name}}(OSCTXT* pctxt, e2ap_{{parent_name}}_{{metadata.field_name}} value){
+    int stat =0;
+    PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST({{metadata.parsed.min}}), OSUINTCONST({{metadata.parsed.max}}), OSUINTCONST(0), OSUINT32_MAX);
+    stat = pe_BitString (pctxt, OS_MIN(value.numbits, {{metadata.parsed.max}}), value.data);
+    if(stat != 0) return LOG_RTERR (pctxt, stat);
+    return stat;
+}
+EXTERN int asn1PD_e2ap_{{parent_name}}_{{metadata.field_name}}(OSCTXT* pctxt, e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue){
+    int stat =0;
+    PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST({{metadata.parsed.min}}), OSUINTCONST({{metadata.parsed.max}}), OSUINTCONST(0), OSUINT32_MAX);
+    stat =  pd_DynBitString (pctxt, pvalue);
+    if(stat != 0) return LOG_RTERR (pctxt, stat);
+    return stat;
+}
+//EXTERN int asn1PrtToStr_e2ap_{{parent_name}}_{{metadata.field_name}} (const char* name, e2ap_{{parent_name}}_{{metadata.field_name}} *pvalue, char* buffer, OSSIZE bufSize);
+//EXTERN int asn1PrtToStrm_e2ap_{{parent_name}}_{{metadata.field_name}} (OSCTXT* pctxt, const char* name, const e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue);
+//EXTERN int asn1Copy_e2ap_{{parent_name}}_{{metadata.field_name}}(OSCTXT* pctxt,const e2ap_{{parent_name}}_{{metadata.field_name}}* pSrcValue,  e2ap_{{parent_name}}_{{metadata.field_name}}* pDstValue);
+EXTERN int asn1Init_e2ap_{{parent_name}}_{{metadata.field_name}}(e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue){
+    if(0==pvalue) return RTERR_NULLPTR;
+    pvalue->numbits=0;
+    pvalue->data =0;
+    return 0;
+}
+EXTERN void asn1Free_e2ap_{{parent_name}}_{{metadata.field_name}}(OSCTXT* pctxt, e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue){
+    if(0==pvalue) return;   
+    if(pvalue->numbits >0){
+        rtFreeBitStr(pctxt, (void*)pvalue->data);
+        pvalue->data =0;
+        pvalue->numbits=0;
+    }
+}
+{% endif %}
+
+{% if metadata.parsed.primitive_id == 4 %}
+//type 4  mau la ul_coordination_info bitstring (a..b)
+
+EXTERN int asn1PE_e2ap_{{parent_name}}_{{metadata.field_name}}(OSCTXT* pctxt, e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue){
+    int stat =0;
+    PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST({{metadata.parsed.min}}), OSUINTCONST({{metadata.parsed.max}}), 0, 0);
+    stat = pe_BitString (pctxt, OS_MIN(pvalue->numbits, {{metadata.parsed.max}}), pvalue->data);
+    if(stat != 0) return LOG_RTERR (pctxt, stat);
+    return stat;
+}
+EXTERN int asn1PD_e2ap_{{parent_name}}_{{metadata.field_name}}(OSCTXT* pctxt, e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue){
+    int stat =0;
+    PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST({{metadata.parsed.min}}), OSUINTCONST({{metadata.parsed.max}}), 0, 0);
+    stat = pd_BitString (pctxt, &pvalue->numbits, pvalue->data, sizeof(pvalue->data));
+    if(stat != 0) return LOG_RTERR (pctxt, stat);
+    return stat;
+}
+//EXTERN int asn1PrtToStr_e2ap_{{parent_name}}_{{metadata.field_name}} (const char* name, e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue, char* buffer, OSSIZE bufSize);
+//EXTERN int asn1PrtToStrm_e2ap_{{parent_name}}_{{metadata.field_name}} (OSCTXT* pctxt, const char* name, const e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue);
+//EXTERN int asn1Copy_e2ap_{{parent_name}}_{{metadata.field_name}}(OSCTXT* pctxt,const e2ap_{{parent_name}}_{{metadata.field_name}}* pSrcValue,  e2ap_{{parent_name}}_{{metadata.field_name}}* pDstValue);
+EXTERN int asn1Init_e2ap_{{parent_name}}_{{metadata.field_name}}(e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue){
+    if(0==pvalue) return RTERR_NULLPTR;
+    pvalue->numbits=0;
+    return 0;
+}
+
+{% endif %}

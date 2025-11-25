@@ -126,8 +126,11 @@ def parse_ie_type_primitive(type_str):
     # ============================================================
     # INTEGER
     # ============================================================
-    # INTEGER(a..b..)
-    m = re.match(r"INTEGER\s*\(\s*([+-]?\d+)\s*\.\.\s*([+-]?\d+)\s*\.\.\s*\d+\s*\)", s, re.IGNORECASE)
+    # INTEGER(a..b..) -> INTEGER(a..b,...)
+    #m = re.match(r"INTEGER\s*\(\s*([+-]?\d+)\s*\.\.\s*([+-]?\d+)\s*\.\.\s*\d+\s*\)", s, re.IGNORECASE)
+    #m = re.match(r"INTEGER\s*\(\s*([+-]?\d+)\s*\.\.\s*([+-]?\d+)\s*(?:\.\.\.\s*\d+)*\s*\)", s, re.IGNORECASE)
+    m = re.match(r"INTEGER\s*\(\s*(\d+)\s*\.\.\s*(\d+)\s*(?:,\s*\.\.\s*)?\s*\)", s, re.IGNORECASE)
+
     if m:
         out.update({"is": True, "type": "INTEGER",
                     "min": int(m.group(1)), "max": int(m.group(2)),
@@ -144,6 +147,7 @@ def parse_ie_type_primitive(type_str):
 
     # INTEGER(n)
     m = re.match(r"INTEGER\s*\(\s*SIZE\s*\(\s*(\d+)\s*\)\s*\)", s, re.IGNORECASE)
+    #m = re.match(r"INTEGER\s*\(\s*SIZE\s*\(\s*(\d+))", s, re.IGNORECASE)
     if m:
         n = int(m.group(1))
         out.update({"is": True, "type": "INTEGER",
@@ -159,6 +163,7 @@ def parse_ie_type_primitive(type_str):
     # ============================================================
     # OCTET STRING
     # ============================================================
+    #m = re.match(r"OCTET STRING\s*\(\s*SIZE\s*\(\s*(\d+))", s, re.IGNORECASE)
     m = re.match(r"OCTET STRING\s*\(\s*SIZE\s*\(\s*(\d+)\s*\)\s*\)", s, re.IGNORECASE)
     if m:
         n = int(m.group(1))
@@ -174,8 +179,11 @@ def parse_ie_type_primitive(type_str):
     # ============================================================
     # BIT STRING
     # ============================================================
-    # BIT STRING(size(a..b..))
-    m = re.match(r"BIT STRING\s*\(\s*SIZE\s*\(\s*(\d+)\s*\.\.\s*(\d+)\s*\.\.\s*\d+\s*\)\s*\)", s, re.IGNORECASE)
+    # trước input là BIT STRING(size(a..b..)) -> giờ input sửa thành BIT STRING (SIZE(a..b,...))
+    
+    #m = re.match(r"BIT STRING\s*\(\s*SIZE\s*\(\s*(\d+)\s*\.\.\s*(\d+)\s*\.\.\s*\d+", s, re.IGNORECASE)
+    #m = re.match(r"BIT STRING\s*\(\s*SIZE\s*\(\s*(\d+)\s*\.\.\s*(\d+)\s*\.\.\s*\d+\s*\)\s*\)", s, re.IGNORECASE)
+    m = re.match(r"BIT STRING\s*\(\s*SIZE\s*\(\s*(\d+)\s*\.\.\s*(\d+)\s*(?:,\s*\.\.\.\s*)?\s*\)\s*\)", s, re.IGNORECASE)
     if m:
         out.update({"is": True, "type": "BIT STRING",
                     "min": int(m.group(1)), "max": int(m.group(2)),
@@ -184,6 +192,7 @@ def parse_ie_type_primitive(type_str):
 
     # BIT STRING(size(n))
     m = re.match(r"BIT STRING\s*\(\s*SIZE\s*\(\s*(\d+)\s*\)\s*\)", s, re.IGNORECASE)
+    #m = re.match(r"BIT STRING\s*\(\s*SIZE\s*\(\s*(\d+)", s, re.IGNORECASE)
     if m:
         n = int(m.group(1))
         out.update({"is": True, "type": "BIT STRING",
@@ -192,7 +201,7 @@ def parse_ie_type_primitive(type_str):
         return out
 
     # BIT STRING(size(a..b))
-    m = re.match(r"BIT STRING\s*\(\s*SIZE\s*\(\s*(\d+)\.\.(\d+)\s*\)\s*\)", s, re.IGNORECASE)
+    m = re.match(r"BIT STRING\s*\(\s*SIZE\s*\(\s*(\d+)\.\.(\d+)\s*\)\s*\)", s, re.IGNORECASE)   #m = re.match(r"BIT STRING\s*\(\s*SIZE\s*\(\s*(\d+)\.\.(\d+)", s, re.IGNORECASE)
     if m:
         out.update({"is": True, "type": "BIT STRING",
                     "min": int(m.group(1)), "max": int(m.group(2)),
@@ -208,9 +217,12 @@ def parse_ie_type_primitive(type_str):
     # PrintableString – FULL SUPPORT
     # ============================================================
 
-    # PrintableString(SIZE(a..b,..)) – hỗ trợ nhiều cặp range
+    # PrintableString(SIZE(a..b,..) – hỗ trợ nhiều cặp range -> PrintableString (SIZE(a..b,...))
     # Lấy toàn bộ bên trong SIZE(...)
-    m = re.match(r"PrintableString\s*\(\s*SIZE\s*\((.*?)\)\s*\)", s, re.IGNORECASE)
+    #m = re.match(r"PrintableString\s*\(\s*SIZE\s*\((.*?)\)\s*\)", s, re.IGNORECASE)
+    #m = re.match(r"PrintableString\s*\(\s*SIZE\s*\(\s*(.*?)\s*\)\s*\)", s, re.IGNORECASE)
+    m = re.match(r"PrintableString\s*\(\s*SIZE\s*\(\s*(.*?)\s*\)\s*\)", s, re.IGNORECASE)
+    #m = re.match(r"PrintableString\s*\(\s*SIZE\s*\(\s*(.*)", s, re.IGNORECASE)
     if m:
         size_expr = m.group(1).strip()
 
@@ -425,6 +437,7 @@ def gen_choice_outputs():
                 continue
             tag = row.get("Tag/ID")
             field = str(row.get("Field_Name"))
+            field = field.replace("_", "_")
             ie_type = row.get("IE_Type")
             ie_type_str = "" if pd.isna(ie_type) else str(ie_type)
 
@@ -458,19 +471,25 @@ def gen_choice_outputs():
                     if primitive_sheet["primitive_type"] == 'INTEGER':
                         h_tmpl = env.get_template("integer_intergrate.h.j2")
                         c_tmpl = env.get_template("integer_intergrate.c.j2")
-                        data = {"name": primitive_name, "is_dynamic": True, "metadata": primitive_sheet}
+                        #data = {"name": primitive_name, "is_dynamic": True, "metadata": primitive_sheet}
+                        metadata = {   "parsed": parsed,  "field_name": field.replace("-", "_") }
+                        data = {"is_dynamic": True,"metadata": metadata, "parent_name": name_clean}
                     elif primitive_sheet['primitive_type'] == 'OCTET STRING':
                         h_tmpl = env.get_template("octet_string_intergrate.h.j2")
                         c_tmpl = env.get_template("octet_string_intergrate.c.j2")
-                        data = {"name": primitive_name, "is_dynamic": True, "metadata": primitive_sheet}
+                        #data = {"name": primitive_name, "is_dynamic": True, "metadata": primitive_sheet}
+                        metadata = {  "parsed": parsed,  "field_name": field.replace("-", "_") }
+                        data = {"is_dynamic": True,"metadata": metadata, "parent_name": name_clean}
                     elif primitive_sheet['primitive_type'] == 'BIT STRING':
                         h_tmpl = env.get_template("bitstring_intergrate.h.j2")
                         c_tmpl = env.get_template("bitstring_intergrate.c.j2")
-                        data = {"name": primitive_name, "is_dynamic": True, "metadata": primitive_sheet}
+                        #data = {"name": primitive_name, "is_dynamic": True, "metadata": primitive_sheet}
+                        metadata = {  "parsed": parsed,  "field_name": field.replace("-", "_") }
+                        data = {"is_dynamic": True,"metadata": metadata, "parent_name": name_clean}
                     else:
                         continue  # Các kiểu khác không cần xử lý ở đây
                     print("dungnm23 primitive sheet type: %s" % primitive_sheet['primitive_type'])
-                    
+                    # tôi muốn data ở đây có chứa metadata
                     # Tạo file con primitive ngay trong loop và lấy nội dung
                     h_file_content = h_tmpl.render(data)
                     c_file_content = c_tmpl.render(data)
@@ -643,6 +662,7 @@ def gen_sequence_outputs():
         seq_fixsize = -1
         seq_minstr = -1
         seq_maxstr = -1
+        primitive_files_data = []  # Danh sách để lưu nội dung các file con primitive
 
         for _, row in child_rows.iterrows():
             field_name_raw = row.get("Field_Name")
@@ -653,7 +673,6 @@ def gen_sequence_outputs():
             ie_type_str = "" if pd.isna(ie_type) else str(ie_type)
             optional_val = row.get("Optional")
             presence = "optional" if (pd.notna(optional_val) and str(optional_val).strip() != "") else "mandatory"
-
             parsed = parse_ie_type_primitive(ie_type_str)
             primitive_sheet = check_if_primitive(ie_type_str)
 
@@ -662,7 +681,7 @@ def gen_sequence_outputs():
                 "field": field_name,
                 "ie_type": ie_type_str.replace("-", "_"),
                 "presence": presence,
- 
+            
                 "primitive": primitive_sheet,
                 "primitive_meta": {
                     "is": parsed["is"],
@@ -673,6 +692,44 @@ def gen_sequence_outputs():
                     "primitive_id": parsed["primitive_id"]
                 }
             })
+                        # *** Tạo các file con primitive vào trong loop này ***
+            primitive_name = str(ie_type_str).replace('-', '_')
+            if primitive_sheet['isprimitive']:
+                print("dungnm23 primitive name: %s" % primitive_name)
+                try:
+                    # Xác định template dựa trên primitive type
+                    if primitive_sheet["primitive_type"] == 'INTEGER':
+                        h_tmpl = env.get_template("integer_intergrate.h.j2")
+                        metadata = {   "parsed": parsed,  "field_name": field_name_raw.replace("-", "_") }
+                        data = {"is_dynamic": True,"metadata": metadata, "parent_name": seq_name}
+                    elif primitive_sheet['primitive_type'] == 'OCTET STRING':
+                        h_tmpl = env.get_template("octet_string_intergrate.h.j2")
+                        c_tmpl = env.get_template("octet_string_intergrate.c.j2")
+                        metadata = {   "parsed": parsed,  "field_name": field_name_raw.replace("-", "_") }
+                        data = {"is_dynamic": True,"metadata": metadata, "parent_name": seq_name}
+                    elif primitive_sheet['primitive_type'] == 'BIT STRING':
+                        h_tmpl = env.get_template("bitstring_intergrate.h.j2")
+                        c_tmpl = env.get_template("bitstring_intergrate.c.j2")
+                        metadata = {   "parsed": parsed,  "field_name": field_name_raw.replace("-", "_") }
+                        data = {"is_dynamic": True,"metadata": metadata, "parent_name": seq_name}
+                    else:
+                        continue  # Các kiểu khác không cần xử lý ở đây
+                    print("dungnm23 primitive sheet type: %s" % primitive_sheet['primitive_type'])
+                    
+                    # Tạo file con primitive ngay trong loop và lấy nội dung
+                    h_file_content = h_tmpl.render(data)
+                    c_file_content = c_tmpl.render(data)
+
+                    # Thêm nội dung của các file con primitive vào danh sách
+                    primitive_files_data.append({
+                        "name": primitive_name,
+                        "h_file_content": h_file_content,
+                        "c_file_content": c_file_content
+                    })
+            
+                except Exception as e:
+                    print(f"[WARN] SEQ primitive template failed for {primitive_name}: {e}")
+
 
         # check extensible
         ext_rows = df[df["Type_Name"] == seq_name_raw]
@@ -689,10 +746,12 @@ def gen_sequence_outputs():
         data = {
             "name": seq_name,
             "fields": fields,
+            "choices" :fields,
             "extensible": extensible,
             "fixsize": seq_fixsize,
             "minstr": seq_minstr,
-            "maxstr": seq_maxstr
+            "maxstr": seq_maxstr,     
+            "primitive_files_data": primitive_files_data  # Gửi thông tin file con vào template
         }
 
         try:

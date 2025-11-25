@@ -1,1 +1,47 @@
 /* bitstring intergrate header file */
+ //metadata.parsed.primitive_id == {{metadata.parsed.primitive_id}}
+
+{% if metadata.parsed.primitive_id == 3 %}
+//mau NID ben xn  bitstring (n)
+typedef struct e2ap_{{parent_name}}_{{metadata.field_name|replace("-","_")}} {
+    OSUINT{{metadata.parsed.max|stdbit}} numbits;
+    OSOCTET* data[{{(metadata.parsed.max+7)//8}}];
+} e2ap_{{parent_name}}_{{metadata.field_name}};
+
+EXTERN int asn1PE_e2ap_{{parent_name}}_{{metadata.field_name}}(OSCTXT* pctxt, e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue);
+EXTERN int asn1PD_e2ap_{{parent_name}}_{{metadata.field_name}}(OSCTXT* pctxt, e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue);
+EXTERN int asn1PrtToStr_e2ap_{{parent_name}}_{{metadata.field_name}} (const char* name, e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue, char* buffer, OSSIZE bufSize);
+EXTERN int asn1PrtToStrm_e2ap_{{parent_name}}_{{metadata.field_name}} (OSCTXT* pctxt, const char* name, const e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue);
+EXTERN int asn1Copy_e2ap_{{parent_name}}_{{metadata.field_name}}(OSCTXT* pctxt,const e2ap_{{parent_name}}_{{metadata.field_name}}* pSrcValue,  e2ap_{{parent_name}}_{{metadata.field_name}}* pDstValue);
+EXTERN int asn1Init_e2ap_{{parent_name}}_{{metadata.field_name}}(e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue);
+{% endif %}
+
+{% if metadata.parsed.primitive_id == 2 %}
+//mau Transportlayeraddress xn bitstring (a..b,..)
+
+typedef ASN1DynamicBitStr e2ap_{{parent_name}}_{{metadata.field_name}};
+
+EXTERN int asn1PE_e2ap_{{parent_name}}_{{metadata.field_name}}(OSCTXT* pctxt, e2ap_{{parent_name}}_{{metadata.field_name}} value);
+EXTERN int asn1PD_e2ap_{{parent_name}}_{{metadata.field_name}}(OSCTXT* pctxt, e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue);
+EXTERN int asn1PrtToStr_e2ap_{{parent_name}}_{{metadata.field_name}} (const char* name, e2ap_{{parent_name}}_{{metadata.field_name}} *pvalue, char* buffer, OSSIZE bufSize);
+EXTERN int asn1PrtToStrm_e2ap_{{parent_name}}_{{metadata.field_name}} (OSCTXT* pctxt, const char* name, const e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue);
+EXTERN int asn1Copy_e2ap_{{parent_name}}_{{metadata.field_name}}(OSCTXT* pctxt,const e2ap_{{parent_name}}_{{metadata.field_name}}* pSrcValue,  e2ap_{{parent_name}}_{{metadata.field_name}}* pDstValue);
+EXTERN int asn1Init_e2ap_{{parent_name}}_{{metadata.field_name}}(e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue);
+EXTERN void asn1Free_e2ap_{{parent_name}}_{{metadata.field_name}}(OSCTXT* pctxt, e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue);
+{% endif %}
+
+{% if metadata.parsed.primitive_id == 4 %}
+//type 4  mau la datatrafficresource bitstring (a..b)
+
+typedef struct e2ap_{{parent_name}}_{{metadata.field_name}} {
+     OSUINT{{metadata.parsed.max|stdbit}}  numbits;
+    OSOCTET* data[{{(metadata.parsed.max+7)//8}}];
+} e2ap_{{parent_name}}_{{metadata.field_name}};
+EXTERN int asn1PE_e2ap_{{parent_name}}_{{metadata.field_name}}(OSCTXT* pctxt, e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue);
+EXTERN int asn1PD_e2ap_{{parent_name}}_{{metadata.field_name}}(OSCTXT* pctxt, e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue);
+EXTERN int asn1PrtToStr_e2ap_{{parent_name}}_{{metadata.field_name}} (const char* name, e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue, char* buffer, OSSIZE bufSize);
+EXTERN int asn1PrtToStrm_e2ap_{{parent_name}}_{{metadata.field_name}} (OSCTXT* pctxt, const char* name, const e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue);
+EXTERN int asn1Copy_e2ap_{{parent_name}}_{{metadata.field_name}}(OSCTXT* pctxt,const e2ap_{{parent_name}}_{{metadata.field_name}}* pSrcValue,  e2ap_{{parent_name}}_{{metadata.field_name}}* pDstValue);
+EXTERN int asn1Init_e2ap_{{parent_name}}_{{metadata.field_name}}(e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue);
+
+{% endif %}

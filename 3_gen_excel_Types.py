@@ -58,10 +58,22 @@ def replace_values_in_workbook(wb, replace_map):
 
 # ---------- Regex helpers ----------
 # Capture primitive name plus optional parenthesized constraint (e.g. SIZE(...))
+# PRIMITIVE_RE = re.compile(
+#     r"\b(BIT\s+STRING|OCTET\s+STRING|INTEGER|ENUMERATED|PrintableString|VisibleString|UTF8String|IA5String|BOOLEAN)"
+#     r"(?:\s*\([^\)]*\))?",
+#     re.IGNORECASE)
+
+# PRIMITIVE_RE = re.compile(
+#     r"\b(BIT\s+STRING|OCTET\s+STRING|INTEGER|ENUMERATED|PrintableString|VisibleString|UTF8String|IA5String|BOOLEAN)"
+#     r"(?:\s*\([^\)]*\))?", 
+#     re.IGNORECASE
+# )
 PRIMITIVE_RE = re.compile(
     r"\b(BIT\s+STRING|OCTET\s+STRING|INTEGER|ENUMERATED|PrintableString|VisibleString|UTF8String|IA5String|BOOLEAN)"
-    r"(?:\s*\([^\)]*\))?",
+    r"(?:\s*\(\s*SIZE\s*\([^\)]*\)\s*\))?",  # Bắt phần SIZE(...) đầy đủ, kể cả lồng ngoặc
     re.IGNORECASE)
+
+
 
 BITSTRING_RE = re.compile(r"\bBIT\s+STRING\b", re.IGNORECASE)
 
@@ -404,6 +416,7 @@ def parse_struct_block(name: str, block: str, detected_single_containers, detect
                 else:
                     # sửa: ưu tiên primitive (kể cả BIT STRING) và lấy full match (kèm SIZE nếu có)
                     m_prim = PRIMITIVE_RE.search(rest)
+                    
                     if m_prim:
                         ie_type = m_prim.group(0).strip()
                     else:

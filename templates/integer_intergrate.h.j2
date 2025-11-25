@@ -1,0 +1,26 @@
+ //metadata.parsed.primitive_id == {{metadata.parsed.primitive_id}}
+
+{% if metadata.primitive_id == 6 %}
+
+// mau integer size(a...b) mau la procedurecode
+typedef OSUINT{{metadata.parsed.max | stdbit}} e2ap_{{parent_name}}_{{metadata.field_name}};
+EXTERN int asn1PE_e2ap_{{parent_name}}_{{metadata.field_name}} (OSCTXT* pctxt, e2ap_{{parent_name}}_{{metadata.field_name}} value);
+EXTERN int asn1PD_e2ap_{{parent_name}}_{{metadata.field_name}} (OSCTXT* pctxt, e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue);
+EXTERN int asn1Print_e2ap_{{parent_name}}_{{metadata.field_name}} (const char* name, const e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue);
+EXTERN int asn1PrtToStr_e2ap_{{parent_name}}_{{metadata.field_name}} (const char* name, e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue, char* buffer, OSSIZE bufSize);
+EXTERN int asn1PrtToStrm_e2ap_{{parent_name}}_{{metadata.field_name}} (OSCTXT* pctxt, const char* name, const e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue);
+
+{% endif %}
+
+{% if metadata.primitive_id == 5 %}
+
+//mau 5 integer size(a .. b..) mau la nrfreqencyband
+typedef OSUINT{{metadata.parsed.max | stdbit}} e2ap_{{parent_name}}_{{metadata.field_name}};
+EXTERN int asn1PE_e2ap_{{parent_name}}_{{metadata.field_name}} (OSCTXT* pctxt, e2ap_{{parent_name}}_{{metadata.field_name}} value);
+EXTERN int asn1PD_e2ap_{{parent_name}}_{{metadata.field_name}} (OSCTXT* pctxt, e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue);
+EXTERN int asn1Print_e2ap_{{parent_name}}_{{metadata.field_name}} (const char* name, const e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue);
+EXTERN int asn1PrtToStr_e2ap_{{parent_name}}_{{metadata.field_name}} (const char* name, e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue, char* buffer, OSSIZE bufSize);
+EXTERN int asn1PrtToStrm_e2ap_{{parent_name}}_{{metadata.field_name}} (OSCTXT* pctxt, const char* name, const e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue);
+
+{% endif %}
+
