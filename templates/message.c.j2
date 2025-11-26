@@ -10,13 +10,13 @@ EXTERN int asn1PE_e2ap_{{message_name}}_protocolIEs_element (OSCTXT* pctxt, e2ap
     /*encode id*/
 
     RTXCTXTPUSHELEMNAME(pctxt, "id");
-        stat = asn1PE_e2ap_ProtocolIE_ID(pctxt, &pvalue->id);
+        stat = asn1PE_e2ap_ProtocolIE_ID(pctxt, pvalue->id);//xoa con tro
         if(stat!=0) return LOG_RTERR(pctxt, stat);
     RTXCTXTPOPELEMNAME(pctxt);
 
     /*encode criticality*/
     RTXCTXTPUSHELEMNAME(pctxt, "criticality");
-        stat = asn1PE_e2ap_Criticality(pctxt, &pvalue->criticality);
+        stat = asn1PE_e2ap_Criticality(pctxt, pvalue->criticality);//xoa con tro
         if(stat!=0) return LOG_RTERR(pctxt, stat);
     RTXCTXTPOPELEMNAME(pctxt);
 
@@ -298,6 +298,8 @@ int asn1PrtToStr_e2ap_{{message_name}}_protocolIEs_element (const char * name,
         }
         }
     if(rtPrintToStringCloseBrace( buffer, bufSize)<0) return -1;
+        if(rtPrintToStringCloseBrace( buffer, bufSize)<0) return -1;
+
     return 0;
 
  }

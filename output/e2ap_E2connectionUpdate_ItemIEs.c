@@ -225,6 +225,8 @@ int  asn1PrtToStr_e2ap_E2connectionUpdate_ItemIEs (const char * name, e2ap_E2con
          }
       }
       if(rtPrintToStringCloseBrace( buffer, bufSize)<0) return -1;
+      if(rtPrintToStringCloseBrace( buffer, bufSize)<0) return -1;
+
       return 0;
 
 }

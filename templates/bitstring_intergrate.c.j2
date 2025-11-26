@@ -18,7 +18,11 @@ EXTERN int asn1PD_e2ap_{{parent_name}}_{{metadata.field_name}}(OSCTXT* pctxt, e2
     if(stat != 0) return LOG_RTERR (pctxt, stat);
     return stat;
 }
-//EXTERN int asn1PrtToStr_e2ap_{{parent_name}}_{{metadata.field_name}} (const char* name, e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue, char* buffer, OSSIZE bufSize);
+EXTERN int asn1PrtToStr_e2ap_{{parent_name}}_{{metadata.field_name}} (const char* name, e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue, char* buffer, OSSIZE bufSize){
+    if(rtPrintToStringIndent(buffer, bufSize) < 0) return -1;
+    if(rtPrintToStringBitStrBraceText (name, OS_MIN(pvalue->numbits, {{metadata.parsed.fix_size}}), pvalue->data, buffer, bufSize) < 0) return -1;
+    return 0;
+}
 //EXTERN int asn1PrtToStrm_e2ap_{{parent_name}}_{{metadata.field_name}} (OSCTXT* pctxt, const char* name, const e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue);
 //EXTERN int asn1Copy_e2ap_{{parent_name}}_{{metadata.field_name}}(OSCTXT* pctxt,const e2ap_{{parent_name}}_{{metadata.field_name}}* pSrcValue,  e2ap_{{parent_name}}_{{metadata.field_name}}* pDstValue);
 EXTERN int asn1Init_e2ap_{{parent_name}}_{{metadata.field_name}}(e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue){
@@ -45,7 +49,11 @@ EXTERN int asn1PD_e2ap_{{parent_name}}_{{metadata.field_name}}(OSCTXT* pctxt, e2
     if(stat != 0) return LOG_RTERR (pctxt, stat);
     return stat;
 }
-//EXTERN int asn1PrtToStr_e2ap_{{parent_name}}_{{metadata.field_name}} (const char* name, e2ap_{{parent_name}}_{{metadata.field_name}} *pvalue, char* buffer, OSSIZE bufSize);
+EXTERN int asn1PrtToStr_e2ap_{{parent_name}}_{{metadata.field_name}} (const char* name, e2ap_{{parent_name}}_{{metadata.field_name}} *pvalue, char* buffer, OSSIZE bufSize){
+    if(rtPrintToStringIndent(buffer, bufSize) < 0) return -1;
+    if(rtPrintToStringBitStrBraceText(name, OS_MIN(pvalue->numbits, {{metadata.parsed.max}}), pvalue->data, buffer, bufSize) < 0) return -1;
+    return 0;
+}
 //EXTERN int asn1PrtToStrm_e2ap_{{parent_name}}_{{metadata.field_name}} (OSCTXT* pctxt, const char* name, const e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue);
 //EXTERN int asn1Copy_e2ap_{{parent_name}}_{{metadata.field_name}}(OSCTXT* pctxt,const e2ap_{{parent_name}}_{{metadata.field_name}}* pSrcValue,  e2ap_{{parent_name}}_{{metadata.field_name}}* pDstValue);
 EXTERN int asn1Init_e2ap_{{parent_name}}_{{metadata.field_name}}(e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue){

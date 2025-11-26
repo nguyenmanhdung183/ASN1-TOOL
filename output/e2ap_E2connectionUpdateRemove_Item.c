@@ -169,6 +169,8 @@ int asn1PrtToStr_e2ap_E2connectionUpdateRemove_Item (const char* name, e2ap_E2co
       return -1;
    }
 
+
+
    /*assum there is an extension*/
    if(rtPrintToStringOpenTypeExtBraceText("extElem1", &pvalue->extElem1, buffer, bufSize) < 0)
    {

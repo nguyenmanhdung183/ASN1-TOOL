@@ -98,7 +98,11 @@ EXTERN int asn1PD_e2ap_TNLinformation_tnlAddress(OSCTXT* pctxt, e2ap_TNLinformat
     if(stat != 0) return LOG_RTERR (pctxt, stat);
     return stat;
 }
-//EXTERN int asn1PrtToStr_e2ap_TNLinformation_tnlAddress (const char* name, e2ap_TNLinformation_tnlAddress *pvalue, char* buffer, OSSIZE bufSize);
+EXTERN int asn1PrtToStr_e2ap_TNLinformation_tnlAddress (const char* name, e2ap_TNLinformation_tnlAddress *pvalue, char* buffer, OSSIZE bufSize){
+    if(rtPrintToStringIndent(buffer, bufSize) < 0) return -1;
+    if(rtPrintToStringBitStrBraceText(name, OS_MIN(pvalue->numbits, 160), pvalue->data, buffer, bufSize) < 0) return -1;
+    return 0;
+}
 //EXTERN int asn1PrtToStrm_e2ap_TNLinformation_tnlAddress (OSCTXT* pctxt, const char* name, const e2ap_TNLinformation_tnlAddress* pvalue);
 //EXTERN int asn1Copy_e2ap_TNLinformation_tnlAddress(OSCTXT* pctxt,const e2ap_TNLinformation_tnlAddress* pSrcValue,  e2ap_TNLinformation_tnlAddress* pDstValue);
 EXTERN int asn1Init_e2ap_TNLinformation_tnlAddress(e2ap_TNLinformation_tnlAddress* pvalue){
@@ -137,7 +141,11 @@ EXTERN int asn1PD_e2ap_TNLinformation_tnlPort(OSCTXT* pctxt, e2ap_TNLinformation
     if(stat != 0) return LOG_RTERR (pctxt, stat);
     return stat;
 }
-//EXTERN int asn1PrtToStr_e2ap_TNLinformation_tnlPort (const char* name, e2ap_TNLinformation_tnlPort* pvalue, char* buffer, OSSIZE bufSize);
+EXTERN int asn1PrtToStr_e2ap_TNLinformation_tnlPort (const char* name, e2ap_TNLinformation_tnlPort* pvalue, char* buffer, OSSIZE bufSize){
+    if(rtPrintToStringIndent(buffer, bufSize) < 0) return -1;
+    if(rtPrintToStringBitStrBraceText (name, OS_MIN(pvalue->numbits, 16), pvalue->data, buffer, bufSize) < 0) return -1;
+    return 0;
+}
 //EXTERN int asn1PrtToStrm_e2ap_TNLinformation_tnlPort (OSCTXT* pctxt, const char* name, const e2ap_TNLinformation_tnlPort* pvalue);
 //EXTERN int asn1Copy_e2ap_TNLinformation_tnlPort(OSCTXT* pctxt,const e2ap_TNLinformation_tnlPort* pSrcValue,  e2ap_TNLinformation_tnlPort* pDstValue);
 EXTERN int asn1Init_e2ap_TNLinformation_tnlPort(e2ap_TNLinformation_tnlPort* pvalue){
@@ -327,6 +335,18 @@ int asn1PrtToStr_e2ap_TNLinformation (const char* name, e2ap_TNLinformation* pva
    {
       return -1;
    }
+
+   if(asn1PrtToStr_e2ap_TNLinformation_tnlAddress ("tnlAddress", pvalue->tnlAddress, buffer, bufSize) < 0)
+   {
+      return -1;
+   }
+
+
+   if(asn1PrtToStr_e2ap_TNLinformation_tnlPort ("tnlPort", pvalue->tnlPort, buffer, bufSize) < 0)
+   {
+      return -1;
+   }
+
 
    /*assum there is an extension*/
    if(rtPrintToStringOpenTypeExtBraceText("extElem1", &pvalue->extElem1, buffer, bufSize) < 0)
@@ -625,10 +645,14 @@ int asn1PrtToStr_e2ap_E2connectionUpdate_Item (const char* name, e2ap_E2connecti
    {
       return -1;
    }
+
+
    if(asn1PrtToStr_e2ap_TNLusage ("tnlUsage", &pvalue->tnlUsage, buffer, bufSize) < 0)
    {
       return -1;
    }
+
+
 
    /*assum there is an extension*/
    if(rtPrintToStringOpenTypeExtBraceText("extElem1", &pvalue->extElem1, buffer, bufSize) < 0)
@@ -868,6 +892,8 @@ int  asn1PrtToStr_e2ap_E2connectionUpdate_ItemIEs (const char * name, e2ap_E2con
          }
       }
       if(rtPrintToStringCloseBrace( buffer, bufSize)<0) return -1;
+      if(rtPrintToStringCloseBrace( buffer, bufSize)<0) return -1;
+
       return 0;
 
 }
@@ -1183,6 +1209,8 @@ int asn1PrtToStr_e2ap_E2connectionUpdateRemove_Item (const char* name, e2ap_E2co
       return -1;
    }
 
+
+
    /*assum there is an extension*/
    if(rtPrintToStringOpenTypeExtBraceText("extElem1", &pvalue->extElem1, buffer, bufSize) < 0)
    {
@@ -1421,6 +1449,8 @@ int  asn1PrtToStr_e2ap_E2connectionUpdateRemove_ItemIEs (const char * name, e2ap
          }
       }
       if(rtPrintToStringCloseBrace( buffer, bufSize)<0) return -1;
+      if(rtPrintToStringCloseBrace( buffer, bufSize)<0) return -1;
+
       return 0;
 
 }
@@ -1739,6 +1769,8 @@ int asn1PrtToStr_e2ap_E2connectionUpdate (const char* name, e2ap_E2connectionUpd
    {
       return -1;
    }
+
+
 
    /*assum there is an extension*/
    if(rtPrintToStringOpenTypeExtBraceText("extElem1", &pvalue->extElem1, buffer, bufSize) < 0)
@@ -2199,6 +2231,8 @@ int asn1PrtToStr_e2ap_E2connectionUpdate_protocolIEs_element (const char * name,
         }
         }
     if(rtPrintToStringCloseBrace( buffer, bufSize)<0) return -1;
+        if(rtPrintToStringCloseBrace( buffer, bufSize)<0) return -1;
+
     return 0;
 
  }

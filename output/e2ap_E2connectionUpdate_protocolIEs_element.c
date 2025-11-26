@@ -446,6 +446,8 @@ int asn1PrtToStr_e2ap_E2connectionUpdate_protocolIEs_element (const char * name,
         }
         }
     if(rtPrintToStringCloseBrace( buffer, bufSize)<0) return -1;
+        if(rtPrintToStringCloseBrace( buffer, bufSize)<0) return -1;
+
     return 0;
 
  }

@@ -184,10 +184,14 @@ int asn1PrtToStr_e2ap_E2connectionUpdate_Item (const char* name, e2ap_E2connecti
    {
       return -1;
    }
+
+
    if(asn1PrtToStr_e2ap_TNLusage ("tnlUsage", &pvalue->tnlUsage, buffer, bufSize) < 0)
    {
       return -1;
    }
+
+
 
    /*assum there is an extension*/
    if(rtPrintToStringOpenTypeExtBraceText("extElem1", &pvalue->extElem1, buffer, bufSize) < 0)

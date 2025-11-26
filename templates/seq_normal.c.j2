@@ -227,19 +227,27 @@ int asn1PrtToStr_e2ap_{{name}} (const char* name, e2ap_{{name}}* pvalue, char* b
       return -1;
    }
 {% for f in fields%}
-{% if not (f.primitive.isprimitive and f.ie_type !="BIT STRING") %}
-{%if f.field == "protocolIEs"%}
+   {% if not (f.primitive.isprimitive and f.ie_type !="BIT STRING") %}
+      {%if f.field == "protocolIEs"%}
    if(asn1PrtToStr_e2ap_{{name|replace('-', '_')}}_protocolIEs ("protocolIEs", &pvalue->protocolIEs, buffer, bufSize) < 0)
    {
       return -1;
    }
-{% else %}
+      {% else %}
    if(asn1PrtToStr_e2ap_{{f.ie_type|replace('-', '_')}} ("{{f.field |replace('-', '_')}}", &pvalue->{{f.field|replace("-","_")}}, buffer, bufSize) < 0)
    {
       return -1;
    }
+     {% endif %}
    {% endif %}
-{% endif %}
+
+   {% if f.primitive.isprimitive == True %}
+   if(asn1PrtToStr_e2ap_{{name}}_{{f.field}} ("{{f.field |replace('-', '_')}}", &pvalue->{{f.field|replace("-","_")}}, buffer, bufSize) < 0)
+   {
+      return -1;
+   }
+   {% endif %}
+
 {% endfor %}
 
    /*assum there is an extension*/
