@@ -6,16 +6,20 @@
 
 EXTERN int asn1PE_e2ap_{{parent_name}}_{{metadata.field_name}}(OSCTXT* pctxt, e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue){
     int stat =0;
+    //RTXCTXTPUSHTYPENAME(pctxt, "{{metadata.field_name|replace('_', '-')}}");
     PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST({{metadata.parsed.fix_size}}), OSUINTCONST({{metadata.parsed.fix_size}}), 0, 0);
     stat = pe_BitString (pctxt, OS_MIN(pvalue->numbits, {{metadata.parsed.fix_size}}), pvalue->data);
     if(stat != 0) return LOG_RTERR (pctxt, stat);
+    //RTXCTXTPOPTYPENAME(pctxt);
     return stat;
 }
 EXTERN int asn1PD_e2ap_{{parent_name}}_{{metadata.field_name}}(OSCTXT* pctxt, e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue){
     int stat =0;
+    //RTXCTXTPUSHTYPENAME(pctxt, "{{metadata.field_name|replace('_', '-')}}");
     PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST({{metadata.parsed.fix_size}}), OSUINTCONST({{metadata.parsed.fix_size}}), 0, 0);
     stat = pd_BitString (pctxt, &pvalue->numbits, pvalue->data, sizeof(pvalue->data));
     if(stat != 0) return LOG_RTERR (pctxt, stat);
+    //RTXCTXTPOPTYPENAME(pctxt);
     return stat;
 }
 EXTERN int asn1PrtToStr_e2ap_{{parent_name}}_{{metadata.field_name}} (const char* name, e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue, char* buffer, OSSIZE bufSize){
@@ -37,16 +41,20 @@ EXTERN int asn1Init_e2ap_{{parent_name}}_{{metadata.field_name}}(e2ap_{{parent_n
 
 EXTERN int asn1PE_e2ap_{{parent_name}}_{{metadata.field_name}}(OSCTXT* pctxt, e2ap_{{parent_name}}_{{metadata.field_name}} value){
     int stat =0;
+    //RTXCTXTPUSHTYPENAME(pctxt, "{{metadata.field_name|replace('_', '-')}}");
     PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST({{metadata.parsed.min}}), OSUINTCONST({{metadata.parsed.max}}), OSUINTCONST(0), OSUINT32_MAX);
     stat = pe_BitString (pctxt, OS_MIN(value.numbits, {{metadata.parsed.max}}), value.data);
     if(stat != 0) return LOG_RTERR (pctxt, stat);
+    //RTXCTXTPOPTYPENAME(pctxt);
     return stat;
 }
 EXTERN int asn1PD_e2ap_{{parent_name}}_{{metadata.field_name}}(OSCTXT* pctxt, e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue){
     int stat =0;
+    //RTXCTXTPUSHTYPENAME(pctxt, "{{metadata.field_name|replace('_', '-')}}");
     PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST({{metadata.parsed.min}}), OSUINTCONST({{metadata.parsed.max}}), OSUINTCONST(0), OSUINT32_MAX);
     stat =  pd_DynBitString (pctxt, pvalue);
     if(stat != 0) return LOG_RTERR (pctxt, stat);
+    //RTXCTXTPOPTYPENAME(pctxt);
     return stat;
 }
 EXTERN int asn1PrtToStr_e2ap_{{parent_name}}_{{metadata.field_name}} (const char* name, e2ap_{{parent_name}}_{{metadata.field_name}} *pvalue, char* buffer, OSSIZE bufSize){
@@ -77,16 +85,20 @@ EXTERN void asn1Free_e2ap_{{parent_name}}_{{metadata.field_name}}(OSCTXT* pctxt,
 
 EXTERN int asn1PE_e2ap_{{parent_name}}_{{metadata.field_name}}(OSCTXT* pctxt, e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue){
     int stat =0;
+    //RTXCTXTPUSHTYPENAME(pctxt, "{{metadata.field_name|replace('_', '-')}}");
     PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST({{metadata.parsed.min}}), OSUINTCONST({{metadata.parsed.max}}), 0, 0);
     stat = pe_BitString (pctxt, OS_MIN(pvalue->numbits, {{metadata.parsed.max}}), pvalue->data);
     if(stat != 0) return LOG_RTERR (pctxt, stat);
+    //RTXCTXTPOPTYPENAME(pctxt);
     return stat;
 }
 EXTERN int asn1PD_e2ap_{{parent_name}}_{{metadata.field_name}}(OSCTXT* pctxt, e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue){
     int stat =0;
+    //RTXCTXTPUSHTYPENAME(pctxt, "{{metadata.field_name|replace('_', '-')}}");
     PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST({{metadata.parsed.min}}), OSUINTCONST({{metadata.parsed.max}}), 0, 0);
     stat = pd_BitString (pctxt, &pvalue->numbits, pvalue->data, sizeof(pvalue->data));
     if(stat != 0) return LOG_RTERR (pctxt, stat);
+    //RTXCTXTPOPTYPENAME(pctxt);
     return stat;
 }
 //EXTERN int asn1PrtToStr_e2ap_{{parent_name}}_{{metadata.field_name}} (const char* name, e2ap_{{parent_name}}_{{metadata.field_name}}* pvalue, char* buffer, OSSIZE bufSize);

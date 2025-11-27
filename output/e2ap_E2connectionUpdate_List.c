@@ -35,7 +35,7 @@ int asn1PE_e2ap_E2connectionUpdate_List (OSCTXT* pctxt, e2ap_E2connectionUpdate_
    }
 
    RTXCTXTPOPTYPENAME (pctxt);
-   return 0;
+   return stat;
 }
 
 int asn1PD_e2ap_E2connectionUpdate_List (OSCTXT* pctxt, e2ap_E2connectionUpdate_List* ppvalue)

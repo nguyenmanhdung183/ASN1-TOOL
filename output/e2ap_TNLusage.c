@@ -79,13 +79,13 @@ EXTERN int asn1PrtToStr_e2ap_TNLusage (const char* name, e2ap_TNLusage* pvalue, 
 
    switch(*pvalue) {
       case 0:
-         stat = rtPrintToString(" = ric_service", buffer, bufSize);
+         stat = rtPrintToString(" = ric_service \n", buffer, bufSize);
          break;
       case 1:
-         stat = rtPrintToString(" = support_function", buffer, bufSize);
+         stat = rtPrintToString(" = support_function \n", buffer, bufSize);
          break;
       case 2:
-         stat = rtPrintToString(" = both", buffer, bufSize);
+         stat = rtPrintToString(" = both \n", buffer, bufSize);
          break;
       default:
          stat = rtPrintToString(" = ???\n", buffer, bufSize);

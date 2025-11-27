@@ -35,7 +35,7 @@ int asn1PE_e2ap_{{name}} (OSCTXT* pctxt, e2ap_{{name}}* pvalue)
 
    RTXCTXTPUSHELEMNAME(pctxt, "{{f.field |replace('_', '-')}}");
    {%if f.field == "protocolIEs"%}
-   stat = asn1PE_e2ap_{{name|replace('-', '_')}}_protocolIEs (pctxt, pvalue->protocolIEs);
+   stat = asn1PE_e2ap_{{name|replace('-', '_')}}_protocolIEs (pctxt, &pvalue->protocolIEs);
    {% elif f.primitive_meta.is == True %}
       {% if f.primitive_meta.primitive_id == 2%}
    stat = asn1PE_e2ap_{{name}}_{{f.field}}(pctxt, pvalue->{{f.field|replace("-","_")}}); //primitive

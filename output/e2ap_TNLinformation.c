@@ -16,16 +16,20 @@
 
 EXTERN int asn1PE_e2ap_TNLinformation_tnlAddress(OSCTXT* pctxt, e2ap_TNLinformation_tnlAddress value){
     int stat =0;
+    //RTXCTXTPUSHTYPENAME(pctxt, "tnlAddress");
     PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST(1), OSUINTCONST(160), OSUINTCONST(0), OSUINT32_MAX);
     stat = pe_BitString (pctxt, OS_MIN(value.numbits, 160), value.data);
     if(stat != 0) return LOG_RTERR (pctxt, stat);
+    //RTXCTXTPOPTYPENAME(pctxt);
     return stat;
 }
 EXTERN int asn1PD_e2ap_TNLinformation_tnlAddress(OSCTXT* pctxt, e2ap_TNLinformation_tnlAddress* pvalue){
     int stat =0;
+    //RTXCTXTPUSHTYPENAME(pctxt, "tnlAddress");
     PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST(1), OSUINTCONST(160), OSUINTCONST(0), OSUINT32_MAX);
     stat =  pd_DynBitString (pctxt, pvalue);
     if(stat != 0) return LOG_RTERR (pctxt, stat);
+    //RTXCTXTPOPTYPENAME(pctxt);
     return stat;
 }
 EXTERN int asn1PrtToStr_e2ap_TNLinformation_tnlAddress (const char* name, e2ap_TNLinformation_tnlAddress *pvalue, char* buffer, OSSIZE bufSize){
@@ -59,16 +63,20 @@ EXTERN void asn1Free_e2ap_TNLinformation_tnlAddress(OSCTXT* pctxt, e2ap_TNLinfor
 
 EXTERN int asn1PE_e2ap_TNLinformation_tnlPort(OSCTXT* pctxt, e2ap_TNLinformation_tnlPort* pvalue){
     int stat =0;
+    //RTXCTXTPUSHTYPENAME(pctxt, "tnlPort");
     PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST(16), OSUINTCONST(16), 0, 0);
     stat = pe_BitString (pctxt, OS_MIN(pvalue->numbits, 16), pvalue->data);
     if(stat != 0) return LOG_RTERR (pctxt, stat);
+    //RTXCTXTPOPTYPENAME(pctxt);
     return stat;
 }
 EXTERN int asn1PD_e2ap_TNLinformation_tnlPort(OSCTXT* pctxt, e2ap_TNLinformation_tnlPort* pvalue){
     int stat =0;
+    //RTXCTXTPUSHTYPENAME(pctxt, "tnlPort");
     PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST(16), OSUINTCONST(16), 0, 0);
     stat = pd_BitString (pctxt, &pvalue->numbits, pvalue->data, sizeof(pvalue->data));
     if(stat != 0) return LOG_RTERR (pctxt, stat);
+    //RTXCTXTPOPTYPENAME(pctxt);
     return stat;
 }
 EXTERN int asn1PrtToStr_e2ap_TNLinformation_tnlPort (const char* name, e2ap_TNLinformation_tnlPort* pvalue, char* buffer, OSSIZE bufSize){
@@ -266,13 +274,13 @@ int asn1PrtToStr_e2ap_TNLinformation (const char* name, e2ap_TNLinformation* pva
       return -1;
    }
 
-   if(asn1PrtToStr_e2ap_TNLinformation_tnlAddress ("tnlAddress", pvalue->tnlAddress, buffer, bufSize) < 0)
+   if(asn1PrtToStr_e2ap_TNLinformation_tnlAddress ("tnlAddress", &pvalue->tnlAddress, buffer, bufSize) < 0)
    {
       return -1;
    }
 
 
-   if(asn1PrtToStr_e2ap_TNLinformation_tnlPort ("tnlPort", pvalue->tnlPort, buffer, bufSize) < 0)
+   if(asn1PrtToStr_e2ap_TNLinformation_tnlPort ("tnlPort", &pvalue->tnlPort, buffer, bufSize) < 0)
    {
       return -1;
    }

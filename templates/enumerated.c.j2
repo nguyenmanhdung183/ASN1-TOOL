@@ -82,7 +82,7 @@ EXTERN int asn1PrtToStr_e2ap_{{name}} (const char* name, e2ap_{{name}}* pvalue, 
    switch(*pvalue) {
 {% for item in items %}
       case {{ item.value | int}}:
-         stat = rtPrintToString(" = {{ item.string | replace('-', '_') }}", buffer, bufSize);
+         stat = rtPrintToString(" = {{ item.string | replace('-', '_') }} \n", buffer, bufSize);
          break;
 {% endfor %}
       default:

@@ -12,13 +12,13 @@ int asn1PE_e2ap_E2connectionUpdate_ItemIEs (OSCTXT* pctxt, e2ap_E2connectionUpda
 
    /* encode id */
    RTXCTXTPUSHELEMNAME (pctxt, "id");
-   stat = asn1PE_e2ap_ProtocolIE_ID (pctxt, &pvalue->id);
+   stat = asn1PE_e2ap_ProtocolIE_ID (pctxt, pvalue->id);//xoa con tro
    if (stat != 0) return LOG_RTERR (pctxt, stat);
    RTXCTXTPOPELEMNAME (pctxt);
 
    /* encode criticality */
    RTXCTXTPUSHELEMNAME (pctxt, "criticality");
-   stat = asn1PE_e2ap_Criticality (pctxt, &pvalue->criticality);
+   stat = asn1PE_e2ap_Criticality (pctxt, pvalue->criticality);//xoa con tro
    if (stat != 0) return LOG_RTERR (pctxt, stat);
    RTXCTXTPOPELEMNAME (pctxt);
 

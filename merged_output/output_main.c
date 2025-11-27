@@ -86,16 +86,20 @@ EXTERN int asn1PD_e2ap_TransactionID (OSCTXT* pctxt, e2ap_TransactionID* pvalue)
 
 EXTERN int asn1PE_e2ap_TNLinformation_tnlAddress(OSCTXT* pctxt, e2ap_TNLinformation_tnlAddress value){
     int stat =0;
+    //RTXCTXTPUSHTYPENAME(pctxt, "tnlAddress");
     PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST(1), OSUINTCONST(160), OSUINTCONST(0), OSUINT32_MAX);
     stat = pe_BitString (pctxt, OS_MIN(value.numbits, 160), value.data);
     if(stat != 0) return LOG_RTERR (pctxt, stat);
+    //RTXCTXTPOPTYPENAME(pctxt);
     return stat;
 }
 EXTERN int asn1PD_e2ap_TNLinformation_tnlAddress(OSCTXT* pctxt, e2ap_TNLinformation_tnlAddress* pvalue){
     int stat =0;
+    //RTXCTXTPUSHTYPENAME(pctxt, "tnlAddress");
     PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST(1), OSUINTCONST(160), OSUINTCONST(0), OSUINT32_MAX);
     stat =  pd_DynBitString (pctxt, pvalue);
     if(stat != 0) return LOG_RTERR (pctxt, stat);
+    //RTXCTXTPOPTYPENAME(pctxt);
     return stat;
 }
 EXTERN int asn1PrtToStr_e2ap_TNLinformation_tnlAddress (const char* name, e2ap_TNLinformation_tnlAddress *pvalue, char* buffer, OSSIZE bufSize){
@@ -129,16 +133,20 @@ EXTERN void asn1Free_e2ap_TNLinformation_tnlAddress(OSCTXT* pctxt, e2ap_TNLinfor
 
 EXTERN int asn1PE_e2ap_TNLinformation_tnlPort(OSCTXT* pctxt, e2ap_TNLinformation_tnlPort* pvalue){
     int stat =0;
+    //RTXCTXTPUSHTYPENAME(pctxt, "tnlPort");
     PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST(16), OSUINTCONST(16), 0, 0);
     stat = pe_BitString (pctxt, OS_MIN(pvalue->numbits, 16), pvalue->data);
     if(stat != 0) return LOG_RTERR (pctxt, stat);
+    //RTXCTXTPOPTYPENAME(pctxt);
     return stat;
 }
 EXTERN int asn1PD_e2ap_TNLinformation_tnlPort(OSCTXT* pctxt, e2ap_TNLinformation_tnlPort* pvalue){
     int stat =0;
+    //RTXCTXTPUSHTYPENAME(pctxt, "tnlPort");
     PU_SETSIZECONSTRAINT(pctxt, OSUINTCONST(16), OSUINTCONST(16), 0, 0);
     stat = pd_BitString (pctxt, &pvalue->numbits, pvalue->data, sizeof(pvalue->data));
     if(stat != 0) return LOG_RTERR (pctxt, stat);
+    //RTXCTXTPOPTYPENAME(pctxt);
     return stat;
 }
 EXTERN int asn1PrtToStr_e2ap_TNLinformation_tnlPort (const char* name, e2ap_TNLinformation_tnlPort* pvalue, char* buffer, OSSIZE bufSize){
@@ -336,13 +344,13 @@ int asn1PrtToStr_e2ap_TNLinformation (const char* name, e2ap_TNLinformation* pva
       return -1;
    }
 
-   if(asn1PrtToStr_e2ap_TNLinformation_tnlAddress ("tnlAddress", pvalue->tnlAddress, buffer, bufSize) < 0)
+   if(asn1PrtToStr_e2ap_TNLinformation_tnlAddress ("tnlAddress", &pvalue->tnlAddress, buffer, bufSize) < 0)
    {
       return -1;
    }
 
 
-   if(asn1PrtToStr_e2ap_TNLinformation_tnlPort ("tnlPort", pvalue->tnlPort, buffer, bufSize) < 0)
+   if(asn1PrtToStr_e2ap_TNLinformation_tnlPort ("tnlPort", &pvalue->tnlPort, buffer, bufSize) < 0)
    {
       return -1;
    }
@@ -440,13 +448,13 @@ EXTERN int asn1PrtToStr_e2ap_TNLusage (const char* name, e2ap_TNLusage* pvalue, 
 
    switch(*pvalue) {
       case 0:
-         stat = rtPrintToString(" = ric_service", buffer, bufSize);
+         stat = rtPrintToString(" = ric_service \n", buffer, bufSize);
          break;
       case 1:
-         stat = rtPrintToString(" = support_function", buffer, bufSize);
+         stat = rtPrintToString(" = support_function \n", buffer, bufSize);
          break;
       case 2:
-         stat = rtPrintToString(" = both", buffer, bufSize);
+         stat = rtPrintToString(" = both \n", buffer, bufSize);
          break;
       default:
          stat = rtPrintToString(" = ???\n", buffer, bufSize);
@@ -679,13 +687,13 @@ int asn1PE_e2ap_E2connectionUpdate_ItemIEs (OSCTXT* pctxt, e2ap_E2connectionUpda
 
    /* encode id */
    RTXCTXTPUSHELEMNAME (pctxt, "id");
-   stat = asn1PE_e2ap_ProtocolIE_ID (pctxt, &pvalue->id);
+   stat = asn1PE_e2ap_ProtocolIE_ID (pctxt, pvalue->id);//xoa con tro
    if (stat != 0) return LOG_RTERR (pctxt, stat);
    RTXCTXTPOPELEMNAME (pctxt);
 
    /* encode criticality */
    RTXCTXTPUSHELEMNAME (pctxt, "criticality");
-   stat = asn1PE_e2ap_Criticality (pctxt, &pvalue->criticality);
+   stat = asn1PE_e2ap_Criticality (pctxt, pvalue->criticality);//xoa con tro
    if (stat != 0) return LOG_RTERR (pctxt, stat);
    RTXCTXTPOPELEMNAME (pctxt);
 
@@ -937,7 +945,7 @@ int asn1PE_e2ap_E2connectionUpdate_List (OSCTXT* pctxt, e2ap_E2connectionUpdate_
    }
 
    RTXCTXTPOPTYPENAME (pctxt);
-   return 0;
+   return stat;
 }
 
 int asn1PD_e2ap_E2connectionUpdate_List (OSCTXT* pctxt, e2ap_E2connectionUpdate_List* ppvalue)
@@ -1236,13 +1244,13 @@ int asn1PE_e2ap_E2connectionUpdateRemove_ItemIEs (OSCTXT* pctxt, e2ap_E2connecti
 
    /* encode id */
    RTXCTXTPUSHELEMNAME (pctxt, "id");
-   stat = asn1PE_e2ap_ProtocolIE_ID (pctxt, &pvalue->id);
+   stat = asn1PE_e2ap_ProtocolIE_ID (pctxt, pvalue->id);//xoa con tro
    if (stat != 0) return LOG_RTERR (pctxt, stat);
    RTXCTXTPOPELEMNAME (pctxt);
 
    /* encode criticality */
    RTXCTXTPUSHELEMNAME (pctxt, "criticality");
-   stat = asn1PE_e2ap_Criticality (pctxt, &pvalue->criticality);
+   stat = asn1PE_e2ap_Criticality (pctxt, pvalue->criticality);//xoa con tro
    if (stat != 0) return LOG_RTERR (pctxt, stat);
    RTXCTXTPOPELEMNAME (pctxt);
 
@@ -1494,7 +1502,7 @@ int asn1PE_e2ap_E2connectionUpdateRemove_List (OSCTXT* pctxt, e2ap_E2connectionU
    }
 
    RTXCTXTPOPTYPENAME (pctxt);
-   return 0;
+   return stat;
 }
 
 int asn1PD_e2ap_E2connectionUpdateRemove_List (OSCTXT* pctxt, e2ap_E2connectionUpdateRemove_List* ppvalue)
@@ -1795,13 +1803,13 @@ EXTERN int asn1PE_e2ap_E2connectionUpdate_protocolIEs_element (OSCTXT* pctxt, e2
     /*encode id*/
 
     RTXCTXTPUSHELEMNAME(pctxt, "id");
-        stat = asn1PE_e2ap_ProtocolIE_ID(pctxt, &pvalue->id);
+        stat = asn1PE_e2ap_ProtocolIE_ID(pctxt, pvalue->id);//xoa con tro
         if(stat!=0) return LOG_RTERR(pctxt, stat);
     RTXCTXTPOPELEMNAME(pctxt);
 
     /*encode criticality*/
     RTXCTXTPUSHELEMNAME(pctxt, "criticality");
-        stat = asn1PE_e2ap_Criticality(pctxt, &pvalue->criticality);
+        stat = asn1PE_e2ap_Criticality(pctxt, pvalue->criticality);//xoa con tro
         if(stat!=0) return LOG_RTERR(pctxt, stat);
     RTXCTXTPOPELEMNAME(pctxt);
 
